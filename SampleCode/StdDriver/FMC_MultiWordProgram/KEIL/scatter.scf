@@ -1,0 +1,18 @@
+LOAD_ROM 0x0
+{
+    EXEC_RAM 0x0 
+    {        
+        startup_M251.o (RESET, +First)
+        *(InRoot$$Sections)
+        startup_M251.o
+        system_M251.o
+        main.o
+    }
+       
+    SRAM 0x20000000
+    {
+        fmc.o
+        * (+RO)	
+        * (+RW,+ZI)
+    }
+}

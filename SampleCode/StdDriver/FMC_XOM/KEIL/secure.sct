@@ -1,0 +1,23 @@
+LR_ROM 0x0
+{
+    EXE_ROM +0 0x7000
+    {
+        *.o(RESET, +First)
+        *(+RO)
+    }
+    
+    EXE_RAM 0x20000000 0x10000
+    {
+        *(+RW, +ZI)
+    }
+	
+}
+
+
+XOMR0 0x7000
+{
+    FLASH1 +0
+    {
+         xom_add.o    (+XO)
+    }
+}

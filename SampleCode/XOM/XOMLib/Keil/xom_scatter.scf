@@ -1,0 +1,36 @@
+FLASH 0x00000000
+{
+    FLASH +0
+    {
+        startup_M251.o(RESET, +First)
+        * (+RO)    
+    }
+
+  SRAM1 0x20000000
+    {  
+        * (+RW)
+    }
+
+  ZI +0
+  {
+    *(+ZI)
+  }
+
+}
+
+XOM0 0x3000
+{
+    XOM0_ROM +0
+    {
+        * (.xom)
+        xom.o
+    }
+    
+    ; We should not use RW/ZI in XOM. Add zero section to detect them.
+    ; 0x20001c00 is not an available memory space.
+    XOM0_SRAM 0x20001c00 0x0
+    {
+        xomlib.o (+RW, +ZI)
+        xom.o (+RW, +ZI)
+    }
+}
