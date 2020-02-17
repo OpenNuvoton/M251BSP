@@ -62,8 +62,8 @@ extern "C"
 #define SCLIB_ERR_PPS                           0x00001004  ///< PPS error \hideinitializer
 
 // error code for T=1 protocol
-//#define SCLIB_ERR_T1_PARITY                     0x00002001            ///< T=1 Parity Error Notice
-//#define SCLIB_ERR_T1_ICC                        0x00002002           ///< ICC communication error
+#define SCLIB_ERR_T1_PARITY                     0x00002001            ///< T=1 Parity Error Notice
+#define SCLIB_ERR_T1_ICC                        0x00002002           ///< ICC communication error
 #define SCLIB_ERR_T1_PROTOCOL                   0x00002003  ///< T=1 Protocol Error \hideinitializer
 #define SCLIB_ERR_T1_ABORT_RECEIVED             0x00002004  ///< Received ABORT request \hideinitializer
 #define SCLIB_ERR_T1_RESYNCH_RECEIVED           0x00002005  ///< Received RESYNCH request \hideinitializer
@@ -95,6 +95,24 @@ typedef struct
     uint32_t ATR_Len;                   ///< ATR length, between SCLIB_MAX_ATR_LEN and SCLIB_MIN_ATR_LEN
     uint8_t ATR_Buf[SCLIB_MAX_ATR_LEN]; ///< Buffer holds ATR answered by smartcard
 } SCLIB_CARD_INFO_T;
+
+/**
+  * @brief  A structure holds smartcard attribute, including convention, guard time, waiting time, IFCS... etc.
+  */
+typedef struct
+{
+    uint8_t Fi;        ///< Findex;
+    uint8_t Di;        ///< Dindex;
+    uint8_t conv;      ///< Convention, direct or inverse. 0 direct, 1 inverse
+    uint8_t chksum;    ///< Checksum type
+    uint8_t GT;        ///< Guard Time
+    uint8_t WI;        ///< Wait integer for T0
+    uint8_t BWI;       ///< Block waiting integer for T1;
+    uint8_t CWI;       ///< Character waiting integer for T1;
+    uint8_t clkStop;   ///< Card clock stop status. 00 Not allowed, 01 low, 02, high, 03 ether high or low
+    uint8_t IFSC;      ///< size of negotiated IFCS
+    uint8_t NAD;       ///< NAD value
+} SCLIB_CARD_ATTRIB_T;
 
 /*@}*/ /* end of group SCLIB_EXPORTED_STRUCTS */
 
@@ -176,6 +194,17 @@ void SCLIB_Deactivate(uint32_t num);
   * @retval SCLIB_ERR_DEACTIVE         Card is deactivated, s_info does not contains card information
   */
 int32_t SCLIB_GetCardInfo(uint32_t num, SCLIB_CARD_INFO_T *s_info);
+
+/**
+  * @brief Get the card attribute (e.g., Fi, Di, convention, guard time... etc. ) after activation success
+  * @param[in] num Smartcard interface number. From 0 ~ ( \ref SC_INTERFACE_NUM - 1)
+  * @param[out] s_attrib A pointer to \ref SCLIB_CARD_ATTRIB_T holds the card information
+  * @return Success or not
+  * @retval SCLIB_SUCCESS              Success, s_info contains card information
+  * @retval SCLIB_ERR_CARD_REMOVED     Card removed, s_info does not contains card information
+  * @retval SCLIB_ERR_DEACTIVE         Card is deactivated, s_info does not contains card information
+  */
+int32_t SCLIB_GetCardAttrib(uint32_t num, SCLIB_CARD_ATTRIB_T *s_attrib);
 
 /**
   * @brief Start a smartcard transmission.
