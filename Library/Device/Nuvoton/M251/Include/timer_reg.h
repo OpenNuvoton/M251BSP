@@ -579,6 +579,9 @@ typedef struct
 #define TIMER_TRGCTL_TRGPDMA_Pos         (4)                                               /*!< TIMER_T::TRGCTL: TRGPDMA Position      */
 #define TIMER_TRGCTL_TRGPDMA_Msk         (0x1ul << TIMER_TRGCTL_TRGPDMA_Pos)               /*!< TIMER_T::TRGCTL: TRGPDMA Mask          */
 
+#define TIMER_TRGCTL_TRGTK_Pos           (8)                                               /*!< TIMER_T::TRGCTL: TRGTK Position      */
+#define TIMER_TRGCTL_TRGTK_Msk           (0x1ul << TIMER_TRGCTL_TRGTK_Pos)                 /*!< TIMER_T::TRGCTL: TRGTK Mask          */
+
 #define TIMER_PWMCTL_CNTEN_Pos           (0)                                               /*!< TIMER_T::PWMCTL: CNTEN Position        */
 #define TIMER_PWMCTL_CNTEN_Msk           (0x1ul << TIMER_PWMCTL_CNTEN_Pos)                 /*!< TIMER_T::PWMCTL: CNTEN Mask            */
 

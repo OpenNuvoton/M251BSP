@@ -585,36 +585,47 @@ uint32_t CLK_SetCoreClock(uint32_t u32Hclk)
   * @return     None
   * @details    Valid parameter combinations listed in following table:
   *
-  * |Module index        |Clock source                          |Divider                 |
-  * | :----------------  | :----------------------------------- | :--------------------- |
-  * |\ref WDT_MODULE     |\ref CLK_CLKSEL1_WDTSEL_HCLK_DIV2048  | x                      |
-  * |\ref WDT_MODULE     |\ref CLK_CLKSEL1_WDTSEL_LXT           | x                      |
-  * |\ref WDT_MODULE     |\ref CLK_CLKSEL1_WDTSEL_LIRC          | x                      |
-  * |\ref EADC_MODULE    |x                                     |\ref CLK_CLKDIV0_EADC(x)|
-  * |\ref TMR0_MODULE    |\ref CLK_CLKSEL1_TMR0SEL_HXT          | x                      |
-  * |\ref TMR0_MODULE    |\ref CLK_CLKSEL1_TMR0SEL_LXT          | x                      |
-  * |\ref TMR0_MODULE    |\ref CLK_CLKSEL1_TMR0SEL_PCLK0        | x                      |
-  * |\ref TMR0_MODULE    |\ref CLK_CLKSEL1_TMR0SEL_EXT_TRG      | x                      |
-  * |\ref TMR0_MODULE    |\ref CLK_CLKSEL1_TMR0SEL_LIRC         | x                      |
-  * |\ref TMR0_MODULE    |\ref CLK_CLKSEL1_TMR0SEL_HIRC         | x                      |
-  * |\ref TMR1_MODULE    |\ref CLK_CLKSEL1_TMR1SEL_HXT          | x                      |
-  * |\ref TMR1_MODULE    |\ref CLK_CLKSEL1_TMR1SEL_LXT          | x                      |
-  * |\ref TMR1_MODULE    |\ref CLK_CLKSEL1_TMR1SEL_PCLK0        | x                      |
-  * |\ref TMR1_MODULE    |\ref CLK_CLKSEL1_TMR1SEL_EXT_TRG      | x                      |
-  * |\ref TMR1_MODULE    |\ref CLK_CLKSEL1_TMR1SEL_LIRC         | x                      |
-  * |\ref TMR1_MODULE    |\ref CLK_CLKSEL1_TMR1SEL_HIRC         | x                      |
-  * |\ref TMR2_MODULE    |\ref CLK_CLKSEL1_TMR2SEL_HXT          | x                      |
-  * |\ref TMR2_MODULE    |\ref CLK_CLKSEL1_TMR2SEL_LXT          | x                      |
-  * |\ref TMR2_MODULE    |\ref CLK_CLKSEL1_TMR2SEL_PCLK1        | x                      |
-  * |\ref TMR2_MODULE    |\ref CLK_CLKSEL1_TMR2SEL_EXT_TRG      | x                      |
-  * |\ref TMR2_MODULE    |\ref CLK_CLKSEL1_TMR2SEL_LIRC         | x                      |
-  * |\ref TMR2_MODULE    |\ref CLK_CLKSEL1_TMR2SEL_HIRC         | x                      |
-  * |\ref TMR3_MODULE    |\ref CLK_CLKSEL1_TMR3SEL_HXT          | x                      |
-  * |\ref TMR3_MODULE    |\ref CLK_CLKSEL1_TMR3SEL_LXT          | x                      |
-  * |\ref TMR3_MODULE    |\ref CLK_CLKSEL1_TMR3SEL_PCLK1        | x                      |
-  * |\ref TMR3_MODULE    |\ref CLK_CLKSEL1_TMR3SEL_EXT_TRG      | x                      |
-  * |\ref TMR3_MODULE    |\ref CLK_CLKSEL1_TMR3SEL_LIRC         | x                      |
-  * |\ref TMR3_MODULE    |\ref CLK_CLKSEL1_TMR3SEL_HIRC         | x                      |
+  * |Module index        |Clock source                          |Divider                  |
+  * | :----------------  | :----------------------------------- | :---------------------- |
+  * |\ref USBD_MODULE    |\ref CLK_CLKSEL0_USBDSEL_HIRC         |\ref CLK_CLKDIV0_USB(x)  |
+  * |\ref USBD_MODULE    |\ref CLK_CLKSEL0_USBDSEL_PLL          |\ref CLK_CLKDIV0_USB(x)  |
+  * |\ref WDT_MODULE     |\ref CLK_CLKSEL1_WDTSEL_HCLK_DIV2048  | x                       |
+  * |\ref WDT_MODULE     |\ref CLK_CLKSEL1_WDTSEL_LXT           | x                       |
+  * |\ref WDT_MODULE     |\ref CLK_CLKSEL1_WDTSEL_LIRC          | x                       |
+  * |\ref WWDT_MODULE    |\ref CLK_CLKSEL1_WWDTSEL_HCLK_DIV2048 | x                       |
+  * |\ref WWDT_MODULE    |\ref CLK_CLKSEL1_WWDTSEL_LIRC         | x                       |
+  * |\ref CLKO_MODULE    |\ref CLK_CLKSEL1_CLKOSEL_HXT          | x                       |
+  * |\ref CLKO_MODULE    |\ref CLK_CLKSEL1_CLKOSEL_LXT          | x                       |
+  * |\ref CLKO_MODULE    |\ref CLK_CLKSEL1_CLKOSEL_HCLK         | x                       |
+  * |\ref CLKO_MODULE    |\ref CLK_CLKSEL1_CLKOSEL_HIRC         | x                       |
+  * |\ref CLKO_MODULE    |\ref CLK_CLKSEL1_CLKOSEL_LIRC         | x                       |
+  * |\ref CLKO_MODULE    |\ref CLK_CLKSEL1_CLKOSEL_MIRC         | x                       |
+  * |\ref CLKO_MODULE    |\ref CLK_CLKSEL1_CLKOSEL_PLL          | x                       |
+  * |\ref CLKO_MODULE    |\ref CLK_CLKSEL1_CLKOSEL_SOF          | x                       |
+  * |\ref TMR0_MODULE    |\ref CLK_CLKSEL1_TMR0SEL_HXT          | x                       |
+  * |\ref TMR0_MODULE    |\ref CLK_CLKSEL1_TMR0SEL_LXT          | x                       |
+  * |\ref TMR0_MODULE    |\ref CLK_CLKSEL1_TMR0SEL_PCLK0        | x                       |
+  * |\ref TMR0_MODULE    |\ref CLK_CLKSEL1_TMR0SEL_EXT_TRG      | x                       |
+  * |\ref TMR0_MODULE    |\ref CLK_CLKSEL1_TMR0SEL_LIRC         | x                       |
+  * |\ref TMR0_MODULE    |\ref CLK_CLKSEL1_TMR0SEL_HIRC         | x                       |
+  * |\ref TMR1_MODULE    |\ref CLK_CLKSEL1_TMR1SEL_HXT          | x                       |
+  * |\ref TMR1_MODULE    |\ref CLK_CLKSEL1_TMR1SEL_LXT          | x                       |
+  * |\ref TMR1_MODULE    |\ref CLK_CLKSEL1_TMR1SEL_PCLK0        | x                       |
+  * |\ref TMR1_MODULE    |\ref CLK_CLKSEL1_TMR1SEL_EXT_TRG      | x                       |
+  * |\ref TMR1_MODULE    |\ref CLK_CLKSEL1_TMR1SEL_LIRC         | x                       |
+  * |\ref TMR1_MODULE    |\ref CLK_CLKSEL1_TMR1SEL_HIRC         | x                       |
+  * |\ref TMR2_MODULE    |\ref CLK_CLKSEL1_TMR2SEL_HXT          | x                       |
+  * |\ref TMR2_MODULE    |\ref CLK_CLKSEL1_TMR2SEL_LXT          | x                       |
+  * |\ref TMR2_MODULE    |\ref CLK_CLKSEL1_TMR2SEL_PCLK1        | x                       |
+  * |\ref TMR2_MODULE    |\ref CLK_CLKSEL1_TMR2SEL_EXT_TRG      | x                       |
+  * |\ref TMR2_MODULE    |\ref CLK_CLKSEL1_TMR2SEL_LIRC         | x                       |
+  * |\ref TMR2_MODULE    |\ref CLK_CLKSEL1_TMR2SEL_HIRC         | x                       |
+  * |\ref TMR3_MODULE    |\ref CLK_CLKSEL1_TMR3SEL_HXT          | x                       |
+  * |\ref TMR3_MODULE    |\ref CLK_CLKSEL1_TMR3SEL_LXT          | x                       |
+  * |\ref TMR3_MODULE    |\ref CLK_CLKSEL1_TMR3SEL_PCLK1        | x                       |
+  * |\ref TMR3_MODULE    |\ref CLK_CLKSEL1_TMR3SEL_EXT_TRG      | x                       |
+  * |\ref TMR3_MODULE    |\ref CLK_CLKSEL1_TMR3SEL_LIRC         | x                       |
+  * |\ref TMR3_MODULE    |\ref CLK_CLKSEL1_TMR3SEL_HIRC         | x                       |
   * |\ref UART0_MODULE   |\ref CLK_CLKSEL1_UART0SEL_HXT         |\ref CLK_CLKDIV0_UART0(x)|
   * |\ref UART0_MODULE   |\ref CLK_CLKSEL1_UART0SEL_PLL         |\ref CLK_CLKDIV0_UART0(x)|
   * |\ref UART0_MODULE   |\ref CLK_CLKSEL1_UART0SEL_LXT         |\ref CLK_CLKDIV0_UART0(x)|
@@ -627,50 +638,41 @@ uint32_t CLK_SetCoreClock(uint32_t u32Hclk)
   * |\ref UART1_MODULE   |\ref CLK_CLKSEL1_UART1SEL_HIRC        |\ref CLK_CLKDIV0_UART1(x)|
   * |\ref UART1_MODULE   |\ref CLK_CLKSEL1_UART1SEL_PCLK1       |\ref CLK_CLKDIV0_UART1(x)|
   * |\ref UART1_MODULE   |\ref CLK_CLKSEL1_UART1SEL_LIRC        |\ref CLK_CLKDIV0_UART1(x)|
+  * |\ref PWM0_MODULE    |\ref CLK_CLKSEL2_PWM0SEL_PLL          | x                       |
+  * |\ref PWM0_MODULE    |\ref CLK_CLKSEL2_PWM0SEL_PCLK0        | x                       |
+  * |\ref PWM1_MODULE    |\ref CLK_CLKSEL2_PWM1SEL_PLL          | x                       |
+  * |\ref PWM1_MODULE    |\ref CLK_CLKSEL2_PWM1SEL_PCLK1        | x                       |
+  * |\ref QSPI0_MODULE   |\ref CLK_CLKSEL2_QSPI0SEL_HXT         | x                       |
+  * |\ref QSPI0_MODULE   |\ref CLK_CLKSEL2_QSPI0SEL_PLL         | x                       |
+  * |\ref QSPI0_MODULE   |\ref CLK_CLKSEL2_QSPI0SEL_PCLK0       | x                       |
+  * |\ref QSPI0_MODULE   |\ref CLK_CLKSEL2_QSPI0SEL_HIRC        | x                       |
+  * |\ref SPI0_MODULE    |\ref CLK_CLKSEL2_SPI0SEL_HXT          | x                       |
+  * |\ref SPI0_MODULE    |\ref CLK_CLKSEL2_SPI0SEL_PLL          | x                       |
+  * |\ref SPI0_MODULE    |\ref CLK_CLKSEL2_SPI0SEL_PCLK1        | x                       |
+  * |\ref SPI0_MODULE    |\ref CLK_CLKSEL2_SPI0SEL_HIRC         | x                       |
+  * |\ref BPWM0_MODULE   |\ref CLK_CLKSEL2_BPWM0SEL_PLL         | x                       |
+  * |\ref BPWM0_MODULE   |\ref CLK_CLKSEL2_BPWM0SEL_PCLK0       | x                       |
+  * |\ref BPWM1_MODULE   |\ref CLK_CLKSEL2_BPWM1SEL_PLL         | x                       |
+  * |\ref BPWM1_MODULE   |\ref CLK_CLKSEL2_BPWM1SEL_PCLK1       | x                       |
+  * |\ref SLCD_MODULE    |\ref CLK_CLKSEL2_SLCDSEL_LIRC         | x                       |
+  * |\ref SLCD_MODULE    |\ref CLK_CLKSEL2_SLCDSEL_LXT          | x                       |
+  * |\ref PSIO_MODULE    |\ref CLK_CLKSEL2_PSIOSEL_HXT          |\ref CLK_CLKDIV1_PSIO(x) |
+  * |\ref PSIO_MODULE    |\ref CLK_CLKSEL2_PSIOSEL_LXT          |\ref CLK_CLKDIV1_PSIO(x) |
+  * |\ref PSIO_MODULE    |\ref CLK_CLKSEL2_PSIOSEL_PCLK1        |\ref CLK_CLKDIV1_PSIO(x) |
+  * |\ref PSIO_MODULE    |\ref CLK_CLKSEL2_PSIOSEL_PLL          |\ref CLK_CLKDIV1_PSIO(x) |
+  * |\ref PSIO_MODULE    |\ref CLK_CLKSEL2_PSIOSEL_LIRC         |\ref CLK_CLKDIV1_PSIO(x) |
+  * |\ref PSIO_MODULE    |\ref CLK_CLKSEL2_PSIOSEL_HIRC         |\ref CLK_CLKDIV1_PSIO(x) |
+  * |\ref SC0_MODULE     |\ref CLK_CLKSEL3_SC0SEL_HXT           |\ref CLK_CLKDIV1_SC0(x)  |
+  * |\ref SC0_MODULE     |\ref CLK_CLKSEL3_SC0SEL_PLL           |\ref CLK_CLKDIV1_SC0(x)  |
+  * |\ref SC0_MODULE     |\ref CLK_CLKSEL3_SC0SEL_PCLK0         |\ref CLK_CLKDIV1_SC0(x)  |
+  * |\ref SC0_MODULE     |\ref CLK_CLKSEL3_SC0SEL_HIRC          |\ref CLK_CLKDIV1_SC0(x)  |
   * |\ref UART2_MODULE   |\ref CLK_CLKSEL3_UART2SEL_HXT         |\ref CLK_CLKDIV4_UART2(x)|
   * |\ref UART2_MODULE   |\ref CLK_CLKSEL3_UART2SEL_PLL         |\ref CLK_CLKDIV4_UART2(x)|
   * |\ref UART2_MODULE   |\ref CLK_CLKSEL3_UART2SEL_LXT         |\ref CLK_CLKDIV4_UART2(x)|
   * |\ref UART2_MODULE   |\ref CLK_CLKSEL3_UART2SEL_HIRC        |\ref CLK_CLKDIV4_UART2(x)|
   * |\ref UART2_MODULE   |\ref CLK_CLKSEL3_UART2SEL_PCLK0       |\ref CLK_CLKDIV4_UART2(x)|
   * |\ref UART2_MODULE   |\ref CLK_CLKSEL3_UART2SEL_LIRC        |\ref CLK_CLKDIV4_UART2(x)|
-  * |\ref BPWM0_MODULE   |\ref CLK_CLKSEL2_BPWM0SEL_PLL         | x                      |
-  * |\ref BPWM0_MODULE   |\ref CLK_CLKSEL2_BPWM0SEL_PCLK0       | x                      |
-  * |\ref BPWM1_MODULE   |\ref CLK_CLKSEL2_BPWM1SEL_PLL         | x                      |
-  * |\ref BPWM1_MODULE   |\ref CLK_CLKSEL2_BPWM1SEL_PCLK1       | x                      |
-  * |\ref PWM0_MODULE    |\ref CLK_CLKSEL2_PWM0SEL_PLL          | x                      |
-  * |\ref PWM0_MODULE    |\ref CLK_CLKSEL2_PWM0SEL_PCLK0        | x                      |
-  * |\ref PWM1_MODULE    |\ref CLK_CLKSEL2_PWM1SEL_PLL          | x                      |
-  * |\ref PWM1_MODULE    |\ref CLK_CLKSEL2_PWM1SEL_PCLK1        | x                      |
-  * |\ref CLKO_MODULE    |\ref CLK_CLKSEL1_CLKOSEL_HXT          | x                      |
-  * |\ref CLKO_MODULE    |\ref CLK_CLKSEL1_CLKOSEL_LXT          | x                      |
-  * |\ref CLKO_MODULE    |\ref CLK_CLKSEL1_CLKOSEL_HCLK         | x                      |
-  * |\ref CLKO_MODULE    |\ref CLK_CLKSEL1_CLKOSEL_HIRC         | x                      |
-  * |\ref CLKO_MODULE    |\ref CLK_CLKSEL1_CLKOSEL_LIRC         | x                      |
-  * |\ref CLKO_MODULE    |\ref CLK_CLKSEL1_CLKOSEL_MIRC         | x                      |
-  * |\ref CLKO_MODULE    |\ref CLK_CLKSEL1_CLKOSEL_PLL          | x                      |
-  * |\ref CLKO_MODULE    |\ref CLK_CLKSEL1_CLKOSEL_SOF          | x                      |
-  * |\ref WWDT_MODULE    |\ref CLK_CLKSEL1_WWDTSEL_HCLK_DIV2048 | x                      |
-  * |\ref WWDT_MODULE    |\ref CLK_CLKSEL1_WWDTSEL_LIRC         | x                      |
-  * |\ref QSPI0_MODULE   |\ref CLK_CLKSEL2_QSPI0SEL_HXT          | x                      |
-  * |\ref QSPI0_MODULE   |\ref CLK_CLKSEL2_QSPI0SEL_PLL          | x                      |
-  * |\ref QSPI0_MODULE   |\ref CLK_CLKSEL2_QSPI0SEL_PCLK0        | x                      |
-  * |\ref QSPI0_MODULE   |\ref CLK_CLKSEL2_QSPI0SEL_HIRC         | x                      |
-  * |\ref SPI0_MODULE    |\ref CLK_CLKSEL2_SPI0SEL_HXT          | x                      |
-  * |\ref SPI0_MODULE    |\ref CLK_CLKSEL2_SPI0SEL_PLL          | x                      |
-  * |\ref SPI0_MODULE    |\ref CLK_CLKSEL2_SPI0SEL_PCLK1        | x                      |
-  * |\ref SPI0_MODULE    |\ref CLK_CLKSEL2_SPI0SEL_HIRC         | x                      |
-  * |\ref USBD_MODULE    |\ref CLK_CLKSEL0_USBDSEL_HIRC         |\ref CLK_CLKDIV0_USB(x) |
-  * |\ref USBD_MODULE    |\ref CLK_CLKSEL0_USBDSEL_PLL          |\ref CLK_CLKDIV0_USB(x) |
-  * |\ref SC0_MODULE     |\ref CLK_CLKSEL3_SC0SEL_HXT           |\ref CLK_CLKDIV1_SC0(x) |
-  * |\ref SC0_MODULE     |\ref CLK_CLKSEL3_SC0SEL_PLL           |\ref CLK_CLKDIV1_SC0(x) |
-  * |\ref SC0_MODULE     |\ref CLK_CLKSEL3_SC0SEL_PCLK0         |\ref CLK_CLKDIV1_SC0(x) |
-  * |\ref SC0_MODULE     |\ref CLK_CLKSEL3_SC0SEL_HIRC          |\ref CLK_CLKDIV1_SC0(x) |
-  * |\ref PSIO_MODULE    |\ref CLK_CLKSEL2_PSIOSEL_HXT          |\ref CLK_CLKDIV1_PSIO(x)|
-  * |\ref PSIO_MODULE    |\ref CLK_CLKSEL2_PSIOSEL_LXT          |\ref CLK_CLKDIV1_PSIO(x)|
-  * |\ref PSIO_MODULE    |\ref CLK_CLKSEL2_PSIOSEL_PCLK1        |\ref CLK_CLKDIV1_PSIO(x)|
-  * |\ref PSIO_MODULE    |\ref CLK_CLKSEL2_PSIOSEL_PLL          |\ref CLK_CLKDIV1_PSIO(x)|
-  * |\ref PSIO_MODULE    |\ref CLK_CLKSEL2_PSIOSEL_LIRC         |\ref CLK_CLKDIV1_PSIO(x)|
-  * |\ref PSIO_MODULE    |\ref CLK_CLKSEL2_PSIOSEL_HIRC         |\ref CLK_CLKDIV1_PSIO(x)|
+  * |\ref EADC_MODULE    |x                                     |\ref CLK_CLKDIV0_EADC(x) |
   */
 void CLK_SetModuleClock(uint32_t u32ModuleIdx, uint32_t u32ClkSrc, uint32_t u32ClkDiv)
 {
@@ -756,9 +758,16 @@ void CLK_DisableXtalRC(uint32_t u32ClkMask)
   * @param[in]  u32ModuleIdx is module index. Including :
   *             - \ref PDMA_MODULE
   *             - \ref ISP_MODULE
-  *             - \ref CRC_MODULE
   *             - \ref EBI_MODULE
+  *             - \ref EXST_MODULE
+  *             - \ref CRC_MODULE
   *             - \ref FMCIDLE_MODULE
+  *             - \ref GPA_MODULE
+  *             - \ref GPB_MODULE
+  *             - \ref GPC_MODULE
+  *             - \ref GPD_MODULE
+  *             - \ref GPE_MODULE
+  *             - \ref GPF_MODULE
   *             - \ref WDT_MODULE
   *             - \ref WWDT_MODULE
   *             - \ref RTC_MODULE
@@ -767,6 +776,7 @@ void CLK_DisableXtalRC(uint32_t u32ClkMask)
   *             - \ref TMR2_MODULE
   *             - \ref TMR3_MODULE
   *             - \ref CLKO_MODULE
+  *             - \ref ACMP01_MODULE
   *             - \ref I2C0_MODULE
   *             - \ref I2C1_MODULE
   *             - \ref QSPI0_MODULE
@@ -774,19 +784,20 @@ void CLK_DisableXtalRC(uint32_t u32ClkMask)
   *             - \ref UART0_MODULE
   *             - \ref UART1_MODULE
   *             - \ref UART2_MODULE
-  *             - \ref ACMP01_MODULE
-  *             - \ref EADC_MODULE
   *             - \ref USBD_MODULE
+  *             - \ref EADC_MODULE
+  *             - \ref TCHK_MODULE
+  *             - \ref SC0_MODULE
   *             - \ref USCI0_MODULE
   *             - \ref USCI1_MODULE
   *             - \ref USCI2_MODULE
-  *             - \ref BPWM0_MODULE
-  *             - \ref BPWM1_MODULE
+  *             - \ref DAC_MODULE
+  *             - \ref SLCD_MODULE
   *             - \ref PWM0_MODULE
   *             - \ref PWM1_MODULE
-  *             - \ref DAC_MODULE
+  *             - \ref BPWM0_MODULE
+  *             - \ref BPWM1_MODULE
   *             - \ref OPA_MODULE
-  *             - \ref SC0_MODULE
   *             - \ref PSIO_MODULE
   * @return     None
   * @details    This function enable module clock.
@@ -803,9 +814,16 @@ void CLK_EnableModuleClock(uint32_t u32ModuleIdx)
   * @param[in]  u32ModuleIdx is module index
   *             - \ref PDMA_MODULE
   *             - \ref ISP_MODULE
-  *             - \ref CRC_MODULE
   *             - \ref EBI_MODULE
+  *             - \ref EXST_MODULE
+  *             - \ref CRC_MODULE
   *             - \ref FMCIDLE_MODULE
+  *             - \ref GPA_MODULE
+  *             - \ref GPB_MODULE
+  *             - \ref GPC_MODULE
+  *             - \ref GPD_MODULE
+  *             - \ref GPE_MODULE
+  *             - \ref GPF_MODULE
   *             - \ref WDT_MODULE
   *             - \ref WWDT_MODULE
   *             - \ref RTC_MODULE
@@ -814,6 +832,7 @@ void CLK_EnableModuleClock(uint32_t u32ModuleIdx)
   *             - \ref TMR2_MODULE
   *             - \ref TMR3_MODULE
   *             - \ref CLKO_MODULE
+  *             - \ref ACMP01_MODULE
   *             - \ref I2C0_MODULE
   *             - \ref I2C1_MODULE
   *             - \ref QSPI0_MODULE
@@ -821,19 +840,20 @@ void CLK_EnableModuleClock(uint32_t u32ModuleIdx)
   *             - \ref UART0_MODULE
   *             - \ref UART1_MODULE
   *             - \ref UART2_MODULE
-  *             - \ref ACMP01_MODULE
-  *             - \ref EADC_MODULE
   *             - \ref USBD_MODULE
+  *             - \ref EADC_MODULE
+  *             - \ref TCHK_MODULE
+  *             - \ref SC0_MODULE
   *             - \ref USCI0_MODULE
   *             - \ref USCI1_MODULE
   *             - \ref USCI2_MODULE
-  *             - \ref BPWM0_MODULE
-  *             - \ref BPWM1_MODULE
+  *             - \ref DAC_MODULE
+  *             - \ref SLCD_MODULE
   *             - \ref PWM0_MODULE
   *             - \ref PWM1_MODULE
-  *             - \ref DAC_MODULE
+  *             - \ref BPWM0_MODULE
+  *             - \ref BPWM1_MODULE
   *             - \ref OPA_MODULE
-  *             - \ref SC0_MODULE
   *             - \ref PSIO_MODULE
   * @return     None
   * @details    This function disable module clock.
@@ -1095,11 +1115,12 @@ uint32_t CLK_GetPMUWKSrc(void)
   *             - \ref UART1_MODULE
   *             - \ref UART2_MODULE
   *             - \ref USBD_MODULE
-  *             - \ref BPWM0_MODULE
-  *             - \ref BPWM1_MODULE
+  *             - \ref SC0_MODULE
+  *             - \ref SLCD_MODULE
   *             - \ref PWM0_MODULE
   *             - \ref PWM1_MODULE
-  *             - \ref SC0_MODULE
+  *             - \ref BPWM0_MODULE
+  *             - \ref BPWM1_MODULE
   *             - \ref PSIO_MODULE
   * @return     Selected module clock source setting
   * @details    This function get selected module clock source.

@@ -40,7 +40,7 @@ int32_t volatile gi32UsbdMessageLength;
 void SC0_IRQHandler(void)
 {
     /* Please don't remove any of the function calls below */
-    if(SCLIB_CheckCDEvent(0))
+    if (SCLIB_CheckCDEvent(0))
     {
         RDR_to_PC_NotifySlotChange();
         USBD_MemCopy((uint8_t *)(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP4)), pu8IntInBuf, 2);
@@ -65,7 +65,7 @@ void SYS_Init(void)
 
     /* Wait for HIRC clock ready */
     CLK_WaitClockReady(CLK_STATUS_HIRCSTB_Msk);
-   
+
 #if (CRYSTAL_LESS)
     /* Switch HCLK clock source to Internal HIRC and HCLK source divide 1 */
     CLK_SetHCLK(CLK_CLKSEL0_HCLKSEL_HIRC, CLK_CLKDIV0_HCLK(1));
@@ -87,10 +87,10 @@ void SYS_Init(void)
 
     /* Disable digital input path of analog pin XT1_OUT to prevent leakage */
     GPIO_DISABLE_DIGITAL_PATH(PF, BIT2 | BIT3);
-#endif    
-    
+#endif
+
     SystemCoreClockUpdate();
-    
+
     /* Select module clock source */
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HIRC, CLK_CLKDIV0_UART0(1));
     CLK_SetModuleClock(SC0_MODULE, CLK_CLKSEL3_SC0SEL_HIRC, CLK_CLKDIV1_SC0(12));
@@ -111,7 +111,7 @@ void SYS_Init(void)
                        | SYS_GPB_MFPL_PB4MFP_Msk | SYS_GPB_MFPL_PB5MFP_Msk);
     SYS->GPB_MFPL |= (SYS_GPB_MFPL_PB2MFP_SC0_PWR | SYS_GPB_MFPL_PB3MFP_SC0_RST
                       | SYS_GPB_MFPL_PB4MFP_SC0_DAT | SYS_GPB_MFPL_PB5MFP_SC0_CLK);
-    
+
     SYS->GPA_MFPL &= ~SYS_GPA_MFPL_PA4MFP_Msk;
     SYS->GPA_MFPL |= SYS_GPA_MFPL_PA4MFP_SC0_nCD;
 }
@@ -133,11 +133,11 @@ void UART0_Init()
 /*---------------------------------------------------------------------------------------------------------*/
 int main(void)
 {
-    
+
 #if CRYSTAL_LESS
     uint32_t u32TrimInit;
-#endif    
-    
+#endif
+
     /* Unlock protected registers */
     SYS_UnlockReg();
 
@@ -180,7 +180,7 @@ int main(void)
     USBD_CLR_INT_FLAG(USBD_INTSTS_SOFIF_Msk);
 #endif
 
-    while(1)
+    while (1)
     {
 #if CRYSTAL_LESS
 
@@ -192,17 +192,17 @@ int main(void)
             {
                 /* Clear SOF */
                 USBD_CLR_INT_FLAG(USBD_INTSTS_SOFIF_Msk);
-                    
-                /* 
-                    USB clock trim function: 
-                    HIRC Trimming with boundary function enhances robustility 
-                    and keeps HIRC in right frequency while receiving unstable USB signal 
+
+                /*
+                    USB clock trim function:
+                    HIRC Trimming with boundary function enhances robustility
+                    and keeps HIRC in right frequency while receiving unstable USB signal
                 */
-                SYS->HIRCTRIMCTL =  ( 0x1 << SYS_HIRCTRIMCTL_REFCKSEL_Pos )
-                                  | ( 0x1 << SYS_HIRCTRIMCTL_FREQSEL_Pos  )
-                                  | ( 0x0 << SYS_HIRCTRIMCTL_LOOPSEL_Pos  )
-                                  | ( 0x1 << SYS_HIRCTRIMCTL_BOUNDEN_Pos  )
-                                  | ( 10  << SYS_HIRCTRIMCTL_BOUNDARY_Pos );
+                SYS->HIRCTRIMCTL = (0x1 << SYS_HIRCTRIMCTL_REFCKSEL_Pos)
+                                   | (0x1 << SYS_HIRCTRIMCTL_FREQSEL_Pos)
+                                   | (0x0 << SYS_HIRCTRIMCTL_LOOPSEL_Pos)
+                                   | (0x1 << SYS_HIRCTRIMCTL_BOUNDEN_Pos)
+                                   | (10  << SYS_HIRCTRIMCTL_BOUNDARY_Pos);
             }
         }
 

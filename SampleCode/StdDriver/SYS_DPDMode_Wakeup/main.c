@@ -255,8 +255,10 @@ void LXT_Enable(void)
 {
     /* Set X32_OUT(PF.4) and X32_IN(PF.5) to input mode */
     PF->MODE &= ~(GPIO_MODE_MODE4_Msk | GPIO_MODE_MODE5_Msk);
+
     /* Enable external 32768Hz XTAL */
     CLK_EnableXtalRC(CLK_PWRCTL_LXTEN_Msk);
+
     /* Waiting for clock ready */
     CLK_WaitClockReady(CLK_STATUS_LXTSTB_Msk);
 
@@ -272,20 +274,12 @@ void SYS_Init(void)
 #if (CLK_SOURCE == CLK_HIRC )
     /* Enable HIRC clock (Internal RC 48MHz) */
     CLK_EnableXtalRC(CLK_PWRCTL_HIRCEN_Msk);
+
     /* Wait for HIRC clock ready */
     CLK_WaitClockReady(CLK_STATUS_HIRCSTB_Msk);
 
     /* Select HCLK clock source as HIRC and and HCLK source divider as 1 */
     CLK_SetHCLK(CLK_CLKSEL0_HCLKSEL_HIRC, CLK_CLKDIV0_HCLK(1));
-
-    /* Set PLL frequency */
-    CLK_EnablePLL(CLK_PLLCTL_PLLSRC_HIRC_DIV4, PLL_CLOCK);
-
-    /* Waiting for clock ready */
-    CLK_WaitClockReady(CLK_STATUS_PLLSTB_Msk);
-
-    /* Switch HCLK clock source to PLL */
-    CLK_SetHCLK(CLK_CLKSEL0_HCLKSEL_PLL, CLK_CLKDIV0_HCLK(1));
 
     /* Set both PCLK0 and PCLK1 as HCLK/2 */
     CLK->PCLKDIV = CLK_PCLKDIV_APB0DIV_DIV2 | CLK_PCLKDIV_APB1DIV_DIV2;

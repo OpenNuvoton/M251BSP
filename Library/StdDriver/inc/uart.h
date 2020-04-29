@@ -432,6 +432,55 @@ extern "C"
  */
 #define UART_RS485_GET_ADDR_FLAG(uart)    (((uart)->FIFOSTS  & UART_FIFOSTS_ADDRDETF_Msk) >> UART_FIFOSTS_ADDRDETF_Pos)
 
+/**
+ *    @brief        Enable specified UART PDMA function
+ *
+ *    @param[in]    uart        The pointer of the specified UART module
+ *    @param[in]    u32FuncSel  Combination of following functions
+ *                             - \ref UART_INTEN_TXPDMAEN_Msk
+ *                             - \ref UART_INTEN_RXPDMAEN_Msk
+ *
+ *    @return       None
+ *
+ *    \hideinitializer
+ */
+#define UART_PDMA_ENABLE(uart, u32FuncSel)    ((uart)->INTEN |= (u32FuncSel))
+/**
+ *    @brief        Disable specified UART PDMA function
+ *
+ *    @param[in]    uart        The pointer of the specified UART module
+ *    @param[in]    u32FuncSel  Combination of following functions
+ *                             - \ref UART_INTEN_TXPDMAEN_Msk
+ *                             - \ref UART_INTEN_RXPDMAEN_Msk
+ *
+ *    @return       None
+ *
+ *    \hideinitializer
+ */
+#define UART_PDMA_DISABLE(uart, u32FuncSel)    ((uart)->INTEN &= ~(u32FuncSel))
+
+/**
+ *    @brief        Enable specified UART Deglitch function
+ *
+ *    @param[in]    uart        The pointer of the specified UART module
+ *
+ *    @return       None
+ *
+ *    \hideinitializer
+ */
+#define UART_DEGLITCH_ENABLE(uart)    ((uart)->FUNCSEL |= UART_FUNCSEL_DGE_Msk))
+/**
+ *    @brief        Disable specified UART Deglitch function
+ *
+ *    @param[in]    uart        The pointer of the specified UART module
+ *
+ *    @return       None
+ *
+ *    \hideinitializer
+ */
+#define UART_DEGLITCH_DISABLE(uart)    ((uart)->FUNCSEL &= ~UART_FUNCSEL_DGE_Msk)
+
+
 /* Declare these inline functions here to avoid MISRA C 2004 rule 8.1 error */
 __STATIC_INLINE void UART_CLEAR_RTS(UART_T *uart);
 __STATIC_INLINE void UART_SET_RTS(UART_T *uart);

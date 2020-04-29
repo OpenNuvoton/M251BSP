@@ -242,6 +242,9 @@ typedef struct
      * |        |          |The TXFULL bit will be cleared to 0 and the TXEMPTY bit will be set to 1
      * |        |          |This bit will be cleared to 0 by hardware about 1 system clock after it is set to 1.
      * |        |          |Note: The TX shift register will not be cleared.
+     * |[10]    |SLVBERX   |RX FIFO Write Data Enable Bit When Slave Mode Bit Count Error (SPI Slave mode Only)
+     * |        |          |0 =  Uncompleted RX data will be dropped from RX FIFO when bit count error event happen in SPI slave mode.
+     * |        |          |1 = Uncompleted RX data will be written into RX FIFO when bit count error event happen in SPI slave mode. User can read SLVBENUM (SPIx_STATUS2[29:24]) to know that the effective bit number of uncompleted RX data when SPI slave bit count error happened.
      * |[26:24] |RXTH      |Receive FIFO Threshold
      * |        |          |If the valid data count of the receive FIFO buffer is larger than the RXTH setting, the RXTHIF bit will be set to 1, else the RXTHIF bit will be cleared to 0
      * |        |          |For SPI1, the MSB of this bit field is only meaningful while SPI mode 8~16 bits of data length.
@@ -346,6 +349,15 @@ typedef struct
      * |        |          |This bit field indicates the valid data count of receive FIFO buffer.
      * |[31:28] |TXCNT     |Transmit FIFO Data Count (Read Only)
      * |        |          |This bit field indicates the valid data count of transmit FIFO buffer.
+     * @var SPI_T::STATUS2
+     * Offset: 0x18  SPI2 Status Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[29:24] |SLVBENUM  |Effective Bit Number of Uncompleted RX data (SPI Slave mode Only)
+     * |        |          |This status register indicates that effective bit number of uncompleted RX data when SLVBERX (SPIx_FIFOCTL[10]) is enabled and RX bit count error event happen in SPI slave mode.
+     * |        |          |This status register will be fixed to 0x0 when SLVBERX (SPIx_FIFOCTL[10]) is disabled.
+     * |        |          |Note: This register will be cleared to 0x0 when user write 0x1 to SLVBEIF (SPIx_STATUS[6]).
      * @var SPI_T::TX
      * Offset: 0x20  SPI Data Transmit Register
      * ---------------------------------------------------------------------------------------------------
@@ -462,6 +474,16 @@ typedef struct
      * |        |          |is the frequency of I2S peripheral clock source, which is defined in the clock control register CLK_CLKSEL2.
      * |        |          |In I2S Slave mode, this field is used to define the frequency of peripheral clock and it's determined by .
      * |        |          |The peripheral clock frequency in I2S Slave mode must be equal to or faster than 6 times of input bit clock.
+     * |[24]    |I2SMODE   |I2S Clock Divider Number Selection for I2S Mode and SPI Mode
+     * |        |          |User sets I2SMODE to set frequency of peripheral clock of I2S mode or SPI mode when BCLKDIV (SPIx_I2SCLK[17:8]) or DIVIDER (SPIx_CLKDIV[8:0]) is set.
+     * |        |          |User needs to set I2SMODE before I2SEN (SPIx_I2SCTL[0]) or SPIEN (SPIx_CTL[0]) is enabled.
+     * |        |          |0 = The frequency of peripheral clock is set to SPI mode.
+     * |        |          |1 = The frequency of peripheral clock is set to I2S mode.
+     * |[25]    |I2SSLAVE  |I2S Clock Divider Number Selection for I2S Slave Mode and I2S Master Mode
+     * |        |          |User sets I2SSLAVE to set frequency of peripheral clock of I2S master mode and I2S slave mode when BCLKDIV (SPIx_I2SCLK[17:8]) is set.
+     * |        |          |I2SSLAVE needs to set before I2SEN (SPIx_I2SCTL[0]) is enabled.
+     * |        |          |0 = The frequency of peripheral clock is set to I2S master mode.
+     * |        |          |1 = The frequency of peripheral clock is set to I2S slave mode.
      * @var SPI_T::I2SSTS
      * Offset: 0x68  I2S Status Register
      * ---------------------------------------------------------------------------------------------------
@@ -533,7 +555,8 @@ typedef struct
     __IO uint32_t PDMACTL;               /*!< [0x000c] SPI PDMA Control Register                                        */
     __IO uint32_t FIFOCTL;               /*!< [0x0010] SPI FIFO Control Register                                        */
     __IO uint32_t STATUS;                /*!< [0x0014] SPI Status Register                                              */
-    __I  uint32_t RESERVE0[2];
+    __IO uint32_t STATUS2;               /*!< [0x0018] SPI Status2 Register                                             */
+    __I  uint32_t RESERVE0;
     __O  uint32_t TX;                    /*!< [0x0020] SPI Data Transmit Register                                       */
     __I  uint32_t RESERVE1[3];
     __I  uint32_t RX;                    /*!< [0x0030] SPI Data Receive Register                                        */
@@ -600,6 +623,9 @@ typedef struct
 #define SPI_SSCTL_AUTOSS_Pos             (3)                                               /*!< SPI_T::SSCTL: AUTOSS Position          */
 #define SPI_SSCTL_AUTOSS_Msk             (0x1ul << SPI_SSCTL_AUTOSS_Pos)                   /*!< SPI_T::SSCTL: AUTOSS Mask              */
 
+#define SPI_SSCTL_SLV3WIRE_Pos           (4)                                               /*!< SPI_T::SSCTL: SLV3WIRE Position        */
+#define SPI_SSCTL_SLV3WIRE_Msk           (0x1ul << SPI_SSCTL_SLV3WIRE_Pos)                 /*!< SPI_T::SSCTL: SLV3WIRE Mask            */
+
 #define SPI_SSCTL_SLVBEIEN_Pos           (8)                                               /*!< SPI_T::SSCTL: SLVBEIEN Position        */
 #define SPI_SSCTL_SLVBEIEN_Msk           (0x1ul << SPI_SSCTL_SLVBEIEN_Pos)                 /*!< SPI_T::SSCTL: SLVBEIEN Mask            */
 
@@ -650,6 +676,9 @@ typedef struct
 
 #define SPI_FIFOCTL_TXFBCLR_Pos          (9)                                               /*!< SPI_T::FIFOCTL: TXFBCLR Position       */
 #define SPI_FIFOCTL_TXFBCLR_Msk          (0x1ul << SPI_FIFOCTL_TXFBCLR_Pos)                /*!< SPI_T::FIFOCTL: TXFBCLR Mask           */
+
+#define SPI_FIFOCTL_SLVBERX_Pos          (10)                                              /*!< SPI_T::FIFOCTL: SLVBERX Position       */
+#define SPI_FIFOCTL_SLVBERX_Msk          (0x1ul << SPI_FIFOCTL_SLVBERX_Pos)                /*!< SPI_T::FIFOCTL: SLVBERX Mask           */
 
 #define SPI_FIFOCTL_RXTH_Pos             (24)                                              /*!< SPI_T::FIFOCTL: RXTH Position          */
 #define SPI_FIFOCTL_RXTH_Msk             (0x7ul << SPI_FIFOCTL_RXTH_Pos)                   /*!< SPI_T::FIFOCTL: RXTH Mask              */
@@ -717,6 +746,9 @@ typedef struct
 #define SPI_STATUS_TXCNT_Pos             (28)                                              /*!< SPI_T::STATUS: TXCNT Position          */
 #define SPI_STATUS_TXCNT_Msk             (0xful << SPI_STATUS_TXCNT_Pos)                   /*!< SPI_T::STATUS: TXCNT Mask              */
 
+#define SPI_STATUS2_SLVBENUM_Pos         (24)                                              /*!< SPI_T::STATUS2: SLVBENUM Position      */
+#define SPI_STATUS2_SLVBENUM_Msk         (0x3ful << SPI_STATUS2_SLVBENUM_Pos)              /*!< SPI_T::STATUS2: SLVBENUM Mask          */
+
 #define SPI_TX_TX_Pos                    (0)                                               /*!< SPI_T::TX: TX Position                 */
 #define SPI_TX_TX_Msk                    (0xfffffffful << SPI_TX_TX_Pos)                   /*!< SPI_T::TX: TX Mask                     */
 
@@ -776,6 +808,12 @@ typedef struct
 
 #define SPI_I2SCLK_BCLKDIV_Pos           (8)                                               /*!< SPI_T::I2SCLK: BCLKDIV Position        */
 #define SPI_I2SCLK_BCLKDIV_Msk           (0x3fful << SPI_I2SCLK_BCLKDIV_Pos)               /*!< SPI_T::I2SCLK: BCLKDIV Mask            */
+
+#define SPI_I2SCLK_I2SMODE_Pos           (24)                                              /*!< SPI_T::I2SCLK: I2SMODE Position        */
+#define SPI_I2SCLK_I2SMODE_Msk           (0x1ul << SPI_I2SCLK_I2SMODE_Pos)                 /*!< SPI_T::I2SCLK: I2SMODE Mask            */
+
+#define SPI_I2SCLK_I2SSLAVE_Pos          (25)                                              /*!< SPI_T::I2SCLK: I2SSLAVE Position       */
+#define SPI_I2SCLK_I2SSLAVE_Msk          (0x1ul << SPI_I2SCLK_I2SSLAVE_Pos)                /*!< SPI_T::I2SCLK: I2SSLAVE Mask           */
 
 #define SPI_I2SSTS_RIGHT_Pos             (4)                                               /*!< SPI_T::I2SSTS: RIGHT Position          */
 #define SPI_I2SSTS_RIGHT_Msk             (0x1ul << SPI_I2SSTS_RIGHT_Pos)                   /*!< SPI_T::I2SSTS: RIGHT Mask              */

@@ -15,7 +15,7 @@
 
 #define ENABLE_PDMA_INTERRUPT 1
 #define PDMA_TEST_LENGTH 100
-
+#define PDMA_TIME 0x5555    //PDMA Timeout count
 /*---------------------------------------------------------------------------------------------------------*/
 /* Global variables                                                                                        */
 /*---------------------------------------------------------------------------------------------------------*/
@@ -228,12 +228,23 @@ void PDMA_IRQHandler(void)
             PDMA_CLR_TD_FLAG(PDMA, PDMA_GET_TD_STS(PDMA));
         }
     }
-    else if (u32Status & (PDMA_INTSTS_REQTOF0_Msk | PDMA_INTSTS_REQTOF1_Msk))    /* channel 2 timeout */
+    else if (u32Status & (PDMA_INTSTS_REQTOF0_Msk | PDMA_INTSTS_REQTOF1_Msk))    /* channel 0-1 timeout */
     {
         printf("timeout interrupt !!\n");
         u32IsTestOver = 3;
+        /* Disable timeout  */
+        PDMA_SetTimeOut(PDMA, 0, 0, 0);
+        /* Clear timeout flag */
         PDMA_CLR_TMOUT_FLAG(PDMA, 0);
+        /* Enable timeout and Set timeout */
+        PDMA_SetTimeOut(PDMA, 0, 1, PDMA_TIME);
+
+        /* Disable timeout  */
+        PDMA_SetTimeOut(PDMA, 1, 0, 0);
+        /* Clear timeout flag */
         PDMA_CLR_TMOUT_FLAG(PDMA, 1);
+        /* Enable timeout and Set timeout */
+        PDMA_SetTimeOut(PDMA, 1, 1, PDMA_TIME);
     }
     else
         printf("unknown interrupt !!\n");
@@ -272,8 +283,11 @@ void UART_PDMATest(void)
     while (1)
     {
         PDMA_Init();
-        UART1->INTEN |= UART_INTEN_RLSIEN_Msk; // Enable Receive Line interrupt
-        UART1->INTEN |= UART_INTEN_TXPDMAEN_Msk | UART_INTEN_RXPDMAEN_Msk;
+        // Enable Receive Line interrupt
+        UART_ENABLE_INT(UART1, UART_INTEN_RLSIEN_Msk);
+        // Enable UART PDMA Tx and Rx
+        UART_PDMA_ENABLE(UART1, UART_INTEN_TXPDMAEN_Msk | UART_INTEN_RXPDMAEN_Msk);
+
         NVIC_EnableIRQ(UART1_IRQn);
 
 #ifdef ENABLE_PDMA_INTERRUPT
@@ -294,8 +308,8 @@ void UART_PDMATest(void)
         PDMA_CLR_TD_FLAG(PDMA_TDSTS_TDIF0_Msk | PDMA_TDSTS_TDIF1_Msk);
 #endif
 
-        UART1->INTEN &= ~UART_INTEN_TXPDMAEN_Msk;
-        UART1->INTEN &= ~UART_INTEN_RXPDMAEN_Msk;
+        // Disable UART PDMA Tx and Rx
+        UART_PDMA_DISABLE(UART1, UART_INTEN_TXPDMAEN_Msk | UART_INTEN_RXPDMAEN_Msk);
 
         for (u32LenCnt = 0; u32LenCnt < PDMA_TEST_LENGTH; u32LenCnt++)
         {

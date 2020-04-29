@@ -155,6 +155,7 @@ int main(void)
     /* Lock protected registers */
     SYS_LockReg();
 
+    NVIC_ClearPendingIRQ(BRAKE0_IRQn);
     NVIC_EnableIRQ(BRAKE0_IRQn);
 
     // Start

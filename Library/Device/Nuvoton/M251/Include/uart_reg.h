@@ -629,6 +629,12 @@ typedef struct
      * |        |          |Note: The TX and RX will not disable immediately when this bit is set.
      * |        |          |The TX and RX compelet current task before disable TX and RX.
      * |        |          |When TX and RX disable, the TXRXACT (UART_FIFOSTS[31]) is cleared.
+     * |[6]     |DGE       |Deglitch Enable Bit
+     * |        |          |0 = Deglitch Disabled.
+     * |        |          |1 = Deglitch Enabled.
+     * |        |          |Note: When this bit is set to logic 1, any pulse width less than about 300 ns will be considered a
+     * |        |          |glitch and will be removed in the serial data input (RX). This bit acts only on RX line and has no
+     * |        |          |effect on the transmitter logic.
      * @var UART_T::LINCTL
      * Offset: 0x34  UART LIN Control Register
      * ---------------------------------------------------------------------------------------------------
@@ -1181,6 +1187,9 @@ typedef struct
 
 #define UART_FUNCSEL_TXRXDIS_Pos         (3)                                               /*!< UART_T::FUNCSEL: TXRXDIS Position      */
 #define UART_FUNCSEL_TXRXDIS_Msk         (0x1ul << UART_FUNCSEL_TXRXDIS_Pos)               /*!< UART_T::FUNCSEL: TXRXDIS Mask          */
+
+#define UART_FUNCSEL_DGE_Pos             (6)                                               /*!< UART_T::FUNCSEL: DGE Position          */
+#define UART_FUNCSEL_DGE_Msk             (0x1ul << UART_FUNCSEL_DGE_Pos)                   /*!< UART_T::FUNCSEL: DGE Mask              */
 
 #define UART_LINCTL_SLVEN_Pos            (0)                                               /*!< UART_T::LINCTL: SLVEN Position         */
 #define UART_LINCTL_SLVEN_Msk            (0x1ul << UART_LINCTL_SLVEN_Pos)                  /*!< UART_T::LINCTL: SLVEN Mask             */

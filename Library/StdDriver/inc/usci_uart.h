@@ -460,6 +460,29 @@ extern "C"
  */
 #define UUART_DISABLE_TX_PDMA(psUUART) ( (psUUART)->PDMACTL &= ~UUART_PDMACTL_TXPDMAEN_Msk )
 
+/**
+ *    @brief      Enable UUART Deglitch function.
+ *
+ *    @param[in]  psUUART The pointer of the specified USCI_UART module.
+ *
+ *    @return     None.
+ *
+ *    @details    Set DEG bit of UUART_PROTCTL register to Enable Deglitch function.
+ *    \hideinitializer
+ */
+#define UUART_DEGLITCH_ENABLE(psUUART) ( (psUUART)->PROTCTL |= UUART_PROTCTL_DEG_Msk )
+
+/**
+ *    @brief      Disable UUART Deglitch function.
+ *
+ *    @param[in]  psUUART The pointer of the specified USCI_UART module.
+ *
+ *    @return     None.
+ *
+ *    @details    Clear DEG bit of UUART_PROTCTL register to disable Deglitch function.
+ *    \hideinitializer
+ */
+#define UUART_DEGLITCH_DISABLE(psUUART) ( (psUUART)->PROTCTL &= ~UUART_PROTCTL_DEG_Msk )
 
 void UUART_ClearIntFlag(UUART_T *psUUART, uint32_t u32Mask);
 uint32_t UUART_GetIntFlag(UUART_T *psUUART, uint32_t u32Mask);

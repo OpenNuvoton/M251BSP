@@ -999,20 +999,20 @@
         <option>
           <name>Input variant</name>
           <version>3</version>
-          <state>0</state>
+          <state>6</state>
         </option>
         <option>
           <name>Input description</name>
-          <state>Automatic choice of formatter.</state>
+          <state>No specifier n, no float nor long long, no scan set, no assignment suppressing.</state>
         </option>
         <option>
           <name>Output variant</name>
           <version>2</version>
-          <state>0</state>
+          <state>5</state>
         </option>
         <option>
           <name>Output description</name>
-          <state>Automatic choice of formatter.</state>
+          <state>No specifier a, A, no specifier n, no float nor long long.</state>
         </option>
         <option>
           <name>GOutputBinary</name>
@@ -1146,7 +1146,7 @@
         <debug>1</debug>
         <option>
           <name>CCDefines</name>
-          <state></state>
+          <state>DEBUG_ENABLE_SEMIHOST</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1207,7 +1207,7 @@
         <option>
           <name>CCAllowList</name>
           <version>1</version>
-          <state>00000000</state>
+          <state>11111110</state>
         </option>
         <option>
           <name>CCDebugInfo</name>
@@ -1297,7 +1297,7 @@
         </option>
         <option>
           <name>CCOptLevel</name>
-          <state>1</state>
+          <state>3</state>
         </option>
         <option>
           <name>CCOptStrategy</name>
@@ -1306,7 +1306,7 @@
         </option>
         <option>
           <name>CCOptLevelSlave</name>
-          <state>1</state>
+          <state>3</state>
         </option>
         <option>
           <name>CompilerMisraRules98</name>
@@ -1360,7 +1360,7 @@
         </option>
         <option>
           <name>IccCppInlineSemantics</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IccCmsis</name>
@@ -1573,7 +1573,7 @@
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state></state>
+          <state>EBI_SRAM.srec</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>

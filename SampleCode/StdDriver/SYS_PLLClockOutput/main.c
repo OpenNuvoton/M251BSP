@@ -153,8 +153,10 @@ void LXT_Enable(void)
 {
     /* Set X32_OUT(PF.4) and X32_IN(PF.5) to input mode */
     PF->MODE &= ~(GPIO_MODE_MODE4_Msk | GPIO_MODE_MODE5_Msk);
+
     /* Enable external 32768Hz XTAL */
     CLK_EnableXtalRC(CLK_PWRCTL_LXTEN_Msk);
+
     /* Waiting for clock ready */
     CLK_WaitClockReady(CLK_STATUS_LXTSTB_Msk);
 
@@ -172,6 +174,7 @@ void SYS_Init(void)
 
     /* Enable HIRC clock (Internal RC 48MHz) */
     CLK_EnableXtalRC(CLK_PWRCTL_HIRCEN_Msk);
+
     /* Wait for HIRC clock ready */
     CLK_WaitClockReady(CLK_STATUS_HIRCSTB_Msk);
 

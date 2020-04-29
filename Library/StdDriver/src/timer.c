@@ -226,11 +226,12 @@ void TIMER_SetTriggerSource(TIMER_T *timer, uint32_t u32Src)
   * @brief      Set Timer Trigger Target
   *
   * @param[in]  timer      The pointer of the specified Timer module. It could be TIMER0, TIMER1, TIMER2, TIMER3.
-  * @param[in]  u32Mask    The mask of modules (PWM/BPWM/DAC/EADC/PDMA) trigger by timer, the combination of
+  * @param[in]  u32Mask    The mask of modules (PWM/BPWM/DAC/EADC/PDMA/TK) trigger by timer, the combination of
   *                        - \ref TIMER_TRGCTL_TRGPWM_Msk, or
   *                        - \ref TIMER_TRGCTL_TRGDAC_Msk, or
   *                        - \ref TIMER_TRGCTL_TRGEADC_Msk, or
-  *                        - \ref TIMER_TRGCTL_TRGPDMA_Msk
+  *                        - \ref TIMER_TRGCTL_TRGPDMA_Msk, or
+  *                        - \ref TIMER_TRGCTL_TRGTK_Msk
   *
   * @return     None
   *
@@ -238,7 +239,7 @@ void TIMER_SetTriggerSource(TIMER_T *timer, uint32_t u32Src)
   */
 void TIMER_SetTriggerTarget(TIMER_T *timer, uint32_t u32Mask)
 {
-    timer->TRGCTL = (timer->TRGCTL & ~(TIMER_TRGCTL_TRGPWM_Msk | TIMER_TRGCTL_TRGDAC_Msk | TIMER_TRGCTL_TRGEADC_Msk | TIMER_TRGCTL_TRGPDMA_Msk)) | u32Mask;
+    timer->TRGCTL = (timer->TRGCTL & ~(TIMER_TRGCTL_TRGPWM_Msk | TIMER_TRGCTL_TRGDAC_Msk | TIMER_TRGCTL_TRGEADC_Msk | TIMER_TRGCTL_TRGPDMA_Msk | TIMER_TRGCTL_TRGTK_Msk)) | u32Mask;
 }
 
 /**

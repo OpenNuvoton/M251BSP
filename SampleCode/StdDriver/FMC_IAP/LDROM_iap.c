@@ -172,7 +172,7 @@ int main()
      *  The stack base address of an executable image is located at offset 0x0.
      *  Thus, this sample get stack base address of APROM code from FMC_APROM_BASE + 0x0.
      */
-#ifdef __GNUC__                        /* for GNU C compiler */
+#if defined( __GNUC__ ) && !defined (__ARMCC_VERSION)                 /* for GNU C compiler */
     u32Data = *(uint32_t *)FMC_LDROM_BASE;
     asm("msr msp, %0" : : "r"(u32Data));
 #else

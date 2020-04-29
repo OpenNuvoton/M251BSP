@@ -58,6 +58,7 @@ extern "C"
 #define TIMER_TRG_TO_EADC               (TIMER_TRGCTL_TRGEADC_Msk)
 #define TIMER_TRG_TO_PDMA               (TIMER_TRGCTL_TRGPDMA_Msk)
 #define TIMER_TRG_TO_DAC                (TIMER_TRGCTL_TRGDAC_Msk)
+#define TIMER_TRG_TO_TK                 (TIMER_TRGCTL_TRGTK_Msk)
 
 /* Capture Sourdce Selection */
 #define TIMER_CAPTURE_FROM_EXTERNAL     (0UL << TIMER_CTL_CAPSRC_Pos)
@@ -144,6 +145,21 @@ extern "C"
   * @details    This macro is used to select timer toggle-output pin is output on Tx or Tx_EXT pin.
   */
 #define TIMER_SELECT_TOUT_PIN(timer, u32ToutSel)    ((timer)->CTL = ((timer)->CTL & ~TIMER_CTL_TGLPINSEL_Msk) | (u32ToutSel))
+
+/**
+  * @brief      Select Timer operating mode
+  *
+  * @param[in]  timer       The pointer of the specified Timer module. It could be TIMER0, TIMER1, TIMER2, TIMER3.
+  * @param[in]  u32OpMode     Operation mode. Possible options are
+  *                         - \ref TIMER_ONESHOT_MODE
+  *                         - \ref TIMER_PERIODIC_MODE
+  *                         - \ref TIMER_TOGGLE_MODE
+  *                         - \ref TIMER_CONTINUOUS_MODE
+  *
+  * @return     None
+  * \hideinitializer
+  */
+#define TIMER_SET_OPMODE(timer, u32OpMode)   ((timer)->CTL = ((timer)->CTL & ~TIMER_CTL_OPMODE_Msk) | (u32OpMode))
 
 /* Declare these inline functions here to avoid MISRA C 2004 rule 8.1 error */
 __STATIC_INLINE void TIMER_Start(TIMER_T *timer);

@@ -781,11 +781,32 @@ typedef struct
 #define CLK_AHBCLK_EBICKEN_Pos           (3)                                               /*!< CLK_T::AHBCLK: EBICKEN Position        */
 #define CLK_AHBCLK_EBICKEN_Msk           (0x1ul << CLK_AHBCLK_EBICKEN_Pos)                 /*!< CLK_T::AHBCLK: EBICKEN Mask            */
 
+#define CLK_AHBCLK_EXSTCKEN_Pos          (4)                                               /*!< CLK_T::AHBCLK: EXSTCKEN Position       */
+#define CLK_AHBCLK_EXSTCKEN_Msk          (0x1ul << CLK_AHBCLK_EXSTCKEN_Pos)                /*!< CLK_T::AHBCLK: EXSTCKEN Mask           */
+
 #define CLK_AHBCLK_CRCCKEN_Pos           (7)                                               /*!< CLK_T::AHBCLK: CRCCKEN Position        */
 #define CLK_AHBCLK_CRCCKEN_Msk           (0x1ul << CLK_AHBCLK_CRCCKEN_Pos)                 /*!< CLK_T::AHBCLK: CRCCKEN Mask            */
 
 #define CLK_AHBCLK_FMCIDLE_Pos           (15)                                              /*!< CLK_T::AHBCLK: FMCIDLE Position        */
 #define CLK_AHBCLK_FMCIDLE_Msk           (0x1ul << CLK_AHBCLK_FMCIDLE_Pos)                 /*!< CLK_T::AHBCLK: FMCIDLE Mask            */
+
+#define CLK_AHBCLK_GPACKEN_Pos           (24)                                              /*!< CLK_T::AHBCLK: GPACKEN Position        */
+#define CLK_AHBCLK_GPACKEN_Msk           (0x1ul << CLK_AHBCLK_GPACKEN_Pos)                 /*!< CLK_T::AHBCLK: GPACKEN Mask            */
+
+#define CLK_AHBCLK_GPBCKEN_Pos           (25)                                              /*!< CLK_T::AHBCLK: GPBCKEN Position        */
+#define CLK_AHBCLK_GPBCKEN_Msk           (0x1ul << CLK_AHBCLK_GPBCKEN_Pos)                 /*!< CLK_T::AHBCLK: GPBCKEN Mask            */
+
+#define CLK_AHBCLK_GPCCKEN_Pos           (26)                                              /*!< CLK_T::AHBCLK: GPCCKEN Position        */
+#define CLK_AHBCLK_GPCCKEN_Msk           (0x1ul << CLK_AHBCLK_GPCCKEN_Pos)                 /*!< CLK_T::AHBCLK: GPCCKEN Mask            */
+
+#define CLK_AHBCLK_GPDCKEN_Pos           (27)                                              /*!< CLK_T::AHBCLK: GPDCKEN Position        */
+#define CLK_AHBCLK_GPDCKEN_Msk           (0x1ul << CLK_AHBCLK_GPDCKEN_Pos)                 /*!< CLK_T::AHBCLK: GPDCKEN Mask            */
+
+#define CLK_AHBCLK_GPECKEN_Pos           (28)                                              /*!< CLK_T::AHBCLK: GPECKEN Position        */
+#define CLK_AHBCLK_GPECKEN_Msk           (0x1ul << CLK_AHBCLK_GPECKEN_Pos)                 /*!< CLK_T::AHBCLK: GPECKEN Mask            */
+
+#define CLK_AHBCLK_GPFCKEN_Pos           (29)                                              /*!< CLK_T::AHBCLK: GPFCKEN Position        */
+#define CLK_AHBCLK_GPFCKEN_Msk           (0x1ul << CLK_AHBCLK_GPFCKEN_Pos)                 /*!< CLK_T::AHBCLK: GPFCKEN Mask            */
 
 #define CLK_APBCLK0_WDTCKEN_Pos          (0)                                               /*!< CLK_T::APBCLK0: WDTCKEN Position       */
 #define CLK_APBCLK0_WDTCKEN_Msk          (0x1ul << CLK_APBCLK0_WDTCKEN_Pos)                /*!< CLK_T::APBCLK0: WDTCKEN Mask           */
@@ -838,6 +859,9 @@ typedef struct
 #define CLK_APBCLK0_EADCCKEN_Pos         (28)                                              /*!< CLK_T::APBCLK0: EADCCKEN Position      */
 #define CLK_APBCLK0_EADCCKEN_Msk         (0x1ul << CLK_APBCLK0_EADCCKEN_Pos)               /*!< CLK_T::APBCLK0: EADCCKEN Mask          */
 
+#define CLK_APBCLK0_TCHKCKEN_Pos         (29)                                              /*!< CLK_T::APBCLK0: TCHKCKEN Position      */
+#define CLK_APBCLK0_TCHKCKEN_Msk         (0x1ul << CLK_APBCLK0_TCHKCKEN_Pos)               /*!< CLK_T::APBCLK0: TCHKCKEN Mask          */
+
 #define CLK_APBCLK1_SC0CKEN_Pos          (0)                                               /*!< CLK_T::APBCLK1: SC0CKEN Position       */
 #define CLK_APBCLK1_SC0CKEN_Msk          (0x1ul << CLK_APBCLK1_SC0CKEN_Pos)                /*!< CLK_T::APBCLK1: SC0CKEN Mask           */
 
@@ -852,6 +876,9 @@ typedef struct
 
 #define CLK_APBCLK1_DACCKEN_Pos          (12)                                              /*!< CLK_T::APBCLK1: DACCKEN Position       */
 #define CLK_APBCLK1_DACCKEN_Msk          (0x1ul << CLK_APBCLK1_DACCKEN_Pos)                /*!< CLK_T::APBCLK1: DACCKEN Mask           */
+
+#define CLK_APBCLK1_SLCDCKEN_Pos         (14)                                              /*!< CLK_T::APBCLK1: SLCDCKEN Position      */
+#define CLK_APBCLK1_SLCDCKEN_Msk         (0x1ul << CLK_APBCLK1_SLCDCKEN_Pos)               /*!< CLK_T::APBCLK1: SLCDCKEN Mask          */
 
 #define CLK_APBCLK1_PWM0CKEN_Pos         (16)                                              /*!< CLK_T::APBCLK1: PWM0CKEN Position      */
 #define CLK_APBCLK1_PWM0CKEN_Msk         (0x1ul << CLK_APBCLK1_PWM0CKEN_Pos)               /*!< CLK_T::APBCLK1: PWM0CKEN Mask          */
@@ -924,6 +951,9 @@ typedef struct
 
 #define CLK_CLKSEL2_BPWM1SEL_Pos         (9)                                               /*!< CLK_T::CLKSEL2: BPWM1SEL Position      */
 #define CLK_CLKSEL2_BPWM1SEL_Msk         (0x1ul << CLK_CLKSEL2_BPWM1SEL_Pos)               /*!< CLK_T::CLKSEL2: BPWM1SEL Mask          */
+
+#define CLK_CLKSEL2_SLCDSEL_Pos          (24)                                              /*!< CLK_T::CLKSEL2: SLCDSEL Position       */
+#define CLK_CLKSEL2_SLCDSEL_Msk          (0x1ul << CLK_CLKSEL2_SLCDSEL_Pos)                /*!< CLK_T::CLKSEL2: SLCDSEL Mask           */
 
 #define CLK_CLKSEL2_PSIOSEL_Pos          (28)                                              /*!< CLK_T::CLKSEL2: PSIOSEL Position       */
 #define CLK_CLKSEL2_PSIOSEL_Msk          (0x7ul << CLK_CLKSEL2_PSIOSEL_Pos)                /*!< CLK_T::CLKSEL2: PSIOSEL Mask           */

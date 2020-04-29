@@ -92,6 +92,7 @@ enum { r0, r1, r2, r3, r12, lr, pc, psr};
  */
 static void DumpStack(uint32_t stack[])
 {
+/*
     printf("r0 =0x%x\n", stack[r0]);
     printf("r1 =0x%x\n", stack[r1]);
     printf("r2 =0x%x\n", stack[r2]);
@@ -100,6 +101,7 @@ static void DumpStack(uint32_t stack[])
     printf("lr =0x%x\n", stack[lr]);
     printf("pc =0x%x\n", stack[pc]);
     printf("psr=0x%x\n", stack[psr]);
+*/
 }
 
 
@@ -368,15 +370,7 @@ __WEAK void SendChar(int ch)
     }
 
 #else
-
-#if defined ( __GNUC__ ) && !defined (__ARMCC_VERSION)
-    char *ch0;
-    *ch0 = (char)ch;
-    _write(0, ch0, 1);
-#else
     SendChar_ToUART(ch);
-#endif /* ( __GNUC__ ) */
-
 #endif /* DEBUG_ENABLE_SEMIHOST */
 }
 

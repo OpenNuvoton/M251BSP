@@ -406,7 +406,48 @@ typedef struct
      * |        |          |The Single Ended Zero (SE0) is when both lines (USB_D+ and USB_D-) are being pulled low.
      * |        |          |0 = Normal operation.
      * |        |          |1 = Force USB PHY transceiver to drive SE0.
+     * @var USBD_T::BCDC
+     * Offset: 0x94  USB Device Battery Charge Detect Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |BCDEN     |Battery Charge Detect Enable
+     * |        |          |Enable battery charge detect, user select DETMOD then observer DETSTS to decide contact
+     * |        |          |port PHY be used to BCD, can't be used to comminication when BCDEN = 1
+     * |        |          |0 = Normal operation
+     * |        |          |1 = Battery charge detect operation
+     * |[3:1]   |DETMOD    |Detect mode
+     * |        |          |When BCDEN = 1, select detect mode to perform
+     * |        |          |000 = Idle, nothing to detect
+     * |        |          |001 = VBUS detect, detect USB VBUS whether great than threshold voltage
+     * |        |          |010 = Data contact detect(DCD), detect data pin contact status
+     * |        |          |011 = Primary detect(PD), distinquish between (SDP'not USB standard port) and (CDP'DCP)
+     * |        |          |100 = Secondary detect(SD), distinquish between CDP and DCP
+     * |        |          |101~111 = Reserved
+     * |[4]     |DETSTS    |Detect status
+     * |        |          |When DETMOD = 000(IDLE), DETSTS = 0
+     * |        |          |
+     * |        |          |When DETMOD = 001(VBUS detect)
+     * |        |          |000 = VBUS unreach threshold voltage
+     * |        |          |001 = VBUS reach threshold voltage
+     * |        |          |
+     * |        |          |When DETMOD = 010(DCD detect)
+     * |        |          |000 = Data pin uncontact
+     * |        |          |001 = Data pin contact
+     * |        |          |
+     * |        |          |When DETMOD = 011(PD)
+     * |        |          |000 = SDP port or not USB support port. If it is not USB support, NUSP is 1
+     * |        |          |001 = DCP or CDP
+     * |        |          |
+     * |        |          |When DETMOD = 100(SD)
+     * |        |          |000 = CDP
+     * |        |          |001 = DCP
+     * |[5]     |NUSP      |Not USB Support port
+     * |        |          |When DETMOD = 011(PD), detect DM be pulled logic high, it means contact port not USB support port
+     * |        |          |0 = USB support port
+     * |        |          |1 = Not USB support port
      */
+
     __IO uint32_t INTEN;                 /*!< [0x0000] USB Device Interrupt Enable Register                             */
     __IO uint32_t INTSTS;                /*!< [0x0004] USB Device Interrupt Event Status Register                       */
     __IO uint32_t FADDR;                 /*!< [0x0008] USB Device Function Address Register                             */
@@ -425,8 +466,9 @@ typedef struct
     __I  uint32_t LPMATTR;               /*!< [0x0088] USB LPM Attribution Register                                     */
     __I  uint32_t FN;                    /*!< [0x008c] USB Frame number Register                                        */
     __IO uint32_t SE0;                   /*!< [0x0090] USB Device Drive SE0 Control Register                            */
+    __IO uint32_t BCDC;                  /*!< [0x0094] USB Device Battery Charge Detect Control Register                             */
     /* @cond HIDDEN_SYMBOLS */
-    __I  uint32_t RESERVE2[283];
+    __I  uint32_t RESERVE2[282];
     /* @endcond //HIDDEN_SYMBOLS */
     USBD_EP_T EP[12];                    /*!< [0x0500~0x5BC] USB Device Endpoints(0~11)                                 */
 } USBD_T;
@@ -612,6 +654,18 @@ typedef struct
 
 #define USBD_SE0_SE0_Pos                 (0)                                               /*!< USBD_T::SE0: SE0 Position              */
 #define USBD_SE0_SE0_Msk                 (0x1ul << USBD_SE0_SE0_Pos)                       /*!< USBD_T::SE0: SE0 Mask                  */
+
+#define USBD_BCDC_BCDEN_Pos              (0)                                               /*!< USBD_T::BCDEN: BCDEN Position          */
+#define USBD_BCDC_BCDEN_Msk              (0x1ul << USBD_BCDC_BCDEN_Pos)                    /*!< USBD_T::BCDEN: BCDEN Mask              */
+
+#define USBD_BCDC_DETMOD_Pos             (1)                                               /*!< USBD_T::DETMOD: DETMOD Position        */
+#define USBD_BCDC_DETMOD_Msk             (0x7ul << USBD_BCDC_DETMOD_Pos)                   /*!< USBD_T::DETMOD: DETMOD Mask            */
+
+#define USBD_BCDC_DETSTS_Pos             (4)                                               /*!< USBD_T::DETSTS: DETSTS Position        */
+#define USBD_BCDC_DETSTS_Msk             (0x1ul << USBD_BCDC_DETSTS_Pos)                   /*!< USBD_T::DETSTS: DETSTS Mask            */
+
+#define USBD_BCDC_NUSP_Pos               (5)                                               /*!< USBD_T::NUSP: NUSP Position            */
+#define USBD_BCDC_NUSP_Msk               (0x1ul << USBD_BCDC_NUSP_Pos)                     /*!< USBD_T::NUSP: NUSP Mask                */
 
 #define USBD_BUFSEG_BUFSEG_Pos           (3)                                               /*!< USBD_EP_T::BUFSEG: BUFSEG Position     */
 #define USBD_BUFSEG_BUFSEG_Msk           (0x3ful << USBD_BUFSEG_BUFSEG_Pos)                /*!< USBD_EP_T::BUFSEG: BUFSEG Mask         */

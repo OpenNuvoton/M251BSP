@@ -106,11 +106,8 @@ void SYS_Init(void)
     CLK_WaitClockReady(CLK_STATUS_HIRCSTB_Msk);
     CLK_WaitClockReady(CLK_STATUS_HXTSTB_Msk);
 
-    /* Select HCLK clock source as HIRC and and HCLK clock divider as 1 */
-    CLK_SetHCLK(CLK_CLKSEL0_HCLKSEL_HIRC, CLK_CLKDIV0_HCLK(1));
-
-    /* Set core clock as FREQ_48MHZ from PLL/2 */
-    CLK_SetCoreClock(FREQ_48MHZ);
+    /* Select HCLK clock source as HXT and and HCLK clock divider as 1 */
+    CLK_SetHCLK(CLK_CLKSEL0_HCLKSEL_HXT, CLK_CLKDIV0_HCLK(1));
 
     /* Enable UART module clock */
     CLK_EnableModuleClock(UART0_MODULE);

@@ -543,11 +543,12 @@ void SYS_Init(void)
     SYS->GPB_MFPH |= (SYS_GPB_MFPH_PB12MFP_USCI0_CLK | SYS_GPB_MFPH_PB13MFP_USCI0_DAT0);
 
     /* Set I2C0 multi-function pins */
-    SYS->GPA_MFPL &= ~(SYS_GPA_MFPL_PA4MFP_Msk | SYS_GPA_MFPL_PA5MFP_Msk);
-    SYS->GPA_MFPL |= (SYS_GPA_MFPL_PA4MFP_I2C0_SDA | SYS_GPA_MFPL_PA5MFP_I2C0_SCL);
+    SYS->GPB_MFPL = (SYS->GPB_MFPL & ~(SYS_GPB_MFPL_PB4MFP_Msk | SYS_GPB_MFPL_PB5MFP_Msk)) |
+                    (SYS_GPB_MFPL_PB4MFP_I2C0_SDA | SYS_GPB_MFPL_PB5MFP_I2C0_SCL);
+
     /* Set I2C1 multi-function pins */
-    SYS->GPA_MFPL &= ~(SYS_GPA_MFPL_PA6MFP_Msk | SYS_GPA_MFPL_PA7MFP_Msk);
-    SYS->GPA_MFPL |= (SYS_GPA_MFPL_PA6MFP_I2C1_SDA | SYS_GPA_MFPL_PA7MFP_I2C1_SCL);
+    SYS->GPA_MFPL = (SYS->GPA_MFPL & ~(SYS_GPA_MFPL_PA2MFP_Msk | SYS_GPA_MFPL_PA3MFP_Msk)) |
+                    (SYS_GPA_MFPL_PA2MFP_I2C1_SDA | SYS_GPA_MFPL_PA3MFP_I2C1_SCL);
 
 }
 
@@ -586,8 +587,8 @@ int main()
     printf("\n");
     printf("Configure I2C0 as Master, and I2C1 as a slave.\n");
     printf("The I/O connection I2C0 to I2C1:\n");
-    printf("I2C0_SDA(PA.4), I2C0_SCL(PA.5)\n");
-    printf("I2C1_SDA(PA.6), I2C1_SCL(PA.7)\n\n");
+    printf("I2C0_SDA(PB.4), I2C0_SCL(PB.5)\n");
+    printf("I2C1_SDA(PA.2), I2C1_SCL(PA.3)\n\n");
 
     /* Init USCI_I2C0 */
     UI2C0_Init(100000);
