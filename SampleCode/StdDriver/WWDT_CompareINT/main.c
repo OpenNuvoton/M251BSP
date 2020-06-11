@@ -3,6 +3,7 @@
  * @version  V0.10
  * @brief    Show how to reload the WWDT counter value.
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>

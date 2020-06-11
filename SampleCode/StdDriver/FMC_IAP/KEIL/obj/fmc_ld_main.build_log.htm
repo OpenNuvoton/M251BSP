@@ -3,57 +3,64 @@
 <pre>
 <h1>µVision Build Log</h1>
 <h2>Tool Versions:</h2>
-IDE-Version: £gVision V5.24.0.0
-Copyright (C) 2017 ARM Ltd and ARM Germany GmbH. All rights reserved.
+IDE-Version: £gVision V5.28.0.0
+Copyright (C) 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
 License Information: 123 Microsoft, Microsoft, LIC=LSNX7-EHMU3-LQ00Q-N2GL8-X3RTJ-0KM6A
  
 Tool Versions:
-Toolchain:       MDK-ARM Plus  Version: 5.24.0.0
+Toolchain:       MDK-ARM Plus  Version: 5.28.0.0
 Toolchain Path:  C:\Keil_v5\ARM\ARMCLANG\Bin
-C Compiler:      ArmClang.exe V6.7
-Assembler:       Armasm.exe V6.7
-Linker/Locator:  ArmLink.exe V6.7
-Library Manager: ArmAr.exe V6.7
-Hex Converter:   FromElf.exe V6.7
+C Compiler:      ArmClang.exe V6.12
+Assembler:       Armasm.exe V6.12
+Linker/Locator:  ArmLink.exe V6.12
+Library Manager: ArmAr.exe V6.12
+Hex Converter:   FromElf.exe V6.12
 CPU DLL:         
 Dialog DLL:      
-Target DLL:      UL2V8M.DLL V1.2.19.0
-Dialog DLL:      TCM.DLL V1.32.0.0
+Target DLL:      NULink\Nu_Link.dll V3.00
+Dialog DLL:      TCM.DLL V1.36.2.0
  
 <h2>Project:</h2>
-C:\Nuvonton_Data\M0L51(TC8237)\BSP_M252\NEW_BSP\bsp\SampleCode\StdDriver\FMC_IAP\KEIL\fmc_ld_main.uvprojx
-Project File Date:  07/24/2018
+C:\Nuvonton_Data\M0L51(TC8237)\BSP_M251\bsp\SampleCode\StdDriver\FMC_IAP\KEIL\fmc_ld_main.uvprojx
+Project File Date:  06/08/2020
 
 <h2>Output:</h2>
-*** Using Compiler 'V6.7', folder: 'C:\Keil_v5\ARM\ARMCLANG\Bin'
-Rebuild target 'fmc_ld_main'
-creating preprocessor file for system_M251.c...
+*** Using Compiler 'V6.12', folder: 'C:\Keil_v5\ARM\ARMCLANG\Bin'
+Build target 'fmc_ld_main'
 assembling startup_M251.s...
+creating preprocessor file for system_M251.c...
 compiling system_M251.c...
 creating preprocessor file for LDROM_iap.c...
 creating preprocessor file for retarget.c...
 compiling LDROM_iap.c...
-creating preprocessor file for clk.c...
 compiling retarget.c...
+creating preprocessor file for clk.c...
 creating preprocessor file for uart.c...
 compiling clk.c...
-creating preprocessor file for sys.c...
 compiling uart.c...
-creating preprocessor file for fmc.c...
+creating preprocessor file for sys.c...
 compiling sys.c...
+creating preprocessor file for fmc.c...
 compiling fmc.c...
 linking...
-Program Size: Code=2612 RO-data=492 RW-data=12 ZI-data=2136  
+Program Size: Code=1388 RO-data=620 RW-data=16 ZI-data=2136  
 After Build - User command #1: fromelf --bin ".\obj\fmc_ld_main.axf" --output ".\obj\fmc_ld_main.bin"
 After Build - User command #2: fromelf --text -c ".\obj\fmc_ld_main.axf" --output ".\obj\fmc_ld_main.txt"
 ".\obj\fmc_ld_main.axf" - 0 Error(s), 0 Warning(s).
 
+<h2>Software Packages used:</h2>
+
+Package Vendor: Nuvoton
+                http://www.nuvoton.com/hq/enu/Documents/KEILSoftwarePack/Nuvoton.NuMicro_DFP.1.3.3.pack
+                Nuvoton.NuMicro_DFP.1.3.3
+                Nuvoton ARM Cortex-M NuMicro Family Device Support
+
 <h2>Collection of Component include folders:</h2>
   .\RTE\_fmc_ld_main
-  C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.1\Device\ARM\ARMCM23\Include
+  C:\Keil_v5\ARM\PACK\Nuvoton\NuMicro_DFP\1.3.3\Device\M251\Include
 
 <h2>Collection of Component Files used:</h2>
-Build Time Elapsed:  00:00:08
+Build Time Elapsed:  00:00:10
 </pre>
 </body>
 </html>

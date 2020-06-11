@@ -6,6 +6,7 @@
  *           QSPI0 will be configured as Master mode and SPI0 will be configured as Slave mode.
  *           Both QSPI0 and SPI0 will be configured as half-dupex mode.
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  *
  ******************************************************************************/

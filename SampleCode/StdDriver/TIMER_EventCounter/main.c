@@ -3,6 +3,7 @@
  * @version  V1.01
  * @brief    Use pin PB.4 to demonstrates timer event counter function
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include <stdio.h>

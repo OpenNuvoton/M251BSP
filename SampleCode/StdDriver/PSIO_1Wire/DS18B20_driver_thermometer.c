@@ -3,11 +3,11 @@
  * @version     V3.00
  * @brief       DS18B20 device driver
  *
- * @note
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 
-#include "M251.h"
+#include "NuMicro.h"
 #include "DS18B20_driver_thermometer.h"
 
 void PSIO_DS18B20_Write_Command(S_PSIO_DS18B20_CFG *psConfig, uint8_t u8CMD)

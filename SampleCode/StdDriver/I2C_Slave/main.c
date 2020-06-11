@@ -5,6 +5,7 @@
  *           Show how to set I2C in Slave mode and receive the data from Master.
  *           This sample code needs to work with I2C_Master.
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>

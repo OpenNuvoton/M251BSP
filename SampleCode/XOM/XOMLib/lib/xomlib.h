@@ -1,11 +1,10 @@
 /******************************************************************************
  * @file     xomlib.h
  * @version  V3.00
- * $Revision: 1 $
- * $Date: 16/10/17 2:06p $
  * @brief    Header file for XOM APIs.
- * @note
- * Copyright (C) 2018 Nuvoton Technology Corp. All rights reserved.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ * @copyright (C) 2018 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #ifndef _XOMLIB_H_
 #define _XOMLIB_H_

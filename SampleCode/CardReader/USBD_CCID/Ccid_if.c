@@ -1,9 +1,10 @@
 /******************************************************************************
  * @file     ccid_if.c
  * @version  V2.00
- * @brief    M252 USBD CCID interface file
- * @note
- * Copyright (C) 2020 Nuvoton Technology Corp. All rights reserved.
+ * @brief    USBD CCID interface file
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ * @copyright (C) 2020 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <string.h>
 #include "NuMicro.h"

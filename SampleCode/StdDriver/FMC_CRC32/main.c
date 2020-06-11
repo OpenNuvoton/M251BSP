@@ -3,6 +3,7 @@
  * @version  V0.10
  * @brief    Demonstrate how to use FMC CRC32 ISP command to calculate the CRC32 checksum of APROM and LDROM.
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include <stdio.h>
@@ -63,7 +64,7 @@ int32_t main(void)
     /*---------------------------------------------------------------------------------------------------------*/
     printf("\n");
     printf("+------------------------------------+\n");
-    printf("|   M251 FMC CRC32 Sample Demo       |\n");
+    printf("|      FMC CRC32 Sample Demo         |\n");
     printf("+------------------------------------+\n");
 
     SYS_UnlockReg();                   /* Unlock protected registers */

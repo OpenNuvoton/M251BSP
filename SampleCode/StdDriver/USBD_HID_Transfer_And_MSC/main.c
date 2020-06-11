@@ -6,6 +6,7 @@
  *           Transfer data between USB device and PC through USB HID interface.
  *           A windows tool is also included in this sample code to connect with a USB device.
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>

@@ -3,11 +3,11 @@
  * @version     V3.00
  * @brief       PS/2 Slave device driver
  *
- * @note
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 
-#include "M251.h"
+#include "NuMicro.h"
 #include "PS2_Device_driver.h"
 
 PS2_DEVICE_STATUS g_eStatus = eDEVICE_IDLE;

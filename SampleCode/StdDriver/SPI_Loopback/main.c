@@ -5,6 +5,7 @@
  *           connect MISO_0 pin and MOSI_0 pin together. It will compare the
  *           received data with transmitted data.
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include <stdio.h>

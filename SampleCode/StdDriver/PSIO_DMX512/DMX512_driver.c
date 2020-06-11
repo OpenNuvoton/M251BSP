@@ -3,11 +3,12 @@
  * @version     V3.00
  * @brief       DMX512 Driver.
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 
 #include "DMX512_driver.h"
-#include "M251.h"
+#include "NuMicro.h"
 #include <stdio.h>
 
 static volatile uint8_t s_u8RcvDone = 0;

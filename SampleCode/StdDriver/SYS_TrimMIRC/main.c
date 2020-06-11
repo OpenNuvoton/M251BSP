@@ -1,11 +1,11 @@
 /**************************************************************************//**
-* @file         main.c
-* @version      V3.00
-* @brief        Demonstrate how to use timer to trim MIRC
-*
-* @note
-* @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
-*****************************************************************************/
+ * @file         main.c
+ * @version      V3.00
+ * @brief        Demonstrate how to use timer to trim MIRC
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
+ *****************************************************************************/
 #include <stdio.h>
 #include "NuMicro.h"
 

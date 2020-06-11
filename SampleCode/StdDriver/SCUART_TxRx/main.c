@@ -3,6 +3,7 @@
  * @version  V1.00
  * @brief    Demonstrate smartcard UART mode by connecting PB.5 and PB.4 pins.
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include <stdio.h>

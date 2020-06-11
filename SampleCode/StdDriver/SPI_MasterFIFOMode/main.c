@@ -5,6 +5,7 @@
  *           with an off-chip SPI Slave device with FIFO mode. This sample
  *           code needs to work with SPI_SlaveFifoMode sample code.
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>

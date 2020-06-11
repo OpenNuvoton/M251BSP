@@ -3,6 +3,7 @@
  * @version  V1.01
  * @brief    Show how to use the timer2 capture function to capture timer2 counter value.
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>

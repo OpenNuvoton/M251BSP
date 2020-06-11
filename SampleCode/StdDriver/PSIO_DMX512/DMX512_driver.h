@@ -3,13 +3,14 @@
  * @version     V3.00
  * @brief       DMX512 Driver.
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 
 #ifndef __DMX512_DRIVER_H__
 #define __DMX512_DRIVER_H__
 
-#include "M251.h"
+#include "NuMicro.h"
 
 #define BITRATE_DMX512 250000UL     /* 250K bps */
 

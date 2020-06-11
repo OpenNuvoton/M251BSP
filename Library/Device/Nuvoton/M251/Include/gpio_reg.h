@@ -3,6 +3,7 @@
  * @version  V1.00
  * @brief    GPIO register definition header file
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 
@@ -183,7 +184,7 @@ typedef struct
      * |        |          |10 = Reserved.
      * |        |          |11 = Reserved.
      * |        |          |Note1: The PC.13/PC.15/PD.14/PF.8~15 pin is ignored.
-     * |        |          |Note2: Please refer to the M251 Datasheet for detailed pin operation voltage
+     * |        |          |Note2: Please refer to the M25 Datasheet for detailed pin operation voltage
      * |        |          |       information about VDD, VDDIO and VBAT electrical characteristics.
      * @var GPIO_T::PUSEL
      * Offset: 0x30/0x70/0xB0/0xF0/0x130/0x170  Port A-F Pull-up and Pull-down Selection Register

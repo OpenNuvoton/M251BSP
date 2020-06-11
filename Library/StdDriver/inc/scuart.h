@@ -1,8 +1,9 @@
 /**************************************************************************//**
  * @file     scuart.h
  * @version  V1.00
- * @brief    M251 Smartcard UART mode (SCUART) driver header file
+ * @brief    M251 smartcard UART mode (SCUART) driver header file
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 

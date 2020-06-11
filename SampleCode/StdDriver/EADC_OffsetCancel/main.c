@@ -3,6 +3,7 @@
  * @version  V0.10
  * @brief    Demonstrate how to modify final EADC conversion result by offset cancellation.
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include <stdio.h>
@@ -101,7 +102,7 @@ void EADC_FunctionTest(void)
 
     printf("\n");
     printf("+----------------------------------------------------------------------+\n");
-    printf("|               M251 EADC Offset Cancellation sample code              |\n");
+    printf("|                  EADC Offset Cancellation sample code                |\n");
     printf("+----------------------------------------------------------------------+\n");
 
     /* Set the EADC and enable the A/D converter */

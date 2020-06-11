@@ -3,6 +3,7 @@
  * @version     V3.00
  * @brief       Demonstrate how to light up the WS1812B LED array.
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 

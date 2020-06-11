@@ -3,6 +3,7 @@
  * @version  V0.10
  * @brief    M251 series SPI driver source file
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include "NuMicro.h"
@@ -794,6 +795,32 @@ uint32_t SPI_GetStatus(SPI_T *spi, uint32_t u32Mask)
     return u32Flag;
 }
 
+/**
+  * @brief  Get SPI status2.
+  * @param[in]  spi The pointer of the specified SPI module.
+  * @param[in]  u32Mask The combination of all related sources.
+  *                     Each bit corresponds to a source.
+  *                     This parameter decides which flags will be read. It is combination of:
+  *                       - \ref SPI_SLVBENUM_MASK
+  *
+  * @return Flags of selected sources.
+  * @details Get SPI related status specified by u32Mask parameter.
+  */
+uint32_t SPI_GetStatus2(SPI_T *spi, uint32_t u32Mask)
+{
+    uint32_t u32TmpStatus;
+    uint32_t u32Number = 0UL;
+
+    u32TmpStatus = spi->STATUS2;
+
+    /* Check effective bit number of uncompleted RX data status */
+    if (u32Mask & SPI_SLVBENUM_MASK)
+    {
+        u32Number = (u32TmpStatus & SPI_STATUS2_SLVBENUM_Msk) >> SPI_STATUS2_SLVBENUM_Pos;
+    }
+
+    return u32Number;
+}
 
 /**
   * @brief  This function is used to get I2S source clock frequency.
@@ -881,8 +908,9 @@ uint32_t SPII2S_Open(SPI_T *i2s, uint32_t u32MasterSlave, uint32_t u32SampleRate
         u32BitRate = u32SampleRate * ((u32WordWidth >> SPI_I2SCTL_WDWIDTH_Pos) + 1UL) * 16UL;
         u32Divider = (((((u32SrcClk * 10UL / u32BitRate)) >> 1UL) + 5UL) / 10UL) - 1UL;
         /* Set BCLKDIV setting */
-        i2s->I2SCLK = (i2s->I2SCLK & ~SPI_I2SCLK_BCLKDIV_Msk) | (u32Divider << SPI_I2SCLK_BCLKDIV_Pos);
-
+        i2s->I2SCLK = ((i2s->I2SCLK & ~SPI_I2SCLK_BCLKDIV_Msk) | (u32Divider << SPI_I2SCLK_BCLKDIV_Pos));
+        /* Enable I2S mode for the frequency of peripheral clock. */
+        i2s->I2SCLK |= SPI_I2SCLK_I2SMODE_Msk;
         /* Calculate bit clock rate */
         u32BitRate = u32SrcClk / ((u32Divider + 1UL) * 2UL);
         /* Calculate real sample rate */
@@ -898,6 +926,8 @@ uint32_t SPII2S_Open(SPI_T *i2s, uint32_t u32MasterSlave, uint32_t u32SampleRate
     {
         /* Set BCLKDIV = 0 */
         i2s->I2SCLK &= ~SPI_I2SCLK_BCLKDIV_Msk;
+        /* Enable I2S slave mode and I2S mode for the frequency of peripheral clock. */
+        i2s->I2SCLK |= (SPI_I2SCLK_I2SSLAVE_Msk | SPI_I2SCLK_I2SMODE_Msk);
 
         if (i2s == SPI0)
         {
@@ -1137,5 +1167,3 @@ void SPII2S_SetFIFO(SPI_T *i2s, uint32_t u32TxThreshold, uint32_t u32RxThreshold
 /*@}*/ /* end of group SPI_Driver */
 
 /*@}*/ /* end of group Standard_Driver */
-
-/*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/

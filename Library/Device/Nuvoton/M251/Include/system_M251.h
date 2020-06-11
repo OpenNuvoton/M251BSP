@@ -1,10 +1,11 @@
 /**************************************************************************//**
-* @file     system_M251.h
-* @version  V0.10
-* @brief    System Setting Header File
-*
-* @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
-****************************************************************************/
+ * @file     system_M251.h
+ * @version  V0.10
+ * @brief    System Setting Header File
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
+ ****************************************************************************/
 
 #ifndef __SYSTEM_M251_H__
 #define __SYSTEM_M251_H__

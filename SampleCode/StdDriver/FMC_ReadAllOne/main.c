@@ -3,6 +3,7 @@
  * @version  V1.00
  * @brief    Demonstrate how to use FMC Read-All-One ISP command to verify APROM/LDROM pages are all 0xFFFFFFFF or not.
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include <stdio.h>
@@ -60,7 +61,7 @@ int32_t main(void)
     /*---------------------------------------------------------------------------------------------------------*/
 
     printf("+------------------------------------------+\n");
-    printf("|     M251 FMC_ReadAllOne Sample Demo      |\n");
+    printf("|        FMC_ReadAllOne Sample Demo        |\n");
     printf("+------------------------------------------+\n");
 
     SYS_UnlockReg();                   /* Unlock protected registers */

@@ -1,9 +1,10 @@
 /******************************************************************************
  * @file     ccid.c
  * @version  V2.00
- * @brief    M252 USBD CCID sample file
- * @note
- * Copyright (C) 2020 Nuvoton Technology Corp. All rights reserved.
+ * @brief    USBD CCID sample file
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ * @copyright (C) 2020 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 /*!<Includes */
 #include <string.h>

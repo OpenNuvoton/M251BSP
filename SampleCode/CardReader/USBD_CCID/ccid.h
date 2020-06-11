@@ -1,10 +1,10 @@
 /******************************************************************************
  * @file     ccid.h
- * @brief    M252 series CCID driver header file
+ * @brief    CCID driver header file
  * @version  V1.00
  *
- * @note
- * Copyright (C) 2020 Nuvoton Technology Corp. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ * @copyright (C) 2020 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #ifndef __USBD_CCID_H__
 #define __USBD_CCID_H__

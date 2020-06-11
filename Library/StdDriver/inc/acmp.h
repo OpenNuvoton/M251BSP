@@ -3,6 +3,7 @@
  * @version  V1.00
  * @brief    M251 series ACMP Driver Header File
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 

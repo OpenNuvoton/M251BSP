@@ -4,8 +4,8 @@
  * $Date: 14/11/17 5:36p $
  * @brief    General UART ISP slave Sample file
  *
- * @note
- * Copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ * @copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 
 /*!<Includes */

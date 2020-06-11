@@ -5,6 +5,7 @@
  *           Transmit and receive data with auto flow control.
  *           This sample code needs to work with USCI_UART_Autoflow_Master.
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>

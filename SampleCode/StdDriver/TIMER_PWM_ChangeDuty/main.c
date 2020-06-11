@@ -3,6 +3,7 @@
  * @version  V1.01
  * @brief    Change duty cycle and period of output waveform in PWM down count type.
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>

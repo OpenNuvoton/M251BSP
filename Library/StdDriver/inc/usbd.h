@@ -3,7 +3,8 @@
  * @version  V0.10
  * @brief    M251 series USB driver header file
  *
- * @copyrightt (C) 2017 Nuvoton Technology Corp. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ * @copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 
 #ifndef __USBD_H__
@@ -409,7 +410,7 @@ extern const S_USBD_INFO_T gsInfo;
 /**
   * @brief      Stop USB transaction of the specified endpoint ID
   *
-  * @param[in]  ep The USB endpoint ID. M251 Series supports 12  hardware endpoint ID. This parameter could be 0 ~ 11.
+  * @param[in]  ep The USB endpoint ID. M251 series supports 12  hardware endpoint ID. This parameter could be 0 ~ 11.
   *
   * @return     None
   *
@@ -421,7 +422,7 @@ extern const S_USBD_INFO_T gsInfo;
 /**
   * @brief      Set USB DATA1 PID for the specified endpoint ID
   *
-  * @param[in]  ep The USB endpoint ID. M251 Series supports 12  hardware endpoint ID. This parameter could be 0 ~ 11.
+  * @param[in]  ep The USB endpoint ID. M251 series supports 12  hardware endpoint ID. This parameter could be 0 ~ 11.
   *
   * @return     None
   *
@@ -434,7 +435,7 @@ extern const S_USBD_INFO_T gsInfo;
 /**
   * @brief      Set USB DATA0 PID for the specified endpoint ID
   *
-  * @param[in]  ep The USB endpoint ID. M251 Series supports 12  hardware endpoint ID. This parameter could be 0 ~ 11.
+  * @param[in]  ep The USB endpoint ID. M251 series supports 12  hardware endpoint ID. This parameter could be 0 ~ 11.
   *
   * @return     None
   *
@@ -447,7 +448,7 @@ extern const S_USBD_INFO_T gsInfo;
 /**
   * @brief      Set USB payload size (IN data)
   *
-  * @param[in]  ep The USB endpoint ID. M251 Series supports 12  hardware endpoint ID. This parameter could be 0 ~ 11.
+  * @param[in]  ep The USB endpoint ID. M251 series supports 12  hardware endpoint ID. This parameter could be 0 ~ 11.
   *
   * @param[in]  size The transfer length.
   *
@@ -461,7 +462,7 @@ extern const S_USBD_INFO_T gsInfo;
 /**
   * @brief      Get USB payload size (OUT data)
   *
-  * @param[in]  ep The USB endpoint ID. M251 Series supports 12 endpoint ID. This parameter could be 0 ~ 11.
+  * @param[in]  ep The USB endpoint ID. M251 series supports 12 endpoint ID. This parameter could be 0 ~ 11.
   *
   * @return     The value of USB_MXPLDx register.
   *
@@ -473,7 +474,7 @@ extern const S_USBD_INFO_T gsInfo;
 /**
   * @brief      Configure endpoint
   *
-  * @param[in]  ep The USB endpoint ID. M251 Series supports 12  hardware endpoint ID. This parameter could be 0 ~ 11.
+  * @param[in]  ep The USB endpoint ID. M251 series supports 12  hardware endpoint ID. This parameter could be 0 ~ 11.
   *
   * @param[in]  config The USB configuration.
   *
@@ -487,7 +488,7 @@ extern const S_USBD_INFO_T gsInfo;
 /**
   * @brief      Set USB endpoint buffer
   *
-  * @param[in]  ep The USB endpoint ID. M251 Series supports 12  hardware endpoint ID. This parameter could be 0 ~ 11.
+  * @param[in]  ep The USB endpoint ID. M251 series supports 12  hardware endpoint ID. This parameter could be 0 ~ 11.
   *
   * @param[in]  offset The SRAM offset.
   *
@@ -501,7 +502,7 @@ extern const S_USBD_INFO_T gsInfo;
 /**
   * @brief      Get the offset of the specified USB endpoint buffer
   *
-  @param[in]  ep The USB endpoint ID. M251 Series supports 12  hardware endpoint ID. This parameter could be 0 ~ 11.
+  @param[in]  ep The USB endpoint ID. M251 series supports 12  hardware endpoint ID. This parameter could be 0 ~ 11.
   *
   * @return     The offset of the specified endpoint buffer.
   *
@@ -513,7 +514,7 @@ extern const S_USBD_INFO_T gsInfo;
 /**
   * @brief       Set USB endpoint stall state
   *
-  * @param[in]   ep  The USB endpoint ID. M251 Series supports 12 hardware endpoint ID. This parameter could be 0 ~ 11.
+  * @param[in]   ep  The USB endpoint ID. M251 series supports 12 hardware endpoint ID. This parameter could be 0 ~ 11.
   *
   * @return      None
   *
@@ -525,7 +526,7 @@ extern const S_USBD_INFO_T gsInfo;
 /**
   * @brief       Clear USB endpoint stall state
   *
-  * @param[in]   ep  The USB endpoint ID. M251 Series supports 12 hardware endpoint ID. This parameter could be 0 ~ 11.
+  * @param[in]   ep  The USB endpoint ID. M251 series supports 12 hardware endpoint ID. This parameter could be 0 ~ 11.
   *
   * @return      None
   *
@@ -536,7 +537,7 @@ extern const S_USBD_INFO_T gsInfo;
 /**
   * @brief       Get USB endpoint stall state
   *
-  * @param[in]   ep  The USB endpoint ID. M251 Series supports 12 hardware endpoint ID. This parameter could be 0 ~ 11.
+  * @param[in]   ep  The USB endpoint ID. M251 series supports 12 hardware endpoint ID. This parameter could be 0 ~ 11.
   *
   * @retval      0      USB endpoint is not stalled.
   * @retval      Others USB endpoint is stalled.

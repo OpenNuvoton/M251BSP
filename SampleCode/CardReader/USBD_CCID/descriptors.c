@@ -1,9 +1,10 @@
 /******************************************************************************
  * @file     descriptors.c
  * @version  V2.00
- * @brief    M252 USBD CCID sample descriptors file
- * @note
- * Copyright (C) 2020 Nuvoton Technology Corp. All rights reserved.
+ * @brief    USBD CCID sample descriptors file
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ * @copyright (C) 2020 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include "NuMicro.h"
 #include "ccid.h"

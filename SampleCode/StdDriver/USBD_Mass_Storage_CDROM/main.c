@@ -23,6 +23,7 @@
  *                  Define MSC_ImageSize value in massstorage.h in this project.
  *                  Modify MSC_ImageSize value to hold the file size.
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>

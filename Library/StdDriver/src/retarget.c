@@ -1,10 +1,11 @@
 /**************************************************************************//**
-* @file     retarget.c
-* @version  V0.10
-* @brief    M251 Series Debug Port and Semihost Setting Source File
-*
-* @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
-****************************************************************************/
+ * @file     retarget.c
+ * @version  V0.10
+ * @brief    M251 series Debug Port and Semihost Setting Source File
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
+ ****************************************************************************/
 
 #include <stdio.h>
 #include "NuMicro.h"
@@ -149,7 +150,7 @@ int32_t SH_Return(int32_t n32In_R0, int32_t n32In_R1, int32_t *pn32Out_R0)
  * @details  This function is implement to print r0, r1, r2, r3, r12, lr, pc, psr.
  *
  */
-void HardFault_Handler(void)
+__attribute__((weak)) void HardFault_Handler(void)
 {
     asm("MOV     R0, LR  \n"
         "MRS     R1, MSP \n"

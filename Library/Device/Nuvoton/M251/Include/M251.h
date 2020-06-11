@@ -3,7 +3,7 @@
  * @version  V1.0
  * @brief    Peripheral Access Layer Header File
  *
- * @note
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 
@@ -44,6 +44,7 @@
   *
   * <b>Copyright Notice</b>
   *
+ * SPDX-License-Identifier: Apache-2.0
   * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
   */
 
@@ -638,6 +639,3 @@ typedef volatile unsigned short vu16;
 #include "scuart.h"
 
 #endif  /* __M251_H__ */
-
-
-/* @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved. */

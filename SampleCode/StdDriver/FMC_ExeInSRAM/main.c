@@ -4,6 +4,7 @@
  * @brief    Implement a code and execute in SRAM to program embedded Flash.
  *           (Support KEIL MDK Only)
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include <stdio.h>

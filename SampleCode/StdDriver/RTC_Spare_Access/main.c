@@ -4,6 +4,7 @@
  * @brief    Demonstrate the RTC spare_register read/write function and displays test result to the
  *           UART console
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>

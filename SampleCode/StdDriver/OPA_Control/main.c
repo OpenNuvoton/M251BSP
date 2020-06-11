@@ -3,6 +3,7 @@
  * @version  V1.00
  * @brief    Show how to control OPA.
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>
@@ -157,7 +158,7 @@ int main(void)
     printf("\n\nCPU @ %d Hz\n", SystemCoreClock);
     printf("\n\n");
     printf("+---------------------------------------+\n");
-    printf("|         M251 OPA Sample Code          |\n");
+    printf("|            OPA Sample Code            |\n");
     printf("+---------------------------------------+\n");
 
     printf("\nThis sample code demonstrates OPA digital output function.\n");

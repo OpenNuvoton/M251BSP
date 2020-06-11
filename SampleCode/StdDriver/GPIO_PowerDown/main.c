@@ -3,6 +3,7 @@
  * @version  V0.10
  * @brief    Show how to wake up system from Power-down mode by GPIO interrupt.
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>

@@ -3,7 +3,7 @@
  * @version  V0.10
  * @brief    EBI SRAM Test source file
  *
- * @note
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>

@@ -5,6 +5,7 @@
  *           Configure USCI_SPI0 as Slave mode and demonstrate how to communicate with an off-chip SPI Master device.
  *           This sample code needs to work with USCI_SPI_MasterMode sample code.
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>
@@ -18,7 +19,7 @@
     extern void initialise_monitor_handles(void);
 #endif
 
-/*On M252C no USCI_CTL0(SS) pins, you can use this definition to open alternatives*/
+/*On M251 C version no USCI_CTL0(SS) pins, you can use this definition to open alternatives*/
 //#define NOT_SUPPORT_SS_PIN
 
 /*Use GPIO PA2 instead of USCI_CTL0(SS) pin*/

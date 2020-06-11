@@ -1,5 +1,5 @@
 /****************************************************************************//**
- * @file     startup_M251.S
+ * @file     startup_M251.s
  * @version  V1.00
  * @brief    CMSIS Cortex-M23 Core Device Startup File for M251
  *

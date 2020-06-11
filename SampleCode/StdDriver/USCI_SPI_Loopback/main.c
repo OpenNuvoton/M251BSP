@@ -6,6 +6,7 @@
  *           This sample code needs to connect USCI_SPI0_MISO pin and USCI_SPI0_MOSI pin together.
  *           It will compare the received data with transmitted data.
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>
@@ -19,7 +20,7 @@
     extern void initialise_monitor_handles(void);
 #endif
 
-/*On M252C no USCI_CTL0(SS) pins, you can use this definition to open alternatives*/
+/*On M251 C version no USCI_CTL0(SS) pins, you can use this definition to open alternatives*/
 //#define NOT_SUPPORT_SS_PIN
 
 /*Use GPIO PA2 instead of USCI_CTL0(SS) pin*/
@@ -174,7 +175,7 @@ void SYS_Init(void)
     SYS->GPC_MFPH = SYS->GPC_MFPH & ~SYS_GPC_MFPH_PC14MFP_Msk;
     SYS->GPC_MFPH = SYS->GPC_MFPH | SYS_GPC_MFPH_PC14MFP_USCI0_CTL0;
 #else
-    /*M252 C is not supoort USCI_CTL0(SS)*/
+    /*M251 C is not supoort USCI_CTL0(SS)*/
     /*Replace the USCI_CTL0(SS) pin with GPIO PA2 */
     SYS->GPA_MFPL = SYS->GPA_MFPL & ~SYS_GPA_MFPL_PA2MFP_Msk;
     GPIO_SetMode(PA, BIT2, GPIO_MODE_OUTPUT);

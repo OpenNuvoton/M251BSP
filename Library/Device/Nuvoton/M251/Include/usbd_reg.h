@@ -3,6 +3,7 @@
  * @version  V1.00
  * @brief    USBD register definition header file
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 
@@ -122,6 +123,9 @@ typedef struct
      * |[4]     |SOFIEN    |Start of Frame Interrupt Enable Bit
      * |        |          |0 = SOF Interrupt Disabled.
      * |        |          |1 = SOF Interrupt Enabled.
+     * |[5]     |BCDIEN    |Battery Charge Detect Interrupt Enable Bit
+     * |        |          |0 = BCD Interrupt Disabled.
+     * |        |          |1 = BCD Interrupt Enabled.
      * |[8]     |WKEN      |Wake-up Function Enable Bit
      * |        |          |0 = USB wake-up function Disabled.
      * |        |          |1 = USB wake-up function Enabled.
@@ -150,6 +154,12 @@ typedef struct
      * |[4]     |SOFIF     |Start of Frame Interrupt Status
      * |        |          |0 = SOF event does not occur.
      * |        |          |1 = SOF event occurred, cleared by write 1 to USBD_INTSTS[4].
+     * |[5]     |BCDIF     |Battery Charge Detect Interrupt Status
+     * |        |          |It support VBUSOK`DCD interrupt status
+     * |        |          |When USBD_BCDC[0] = 1 ,USBD_BCDC[3:1] = 001 ,VBUS detect
+     * |        |          |When USBD_BCDC[0] = 1 ,USBD_BCDC[3:1] = 010 ,DCD detect
+     * |        |          |0 = BCD event does not occur.
+     * |        |          |1 = BCD event occurred, cleared by write 1 to USBD_INTSTS[5].
      * |[16]    |EPEVT0    |Endpoint 0's USB Event Status
      * |        |          |0 = No event occurred in endpoint 0.
      * |        |          |1 = USB event occurred on Endpoint 0, check USBD_EPSTS0[3:0] to know which kind of USB event was occurred, cleared by write 1 to USBD_INTSTS[16] or USBD_INTSTS[1].
@@ -493,6 +503,9 @@ typedef struct
 #define USBD_INTEN_SOFIEN_Pos            (4)                                               /*!< USBD_T::INTEN: SOFIEN Position         */
 #define USBD_INTEN_SOFIEN_Msk            (0x1ul << USBD_INTEN_SOFIEN_Pos)                  /*!< USBD_T::INTEN: SOFIEN Mask             */
 
+#define USBD_INTEN_BCDIEN_Pos            (5)                                               /*!< USBD_T::INTEN: BCDIEN Position         */
+#define USBD_INTEN_BCDIEN_Msk            (0x1ul << USBD_INTEN_BCDIEN_Pos)                  /*!< USBD_T::INTEN: BCDIEN Mask             */
+
 #define USBD_INTEN_WKEN_Pos              (8)                                               /*!< USBD_T::INTEN: WKEN Position           */
 #define USBD_INTEN_WKEN_Msk              (0x1ul << USBD_INTEN_WKEN_Pos)                    /*!< USBD_T::INTEN: WKEN Mask               */
 
@@ -513,6 +526,9 @@ typedef struct
 
 #define USBD_INTSTS_SOFIF_Pos            (4)                                               /*!< USBD_T::INTSTS: SOFIF Position         */
 #define USBD_INTSTS_SOFIF_Msk            (0x1ul << USBD_INTSTS_SOFIF_Pos)                  /*!< USBD_T::INTSTS: SOFIF Mask             */
+
+#define USBD_INTSTS_BCDIF_Pos            (5)                                               /*!< USBD_T::INTSTS: BCDIF Position         */
+#define USBD_INTSTS_BCDIF_Msk            (0x1ul << USBD_INTSTS_BCDIF_Pos)                  /*!< USBD_T::INTSTS: BCDIF Mask             */
 
 #define USBD_INTSTS_EPEVT0_Pos           (16)                                              /*!< USBD_T::INTSTS: EPEVT0 Position        */
 #define USBD_INTSTS_EPEVT0_Msk           (0x1ul << USBD_INTSTS_EPEVT0_Pos)                 /*!< USBD_T::INTSTS: EPEVT0 Mask            */

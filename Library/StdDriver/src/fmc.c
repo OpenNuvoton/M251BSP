@@ -1,9 +1,9 @@
 /**************************************************************************//**
  * @file     fmc.c
  * @version  V3.00
- * @brief    M251 Series Flash Memory Controller(FMC) driver source file
+ * @brief    M251 series Flash Memory Controller(FMC) driver source file
  *
- * @note
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 #include <stdio.h>

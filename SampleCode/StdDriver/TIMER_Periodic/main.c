@@ -3,6 +3,7 @@
  * @version  V1.01
  * @brief    Use the timer periodic mode to generate timer interrupt every 1 second
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include <stdio.h>

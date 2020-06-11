@@ -5,6 +5,7 @@
  *           Demonstrate how to implement a USB virtual com port device.
  *           It supports one virtual comport.
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>

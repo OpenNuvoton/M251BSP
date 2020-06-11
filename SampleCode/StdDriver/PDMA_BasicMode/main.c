@@ -3,6 +3,7 @@
  * @version  V3.00
  * @brief    Use PDMA channel 2 to transfer data from memory to memory.
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>

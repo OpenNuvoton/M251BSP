@@ -3,6 +3,7 @@
  * @version  V1.00
  * @brief    SYS register definition header file
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 
@@ -89,7 +90,7 @@ typedef struct
      * |        |          |Note: Write 1 to clear this bit to 0.
      * |        |          |Note2: When CPU lockup happened under ICE is connected, This flag will set to 1 but chip will not reset.
      * |[9]     |VBATLVRF  |VBAT LVR Reset Flag
-     * |        |          |The VBAT LVR reset flag is set by the “Reset Signal” from the VBAT Low Voltage Reset Controller to indicate the previous reset source.
+     * |        |          |The VBAT LVR reset flag is set by the Reset Signal from the VBAT Low Voltage Reset Controller to indicate the previous reset source.
      * |        |          |0 = No reset from VBAT LVR.
      * |        |          |1 = VBAT LVR controller had issued the reset signal to reset the system.
      * |        |          |Note: Write 1 to clear this bit to 0.

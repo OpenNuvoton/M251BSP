@@ -3,6 +3,7 @@
  * @version  V0.10
  * @brief    Use BPWM0 Channel 0(PA.0) to capture the PWM0 Channel 0(PB.5) Waveform.
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>

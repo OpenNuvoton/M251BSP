@@ -3,6 +3,7 @@
  * @version  V0.10
  * @brief    Show how to trigger EADC by Timer.
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include <stdio.h>
@@ -121,7 +122,7 @@ void EADC_FunctionTest(void)
 
     printf("\n");
     printf("+----------------------------------------------------------------------+\n");
-    printf("|                  M251 EADC Timer trigger sample code                 |\n");
+    printf("|                     EADC Timer trigger sample code                   |\n");
     printf("+----------------------------------------------------------------------+\n");
 
     printf("\nIn this test, software will get 6 conversion result from the specified channel.\n");

@@ -5,6 +5,7 @@
  *           Transmit and receive data in RS485 mode.
  *           This sample code needs to work with USCI_UART_RS485_Slave.
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>

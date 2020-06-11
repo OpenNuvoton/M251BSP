@@ -4,6 +4,7 @@
  * @brief    Show a Master how to access Slave.
  *           This sample code needs to work with USCI_I2C_Slave.
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>

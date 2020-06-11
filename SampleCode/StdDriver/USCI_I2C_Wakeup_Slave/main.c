@@ -4,6 +4,7 @@
  * @brief    Show how to wake-up USCI_I2C from deep sleep mode.
  *           This sample code needs to work with USCI_I2C_Master.
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>

@@ -3,11 +3,12 @@
  * @version  V3.00
  * @brief    XOM library  --  Add function
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 
 #include <stdio.h>
-#include "M251.h"
+#include "NuMicro.h"
 
 
 int32_t XOM_Add(int32_t i32Val1, int32_t i32Val2)

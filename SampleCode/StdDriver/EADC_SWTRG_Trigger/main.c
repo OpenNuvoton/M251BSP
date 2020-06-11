@@ -3,6 +3,7 @@
  * @version  V0.10
  * @brief    Trigger EADC by writing EADC_SWTRG register.
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include <stdio.h>
@@ -100,7 +101,7 @@ void EADC_FunctionTest(void)
 
     printf("\n");
     printf("+----------------------------------------------------------------------+\n");
-    printf("|                M251 EADC software trigger sample code                |\n");
+    printf("|                   EADC software trigger sample code                  |\n");
     printf("+----------------------------------------------------------------------+\n");
 
     /* Set the EADC and enable the A/D converter */

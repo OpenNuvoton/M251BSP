@@ -3,12 +3,12 @@
  * @version     V3.00
  * @brief       TI HDQ BQ2028
  *
- * @note
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 
 #include <stdio.h>
-#include "M251.h"
+#include "NuMicro.h"
 #include "BQ2028_driver_EEPROM.h"
 
 typedef void (*PSIO_FUNC)(PSIO_BQ2028_CFG_T *pConfig);

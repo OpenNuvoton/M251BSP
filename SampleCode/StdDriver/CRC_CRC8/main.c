@@ -3,6 +3,7 @@
  * @version  V0.10
  * @brief    Implement CRC in CRC-8 mode and get the CRC checksum result.
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>

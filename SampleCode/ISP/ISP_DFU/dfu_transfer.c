@@ -3,6 +3,7 @@
  * @version  V1.00
  * @brief    M251 series USBD DFU transfer sample file
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 
@@ -12,7 +13,7 @@
 #include "NuMicro.h"
 #include "dfu_transfer.h"
 
-#define APROM_BLOCK_NUM         ((0x8000/TRANSFER_SIZE)-1) //M252 series minimum size 32KB.
+#define APROM_BLOCK_NUM         ((0x8000/TRANSFER_SIZE)-1) //M251 series minimum size 32KB.
 
 unsigned int command_Count = 0;
 

@@ -3,7 +3,7 @@
  * @version     V3.00
  * @brief       NEC IR device driver
  *
- * @note
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 

@@ -1,10 +1,11 @@
 /**************************************************************************//**
-* @file     ebi.h
-* @version  V0.10
-* @brief    M251 series EBI driver source file
-*
-* @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
-****************************************************************************/
+ * @file     ebi.h
+ * @version  V0.10
+ * @brief    M251 series EBI driver source file
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
+ ****************************************************************************/
 
 #ifndef __EBI_H__
 #define __EBI_H__
@@ -79,7 +80,7 @@ extern "C"
 /*@}*/ /* end of group EBI_EXPORTED_CONSTANTS */
 
 
-/** @addtogroup M251_EBI_EXPORTED_FUNCTIONS EBI Exported Functions
+/** @addtogroup M25_EBI_EXPORTED_FUNCTIONS EBI Exported Functions
   @{
 */
 

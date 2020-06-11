@@ -1,8 +1,9 @@
 /**************************************************************************//**
  * @file     I2C.h
  * @version  V0.10
- * @brief    M251 Series I2C Driver Header File
+ * @brief    M251 series I2C Driver Header File
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 

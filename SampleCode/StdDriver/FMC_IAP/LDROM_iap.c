@@ -4,6 +4,7 @@
  * @brief    FMC LDROM IAP sample program run on LDROM.
  *
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include <stdio.h>
@@ -141,7 +142,7 @@ int main()
 
     PutString("\n\n");
     PutString("+-------------------------------------+\n");
-    PutString("|     M251 FMC IAP Sample Code        |\n");
+    PutString("|        FMC IAP Sample Code          |\n");
     PutString("|          [LDROM code]               |\n");
     PutString("+-------------------------------------+\n");
 

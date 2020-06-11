@@ -1,11 +1,11 @@
 /***************************************************************************//**
- * @file     isp_user.c
+ * @file     isp_user.h
  * @brief    ISP Command header file
  * @version  0x32
  * @date     14, June, 2017
  *
- * @note
- * Copyright (C) 2017-2018 Nuvoton Technology Corp. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ * @copyright (C) 2017-2018 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #ifndef ISP_USER_H
 #define ISP_USER_H

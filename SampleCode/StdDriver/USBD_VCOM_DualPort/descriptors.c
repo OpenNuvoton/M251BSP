@@ -2,7 +2,7 @@
  * @file     descriptors.c
  * @brief    USBD descriptors
  *
- * @note
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 

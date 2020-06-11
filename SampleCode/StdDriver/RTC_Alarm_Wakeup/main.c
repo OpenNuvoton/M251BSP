@@ -4,6 +4,7 @@
  * @brief    Demonstrate the System run to power down mode and RTC Alram
  *           function to Wake up the system
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>

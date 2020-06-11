@@ -3,7 +3,8 @@
  * @brief    ISP tool SPI initialization and IRQ function
  * @version  2.0.0
  *
- * Copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>
 #include "targetdev.h"

@@ -2,7 +2,7 @@
  * @file     UART_LIN.h
  * @brief    UART LIN header file
  *
- * @note
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #ifndef __UART_LIN_H__

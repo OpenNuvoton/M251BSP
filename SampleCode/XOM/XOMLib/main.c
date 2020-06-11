@@ -3,11 +3,12 @@
  * @version  V3.00
  * @brief    Show how to config/erase XOM region.
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 
 #include <stdio.h>
-#include "M251.h"
+#include "NuMicro.h"
 #include "xomapi.h"
 
 

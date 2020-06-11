@@ -3,6 +3,7 @@
  * @version  V0.10
  * @brief    Capture the PWM0 Channel 0 waveform by PWM0 Channel 2.
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>

@@ -3,6 +3,7 @@
  * @version  V3.01
  * @brief    M251 series Timer Controller(Timer) driver source file
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include "NuMicro.h"

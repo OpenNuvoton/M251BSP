@@ -3,6 +3,7 @@
  * @version  V1.00
  * @brief    Show how to wake up MCU from Power-down mode by ACMP wake-up function.
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include <stdio.h>

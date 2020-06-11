@@ -1,8 +1,9 @@
 /**************************************************************************//**
  * @file     usbd_user.c
  * @version  V1.00
- * @brief    M480 USBD driver source file
+ * @brief    M251 USBD driver source file
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 

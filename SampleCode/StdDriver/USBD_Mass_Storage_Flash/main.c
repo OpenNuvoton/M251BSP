@@ -5,6 +5,7 @@
  *           Demonstrate how to implement a USB Mass-Storage.
  *           It uses embedded data flash as storage.
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>

@@ -3,6 +3,7 @@
  * @version  V1.00
  * @brief    Demonstrate how ACMP compare VBG output with ACMP1_P1 value
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 

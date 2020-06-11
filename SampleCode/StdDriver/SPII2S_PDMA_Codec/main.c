@@ -3,6 +3,7 @@
  * @version  V0.10
  * @brief    This is a I2S demo with PDMA function connected with NAU8822 codec.
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>

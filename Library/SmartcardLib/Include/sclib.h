@@ -3,6 +3,7 @@
  * @version  V1.00
  * @brief    Smartcard library header file
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 #ifndef __SCLIB_H__

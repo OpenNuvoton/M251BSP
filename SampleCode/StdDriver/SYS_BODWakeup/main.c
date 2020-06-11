@@ -3,6 +3,7 @@
  * @version  V3.00
  * @brief    Show how to wake up system form Power-down mode by brown-out detector interrupt.
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include "stdio.h"

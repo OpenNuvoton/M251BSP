@@ -3,6 +3,7 @@
  * @version  V0.10
  * @brief    Access SPI flash using QSPI quad mode
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>
@@ -227,7 +228,7 @@ void SpiFlash_NormalPageProgram(uint32_t StartAddress, uint8_t *u8DataBuffer)
         {
             QSPI_WRITE_TX(SPI_FLASH_PORT, u8DataBuffer[u32Cnt++]);
 
-            if (u32Cnt >= 255) break;
+            if (u32Cnt > 255) break;
         }
     }
 

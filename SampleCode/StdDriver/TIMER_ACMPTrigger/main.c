@@ -3,6 +3,7 @@
  * @version  V1.01
  * @brief    Use ACMP to trigger Timer0 counter reset mode.
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include <stdio.h>

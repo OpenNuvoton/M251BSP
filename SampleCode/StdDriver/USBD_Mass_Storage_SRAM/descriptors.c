@@ -4,7 +4,7 @@
  * @version  1.0.0
  * @date     August, 2019
  *
- * @note
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 /*!<Includes */

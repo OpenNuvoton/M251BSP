@@ -8,8 +8,8 @@
  * @version  0x32
  * @date     14, June, 2017
  *
- * @note
- * Copyright (C) 2017-2018 Nuvoton Technology Corp. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ * @copyright (C) 2017-2018 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>
 #include "targetdev.h"
@@ -97,7 +97,7 @@ int32_t main(void)
         /* Start USB device */
         USBD_Start();
 
-        /* Using polling mode and Removed Interrupt Table to reduce code size for M252 */
+        /* Using polling mode and Removed Interrupt Table to reduce code size for M251 */
 
         while (DetectPin == 0)
         {

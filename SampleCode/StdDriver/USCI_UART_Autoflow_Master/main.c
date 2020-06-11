@@ -5,6 +5,7 @@
  *           Transmit and receive data with auto flow control.
  *           This sample code needs to work with USCI_UART_Autoflow_Slave.
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>
@@ -17,7 +18,7 @@
 #endif
 
 
-/*On M252C no USCI_CTL0(CTS) pins, you can use this definition to open alternatives*/
+/*On M251 C version no USCI_CTL0(CTS) pins, you can use this definition to open alternatives*/
 //#define NOT_SUPPORT_CTS_PIN
 
 /*Use GPIO PA2 instead of USCI_CTL0(CTS) pin*/
@@ -71,7 +72,7 @@ void SYS_Init(void)
     SYS->GPC_MFPH = SYS->GPC_MFPH & ~SYS_GPC_MFPH_PC14MFP_Msk;
     SYS->GPC_MFPH = SYS->GPC_MFPH | SYS_GPC_MFPH_PC14MFP_USCI0_CTL0;
 #else
-    /*M252 C is not supoort USCI_CTL0(CTS)*/
+    /*M251 C is not supoort USCI_CTL0(CTS)*/
     /*Replace the USCI_CTL0(CTS) pin with GPIO PA2 */
     SYS->GPA_MFPL = SYS->GPA_MFPL & ~SYS_GPA_MFPL_PA2MFP_Msk;
 

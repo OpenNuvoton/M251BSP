@@ -3,11 +3,11 @@
  * @version     V3.00
  * @brief       HZ1050 device driver
  *
- * @note
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 
-#include "M251.h"
+#include "NuMicro.h"
 #include "HZ1050_driver_RFID.h"
 
 

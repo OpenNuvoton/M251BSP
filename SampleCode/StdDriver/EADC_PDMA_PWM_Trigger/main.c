@@ -3,6 +3,7 @@
  * @version  V0.10
  * @brief    Demonstrate how to trigger EADC by PWM and transfer conversion data by PDMA.
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include <stdio.h>
@@ -180,7 +181,7 @@ void EADC_FunctionTest(void)
 
     printf("\n");
     printf("+----------------------------------------------------------------------+\n");
-    printf("|M251 EADC PWM trigger and transfer conversion data by PDMA sample code|\n");
+    printf("|   EADC PWM trigger and transfer conversion data by PDMA sample code  |\n");
     printf("+----------------------------------------------------------------------+\n");
 
     printf("\nIn this test, software will get 6 conversion result from the specified channel.\n");

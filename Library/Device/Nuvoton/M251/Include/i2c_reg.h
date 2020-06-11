@@ -3,6 +3,7 @@
  * @version  V1.00
  * @brief    I2C register definition header file
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 
@@ -88,6 +89,11 @@ typedef struct
      * |[9:0]   |DIVIDER   |I2C Clock Divided
      * |        |          |Indicates the I2C clock rate: Data Baud Rate of I2C = (system clock) / (4x (I2C_CLKDIV+1)).
      * |        |          |Note: The minimum value of I2C_CLKDIV is 4.
+     * |[15:12] |NFCNT     |The register bits control the input filter width.
+     * |        |          |0 : filter width 3*PCLK
+     * |        |          |1 : filter width 4*PCLK
+     * |        |          |N : filter width (3+N)*PCKL
+     * |        |          |Note: Filter width Min :3*PCLK, Max : 18*PCLK
      * @var I2C_T::TOCTL
      * Offset: 0x14  I2C Time-out Control Register
      * ---------------------------------------------------------------------------------------------------
@@ -485,6 +491,9 @@ typedef struct
 
 #define I2C_CLKDIV_DIVIDER_Pos           (0)                                               /*!< I2C_T::CLKDIV: DIVIDER Position        */
 #define I2C_CLKDIV_DIVIDER_Msk           (0x3fful << I2C_CLKDIV_DIVIDER_Pos)               /*!< I2C_T::CLKDIV: DIVIDER Mask            */
+
+#define I2C_CLKDIV_NFCNT_Pos             (12)                                              /*!< I2C_T::CLKDIV: NFCNT Position          */
+#define I2C_CLKDIV_NFCNT_Msk             (0xful << I2C_CLKDIV_NFCNT_Pos)                   /*!< I2C_T::CLKDIV: NFCNT Mask              */
 
 #define I2C_TOCTL_TOIF_Pos               (0)                                               /*!< I2C_T::TOCTL: TOIF Position            */
 #define I2C_TOCTL_TOIF_Msk               (0x1ul << I2C_TOCTL_TOIF_Pos)                     /*!< I2C_T::TOCTL: TOIF Mask                */

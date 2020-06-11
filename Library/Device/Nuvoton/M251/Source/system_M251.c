@@ -1,10 +1,11 @@
 /**************************************************************************//**
-* @file     system_M251.c
-* @version  V0.10
-* @brief    System Setting Source File
-*
-* @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
-****************************************************************************/
+ * @file     system_M251.c
+ * @version  V0.10
+ * @brief    System Setting Source File
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
+ ****************************************************************************/
 
 #include <arm_cmse.h>
 #include <stdio.h>

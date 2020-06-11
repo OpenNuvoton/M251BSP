@@ -3,10 +3,10 @@
  * @version  V1.00
  * @brief    M251 series PDMA driver source file
  *
- * @note
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
-#include "M251.h"
+#include "NuMicro.h"
 
 
 static uint8_t u8ChSelect[PDMA_CH_MAX];

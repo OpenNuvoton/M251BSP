@@ -4,6 +4,7 @@
  * @brief
  *           Show how to implement a USB micro printer device.
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>

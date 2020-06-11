@@ -3,6 +3,7 @@
  * @version  V0.10
  * @brief    M251 series SPI driver header file
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 
@@ -61,6 +62,8 @@ extern "C"
 #define SPI_SPIEN_STS_MASK               (0x40UL)                           /*!< SPIEN status mask \hideinitializer */
 #define SPI_SSLINE_STS_MASK              (0x80UL)                           /*!< SPIx_SS line status mask \hideinitializer */
 
+/* SPI Status2 Mask */
+#define SPI_SLVBENUM_MASK                (0x01UL)                         /*!< Effective bit number of uncompleted RX data status mask */
 
 /* I2S Data Width */
 #define SPII2S_DATABIT_8           (0UL << SPI_I2SCTL_WDWIDTH_Pos)      /*!< I2S data width is 8-bit \hideinitializer */
@@ -571,6 +574,7 @@ void SPI_DisableInt(SPI_T *spi, uint32_t u32Mask);
 uint32_t SPI_GetIntFlag(SPI_T *spi, uint32_t u32Mask);
 void SPI_ClearIntFlag(SPI_T *spi, uint32_t u32Mask);
 uint32_t SPI_GetStatus(SPI_T *spi, uint32_t u32Mask);
+uint32_t SPI_GetStatus2(SPI_T *spi, uint32_t u32Mask);
 
 uint32_t SPII2S_Open(SPI_T *i2s, uint32_t u32MasterSlave, uint32_t u32SampleRate, uint32_t u32WordWidth, uint32_t u32Channels, uint32_t u32DataFormat);
 void SPII2S_Close(SPI_T *i2s);

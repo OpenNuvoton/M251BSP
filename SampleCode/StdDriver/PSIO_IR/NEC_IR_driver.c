@@ -3,13 +3,13 @@
  * @version     V3.00
  * @brief       NEC IR device driver
  *
- * @note
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 
 #include <stdio.h>
 #include <string.h>
-#include <M251.h>
+#include <NuMicro.h>
 #include "NEC_IR_driver.h"
 
 #define MAX_TX_CNT 5

@@ -3,7 +3,7 @@
  * @version  V1.01
  * @brief    M251 series Timer driver header file
  *
- * @note
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 
