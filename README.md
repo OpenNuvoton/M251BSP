@@ -62,7 +62,7 @@ This BSP folder
 	Demonstrate how to create XOM library and use it.
 
 
-# Licesne
+# License
 
 **SPDX-License-Identifier: Apache-2.0**
 
