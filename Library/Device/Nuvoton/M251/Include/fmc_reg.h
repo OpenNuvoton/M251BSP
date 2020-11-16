@@ -4,7 +4,7 @@
  * @brief    FMC register definition header file
  *
  * SPDX-License-Identifier: Apache-2.0
- * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2020 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 
 #ifndef __FMC_REG_H__
@@ -297,24 +297,35 @@ typedef struct
     __IO uint32_t ISPTRG;                /*!< [0x0010] ISP Trigger Control Register                                     */
     __I  uint32_t RESERVE0;
     __IO uint32_t FTCTL;                 /*!< [0x0018] Flash Access Time Control Register                               */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE1[9];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t ISPSTS;                /*!< [0x0040] ISP Status Register                                              */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE2[2];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t CYCCTL;                /*!< [0x004c] Flash Access Cycle Control Register                              */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE3[12];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t MPDAT0;                /*!< [0x0080] ISP Data0 Register                                               */
     __IO uint32_t MPDAT1;                /*!< [0x0084] ISP Data1 Register                                               */
     __IO uint32_t MPDAT2;                /*!< [0x0088] ISP Data2 Register                                               */
     __IO uint32_t MPDAT3;                /*!< [0x008c] ISP Data3 Register                                               */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE4[12];
+    /// @endcond //HIDDEN_SYMBOLS
     __I  uint32_t MPSTS;                 /*!< [0x00c0] ISP Multi-program Status Register                                */
     __I  uint32_t MPADDR;                /*!< [0x00c4] ISP Multi-program Address Register                               */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE5[2];
+    /// @endcond //HIDDEN_SYMBOLS
     __I  uint32_t XOMR0STS0;             /*!< [0x00d0] XOM Region 0 Status Register 0                                   */
     __I  uint32_t XOMR0STS1;             /*!< [0x00d4] XOM Region 0 Status Register 1                                   */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE6[2];
+    /// @endcond //HIDDEN_SYMBOLS
     __I  uint32_t XOMSTS;                /*!< [0x00e0] XOM Status Register                                              */
-
 } FMC_T;
 
 /**

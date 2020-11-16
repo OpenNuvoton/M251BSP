@@ -11,8 +11,6 @@
 #include "targetdev.h"
 #include "spi_transfer.h"
 
-uint32_t Pclk0;
-uint32_t Pclk1;
 
 __WEAK uint32_t CLK_GetPLLClockFreq(void)
 {
@@ -61,6 +59,7 @@ void TIMER3_Init(void)
 
 void SYS_Init(void)
 {
+    /* Unlock write-protected registers to operate SYS_Init and FMC ISP function */
     SYS_UnlockReg();
 
     /* Enable internal RC 48MHz clock */
@@ -76,8 +75,6 @@ void SYS_Init(void)
     CLK->PCLKDIV = CLK_PCLKDIV_APB0DIV_DIV2 | CLK_PCLKDIV_APB1DIV_DIV2;
     SystemCoreClock = FREQ_48MHZ;
     CyclesPerUs     = SystemCoreClock / 1000000;  // For SYS_SysTickDelay()
-    Pclk0           = SystemCoreClock / 2;
-    Pclk1           = SystemCoreClock / 2;
 
     /* Select PCLK0 as the clock source of SPI1 */
     CLK->CLKSEL2 = (CLK->CLKSEL2 & (~CLK_CLKSEL2_SPI0SEL_Msk)) | CLK_CLKSEL2_SPI0SEL_PCLK1;

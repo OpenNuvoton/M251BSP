@@ -67,7 +67,7 @@ int32_t main(void)
     printf("|      FMC CRC32 Sample Demo         |\n");
     printf("+------------------------------------+\n");
 
-    SYS_UnlockReg();                   /* Unlock protected registers */
+    SYS_UnlockReg();                   /* Unlock protected registers to operate FMC ISP function */
 
     FMC_Open();                        /* Enable FMC ISP function */
 

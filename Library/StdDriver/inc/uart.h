@@ -469,7 +469,7 @@ extern "C"
  *
  *    \hideinitializer
  */
-#define UART_DEGLITCH_ENABLE(uart)    ((uart)->FUNCSEL |= UART_FUNCSEL_DGE_Msk))
+#define UART_DEGLITCH_ENABLE(uart)    ((uart)->FUNCSEL |= UART_FUNCSEL_DGE_Msk)
 /**
  *    @brief        Disable specified UART Deglitch function
  *

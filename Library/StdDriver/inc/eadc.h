@@ -4,7 +4,7 @@
  * @brief    M251 series EADC driver header file
  *
  * SPDX-License-Identifier: Apache-2.0
- * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2020 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 
 #ifndef __EADC_H__
@@ -125,9 +125,9 @@ extern "C"
 /**
   * @brief Enable PDMA transfer.
   * @param[in] eadc The pointer of the specified EADC module.
-  * @param[in] u32ModuleNum Decides the sample module number, valid value are from 0 to 15.
+  * @param[in] u32ModuleNum Decides the sample module number, valid value are from 0 to 18.
   * @return None
-  * @details When A/D conversion is completed, the converted data is loaded into EADC_DATn (n=0~15) register,
+  * @details When A/D conversion is completed, the converted data is loaded into EADC_DATn (n=0~18) register,
   *         user can enable this bit to generate a PDMA data transfer request.
   */
 #define EADC_ENABLE_PDMA(eadc, u32ModuleNum) (eadc)->PDMACTL |= (0x1 << u32ModuleNum)
@@ -136,7 +136,7 @@ extern "C"
 /**
   * @brief Disable PDMA transfer.
   * @param[in] eadc The pointer of the specified EADC module.
-  * @param[in] u32ModuleNum Decides the sample module number, valid value are from 0 to 15.
+  * @param[in] u32ModuleNum Decides the sample module number, valid value are from 0 to 18.
   * @return None
   * @details This macro is used to disable PDMA transfer.
   */
@@ -405,7 +405,8 @@ extern "C"
                          u32ModuleNum,\
                          u32Condition,\
                          u16CMPData,\
-                         u32MatchCount) ((eadc)->CMP[0] = (((u32ModuleNum) << EADC_CMP_CMPSPL_Pos) |\
+                         u32MatchCount) ((eadc)->CMP[0] = ((eadc)->CMP[0] & ~(EADC_CMP_CMPSPL_Msk|EADC_CMP_CMPCOND_Msk|EADC_CMP_CMPDAT_Msk|EADC_CMP_CMPMCNT_Msk))|\
+                                                          (((u32ModuleNum) << EADC_CMP_CMPSPL_Pos) |\
                                                            (u32Condition) |\
                                                            ((u16CMPData) << EADC_CMP_CMPDAT_Pos) |\
                                                            (((u32MatchCount) - 1) << EADC_CMP_CMPMCNT_Pos) |\
@@ -430,7 +431,8 @@ extern "C"
                          u32ModuleNum,\
                          u32Condition,\
                          u16CMPData,\
-                         u32MatchCount) ((eadc)->CMP[1] = (((u32ModuleNum) << EADC_CMP_CMPSPL_Pos) |\
+                         u32MatchCount) ((eadc)->CMP[1] = ((eadc)->CMP[1] & ~(EADC_CMP_CMPSPL_Msk|EADC_CMP_CMPCOND_Msk|EADC_CMP_CMPDAT_Msk|EADC_CMP_CMPMCNT_Msk))|\
+                                                          (((u32ModuleNum) << EADC_CMP_CMPSPL_Pos) |\
                                                            (u32Condition) |\
                                                            ((u16CMPData) << EADC_CMP_CMPDAT_Pos) |\
                                                            (((u32MatchCount) - 1) << EADC_CMP_CMPMCNT_Pos) |\
@@ -455,7 +457,8 @@ extern "C"
                          u32ModuleNum,\
                          u32Condition,\
                          u16CMPData,\
-                         u32MatchCount) ((eadc)->CMP[2] = (((u32ModuleNum) << EADC_CMP_CMPSPL_Pos) |\
+                         u32MatchCount) ((eadc)->CMP[2] = ((eadc)->CMP[2] & ~(EADC_CMP_CMPSPL_Msk|EADC_CMP_CMPCOND_Msk|EADC_CMP_CMPDAT_Msk|EADC_CMP_CMPMCNT_Msk))|\
+                                                          (((u32ModuleNum) << EADC_CMP_CMPSPL_Pos) |\
                                                            (u32Condition) |\
                                                            ((u16CMPData) << EADC_CMP_CMPDAT_Pos) |\
                                                            (((u32MatchCount) - 1) << EADC_CMP_CMPMCNT_Pos) |\
@@ -480,7 +483,8 @@ extern "C"
                          u32ModuleNum,\
                          u32Condition,\
                          u16CMPData,\
-                         u32MatchCount) ((eadc)->CMP[3] = (((u32ModuleNum) << EADC_CMP_CMPSPL_Pos) |\
+                         u32MatchCount) ((eadc)->CMP[3] = ((eadc)->CMP[3] & ~(EADC_CMP_CMPSPL_Msk|EADC_CMP_CMPCOND_Msk|EADC_CMP_CMPDAT_Msk|EADC_CMP_CMPMCNT_Msk))|\
+                                                          (((u32ModuleNum) << EADC_CMP_CMPSPL_Pos) |\
                                                            (u32Condition) |\
                                                            ((u16CMPData) << EADC_CMP_CMPDAT_Pos) |\
                                                            (((u32MatchCount) - 1) << EADC_CMP_CMPMCNT_Pos) |\
@@ -678,27 +682,6 @@ extern "C"
 #define EADC_DISABLE_AUTOFF(eadc) ((eadc)->PWRCTL &= (~EADC_PWRCTL_AUTOFF_Msk))
 
 
-/**
-  * @brief Configure the Offset Cancellation feature and enable it.
-  * @param[in] eadc The pointer of the specified EADC module.
-  * @param[in] i16OffsetCancel specifies the signed value of offset cancellation, valid values are -16 to 15.
-  * @return None
-  * @details When i16OffsetCancel is set to 0, the offset cancellation trim bits have no effect to A/D result.
-  */
-#define EADC_ENABLE_OFFSETCANCEL(eadc,\
-                                 i16OffsetCancel) {(eadc)->CTL |= EADC_CTL_CALEN_Msk;\
-    (eadc)->OFFSETCAL = (i16OffsetCancel & EADC_OFFSETCAL_OFFSETCANCEL_Msk);}
-
-
-/**
-  * @brief Disable the Offset Cancellation feature.
-  * @param[in] eadc The pointer of the specified EADC module.
-  * @return None
-  */
-#define EADC_DISABLE_OFFSETCANCEL(eadc) {(eadc)->OFFSETCAL = 0;\
-        (eadc)->CTL &= (~EADC_CTL_CALEN_Msk);}
-
-
 /*---------------------------------------------------------------------------------------------------------*/
 /* Define EADC functions prototype                                                                         */
 /*---------------------------------------------------------------------------------------------------------*/
@@ -719,5 +702,3 @@ void EADC_SetExtendSampleTime(EADC_T *eadc, uint32_t u32ModuleNum, uint32_t u32E
 #endif
 
 #endif /* __EADC_H__ */
-
-/*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/

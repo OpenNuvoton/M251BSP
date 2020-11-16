@@ -1084,51 +1084,82 @@ typedef struct
      */
     __IO uint32_t CTL0;                  /*!< [0x0000] BPWM Control Register 0                                          */
     __IO uint32_t CTL1;                  /*!< [0x0004] BPWM Control Register 1                                          */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE0[2];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t CLKSRC;                /*!< [0x0010] BPWM Clock Source Register                                       */
     __IO uint32_t CLKPSC;                /*!< [0x0014] BPWM Clock Prescale Register                                     */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE1[2];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t CNTEN;                 /*!< [0x0020] BPWM Counter Enable Register                                     */
     __IO uint32_t CNTCLR;                /*!< [0x0024] BPWM Clear Counter Register                                      */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE2[2];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t PERIOD;                /*!< [0x0030] BPWM Period Register                                             */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE3[7];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t CMPDAT[6];             /*!< [0x0050 ~ 0x0064] BPWM Comparator Register 0 ~ 6                          */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE4[10];
+    /// @endcond //HIDDEN_SYMBOLS
     __I  uint32_t CNT;                   /*!< [0x0090] BPWM Counter Register                                            */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE5[7];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t WGCTL0;                /*!< [0x00b0] BPWM Generation Register 0                                       */
     __IO uint32_t WGCTL1;                /*!< [0x00b4] BPWM Generation Register 1                                       */
     __IO uint32_t MSKEN;                 /*!< [0x00b8] BPWM Mask Enable Register                                        */
     __IO uint32_t MSK;                   /*!< [0x00bc] BPWM Mask Data Register                                          */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE6[5];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t POLCTL;                /*!< [0x00d4] BPWM Pin Polar Inverse Register                                  */
     __IO uint32_t POEN;                  /*!< [0x00d8] BPWM Output Enable Register                                      */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE7[1];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t INTEN;                 /*!< [0x00e0] BPWM Interrupt Enable Register                                   */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE8[1];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t INTSTS;                /*!< [0x00e8] BPWM Interrupt Flag Register                                     */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE9[3];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t EADCTS0;               /*!< [0x00f8] BPWM Trigger EADC Source Select Register 0                       */
     __IO uint32_t EADCTS1;               /*!< [0x00fc] BPWM Trigger EADC Source Select Register 1                       */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE10[4];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t SSCTL;                 /*!< [0x0110] BPWM Synchronous Start Control Register                          */
     __O  uint32_t SSTRG;                 /*!< [0x0114] BPWM Synchronous Start Trigger Register                          */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE11[2];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t STATUS;                /*!< [0x0120] BPWM Status Register                                             */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE12[55];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t CAPINEN;               /*!< [0x0200] BPWM Capture Input Enable Register                               */
     __IO uint32_t CAPCTL;                /*!< [0x0204] BPWM Capture Control Register                                    */
     __I  uint32_t CAPSTS;                /*!< [0x0208] BPWM Capture Status Register                                     */
     BCAPDAT_T CAPDAT[6];                 /*!< [0x020C ~ 0x0238] BPWM Rising and Falling Capture Data Register 0~5       */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE13[5];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t CAPIEN;                /*!< [0x0250] BPWM Capture Interrupt Enable Register                           */
     __IO uint32_t CAPIF;                 /*!< [0x0254] BPWM Capture Interrupt Flag Register                             */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE14[43];
+    /// @endcond //HIDDEN_SYMBOLS
     __I  uint32_t PBUF;                  /*!< [0x0304] BPWM PERIOD Buffer                                               */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE15[5];
+    /// @endcond //HIDDEN_SYMBOLS
     __I  uint32_t CMPBUF[6];             /*!< [0x031c ~ 0x0330] BPWM CMPDAT 0 ~ 5 Buffer                                */
-
 } BPWM_T;
 
 /**

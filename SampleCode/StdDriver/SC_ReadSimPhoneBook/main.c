@@ -293,6 +293,8 @@ void SYS_Init(void)
                       | SYS_GPA_MFPL_PA2MFP_SC0_RST | SYS_GPA_MFPL_PA3MFP_SC0_PWR);
 
 #if SW_CARD_DETECT_EN
+    CLK_EnableModuleClock(GPB_MODULE);
+
     /*For Chip without CD pin*/
     SYS->GPB_MFPL &= ~SYS_GPB_MFPL_PB0MFP_Msk;
     SYS->GPB_MFPL |= SYS_GPB_MFPL_PB0MFP_GPIO;

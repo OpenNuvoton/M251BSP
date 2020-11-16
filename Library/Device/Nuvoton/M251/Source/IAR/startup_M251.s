@@ -3,7 +3,8 @@
 ; * @version  V0.10
 ; * @brief    CMSIS Cortex-M23 Core Device Startup File for M251
 ; *
-; * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
+; * SPDX-License-Identifier: Apache-2.0
+; * @copyright (C) 2020 Nuvoton Technology Corp. All rights reserved.
 ;*****************************************************************************/
 
         MODULE  ?cstartup
@@ -107,9 +108,9 @@ __vector_table
         DCD     SC0_IRQHandler            ; 58: Smart Card0
         DCD     DEFAULT_IRQHandler        ; 59: Reserved
         DCD     USCI2_IRQHandler          ; 60: USCI2
-        DCD     DEFAULT_IRQHandler        ; 61: Reserved
+        DCD     LCD_IRQHandler            ; 61: LCD
         DCD     OPA_IRQHandler            ; 62: OPA
-        DCD     DEFAULT_IRQHandler        ; 63: Reserved
+        DCD     TK_IRQHandler             ; 63: TK
 __Vectors_End
 
 __Vectors       EQU   __vector_table
@@ -141,7 +142,7 @@ Reset_Handler
         LDR     R2, =0x40000024
         LDR     R1, =0x00005AA5
         STR     R1, [R2]
-		
+
 	    LDR     R2, =0x400001EC
         STR     R1, [R2]
 
@@ -161,17 +162,12 @@ NMI_Handler
         PUBWEAK HardFault_Handler
         SECTION .text:CODE:REORDER:NOROOT(2)
 HardFault_Handler
-        MOV     R0, LR                 
-        MRS     R1, MSP                
-        MRS     R2, PSP                
-        LDR     R3, =ProcessHardFault 
-        BLX     R3                     
+        MOV     R0, LR
+        MRS     R1, MSP
+        MRS     R2, PSP
+        LDR     R3, =ProcessHardFault
+        BLX     R3
         BX      R0
-
-;        PUBWEAK ProcessHardFault
-;        SECTION .text:CODE:REORDER:NOROOT(1)
-;ProcessHardFault
-;        B ProcessHardFault
 
         PUBWEAK MemManage_Handler
         SECTION .text:CODE:REORDER:NOROOT(1)
@@ -262,7 +258,9 @@ SysTick_Handler
         PUBWEAK  PSIO_IRQHandler
         PUBWEAK  SC0_IRQHandler
         PUBWEAK  USCI2_IRQHandler
+        PUBWEAK  LCD_IRQHandler
         PUBWEAK  OPA_IRQHandler
+        PUBWEAK  TK_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
 
 BOD_IRQHandler
@@ -319,23 +317,23 @@ BPWM1_IRQHandler
 PSIO_IRQHandler
 SC0_IRQHandler
 USCI2_IRQHandler
+LCD_IRQHandler
 OPA_IRQHandler
+TK_IRQHandler
 DEFAULT_IRQHandler
-    B DEFAULT_IRQHandler 
+    B DEFAULT_IRQHandler
 
 
 ;int32_t SH_DoCommand(int32_t n32In_R0, int32_t n32In_R1, int32_t *pn32Out_R0)
           PUBWEAK SH_DoCommand
           SECTION .text:CODE:REORDER:ROOT(2)
-SH_DoCommand   
+SH_DoCommand
                 IMPORT      SH_Return
-                    
+
                 BKPT    0xAB                ; Wait ICE or HardFault
-                LDR     R3, =SH_Return			        
+                LDR     R3, =SH_Return
 		PUSH    {R3 ,lr}
                 BLX     R3                  ; Call SH_Return. The return value is in R0
 		POP     {R3 ,PC}            ; Return value = R0
 
         END
-
-;/*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/

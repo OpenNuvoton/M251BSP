@@ -52,6 +52,10 @@ void SYS_Init(void)
     CLK_EnableModuleClock(UART0_MODULE);
     CLK_EnableModuleClock(USCI0_MODULE);
 
+#if defined (NOT_SUPPORT_CTS_PIN)
+    CLK_EnableModuleClock(GPC_MODULE);
+#endif
+
     /* Peripheral clock source */
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HIRC, CLK_CLKDIV0_UART0(1));
 
@@ -75,9 +79,7 @@ void SYS_Init(void)
     /*M251 C is not supoort USCI_CTL0(CTS)*/
     /*Replace the USCI_CTL0(CTS) pin with GPIO PA2 */
     SYS->GPA_MFPL = SYS->GPA_MFPL & ~SYS_GPA_MFPL_PA2MFP_Msk;
-
 #endif
-
 }
 
 void UART0_Init(void)
@@ -204,7 +206,4 @@ void USCI_AutoFlow_FunctionTxTest()
     }
 
     printf("\n Transmit Done\n");
-
 }
-
-/*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/

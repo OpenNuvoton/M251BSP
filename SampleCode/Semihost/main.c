@@ -92,8 +92,6 @@ int32_t main()
     --------------------------------------------------------------
     */
 
-    int8_t i8item;
-
     /* Init System, IP clock and multi-function I/O */
     SYS_Init();
 
@@ -109,6 +107,7 @@ int32_t main()
 
     while (1)
     {
+        int8_t i8item;
         i8item = getchar();
         printf("%c\n", i8item);
     }

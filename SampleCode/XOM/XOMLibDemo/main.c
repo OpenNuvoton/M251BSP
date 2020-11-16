@@ -77,16 +77,16 @@ int32_t main(void)
 
 
     XOM_CALL(XOM_Add, u32Data, 100, 200);
-    printf(" 100 + 200 = %d\n", u32Data);
+    printf(" 100 + 200 = %u\n", u32Data);
 
     XOM_CALL(XOM_Sub, u32Data, 500, 100);
-    printf(" 500 - 100 = %d\n", u32Data);
+    printf(" 500 - 100 = %u\n", u32Data);
 
     XOM_CALL(XOM_Mul, u32Data, 200, 100);
-    printf(" 200 * 100 = %d\n", u32Data);
+    printf(" 200 * 100 = %u\n", u32Data);
 
     XOM_CALL(XOM_Div, u32Data, 1000, 250);
-    printf("1000 / 250 = %d\n", u32Data);
+    printf("1000 / 250 = %u\n", u32Data);
 
     while (1);
 }

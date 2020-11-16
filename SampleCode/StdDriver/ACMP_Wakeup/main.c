@@ -144,6 +144,11 @@ void SYS_Init(void)
     /* Enable ACMP01 peripheral clock */
     CLK_EnableModuleClock(ACMP01_MODULE);
 
+    /* Enable GPB peripheral clock */
+    CLK_EnableModuleClock(GPB_MODULE);
+    /* Enable GPC peripheral clock */
+    CLK_EnableModuleClock(GPC_MODULE);
+
     /* User can use SystemCoreClockUpdate() to calculate SystemCoreClock and CyclesPerUs automatically. */
     SystemCoreClockUpdate();
 

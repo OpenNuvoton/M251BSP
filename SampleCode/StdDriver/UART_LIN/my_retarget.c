@@ -1,7 +1,7 @@
 /**************************************************************************//**
  * @file     retarget.c
  * @version  V0.10
- * @brief    M251 series serial driver source file
+ * @brief    M251 series Debug Port and Semihost Setting Source File
  *
  * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
@@ -37,14 +37,25 @@ struct __FILE
 {
     int handle; /* Add whatever you need here */
 };
-#endif
-#endif
+#else
+#if !defined(__MICROLIB)
+    #if (__OPTIMIZE__ == -O0)
+        __asm(".global __ARM_use_no_argv\n\t" "__ARM_use_no_argv:\n\t");
+    #endif /* (__OPTIMIZE__ == -O0) */
+#endif /* !defined(__MICROLIB) */
+#endif /* (__ARMCC_VERSION < 6040000) */
+
+#elif(__VER__ >= 8000000)
+struct __FILE
+{
+    int handle; /* Add whatever you need here */
+};
+#endif /* !(defined(__ICCARM__) && (__VER__ >= 6010000)) */
 
 FILE __stdout;
 FILE __stdin;
 
 #if defined (__ARMCC_VERSION) || defined (__ICCARM__)
-
     extern int32_t SH_DoCommand(int32_t n32In_R0, int32_t n32In_R1, int32_t *pn32Out_R0);
 
     #if defined( __ICCARM__ )
@@ -52,8 +63,8 @@ FILE __stdin;
     #else
         __attribute__((weak))
     #endif
-    uint32_t ProcessHardFault(uint32_t lr, uint32_t msp, uint32_t psp);
 
+    uint32_t ProcessHardFault(uint32_t lr, uint32_t msp, uint32_t psp);
 #endif
 
 int kbhit(void);
@@ -88,14 +99,16 @@ enum { r0, r1, r2, r3, r12, lr, pc, psr};
  */
 static void DumpStack(uint32_t stack[])
 {
-    printf("r0 =0x%x\n", stack[r0]);
-    printf("r1 =0x%x\n", stack[r1]);
-    printf("r2 =0x%x\n", stack[r2]);
-    printf("r3 =0x%x\n", stack[r3]);
-    printf("r12=0x%x\n", stack[r12]);
-    printf("lr =0x%x\n", stack[lr]);
-    printf("pc =0x%x\n", stack[pc]);
-    printf("psr=0x%x\n", stack[psr]);
+    /*
+        printf("r0 =0x%x\n", stack[r0]);
+        printf("r1 =0x%x\n", stack[r1]);
+        printf("r2 =0x%x\n", stack[r2]);
+        printf("r3 =0x%x\n", stack[r3]);
+        printf("r12=0x%x\n", stack[r12]);
+        printf("lr =0x%x\n", stack[lr]);
+        printf("pc =0x%x\n", stack[pc]);
+        printf("psr=0x%x\n", stack[psr]);
+    */
 }
 
 
@@ -143,7 +156,7 @@ int32_t SH_Return(int32_t n32In_R0, int32_t n32In_R1, int32_t *pn32Out_R0)
  * @details  This function is implement to print r0, r1, r2, r3, r12, lr, pc, psr.
  *
  */
-void HardFault_Handler(void)
+__attribute__((weak)) void HardFault_Handler(void)
 {
     asm("MOV     R0, LR  \n"
         "MRS     R1, MSP \n"
@@ -180,8 +193,12 @@ uint32_t ProcessHardFault(uint32_t lr, uint32_t msp, uint32_t psp)
     /* TODO: Implement your hardfault handle code here */
 
     /* Check the used stack */
-    // if(lr & 0x40UL)   // M251 has no TrustZone.
+#if defined (__ARM_FEATURE_CMSE) &&  (__ARM_FEATURE_CMSE == 3)
+
+    if (lr & 0x40UL)
     {
+#endif
+
         /* Secure stack used */
         if (lr & 4UL)
         {
@@ -192,8 +209,8 @@ uint32_t ProcessHardFault(uint32_t lr, uint32_t msp, uint32_t psp)
             sp = (uint32_t *)msp;
         }
 
-    }
 #if defined (__ARM_FEATURE_CMSE) &&  (__ARM_FEATURE_CMSE == 3)
+    }
     else
     {
         /* Non-secure stack used */
@@ -248,6 +265,7 @@ void SendChar_ToUART(int ch)
         DEBUG_PORT->DAT = '\r';
 
         while (DEBUG_PORT->FIFOSTS & UART_FIFOSTS_TXFULL_Msk) {}
+
     }
 
     DEBUG_PORT->DAT = (uint32_t)ch;
@@ -267,6 +285,7 @@ void SendChar_ToUART(int ch)
     if (ch)
     {
         // Push char
+
         if (ch == '\n')
         {
             i32Tmp = i32Head + 1;
@@ -289,7 +308,6 @@ void SendChar_ToUART(int ch)
             u8Buf[i32Head] = ch;
             i32Head = i32Tmp;
         }
-
     }
     else
     {
@@ -306,7 +324,7 @@ void SendChar_ToUART(int ch)
 
         if ((DEBUG_PORT->FIFOSTS & UART_FIFOSTS_TXFULL_Msk) == 0)
         {
-            DEBUG_PORT->DATA = u8Buf[i32Tail];
+            DEBUG_PORT->DAT = u8Buf[i32Tail];
             i32Tail = i32Tmp;
         }
         else
@@ -362,15 +380,7 @@ __WEAK void SendChar(int ch)
     }
 
 #else
-
-#if defined ( __GNUC__ ) && !defined (__ARMCC_VERSION)
-    char *ch0;
-    *ch0 = (char)ch;
-    _write(0, ch0, 1);
-#else
     SendChar_ToUART(ch);
-#endif /* ( __GNUC__ ) */
-
 #endif /* DEBUG_ENABLE_SEMIHOST */
 }
 
@@ -400,7 +410,6 @@ char GetChar(void)
         }
 
 #else
-
         int nRet, nRet1;
 
         while (SH_DoCommand(0x101, 0, &nRet) != 0)
@@ -534,8 +543,6 @@ int _write(int fd, char *ptr, int len)
     while (i--)
     {
         while (DEBUG_PORT->FIFOSTS & UART_FIFOSTS_TXFULL_Msk);
-
-
 
         if (*ptr == '\n')
         {

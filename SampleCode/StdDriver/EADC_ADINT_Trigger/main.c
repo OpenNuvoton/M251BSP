@@ -89,7 +89,6 @@ void UART0_Init(void)
 /*---------------------------------------------------------------------------------------------------------*/
 void EADC_FunctionTest(void)
 {
-    uint8_t  u8Option;
     int32_t  i32ConversionData;
     uint32_t u32IntNum,  u32ModuleNum, u32ChannelNum;
     uint32_t u32IntMask, u32ModuleMask;
@@ -108,6 +107,7 @@ void EADC_FunctionTest(void)
         printf("  [1] Trigger by ADINT0\n");
         printf("  [2] Trigger by ADINT0 and then ADINT1\n");
         printf("  Other keys: exit EADC test\n");
+        uint8_t  u8Option;
         u8Option = getchar();
 
         if (u8Option == '1')
@@ -119,7 +119,7 @@ void EADC_FunctionTest(void)
             u32ChannelNum = 0;
             u32IntMask = (BIT0 << u32IntNum);
             u32ModuleMask = (BIT0 << u32ModuleNum);
-            printf("Software trigger sample module %d, channel %d and generate interrupt ADINT%d.\n", u32ModuleNum, u32ChannelNum, u32IntNum);
+            printf("Software trigger sample module %u, channel %u and generate interrupt ADINT%u.\n", u32ModuleNum, u32ChannelNum, u32IntNum);
             /* Configure the sample module for analog input channel and software trigger source. */
             EADC_ConfigSampleModule(EADC, u32ModuleNum, EADC_SOFTWARE_TRIGGER, u32ChannelNum);
 
@@ -139,7 +139,7 @@ void EADC_FunctionTest(void)
             u32ChannelNum = 1;
             u32IntMask = (BIT0 << u32IntNum);
             u32ModuleMask = (BIT0 << u32ModuleNum);
-            printf("ADINT0   trigger sample module %d, channel %d and generate interrupt ADINT%d.\n", u32ModuleNum, u32ChannelNum, u32IntNum);
+            printf("ADINT0   trigger sample module %u, channel %u and generate interrupt ADINT%u.\n", u32ModuleNum, u32ChannelNum, u32IntNum);
             /* Configure the sample module for analog input channel and software trigger source. */
             EADC_ConfigSampleModule(EADC, u32ModuleNum, EADC_ADINT0_TRIGGER, u32ChannelNum);
 
@@ -194,7 +194,7 @@ void EADC_FunctionTest(void)
             u32ChannelNum = 0;
             u32IntMask = (BIT0 << u32IntNum);
             u32ModuleMask = (BIT0 << u32ModuleNum);
-            printf("Software trigger sample module %d, channel %d and generate interrupt ADINT%d.\n", u32ModuleNum, u32ChannelNum, u32IntNum);
+            printf("Software trigger sample module %u, channel %u and generate interrupt ADINT%u.\n", u32ModuleNum, u32ChannelNum, u32IntNum);
             /* Configure the sample module for analog input channel and software trigger source. */
             EADC_ConfigSampleModule(EADC, u32ModuleNum, EADC_SOFTWARE_TRIGGER, u32ChannelNum);
 
@@ -214,7 +214,7 @@ void EADC_FunctionTest(void)
             u32ChannelNum = 1;
             u32IntMask = (BIT0 << u32IntNum);
             u32ModuleMask = (BIT0 << u32ModuleNum);
-            printf("ADINT0   trigger sample module %d, channel %d and generate interrupt ADINT%d.\n", u32ModuleNum, u32ChannelNum, u32IntNum);
+            printf("ADINT0   trigger sample module %u, channel %u and generate interrupt ADINT%u.\n", u32ModuleNum, u32ChannelNum, u32IntNum);
             /* Configure the sample module for analog input channel and software trigger source. */
             EADC_ConfigSampleModule(EADC, u32ModuleNum, EADC_ADINT0_TRIGGER, u32ChannelNum);
 
@@ -231,7 +231,7 @@ void EADC_FunctionTest(void)
             u32ChannelNum = 3;
             u32IntMask = (BIT0 << u32IntNum);
             u32ModuleMask = (BIT0 << u32ModuleNum);
-            printf("ADINT1   trigger sample module %d, channel %d and generate interrupt ADINT%d.\n", u32ModuleNum, u32ChannelNum, u32IntNum);
+            printf("ADINT1   trigger sample module %u, channel %u and generate interrupt ADINT%u.\n", u32ModuleNum, u32ChannelNum, u32IntNum);
             /* Configure the sample module for analog input channel and software trigger source. */
             EADC_ConfigSampleModule(EADC, u32ModuleNum, EADC_ADINT1_TRIGGER, u32ChannelNum);
 

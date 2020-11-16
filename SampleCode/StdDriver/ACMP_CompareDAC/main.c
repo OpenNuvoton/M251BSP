@@ -135,6 +135,10 @@ void SYS_Init(void)
     CLK_EnableModuleClock(UART0_MODULE);
     /* Enable ACMP01 peripheral clock */
     CLK_EnableModuleClock(ACMP01_MODULE);
+    /* Enable GPB peripheral clock */
+    CLK_EnableModuleClock(GPB_MODULE);
+    /* Enable GPC peripheral clock */
+    CLK_EnableModuleClock(GPC_MODULE);
 
     /* Enable DAC module clock */
     CLK_EnableModuleClock(DAC_MODULE);
@@ -147,23 +151,16 @@ void SYS_Init(void)
     PB->MODE &= ~(GPIO_MODE_MODE4_Msk);
     PC->MODE &= ~(GPIO_MODE_MODE0_Msk);
 
-    /* Set PB multi-function pins for DAC voltage output */
-    //    SYS->GPB_MFPH = SYS_GPB_MFPH_PB12MFP_DAC0_OUT;
 
     /* Set PB4 multi-function pin for ACMP1 positive input pin and PC0 multi-function pin for ACMP1 output pin*/
     SYS->GPB_MFPL = SYS_GPB_MFPL_PB4MFP_ACMP1_P1;
     SYS->GPC_MFPL = SYS_GPC_MFPL_PC0MFP_ACMP1_O;
 
     /* Set PB multi-function pins for UART0 RXD and TXD */
-    // Uart0DefaultMPF();
+    Uart0DefaultMPF();
 
     /* Disable digital input path of analog pin ACMP1_P1 to prevent leakage */
     GPIO_DISABLE_DIGITAL_PATH(PB, (1ul << 4));
-
-    /* Disable digital input path of analog pin DAC0_OUT to prevent leakage */
-    //    GPIO_DISABLE_DIGITAL_PATH(PB, (1ul << 12));
-
-
 
 
 }

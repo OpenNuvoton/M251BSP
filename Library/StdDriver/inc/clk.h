@@ -4,7 +4,7 @@
  * @brief    M251 series CLK driver source file
  *
  * SPDX-License-Identifier: Apache-2.0
- * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2020 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 
 #ifndef __CLK_H__
@@ -148,8 +148,11 @@ extern "C"
 #define CLK_CLKSEL2_BPWM1SEL_PLL         (0x0UL<<CLK_CLKSEL2_BPWM1SEL_Pos)      /*!< Setting PWM0 and PWM1 clock source as external X'tal */
 #define CLK_CLKSEL2_BPWM1SEL_PCLK1       (0x1UL<<CLK_CLKSEL2_BPWM1SEL_Pos)      /*!< Setting PWM0 and PWM1 clock source as PCLK */
 
-#define CLK_CLKSEL2_SLCDSEL_LIRC         (0x0UL <<CLK_CLKSEL2_SLCDSEL_Pos)      /*!< Setting SLCD clock source as LIRC */
-#define CLK_CLKSEL2_SLCDSEL_LXT          (0x1UL <<CLK_CLKSEL2_SLCDSEL_Pos)      /*!< Setting SLCD clock source as LXT */
+#define CLK_CLKSEL2_LCDSEL_LIRC          (0x0UL <<CLK_CLKSEL2_LCDSEL_Pos)       /*!< Setting LCD clock source as LIRC */
+#define CLK_CLKSEL2_LCDSEL_LXT           (0x1UL <<CLK_CLKSEL2_LCDSEL_Pos)       /*!< Setting LCD clock source as LXT */
+
+#define CLK_CLKSEL2_LCDCPSEL_MIRC1P2M    (0x0UL <<CLK_CLKSEL2_LCDCPSEL_Pos)     /*!< Setting LCD charge pump clock source as MIRC1P2M */
+#define CLK_CLKSEL2_LCDCPSEL_MIRC        (0x1UL <<CLK_CLKSEL2_LCDCPSEL_Pos)     /*!< Setting LCD charge pump clock source as MIRC */
 
 #define CLK_CLKSEL2_PSIOSEL_HXT          (0x0UL<<CLK_CLKSEL2_PSIOSEL_Pos)
 #define CLK_CLKSEL2_PSIOSEL_LXT          (0x1UL<<CLK_CLKSEL2_PSIOSEL_Pos)
@@ -395,9 +398,9 @@ extern "C"
                         MODULE_CLKSEL_ENC(NA)|MODULE_CLKSEL_Msk_ENC(NA)|MODULE_CLKSEL_Pos_ENC(NA)|\
                         MODULE_CLKDIV_ENC( 0)|MODULE_CLKDIV_Msk_ENC(0xFF)|MODULE_CLKDIV_Pos_ENC(16))    /*!< ADC Module */
 
-#define TCHK_MODULE    (MODULE_APBCLK_ENC( 1)|MODULE_IP_EN_Pos_ENC(CLK_APBCLK0_TCHKCKEN_Pos)|\
+#define TK_MODULE      (MODULE_APBCLK_ENC( 1)|MODULE_IP_EN_Pos_ENC(CLK_APBCLK0_TKCKEN_Pos)|\
                         MODULE_CLKSEL_ENC(NA)|MODULE_CLKSEL_Msk_ENC(NA)|MODULE_CLKSEL_Pos_ENC(NA)|\
-                        MODULE_CLKDIV_ENC(NA)|MODULE_CLKDIV_Msk_ENC(NA)|MODULE_CLKDIV_Pos_ENC(NA))      /*!< TCHK Module */
+                        MODULE_CLKDIV_ENC(NA)|MODULE_CLKDIV_Msk_ENC(NA)|MODULE_CLKDIV_Pos_ENC(NA))      /*!< TK Module */
 
 //APBCLK1
 #define SC0_MODULE     (MODULE_APBCLK_ENC( 2)|MODULE_IP_EN_Pos_ENC(CLK_APBCLK1_SC0CKEN_Pos)|\
@@ -420,9 +423,13 @@ extern "C"
                         MODULE_CLKSEL_ENC(NA)|MODULE_CLKSEL_Msk_ENC(NA)|MODULE_CLKSEL_Pos_ENC(NA)|\
                         MODULE_CLKDIV_ENC(NA)|MODULE_CLKDIV_Msk_ENC(NA)|MODULE_CLKDIV_Pos_ENC(NA))      /*!< DAC Module */
 
-#define SLCD_MODULE    (MODULE_APBCLK_ENC( 2)|MODULE_IP_EN_Pos_ENC(CLK_APBCLK1_SLCDCKEN_Pos)|\
+#define LCD_MODULE     (MODULE_APBCLK_ENC( 2)|MODULE_IP_EN_Pos_ENC(CLK_APBCLK1_LCDCKEN_Pos)|\
                         MODULE_CLKSEL_ENC( 2)|MODULE_CLKSEL_Msk_ENC( 1)|MODULE_CLKSEL_Pos_ENC( 24)|\
-                        MODULE_CLKDIV_ENC(NA)|MODULE_CLKDIV_Msk_ENC(NA)|MODULE_CLKDIV_Pos_ENC( NA))     /*!< SLCD Module */
+                        MODULE_CLKDIV_ENC(NA)|MODULE_CLKDIV_Msk_ENC(NA)|MODULE_CLKDIV_Pos_ENC(NA))      /*!< LCD Module */
+
+#define LCDCP_MODULE   (MODULE_APBCLK_ENC( 2)|MODULE_IP_EN_Pos_ENC(CLK_APBCLK1_LCDCPCKEN_Pos)|\
+                        MODULE_CLKSEL_ENC( 2)|MODULE_CLKSEL_Msk_ENC( 1)|MODULE_CLKSEL_Pos_ENC( 25)|\
+                        MODULE_CLKDIV_ENC(NA)|MODULE_CLKDIV_Msk_ENC(NA)|MODULE_CLKDIV_Pos_ENC(NA))      /*!< LCDCP MODULE */
 
 #define PWM0_MODULE    (MODULE_APBCLK_ENC( 2)|MODULE_IP_EN_Pos_ENC(CLK_APBCLK1_PWM0CKEN_Pos)|\
                         MODULE_CLKSEL_ENC( 2)|MODULE_CLKSEL_Msk_ENC( 1)|MODULE_CLKSEL_Pos_ENC( 0)|\
@@ -447,6 +454,8 @@ extern "C"
 #define PSIO_MODULE    (MODULE_APBCLK_ENC( 2)|MODULE_IP_EN_Pos_ENC(CLK_APBCLK1_PSIOCKEN_Pos)|\
                         MODULE_CLKSEL_ENC( 2)|MODULE_CLKSEL_Msk_ENC( 7)|MODULE_CLKSEL_Pos_ENC( 28)|\
                         MODULE_CLKDIV_ENC( 1)|MODULE_CLKDIV_Msk_ENC(0xFF)|MODULE_CLKDIV_Pos_ENC( 24))   /*!< PSIO Module */
+
+
 
 /*---------------------------------------------------------------------------------------------------------*/
 /*  PDMSEL constant definitions.                                                                          */
@@ -659,5 +668,3 @@ uint32_t CLK_GetModuleClockDivider(uint32_t u32ModuleIdx);
 #endif
 
 #endif /* __CLK_H__ */
-
-/*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/

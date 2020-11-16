@@ -90,6 +90,7 @@ void SYS_Init(void)
 
     /* Enable UART module clock */
     CLK_EnableModuleClock(UART0_MODULE);
+    CLK_EnableModuleClock(GPB_MODULE);
 
     /* Select UART module clock source as HIRC and UART module clock divider as 1 */
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HIRC, CLK_CLKDIV0_UART0(1));
@@ -140,7 +141,7 @@ int main(void)
     /* Init UART0 for printf */
     UART0_Init();
 
-    printf("\n\nCPU @ %d Hz\n", SystemCoreClock);
+    printf("\n\nCPU @ %u Hz\n", SystemCoreClock);
     printf("+------------------------------------------------------------+\n");
     printf("| GPIO EINT0/EINT1/EINT2 Interrupt and De-bounce Sample Code |\n");
     printf("+------------------------------------------------------------+\n\n");

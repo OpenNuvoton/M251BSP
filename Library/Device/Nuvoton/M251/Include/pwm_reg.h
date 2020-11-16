@@ -1433,20 +1433,32 @@ typedef struct
      */
     __IO uint32_t CTL0;                  /*!< [0x0000] PWM Control Register 0                                           */
     __IO uint32_t CTL1;                  /*!< [0x0004] PWM Control Register 1                                           */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE0[2];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t CLKSRC;                /*!< [0x0010] PWM Clock Source Register                                        */
     __IO uint32_t CLKPSC[3];             /*!< [0x0014 ~ 0x001c] PWM Clock Prescale Register                             */
     __IO uint32_t CNTEN;                 /*!< [0x0020] PWM Counter Enable Register                                      */
     __IO uint32_t CNTCLR;                /*!< [0x0024] PWM Clear Counter Register                                       */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE1[2];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t PERIOD[6];            /*!< [0x0030 ~ 0x0044] PWM Period Register 0                                    */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE4[2];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t CMPDAT[6];             /*!< [0x0050 ~ 0x0064] PWM Comparator Register 0 ~ 5                           */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE5[2];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t DTCTL[3];              /*!< [0x0070 ~ 0x0078] PWM Dead-time Control Register                          */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE6[5];
+    /// @endcond //HIDDEN_SYMBOLS
     __I  uint32_t CNT[6];                /*!< [0x0090] PWM Counter Register 0,2,4                                       */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE9[2];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t WGCTL0;                /*!< [0x00b0] PWM Generation Register 0                                        */
     __IO uint32_t WGCTL1;                /*!< [0x00b4] PWM Generation Register 1                                        */
     __IO uint32_t MSKEN;                 /*!< [0x00b8] PWM Mask Enable Register                                         */
@@ -1461,28 +1473,39 @@ typedef struct
     __IO uint32_t INTEN1;                /*!< [0x00e4] PWM Interrupt Enable Register 1                                  */
     __IO uint32_t INTSTS0;               /*!< [0x00e8] PWM Interrupt Flag Register 0                                    */
     __IO uint32_t INTSTS1;               /*!< [0x00ec] PWM Interrupt Flag Register 1                                    */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE10[2];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t EADCTS0;               /*!< [0x00f8] PWM Trigger EADC Source Select Register 0                        */
     __IO uint32_t EADCTS1;               /*!< [0x00fc] PWM Trigger EADC Source Select Register 1                        */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE11[4];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t SSCTL;                 /*!< [0x0110] PWM Synchronous Start Control Register                           */
     __O  uint32_t SSTRG;                 /*!< [0x0114] PWM Synchronous Start Trigger Register                           */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE12[2];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t STATUS;                /*!< [0x0120] PWM Status Register                                              */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE13[55];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t CAPINEN;               /*!< [0x0200] PWM Capture Input Enable Register                                */
     __IO uint32_t CAPCTL;                /*!< [0x0204] PWM Capture Control Register                                     */
     __I  uint32_t CAPSTS;                /*!< [0x0208] PWM Capture Status Register                                      */
     CAPDAT_T CAPDAT[6];                 /*!< [0x020C] PWM Rising and Falling Capture Data Register 0~5                  */
     __IO uint32_t PDMACTL;               /*!< [0x023c] PWM PDMA Control Register                                        */
     __I  uint32_t PDMACAP[3];            /*!< [0x0240 ~ 0x0248] PWM Capture Channel 01, 23, 45 PDMA Register            */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE14[1];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t CAPIEN;                /*!< [0x0250] PWM Capture Interrupt Enable Register                            */
     __IO uint32_t CAPIF;                 /*!< [0x0254] PWM Capture Interrupt Flag Register                              */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE15[43];
+    /// @endcond //HIDDEN_SYMBOLS
     __I  uint32_t PBUF[6];               /*!< [0x0304 ~ 0x0318] PWM PERIOD0 ~ 6 Buffer                                  */
     __I  uint32_t CMPBUF[6];             /*!< [0x031c ~ 0x0330] PWM CMPDAT0 ~ 5 Buffer                                  */
-
 } PWM_T;
 
 /**

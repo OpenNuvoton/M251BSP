@@ -373,13 +373,19 @@ typedef struct
      * |        |          |The delay hold time is numbers of peripheral clock = HTCTL x fPCLK.
      */
     __IO uint32_t CTL;                   /*!< [0x0000] USCI Control Register                                            */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE0[1];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t BRGEN;                 /*!< [0x0008] USCI Baud Rate Generator Register                                */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE1[8];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t LINECTL;               /*!< [0x002c] USCI Line Control Register                                       */
     __O  uint32_t TXDAT;                 /*!< [0x0030] USCI Transmit Data Register                                      */
     __I  uint32_t RXDAT;                 /*!< [0x0034] USCI Receive Data Register                                       */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE2[3];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t DEVADDR0;              /*!< [0x0044] USCI Device Address Register 0                                   */
     __IO uint32_t DEVADDR1;              /*!< [0x0048] USCI Device Address Register 1                                   */
     __IO uint32_t ADDRMSK0;              /*!< [0x004c] USCI Device Address Mask Register 0                              */
@@ -389,10 +395,11 @@ typedef struct
     __IO uint32_t PROTCTL;               /*!< [0x005c] USCI Protocol Control Register                                   */
     __IO uint32_t PROTIEN;               /*!< [0x0060] USCI Protocol Interrupt Enable Register                          */
     __IO uint32_t PROTSTS;               /*!< [0x0064] USCI Protocol Status Register                                    */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE3[8];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t ADMAT;                 /*!< [0x0088] I2C Slave Match Address Register                                 */
     __IO uint32_t TMCTL;                 /*!< [0x008c] I2C Timing Configure Control Register                            */
-
 } UI2C_T;
 
 /**

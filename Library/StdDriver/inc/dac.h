@@ -4,7 +4,7 @@
  * @brief    M251 series DAC driver header file
  *
  * SPDX-License-Identifier: Apache-2.0
- * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2020 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 
 #ifndef __DAC_H__
@@ -247,5 +247,3 @@ uint32_t DAC_SetDelayTime(DAC_T *dac, uint32_t u32Delay);
 #endif
 
 #endif /* __DAC_H__ */
-
-/*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/

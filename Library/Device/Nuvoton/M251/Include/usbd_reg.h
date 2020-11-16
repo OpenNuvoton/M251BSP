@@ -4,7 +4,7 @@
  * @brief    USBD register definition header file
  *
  * SPDX-License-Identifier: Apache-2.0
- * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2020 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 
 #ifndef __USBD_REG_H__
@@ -123,7 +123,7 @@ typedef struct
      * |[4]     |SOFIEN    |Start of Frame Interrupt Enable Bit
      * |        |          |0 = SOF Interrupt Disabled.
      * |        |          |1 = SOF Interrupt Enabled.
-     * |[5]     |BCDIEN    |Battery Charge Detect Interrupt Enable Bit
+     * |[5]     |BCDIEN    |Battery Charge Detect Interrupt Enable Bit (Only for M258)
      * |        |          |0 = BCD Interrupt Disabled.
      * |        |          |1 = BCD Interrupt Enabled.
      * |[8]     |WKEN      |Wake-up Function Enable Bit
@@ -154,7 +154,7 @@ typedef struct
      * |[4]     |SOFIF     |Start of Frame Interrupt Status
      * |        |          |0 = SOF event does not occur.
      * |        |          |1 = SOF event occurred, cleared by write 1 to USBD_INTSTS[4].
-     * |[5]     |BCDIF     |Battery Charge Detect Interrupt Status
+     * |[5]     |BCDIF     |Battery Charge Detect Interrupt Status (Only for M258)
      * |        |          |It support VBUSOK`DCD interrupt status
      * |        |          |When USBD_BCDC[0] = 1 ,USBD_BCDC[3:1] = 001 ,VBUS detect
      * |        |          |When USBD_BCDC[0] = 1 ,USBD_BCDC[3:1] = 010 ,DCD detect
@@ -195,7 +195,7 @@ typedef struct
      * |        |          |1 = USB event occurred on Endpoint 10, check USBD_EPSTS1[11 :8] to know which kind of USB event was occurred, cleared by write 1 to USBD_INTSTS[26] or USBD_INTSTS[1].
      * |[27]    |EPEVT11   |Endpoint 11's USB Event Status
      * |        |          |0 = No event occurred in endpoint 11.
-     * |        |          |1 = USB event occurred on Endpoint 11, check USBD_EPSTS1[ 15:12] to know which kind of USB event was occurred, cleared by write 1 to USBD_INTSTS[27] or USBD_INTSTS[1].
+     * |        |          |1 = USB event occurred on Endpoint 11, check USBD_EPSTS1[15:12] to know which kind of USB event was occurred, cleared by write 1 to USBD_INTSTS[27] or USBD_INTSTS[1].
      * |[31]    |SETUP     |Setup Event Status
      * |        |          |0 = No Setup event.
      * |        |          |1 = Setup event occurred, cleared by write 1 to USBD_INTSTS[31].
@@ -423,27 +423,27 @@ typedef struct
      * | :----: | :----:   | :---- |
      * |[0]     |BCDEN     |Battery Charge Detect Enable
      * |        |          |Enable battery charge detect, user select DETMOD then observer DETSTS to decide contact
-     * |        |          |port PHY be used to BCD, can't be used to comminication when BCDEN = 1
+     * |        |          |port PHY be used to BCD, can't be used to communication when BCDEN = 1
      * |        |          |0 = Normal operation
      * |        |          |1 = Battery charge detect operation
-     * |[3:1]   |DETMOD    |Detect mode
+     * |[3:1]   |DETMOD    |Detect Mode
      * |        |          |When BCDEN = 1, select detect mode to perform
      * |        |          |000 = Idle, nothing to detect
      * |        |          |001 = VBUS detect, detect USB VBUS whether great than threshold voltage
      * |        |          |010 = Data contact detect(DCD), detect data pin contact status
-     * |        |          |011 = Primary detect(PD), distinquish between (SDP'not USB standard port) and (CDP'DCP)
-     * |        |          |100 = Secondary detect(SD), distinquish between CDP and DCP
+     * |        |          |011 = Primary detect(PD), distinguish between (SDP or NUSP) and (CDP or DCP)
+     * |        |          |100 = Secondary detect(SD), distinguish between CDP and DCP
      * |        |          |101~111 = Reserved
-     * |[4]     |DETSTS    |Detect status
+     * |[4]     |DETSTS    |Detect Status (Read Only)
      * |        |          |When DETMOD = 000(IDLE), DETSTS = 0
      * |        |          |
      * |        |          |When DETMOD = 001(VBUS detect)
-     * |        |          |000 = VBUS unreach threshold voltage
-     * |        |          |001 = VBUS reach threshold voltage
+     * |        |          |000 = VBUS is less than threshold voltage
+     * |        |          |001 = VBUS is greater than threshold voltage
      * |        |          |
      * |        |          |When DETMOD = 010(DCD detect)
-     * |        |          |000 = Data pin uncontact
-     * |        |          |001 = Data pin contact
+     * |        |          |000 = Data pin not contacted
+     * |        |          |001 = Data pin contacted
      * |        |          |
      * |        |          |When DETMOD = 011(PD)
      * |        |          |000 = SDP port or not USB support port. If it is not USB support, NUSP is 1
@@ -452,7 +452,7 @@ typedef struct
      * |        |          |When DETMOD = 100(SD)
      * |        |          |000 = CDP
      * |        |          |001 = DCP
-     * |[5]     |NUSP      |Not USB Support port
+     * |[5]     |NUSP      |Not USB Support Port (Read Only)
      * |        |          |When DETMOD = 011(PD), detect DM be pulled logic high, it means contact port not USB support port
      * |        |          |0 = USB support port
      * |        |          |1 = Not USB support port
@@ -476,11 +476,11 @@ typedef struct
     __I  uint32_t LPMATTR;               /*!< [0x0088] USB LPM Attribution Register                                     */
     __I  uint32_t FN;                    /*!< [0x008c] USB Frame number Register                                        */
     __IO uint32_t SE0;                   /*!< [0x0090] USB Device Drive SE0 Control Register                            */
-    __IO uint32_t BCDC;                  /*!< [0x0094] USB Device Battery Charge Detect Control Register                             */
+    __IO uint32_t BCDC;                  /*!< [0x0094] USB Device Battery Charge Detect Control Register                */
     /* @cond HIDDEN_SYMBOLS */
     __I  uint32_t RESERVE2[282];
     /* @endcond //HIDDEN_SYMBOLS */
-    USBD_EP_T EP[12];                    /*!< [0x0500~0x5BC] USB Device Endpoints(0~11)                                 */
+    USBD_EP_T EP[12];                    /*!< [0x0500~0x60C] USB Device Endpoints(0~16)                                 */
 } USBD_T;
 
 /**

@@ -4,7 +4,7 @@
  * @brief    CLK register definition header file
  *
  * SPDX-License-Identifier: Apache-2.0
- * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2020 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 
 #ifndef __CLK_REG_H__
@@ -98,9 +98,9 @@ typedef struct
      * |        |          |010 = HXT frequency  8~12 MHz.
      * |        |          |011 = HXT frequency 12~16 MHz.
      * |        |          |100 = HXT frequency 12~24 MHz.
-     * |        |          |101 = HXT frequency 16~32 Mhz.
+     * |        |          |101 = HXT frequency 16~32 MHz.
      * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |        |          |Note : reset by powr on reset
+     * |        |          |Note : reset by power on reset
      * @var CLK_T::AHBCLK
      * Offset: 0x04  AHB Devices Clock Enable Control Register
      * ---------------------------------------------------------------------------------------------------
@@ -716,26 +716,39 @@ typedef struct
     __IO uint32_t CLKSEL3;               /*!< [0x001c] Clock Source Select Control Register 3                           */
     __IO uint32_t CLKDIV0;               /*!< [0x0020] Clock Divider Number Register 0                                  */
     __IO uint32_t CLKDIV1;               /*!< [0x0024] Clock Divider Number Register 1                                  */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE0[2];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t CLKDIV4;               /*!< [0x0030] Clock Divider Number Register 4                                  */
     __IO uint32_t PCLKDIV;               /*!< [0x0034] APB Clock Divider Register                                       */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE1[2];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t PLLCTL;                /*!< [0x0040] PLL Control Register                                             */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE2[3];
+    /// @endcond //HIDDEN_SYMBOLS
     __I  uint32_t STATUS;                /*!< [0x0050] Clock Status Monitor Register                                    */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE3[3];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t CLKOCTL;               /*!< [0x0060] Clock Output Control Register                                    */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE4[3];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t CLKDCTL;               /*!< [0x0070] Clock Fail Detector Control Register                             */
     __IO uint32_t CLKDSTS;               /*!< [0x0074] Clock Fail Detector Status Register                              */
     __IO uint32_t CDUPB;                 /*!< [0x0078] Clock Frequency Range Detector Upper Boundary Register           */
     __IO uint32_t CDLOWB;                /*!< [0x007c] Clock Frequency Range Detector Lower Boundary Register           */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE5[4];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t PMUCTL;                /*!< [0x0090] Power Manager Control Register                                   */
     __IO uint32_t PMUSTS;                /*!< [0x0094] Power Manager Status Register                                    */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE6[7];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t HXTFSEL;               /*!< [0x00b4] HXT Filter Select Control Register                               */
-
 } CLK_T;
 
 /**
@@ -860,8 +873,8 @@ typedef struct
 #define CLK_APBCLK0_EADCCKEN_Pos         (28)                                              /*!< CLK_T::APBCLK0: EADCCKEN Position      */
 #define CLK_APBCLK0_EADCCKEN_Msk         (0x1ul << CLK_APBCLK0_EADCCKEN_Pos)               /*!< CLK_T::APBCLK0: EADCCKEN Mask          */
 
-#define CLK_APBCLK0_TCHKCKEN_Pos         (29)                                              /*!< CLK_T::APBCLK0: TCHKCKEN Position      */
-#define CLK_APBCLK0_TCHKCKEN_Msk         (0x1ul << CLK_APBCLK0_TCHKCKEN_Pos)               /*!< CLK_T::APBCLK0: TCHKCKEN Mask          */
+#define CLK_APBCLK0_TKCKEN_Pos           (29)                                              /*!< CLK_T::APBCLK0: TKCKEN Position        */
+#define CLK_APBCLK0_TKCKEN_Msk           (0x1ul << CLK_APBCLK0_TKCKEN_Pos)                 /*!< CLK_T::APBCLK0: TKCKEN Mask            */
 
 #define CLK_APBCLK1_SC0CKEN_Pos          (0)                                               /*!< CLK_T::APBCLK1: SC0CKEN Position       */
 #define CLK_APBCLK1_SC0CKEN_Msk          (0x1ul << CLK_APBCLK1_SC0CKEN_Pos)                /*!< CLK_T::APBCLK1: SC0CKEN Mask           */
@@ -878,8 +891,11 @@ typedef struct
 #define CLK_APBCLK1_DACCKEN_Pos          (12)                                              /*!< CLK_T::APBCLK1: DACCKEN Position       */
 #define CLK_APBCLK1_DACCKEN_Msk          (0x1ul << CLK_APBCLK1_DACCKEN_Pos)                /*!< CLK_T::APBCLK1: DACCKEN Mask           */
 
-#define CLK_APBCLK1_SLCDCKEN_Pos         (14)                                              /*!< CLK_T::APBCLK1: SLCDCKEN Position      */
-#define CLK_APBCLK1_SLCDCKEN_Msk         (0x1ul << CLK_APBCLK1_SLCDCKEN_Pos)               /*!< CLK_T::APBCLK1: SLCDCKEN Mask          */
+#define CLK_APBCLK1_LCDCKEN_Pos          (14)                                              /*!< CLK_T::APBCLK1: LCDCKEN Position       */
+#define CLK_APBCLK1_LCDCKEN_Msk          (0x1ul << CLK_APBCLK1_LCDCKEN_Pos)                /*!< CLK_T::APBCLK1: LCDCKEN Mask           */
+
+#define CLK_APBCLK1_LCDCPCKEN_Pos        (15)                                              /*!< CLK_T::APBCLK1: LCDCPCKEN Position     */
+#define CLK_APBCLK1_LCDCPCKEN_Msk        (0x1ul << CLK_APBCLK1_LCDCPCKEN_Pos)              /*!< CLK_T::APBCLK1: LCDCPCKEN Mask         */
 
 #define CLK_APBCLK1_PWM0CKEN_Pos         (16)                                              /*!< CLK_T::APBCLK1: PWM0CKEN Position      */
 #define CLK_APBCLK1_PWM0CKEN_Msk         (0x1ul << CLK_APBCLK1_PWM0CKEN_Pos)               /*!< CLK_T::APBCLK1: PWM0CKEN Mask          */
@@ -953,8 +969,11 @@ typedef struct
 #define CLK_CLKSEL2_BPWM1SEL_Pos         (9)                                               /*!< CLK_T::CLKSEL2: BPWM1SEL Position      */
 #define CLK_CLKSEL2_BPWM1SEL_Msk         (0x1ul << CLK_CLKSEL2_BPWM1SEL_Pos)               /*!< CLK_T::CLKSEL2: BPWM1SEL Mask          */
 
-#define CLK_CLKSEL2_SLCDSEL_Pos          (24)                                              /*!< CLK_T::CLKSEL2: SLCDSEL Position       */
-#define CLK_CLKSEL2_SLCDSEL_Msk          (0x1ul << CLK_CLKSEL2_SLCDSEL_Pos)                /*!< CLK_T::CLKSEL2: SLCDSEL Mask           */
+#define CLK_CLKSEL2_LCDSEL_Pos           (24)                                              /*!< CLK_T::CLKSEL2: LCDSEL Position        */
+#define CLK_CLKSEL2_LCDSEL_Msk           (0x1ul << CLK_CLKSEL2_LCDSEL_Pos)                 /*!< CLK_T::CLKSEL2: LCDSEL Mask            */
+
+#define CLK_CLKSEL2_LCDCPSEL_Pos         (25)                                              /*!< CLK_T::CLKSEL2: LCDCPSEL Position      */
+#define CLK_CLKSEL2_LCDCPSEL_Msk         (0x1ul << CLK_CLKSEL2_LCDCPSEL_Pos)               /*!< CLK_T::CLKSEL2: LCDCPSEL Mask          */
 
 #define CLK_CLKSEL2_PSIOSEL_Pos          (28)                                              /*!< CLK_T::CLKSEL2: PSIOSEL Position       */
 #define CLK_CLKSEL2_PSIOSEL_Msk          (0x7ul << CLK_CLKSEL2_PSIOSEL_Pos)                /*!< CLK_T::CLKSEL2: PSIOSEL Mask           */

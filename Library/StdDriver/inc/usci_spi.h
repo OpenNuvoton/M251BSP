@@ -363,6 +363,15 @@ extern "C"
 #define USPI_TRIGGER_TX_PDMA(psUSPI)   ((psUSPI)->PDMACTL |= USPI_PDMACTL_TXPDMAEN_Msk|USPI_PDMACTL_PDMAEN_Msk)
 
 /**
+  * @brief      Trigger TX and RX PDMA function.
+  * @param[in]  psUSPI The pointer of the specified USCI_SPI module.
+  * @return     None.
+  * @details    Set TXPDMAEN bit and RXPDMAEN bit of USPI_PDMACTL register to enable TX and RX PDMA transfer function.
+  * \hideinitializer
+  */
+#define USPI_TRIGGER_TX_RX_PDMA(psUSPI)   ((psUSPI)->PDMACTL |= USPI_PDMACTL_TXPDMAEN_Msk|USPI_PDMACTL_RXPDMAEN_Msk|USPI_PDMACTL_PDMAEN_Msk)
+
+/**
   * @brief      Disable RX PDMA transfer.
   * @param[in]  psUSPI The pointer of the specified USCI_SPI module.
   * @return     None.
@@ -379,6 +388,15 @@ extern "C"
   * \hideinitializer
   */
 #define USPI_DISABLE_TX_PDMA(psUSPI) ( (psUSPI)->PDMACTL &= ~USPI_PDMACTL_TXPDMAEN_Msk )
+
+/**
+  * @brief      Disable TX and RX PDMA transfer.
+  * @param[in]  psUSPI The pointer of the specified USCI_SPI module.
+  * @return     None.
+  * @details    Clear TXPDMAEN bit and RXPDMAEN bit of USPI_PDMACTL register to disable TX and RX PDMA transfer function.
+  * \hideinitializer
+  */
+#define USPI_DISABLE_TX_RX_PDMA(psUSPI) ( (psUSPI)->PDMACTL &= ~(USPI_PDMACTL_TXPDMAEN_Msk | USPI_PDMACTL_RXPDMAEN_Msk))
 
 uint32_t USPI_Open(USPI_T *psUSPI, uint32_t u32MasterSlave, uint32_t u32SPIMode,  uint32_t u32DataWidth, uint32_t u32BusClock);
 void USPI_Close(USPI_T *psUSPI);

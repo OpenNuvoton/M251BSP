@@ -87,7 +87,6 @@ void UART0_Init(void)
 /*---------------------------------------------------------------------------------------------------------*/
 void EADC_FunctionTest(void)
 {
-    uint8_t  u8Option;
     int32_t  i32ConversionData;
     uint32_t u32IntNum,  u32ModuleNum, u32ChannelNum;
     uint32_t u32IntMask, u32ModuleMask;
@@ -112,6 +111,8 @@ void EADC_FunctionTest(void)
         printf("  [1] Basic EADC compare function\n");
         printf("  [2] EADC compare window mode\n");
         printf("  Other keys: exit EADC test\n");
+
+        uint8_t  u8Option;
         u8Option = getchar();
 
         if (u8Option == '1')
@@ -126,11 +127,11 @@ void EADC_FunctionTest(void)
             EADC_CLR_INT_FLAG(EADC, EADC_STATUS2_ADIF0_Msk);
 
             /* Enable EADC comparator 0. Compare condition: conversion result < 0x800; match Count=5 */
-            printf("Set the compare condition of comparator 0:\n  channel %d is less than 0x800; match count is 1.\n", u32ChannelNum);
+            printf("Set the compare condition of comparator 0:\n  channel %u is less than 0x800; match count is 1.\n", u32ChannelNum);
             EADC_ENABLE_CMP0(EADC, u32ModuleNum, EADC_CMP_CMPCOND_LESS_THAN, 0x800, 1);
 
             /* Enable EADC comparator 1. Compare condition: conversion result >= 0x800; match Count=5 */
-            printf("Set the compare condition of comparator 1:\n  channel %d is greater than or equal to 0x800; match count is 1.\n", u32ChannelNum);
+            printf("Set the compare condition of comparator 1:\n  channel %u is greater than or equal to 0x800; match count is 1.\n", u32ChannelNum);
             EADC_ENABLE_CMP1(EADC, u32ModuleNum, EADC_CMP_CMPCOND_GREATER_OR_EQUAL, 0x800, 1);
 
             /* Enable the sample module interrupt.  */
@@ -168,19 +169,19 @@ void EADC_FunctionTest(void)
 
             /* Get the conversion result of the sample module */
             i32ConversionData = EADC_GET_CONV_DATA(EADC, u32ModuleNum);
-            printf("Conversion result of channel %d: 0x%X (%d)\n", u32ChannelNum, i32ConversionData, i32ConversionData);
+            printf("Conversion result of channel %u: 0x%X (%d)\n", u32ChannelNum, i32ConversionData, i32ConversionData);
 
             /* Wait EADC compare interrupt */
             while ((g_u32EadcCmp0IntFlag == 0) && (g_u32EadcCmp1IntFlag == 0));
 
             if (g_u32EadcCmp0IntFlag == 1)
             {
-                printf("Comparator 0 interrupt occurs.\nThe conversion result of channel %d is less than 0x800\n\n", u32ChannelNum);
+                printf("Comparator 0 interrupt occurs.\nThe conversion result of channel %u is less than 0x800\n\n", u32ChannelNum);
             }
 
             if (g_u32EadcCmp1IntFlag == 1)
             {
-                printf("Comparator 1 interrupt occurs.\nThe conversion result of channel %d is greater than or equal to 0x800\n\n", u32ChannelNum);
+                printf("Comparator 1 interrupt occurs.\nThe conversion result of channel %u is greater than or equal to 0x800\n\n", u32ChannelNum);
             }
 
             /* Disable compare function */
@@ -209,11 +210,11 @@ void EADC_FunctionTest(void)
             EADC_CLR_INT_FLAG(EADC, EADC_STATUS2_ADIF0_Msk);
 
             /* Enable EADC comparator 0. Compare condition: conversion result < 0x800; match Count=5 */
-            printf("Set the compare condition of comparator 0:\n  channel %d is less than 0x800; match count is 1.\n", u32ChannelNum);
+            printf("Set the compare condition of comparator 0:\n  channel %u is less than 0x800; match count is 1.\n", u32ChannelNum);
             EADC_ENABLE_CMP0(EADC, u32ModuleNum, EADC_CMP_CMPCOND_LESS_THAN, 0x800, 1);
 
             /* Enable EADC comparator 1. Compare condition: conversion result >= 0x800; match Count=5 */
-            printf("Set the compare condition of comparator 1:\n  channel %d is greater than or equal to 0x200; match count is 1.\n", u32ChannelNum);
+            printf("Set the compare condition of comparator 1:\n  channel %u is greater than or equal to 0x200; match count is 1.\n", u32ChannelNum);
             EADC_ENABLE_CMP1(EADC, u32ModuleNum, EADC_CMP_CMPCOND_GREATER_OR_EQUAL, 0x200, 1);
 
             printf("Enable Compare Window Mode.\n  Compare interrupt occurred only if both comparator 0 and 1 are match.\n");
@@ -248,15 +249,15 @@ void EADC_FunctionTest(void)
 
             /* Get the conversion result of the sample module */
             i32ConversionData = EADC_GET_CONV_DATA(EADC, u32ModuleNum);
-            printf("Conversion result of channel %d: 0x%X (%d)\n", u32ChannelNum, i32ConversionData, i32ConversionData);
+            printf("Conversion result of channel %u: 0x%X (%d)\n", u32ChannelNum, i32ConversionData, i32ConversionData);
 
             if (g_u32EadcCmp0IntFlag == 1)
             {
-                printf("Comparator 0 interrupt occurs.\nThe conversion result of channel %d is < 0x800 and >= 0x200\n\n", u32ChannelNum);
+                printf("Comparator 0 interrupt occurs.\nThe conversion result of channel %u is < 0x800 and >= 0x200\n\n", u32ChannelNum);
             }
             else
             {
-                printf("Comparator 0 interrupt don't occurs.\nThe conversion result of channel %d is >= 0x800 or < 0x200\n\n", u32ChannelNum);
+                printf("Comparator 0 interrupt don't occurs.\nThe conversion result of channel %u is >= 0x800 or < 0x200\n\n", u32ChannelNum);
             }
 
             /* Disable compare function */

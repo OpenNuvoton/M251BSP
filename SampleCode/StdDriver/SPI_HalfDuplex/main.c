@@ -4,7 +4,7 @@
  * @brief
  *           Demonstrate SPI half-duplex mode.
  *           QSPI0 will be configured as Master mode and SPI0 will be configured as Slave mode.
- *           Both QSPI0 and SPI0 will be configured as half-dupex mode.
+ *           Both QSPI0 and SPI0 will be configured as half-duplex mode.
  *
  * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
@@ -99,7 +99,7 @@ void SPI_Init(void)
     /* Configure SPI0 */
     /* Configure SPI0 as a slave, clock idle low, 32-bit transaction, drive output on falling clock edge and latch input on rising edge. */
     /* Configure SPI0 as a low level active device. SPI peripheral clock rate = f_PCLK0 */
-    SPI_Open(SPI0, SPI_SLAVE, SPI_MODE_0, 32, (uint32_t)NULL);
+    SPI_Open(SPI0, SPI_SLAVE, SPI_MODE_0, 32, 0);
 }
 
 int main(void)
@@ -175,7 +175,7 @@ int main(void)
 
     for (u32DataCount = 0; u32DataCount < TEST_COUNT; u32DataCount++)
     {
-        printf("%d:\t0x%X\n", u32DataCount, g_au32DestinationData[u32DataCount]);
+        printf("%u:\t0x%X\n", u32DataCount, g_au32DestinationData[u32DataCount]);
     }
 
     printf("The data transfer was done.\n");

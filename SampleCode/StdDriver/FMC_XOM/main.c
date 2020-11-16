@@ -50,7 +50,6 @@ void SYS_Init(void)
 
 int32_t main(void)
 {
-    uint32_t u32Status;
 
     /* Unlock protected registers */
     SYS_UnlockReg();
@@ -73,7 +72,7 @@ int32_t main(void)
     printf("|  FMC XOM config & erase  Sample Code   |\n");
     printf("+----------------------------------------+\n");
 
-    /* Unlock protected registers */
+    /* Unlock protected registers to operate FMC ISP function */
     SYS_UnlockReg();
 
     /* Enable FMC ISP function and enable APROM active*/
@@ -92,6 +91,7 @@ int32_t main(void)
         /* Config XOMR0 */
         if (FMC_Is_XOM_Actived(XOMR0) == 0)
         {
+            uint32_t u32Status;
             u32Status = FMC_Config_XOM(XOMR0, XOMR0_BASE, 0x1);
 
             if (u32Status)
@@ -136,6 +136,9 @@ int32_t main(void)
     }
 
     printf("LOOP\n");
+
+    /* Lock protected registers */
+    SYS_LockReg();
 
     while (1);
 }

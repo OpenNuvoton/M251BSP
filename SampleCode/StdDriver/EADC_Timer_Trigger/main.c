@@ -108,7 +108,6 @@ void TIMER0_Init(void)
 /*---------------------------------------------------------------------------------------------------------*/
 void EADC_FunctionTest(void)
 {
-    uint8_t  u8Option;
     int32_t  i32Temp;
     int32_t  ai32ConversionData[6] = {0};
     uint32_t u32IntNum,  u32ModuleNum, u32ChannelNum;
@@ -136,6 +135,8 @@ void EADC_FunctionTest(void)
         printf("  [1] Basic EADC conversion (channel 0 only)\n");
         printf("  [2] Basic EADC conversion (channel 1 only)\n");
         printf("  Other keys: exit EADC test\n");
+
+        uint8_t  u8Option;
         u8Option = getchar();
 
         if (u8Option == '1')
@@ -170,7 +171,7 @@ void EADC_FunctionTest(void)
             /* Wait EADC interrupt (g_u32EadcInt0Flag will be set at EADC_INT0_IRQHandler() function) */
             while (g_u32EadcInt0Flag == 0);
 
-            printf("[%d] EADC conversion completed !\n", g_u32ConvNum);
+            printf("[%u] EADC conversion completed !\n", g_u32ConvNum);
 
             /* Reset the EADC interrupt indicator */
             g_u32EadcInt0Flag = 0;
@@ -186,7 +187,7 @@ void EADC_FunctionTest(void)
         /* Disable Timer0 counter */
         TIMER_Stop(TIMER0);
 
-        printf("Conversion result of channel %d:\n", u32ChannelNum);
+        printf("Conversion result of channel %u:\n", u32ChannelNum);
 
         for (g_u32ConvNum = 0; g_u32ConvNum < 6; g_u32ConvNum++)
         {

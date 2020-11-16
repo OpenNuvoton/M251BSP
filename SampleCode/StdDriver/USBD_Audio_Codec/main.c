@@ -64,6 +64,8 @@ void SYS_Init(void)
     CLK_EnableModuleClock(I2C0_MODULE);
     CLK_EnableModuleClock(SPI0_MODULE);
     CLK_EnableModuleClock(PDMA_MODULE);
+    CLK_EnableModuleClock(GPA_MODULE);
+    CLK_EnableModuleClock(GPD_MODULE);
 
     /* Select module clock source */
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HIRC, CLK_CLKDIV0_UART0(1));
@@ -188,6 +190,12 @@ int32_t main(void)
     NVIC_EnableIRQ(USBD_IRQn);
     NVIC_EnableIRQ(PDMA_IRQn);
 
+    /* PDMA interrupt has higher frequency then USBD interrupt.
+       Therefore, we need to set PDMA with higher priority to avoid
+       PDMA interrupt pending too long time when USBD interrupt happen. */
+    NVIC_SetPriority(USBD_IRQn, 3);
+    NVIC_SetPriority(PDMA_IRQn, 2);
+
     USBD_Start();
 
 #if CRYSTAL_LESS
@@ -248,6 +256,3 @@ int32_t main(void)
         AdjFreq();
     }
 }
-
-/*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/
-

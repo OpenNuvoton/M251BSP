@@ -82,6 +82,7 @@ void SYS_Init(void)
     /* Enable IP clock */
     CLK_EnableModuleClock(UART0_MODULE);
     CLK_EnableModuleClock(TMR0_MODULE);
+    CLK_EnableModuleClock(GPB_MODULE);
 
     /* Select IP clock source */
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_PCLK0, CLK_CLKDIV0_UART0(1));

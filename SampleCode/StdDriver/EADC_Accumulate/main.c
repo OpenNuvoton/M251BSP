@@ -122,7 +122,7 @@ uint32_t EADC_Accumulate_LeftShift(uint32_t u32AccuRawResult, uint32_t u32AccuCo
             return (u32AccuRawResult << 4);
 
         default:
-            printf("*** Error! Wrong parameter %d for M251 Accumulate.\n\n", u32AccuCount);
+            printf("*** Error! Wrong parameter %u for M251 Accumulate.\n\n", u32AccuCount);
             return u32AccuRawResult;
     }
 }
@@ -133,8 +133,6 @@ uint32_t EADC_Accumulate_LeftShift(uint32_t u32AccuRawResult, uint32_t u32AccuCo
 /*---------------------------------------------------------------------------------------------------------*/
 void EADC_FunctionTest(void)
 {
-    uint8_t  u8Option;
-    int32_t  i32ConversionData;
     uint32_t u32IntNum,  u32ModuleNum, u32ChannelNum;
     uint32_t u32IntMask, u32ModuleMask;
 
@@ -158,6 +156,8 @@ void EADC_FunctionTest(void)
         printf("  [1] Basic EADC conversion (channel 0 only)\n");
         printf("  [2] Basic EADC conversion (channel 1 only)\n");
         printf("  Other keys: exit EADC test\n");
+
+        uint8_t  u8Option;
         u8Option = getchar();
 
         if (u8Option == '1')
@@ -193,12 +193,14 @@ void EADC_FunctionTest(void)
         /* Wait EADC interrupt (g_u32EadcInt0Flag will be set at EADC_INT0_IRQHandler() function) */
         while (g_u32EadcInt0Flag == 0);
 
+        int32_t  i32ConversionData;
+
         /* Get the conversion result of the sample module */
         i32ConversionData = EADC_GET_CONV_DATA(EADC, u32ModuleNum);
-        printf("Conversion result of channel %d: 0x%X (%d)\n", u32ChannelNum, i32ConversionData, i32ConversionData);
+        printf("Conversion result of channel %u: 0x%X (%d)\n", u32ChannelNum, i32ConversionData, i32ConversionData);
 
         i32ConversionData = EADC_Accumulate_LeftShift(i32ConversionData, 8);
-        printf("Conversion result of channel %d after left shifted: 0x%X (%d)\n", u32ChannelNum, i32ConversionData, i32ConversionData);
+        printf("Conversion result of channel %u after left shifted: 0x%X (%d)\n", u32ChannelNum, i32ConversionData, i32ConversionData);
 
         printf("The average that calculated by software is 0x%X (%d)\n\n", (int)(i32ConversionData / 8), (int)(i32ConversionData / 8));
 
@@ -266,5 +268,3 @@ int32_t main(void)
 
     while (1);
 }
-
-/*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/

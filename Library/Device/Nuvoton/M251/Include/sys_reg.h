@@ -4,7 +4,7 @@
  * @brief    SYS register definition header file
  *
  * SPDX-License-Identifier: Apache-2.0
- * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2020 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 
 #ifndef __SYS_REG_H__
@@ -496,98 +496,98 @@ typedef struct
      * | :----: | :----:   | :---- |
      * |[0]     |MFOS0     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[1]     |MFOS1     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[2]     |MFOS2     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[3]     |MFOS3     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[4]     |MFOS4     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[5]     |MFOS5     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[6]     |MFOS6     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[7]     |MFOS7     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[8]     |MFOS8     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[9]     |MFOS9     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[10]    |MFOS10    |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[11]    |MFOS11    |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[12]    |MFOS12    |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[13]    |MFOS13    |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[14]    |MFOS14    |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[15]    |MFOS15    |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * @var SYS_T::GPB_MFOS
@@ -597,98 +597,98 @@ typedef struct
      * | :----: | :----:   | :---- |
      * |[0]     |MFOS0     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[1]     |MFOS1     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[2]     |MFOS2     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[3]     |MFOS3     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[4]     |MFOS4     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[5]     |MFOS5     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[6]     |MFOS6     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[7]     |MFOS7     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[8]     |MFOS8     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[9]     |MFOS9     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[10]    |MFOS10    |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[11]    |MFOS11    |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[12]    |MFOS12    |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[13]    |MFOS13    |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[14]    |MFOS14    |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[15]    |MFOS15    |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * @var SYS_T::GPC_MFOS
@@ -698,98 +698,98 @@ typedef struct
      * | :----: | :----:   | :---- |
      * |[0]     |MFOS0     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[1]     |MFOS1     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[2]     |MFOS2     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[3]     |MFOS3     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[4]     |MFOS4     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[5]     |MFOS5     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[6]     |MFOS6     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[7]     |MFOS7     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[8]     |MFOS8     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[9]     |MFOS9     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[10]    |MFOS10    |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[11]    |MFOS11    |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[12]    |MFOS12    |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[13]    |MFOS13    |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[14]    |MFOS14    |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[15]    |MFOS15    |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * @var SYS_T::GPD_MFOS
@@ -799,98 +799,98 @@ typedef struct
      * | :----: | :----:   | :---- |
      * |[0]     |MFOS0     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[1]     |MFOS1     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[2]     |MFOS2     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[3]     |MFOS3     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[4]     |MFOS4     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[5]     |MFOS5     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[6]     |MFOS6     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[7]     |MFOS7     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[8]     |MFOS8     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[9]     |MFOS9     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[10]    |MFOS10    |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[11]    |MFOS11    |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[12]    |MFOS12    |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[13]    |MFOS13    |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[14]    |MFOS14    |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[15]    |MFOS15    |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * @var SYS_T::GPE_MFOS
@@ -900,98 +900,98 @@ typedef struct
      * | :----: | :----:   | :---- |
      * |[0]     |MFOS0     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[1]     |MFOS1     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[2]     |MFOS2     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[3]     |MFOS3     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[4]     |MFOS4     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[5]     |MFOS5     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[6]     |MFOS6     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[7]     |MFOS7     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[8]     |MFOS8     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[9]     |MFOS9     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[10]    |MFOS10    |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[11]    |MFOS11    |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[12]    |MFOS12    |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[13]    |MFOS13    |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[14]    |MFOS14    |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[15]    |MFOS15    |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * @var SYS_T::GPF_MFOS
@@ -1001,98 +1001,98 @@ typedef struct
      * | :----: | :----:   | :---- |
      * |[0]     |MFOS0     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[1]     |MFOS1     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[2]     |MFOS2     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[3]     |MFOS3     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[4]     |MFOS4     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[5]     |MFOS5     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[6]     |MFOS6     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[7]     |MFOS7     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[8]     |MFOS8     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[9]     |MFOS9     |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[10]    |MFOS10    |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[11]    |MFOS11    |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[12]    |MFOS12    |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[13]    |MFOS13    |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[14]    |MFOS14    |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * |[15]    |MFOS15    |GPIOA-f Pin[n] Multiple Function Pin Output Mode Select
      * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple funtion pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple funtion pin output mode type is Open-drain mode.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
      * |        |          |Note:
      * |        |          |Max. n=15.
      * @var SYS_T::MODCTL
@@ -1101,7 +1101,7 @@ typedef struct
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
      * |[0]     |MODEN     |Modulation Function Enable Bit
-     * |        |          |This bit enables modulation funcion by modulating with PWM0 channel output and USCI0(USCI0_DAT0) or UART0(UART0_TXD) output.
+     * |        |          |This bit enables modulation function by modulating with PWM0 channel output and USCI0(USCI0_DAT0) or UART0(UART0_TXD) output.
      * |        |          |0 = Modulation Function Disabled.
      * |        |          |1 = Modulation Function Enabled.
      * |[1]     |MODH      |Modulation at Data High
@@ -1113,17 +1113,17 @@ typedef struct
      * |        |          |0000: PWM0 Channel 0 modulate with UART0_TXD.
      * |        |          |0001: PWM0 Channel 1 modulate with UART0_TXD.
      * |        |          |0010: PWM0 Channel 2 modulate with UART0_TXD.
-     * |        |          |0011: PWM0 Channel 3 modulete with UART0_TXD.
-     * |        |          |0100: PWM0 Channel 4 modulete with UART0_TXD.
-     * |        |          |0101: PWM0 Channel 5 modulete with UART0_TXD.
+     * |        |          |0011: PWM0 Channel 3 modulate with UART0_TXD.
+     * |        |          |0100: PWM0 Channel 4 modulate with UART0_TXD.
+     * |        |          |0101: PWM0 Channel 5 modulate with UART0_TXD.
      * |        |          |0110: Reserved.
      * |        |          |0111: Reserved.
      * |        |          |1000: PWM0 Channel 0 modulate with USCI0_DAT0.
      * |        |          |1001: PWM0 Channel 1 modulate with USCI0_DAT0.
      * |        |          |1010: PWM0 Channel 2 modulate with USCI0_DAT0.
-     * |        |          |1011: PWM0 Channel 3 modulete with USCI0_DAT0.
-     * |        |          |1100: PWM0 Channel 4 modulete with USCI0_DAT0.
-     * |        |          |1101: PWM0 Channel 5 modulete with USCI0_DAT0.
+     * |        |          |1011: PWM0 Channel 3 modulate with USCI0_DAT0.
+     * |        |          |1100: PWM0 Channel 4 modulate with USCI0_DAT0.
+     * |        |          |1101: PWM0 Channel 5 modulate with USCI0_DAT0.
      * |        |          |1110: Reserved.
      * |        |          |1111: Reserved.
      * |        |          |Note: This bis is valid while MODEN (SYS_MODCTL[0]) is set to 1.
@@ -1250,7 +1250,7 @@ typedef struct
      * |        |          |This bit indicates the HIRC frequency is locked.
      * |        |          |This is a status bit and doesn't trigger any interrupt
      * |        |          |Write 1 to clear this to 0
-     * |        |          |This bit will be set automatically, if the frequecy is lock and the RC_TRIM is enabled.
+     * |        |          |This bit will be set automatically, if the frequency is lock and the RC_TRIM is enabled.
      * |        |          |0 = The internal high-speed oscillator frequency doesn't lock at 48 MHz yet.
      * |        |          |1 = The internal high-speed oscillator frequency locked at 48 MHz.
      * |[1]     |TFAILIF   |Trim Failure Interrupt Status
@@ -1269,8 +1269,8 @@ typedef struct
      * |        |          |1 = Clock frequency is inaccuracy.
      * |[3]     |OVBDIF    |Over Boundary Status
      * |        |          |When the over boundary function is set, if there occurs the over boundary condition, this flag will be set.
-     * |        |          |0 = Over boundary coundition did not occur.
-     * |        |          |1 = Over boundary coundition occurred.
+     * |        |          |0 = Over boundary condition did not occur.
+     * |        |          |1 = Over boundary condition occurred.
      * |        |          |Note: Write 1 to clear this flag.
      * @var SYS_T::REGLCTL
      * Offset: 0x100  Register Lock Control Register
@@ -1387,7 +1387,7 @@ typedef struct
      * |        |          |This bit indicates the MIRC frequency is locked.
      * |        |          |This is a status bit and doesn't trigger any interrupt
      * |        |          |Write 1 to clear this to 0
-     * |        |          |This bit will be set automatically, if the frequecy is lock and the RC_TRIM is enabled.
+     * |        |          |This bit will be set automatically, if the frequency is lock and the RC_TRIM is enabled.
      * |        |          |0 = The internal medium-speed oscillator frequency doesn't lock yet.
      * |        |          |1 = The internal medium-speed oscillator frequency locked.
      * |[1]     |TFAILIF   |Trim Failure Interrupt Status
@@ -1406,8 +1406,8 @@ typedef struct
      * |        |          |1 = Clock frequency is inaccuracy.
      * |[3]     |OVBDIF    |Over Boundary Status
      * |        |          |When the over boundary function is set, if there occurs the over boundary condition, this flag will be set.
-     * |        |          |0 = Over boundary coundition did not occur.
-     * |        |          |1 = Over boundary coundition occurred.
+     * |        |          |0 = Over boundary condition did not occur.
+     * |        |          |1 = Over boundary condition occurred.
      * |        |          |Note: Write 1 to clear this flag.
      * @var SYS_T::RTCLVRIEN
      * Offset: 0x144  RTC LVR interrupt control register
@@ -1469,14 +1469,20 @@ typedef struct
     __IO uint32_t RSTSTS;                /*!< [0x0004] System Reset Status Register                                     */
     __IO uint32_t IPRST0;                /*!< [0x0008] Peripheral  Reset Control Register 0                             */
     __IO uint32_t IPRST1;                /*!< [0x000c] Peripheral Reset Control Register 1                              */
-    __IO uint32_t IPRST2;                /*!< [0x0010] Peripheral Reset Control Register 2                         */
+    __IO uint32_t IPRST2;                /*!< [0x0010] Peripheral Reset Control Register 2                              */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE0[1];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t BODCTL;                /*!< [0x0018] Brown-out Detector Control Register                              */
     __IO uint32_t IVSCTL;                /*!< [0x001c] Internal Voltage Source Control Register                         */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE1[1];
-    __IO uint32_t PORCTL0;               /*!< [0x0024] Power-On-reset Controller Register 0                              */
+    /// @endcond //HIDDEN_SYMBOLS
+    __IO uint32_t PORCTL0;               /*!< [0x0024] Power-On-reset Controller Register 0                             */
     __IO uint32_t VREFCTL;               /*!< [0x0028] VREF Control Register                                            */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE2[1];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t GPA_MFPL;              /*!< [0x0030] GPIOA Low Byte Multiple Function Control Register                */
     __IO uint32_t GPA_MFPH;              /*!< [0x0034] GPIOA High Byte Multiple Function Control Register               */
     __IO uint32_t GPB_MFPL;              /*!< [0x0038] GPIOB Low Byte Multiple Function Control Register                */
@@ -1489,34 +1495,50 @@ typedef struct
     __IO uint32_t GPE_MFPH;              /*!< [0x0054] GPIOE High Byte Multiple Function Control Register               */
     __IO uint32_t GPF_MFPL;              /*!< [0x0058] GPIOF Low Byte Multiple Function Control Register                */
     __IO uint32_t GPF_MFPH;              /*!< [0x005c] GPIOF High Byte Multiple Function Control Register               */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE3[8];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t GPA_MFOS;              /*!< [0x0080] GPIOA Multiple Function Output Select Register                   */
     __IO uint32_t GPB_MFOS;              /*!< [0x0084] GPIOB Multiple Function Output Select Register                   */
     __IO uint32_t GPC_MFOS;              /*!< [0x0088] GPIOC Multiple Function Output Select Register                   */
     __IO uint32_t GPD_MFOS;              /*!< [0x008c] GPIOD Multiple Function Output Select Register                   */
     __IO uint32_t GPE_MFOS;              /*!< [0x0090] GPIOE Multiple Function Output Select Register                   */
     __IO uint32_t GPF_MFOS;              /*!< [0x0094] GPIOF Multiple Function Output Select Register                   */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE4[10];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t MODCTL;                /*!< [0x00c0] Modulation Control Register                                      */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE5[3];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t SRAM_BISTCTL;          /*!< [0x00d0] System SRAM BIST Test Control Register                           */
     __I  uint32_t SRAM_BISTSTS;          /*!< [0x00d4] System SRAM BIST Test Status Register                            */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE6[6];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t HIRCTRIMCTL;           /*!< [0x00f0] HIRC Trim Control Register                                       */
     __IO uint32_t HIRCTRIMIEN;           /*!< [0x00f4] HIRC Trim Interrupt Enable Register                              */
     __IO uint32_t HIRCTRIMSTS;           /*!< [0x00f8] HIRC Trim Interrupt Status Register                              */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE7[1];
+    /// @endcond //HIDDEN_SYMBOLS
     __O  uint32_t REGLCTL;               /*!< [0x0100] Register Lock Control Register                                   */
     __IO uint32_t MIRCTRIMCTL;           /*!< [0x0104] MIRC Trim Control Register                                       */
     __IO uint32_t MIRCTRIMIEN;           /*!< [0x0108] MIRC Trim Interrupt Enable Register                              */
-    __IO uint32_t MIRCTRIMSTS;           /*!< [0x010c] MIRC Trim Interrupt Status Register                             */
+    __IO uint32_t MIRCTRIMSTS;           /*!< [0x010c] MIRC Trim Interrupt Status Register                              */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE8[13];
-    __IO uint32_t RTCLVRIEN;             /*!< [0x0144] RTC LVR interrupt control register                              */
-    __IO uint32_t RTCLVRSTS;             /*!< [0x0148] RTC LVR interrupt status register                             */
+    /// @endcond //HIDDEN_SYMBOLS
+    __IO uint32_t RTCLVRIEN;             /*!< [0x0144] RTC LVR interrupt control register                               */
+    __IO uint32_t RTCLVRSTS;             /*!< [0x0148] RTC LVR interrupt status register                                */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE9[40];
-    __IO uint32_t PORCTL1;               /*!< [0x01ec] Power-On-reset Controller Register 1                              */
+    /// @endcond //HIDDEN_SYMBOLS
+    __IO uint32_t PORCTL1;               /*!< [0x01ec] Power-On-reset Controller Register 1                             */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE10[2];
-    __IO uint32_t PLCTL;                 /*!< [0x01F8] Power Level Control Register                              */
+    /// @endcond //HIDDEN_SYMBOLS
+    __IO uint32_t PLCTL;                 /*!< [0x01F8] Power Level Control Register                                     */
     __I  uint32_t PLSTS;                 /*!< [0x01Fc] Power Level Status Register                                      */
 } SYS_T;
 
@@ -1635,6 +1657,12 @@ typedef struct
 
 #define SYS_IPRST2_DACRST_Pos            (12)                                              /*!< SYS_T::IPRST2: DACRST Position         */
 #define SYS_IPRST2_DACRST_Msk            (0x1ul << SYS_IPRST2_DACRST_Pos)                  /*!< SYS_T::IPRST2: DACRST Mask             */
+
+#define SYS_IPRST2_LCDRST_Pos            (14)                                              /*!< SYS_T::IPRST2: LCDRST Position         */
+#define SYS_IPRST2_LCDRST_Msk            (0x1ul << SYS_IPRST2_LCDRST_Pos)                  /*!< SYS_T::IPRST2: LCDRST Mask             */
+
+#define SYS_IPRST2_TKRST_Pos             (15)                                              /*!< SYS_T::IPRST2: TKRST Position          */
+#define SYS_IPRST2_TKRST_Msk             (0x1ul << SYS_IPRST2_TKRST_Pos)                   /*!< SYS_T::IPRST2: TKRST Mask              */
 
 #define SYS_IPRST2_PWM0RST_Pos           (16)                                              /*!< SYS_T::IPRST2: PWM0RST Position        */
 #define SYS_IPRST2_PWM0RST_Msk           (0x1ul << SYS_IPRST2_PWM0RST_Pos)                 /*!< SYS_T::IPRST2: PWM0RST Mask            */

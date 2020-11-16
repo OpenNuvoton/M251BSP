@@ -3,7 +3,8 @@
  * @version  V1.00
  * @brief    CMSIS Cortex-M23 Core Device Startup File for M251
  *
- * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ * @copyright (C) 2020 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 
 	.syntax	unified
@@ -124,9 +125,9 @@ __Vectors:
 	.long	SC0_IRQHandler        /* 58: SC0                        */
 	.long	Default_Handler       /* 59: Reserved                   */
 	.long	USCI2_IRQHandler      /* 60: USCI2                      */
-	.long	Default_Handler       /* 61: Reserved                   */
+	.long	LCD_IRQHandler        /* 61: LCD                        */
 	.long	OPA_IRQHandler        /* 62: OPA                        */
-	.long	Default_Handler       /* 63: Reserved                   */
+	.long	TK_IRQHandler         /* 63: TK                         */
 
 	.size	__Vectors, . - __Vectors
 
@@ -211,7 +212,7 @@ Reset_Handler:
  *  latter.
  *
  *  Define macro __STARTUP_CLEAR_BSS_MULTIPLE to choose the former.
- *  Otherwise efine macro __STARTUP_CLEAR_BSS to choose the later.
+ *  Otherwise define macro __STARTUP_CLEAR_BSS to choose the later.
  */
 #ifdef __STARTUP_CLEAR_BSS_MULTIPLE
 /*  Multiple sections scheme.
@@ -320,67 +321,69 @@ Default_Handler:
 	.weak	\handler_name
 	.set	\handler_name, Default_Handler
 	.endm
-	
-	def_irq_handler	NMI_Handler         
+
+	def_irq_handler	NMI_Handler
     def_irq_handler	HardFault_Handler
     def_irq_handler	SVC_Handler
-    def_irq_handler	PendSV_Handler      
-    def_irq_handler	SysTick_Handler     
-    def_irq_handler	BOD_IRQHandler      
-    def_irq_handler	IRCTRIM_IRQHandler  
+    def_irq_handler	PendSV_Handler
+    def_irq_handler	SysTick_Handler
+    def_irq_handler	BOD_IRQHandler
+    def_irq_handler	IRCTRIM_IRQHandler
     def_irq_handler	PWRWU_IRQHandler
-    def_irq_handler	CLKFAIL_IRQHandler  
-    def_irq_handler	RTC_IRQHandler      
-    def_irq_handler	TAMPER_IRQHandler   
-    def_irq_handler	WDT_IRQHandler      
-    def_irq_handler	WWDT_IRQHandler     
-    def_irq_handler	EINT0_IRQHandler    
-    def_irq_handler	EINT1_IRQHandler    
-    def_irq_handler	EINT2_IRQHandler    
-    def_irq_handler	EINT3_IRQHandler    
-    def_irq_handler	EINT4_IRQHandler    
-    def_irq_handler	EINT5_IRQHandler    
-    def_irq_handler	GPA_IRQHandler      
-    def_irq_handler	GPB_IRQHandler      
-    def_irq_handler	GPC_IRQHandler      
-    def_irq_handler	GPD_IRQHandler      
-    def_irq_handler	GPE_IRQHandler      
-    def_irq_handler	GPF_IRQHandler      
-    def_irq_handler	QSPI0_IRQHandler    
-    def_irq_handler	SPI0_IRQHandler     
-    def_irq_handler	BRAKE0_IRQHandler   
-    def_irq_handler	PWM0_P0_IRQHandler  
-    def_irq_handler	PWM0_P1_IRQHandler  
-    def_irq_handler	PWM0_P2_IRQHandler  
-    def_irq_handler	BRAKE1_IRQHandler   
-    def_irq_handler	PWM1_P0_IRQHandler  
-    def_irq_handler	PWM1_P1_IRQHandler  
-    def_irq_handler	PWM1_P2_IRQHandler  
-    def_irq_handler	TMR0_IRQHandler     
-    def_irq_handler	TMR1_IRQHandler     
-    def_irq_handler	TMR2_IRQHandler     
-    def_irq_handler	TMR3_IRQHandler     
-    def_irq_handler	UART0_IRQHandler    
-    def_irq_handler	UART1_IRQHandler    
-    def_irq_handler	I2C0_IRQHandler     
-    def_irq_handler	I2C1_IRQHandler     
-    def_irq_handler	PDMA_IRQHandler     
-    def_irq_handler	DAC_IRQHandler      
+    def_irq_handler	CLKFAIL_IRQHandler
+    def_irq_handler	RTC_IRQHandler
+    def_irq_handler	TAMPER_IRQHandler
+    def_irq_handler	WDT_IRQHandler
+    def_irq_handler	WWDT_IRQHandler
+    def_irq_handler	EINT0_IRQHandler
+    def_irq_handler	EINT1_IRQHandler
+    def_irq_handler	EINT2_IRQHandler
+    def_irq_handler	EINT3_IRQHandler
+    def_irq_handler	EINT4_IRQHandler
+    def_irq_handler	EINT5_IRQHandler
+    def_irq_handler	GPA_IRQHandler
+    def_irq_handler	GPB_IRQHandler
+    def_irq_handler	GPC_IRQHandler
+    def_irq_handler	GPD_IRQHandler
+    def_irq_handler	GPE_IRQHandler
+    def_irq_handler	GPF_IRQHandler
+    def_irq_handler	QSPI0_IRQHandler
+    def_irq_handler	SPI0_IRQHandler
+    def_irq_handler	BRAKE0_IRQHandler
+    def_irq_handler	PWM0_P0_IRQHandler
+    def_irq_handler	PWM0_P1_IRQHandler
+    def_irq_handler	PWM0_P2_IRQHandler
+    def_irq_handler	BRAKE1_IRQHandler
+    def_irq_handler	PWM1_P0_IRQHandler
+    def_irq_handler	PWM1_P1_IRQHandler
+    def_irq_handler	PWM1_P2_IRQHandler
+    def_irq_handler	TMR0_IRQHandler
+    def_irq_handler	TMR1_IRQHandler
+    def_irq_handler	TMR2_IRQHandler
+    def_irq_handler	TMR3_IRQHandler
+    def_irq_handler	UART0_IRQHandler
+    def_irq_handler	UART1_IRQHandler
+    def_irq_handler	I2C0_IRQHandler
+    def_irq_handler	I2C1_IRQHandler
+    def_irq_handler	PDMA_IRQHandler
+    def_irq_handler	DAC_IRQHandler
     def_irq_handler	EADC_INT0_IRQHandler
     def_irq_handler	EADC_INT1_IRQHandler
-    def_irq_handler	ACMP01_IRQHandler   
-    def_irq_handler	BPWM0_IRQHandler    
+    def_irq_handler	ACMP01_IRQHandler
+    def_irq_handler	BPWM0_IRQHandler
     def_irq_handler	EADC_INT2_IRQHandler
     def_irq_handler	EADC_INT3_IRQHandler
     def_irq_handler	UART2_IRQHandler
-    def_irq_handler	USCI0_IRQHandler                
-    def_irq_handler	USCI1_IRQHandler    
-    def_irq_handler	USBD_IRQHandler     
-    def_irq_handler	BPWM1_IRQHandler    
+    def_irq_handler	USCI0_IRQHandler
+    def_irq_handler	USCI1_IRQHandler
+    def_irq_handler	USBD_IRQHandler
+    def_irq_handler	BPWM1_IRQHandler
     def_irq_handler	PSIO_IRQHandler
-    def_irq_handler	SC0_IRQHandler                     
-    def_irq_handler	USCI2_IRQHandler                   
+    def_irq_handler	SC0_IRQHandler
+    def_irq_handler	USCI2_IRQHandler
+    def_irq_handler	LCD_IRQHandler
     def_irq_handler	OPA_IRQHandler
+    def_irq_handler	TK_IRQHandler
 
 
     .end

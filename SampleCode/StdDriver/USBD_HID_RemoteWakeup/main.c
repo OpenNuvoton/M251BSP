@@ -58,6 +58,7 @@ void SYS_Init(void)
     /* Enable module clock */
     CLK_EnableModuleClock(UART0_MODULE);
     CLK_EnableModuleClock(USBD_MODULE);
+    CLK_EnableModuleClock(GPB_MODULE);
 
     /* Select module clock source */
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HIRC, CLK_CLKDIV0_UART0(1));
@@ -66,13 +67,12 @@ void SYS_Init(void)
     /* Init I/O Multi-function                                                                                 */
     /*---------------------------------------------------------------------------------------------------------*/
     Uart0DefaultMPF();
-
 }
 
 void GPIO_Init(void)
 {
     /* Enable PB0~5 interrupt for wakeup */
-    GPIO_SetMode(PB, 0x3f, GPIO_MODE_QUASI); /* PC0~5 be Quasi mode */
+    GPIO_SetMode(PB, 0x3f, GPIO_MODE_QUASI); /* PB0~5 be Quasi mode */
     GPIO_CLR_INT_FLAG(PB, 0x3f);
     GPIO_EnableInt(PB, 0, GPIO_INT_BOTH_EDGE);
     GPIO_EnableInt(PB, 1, GPIO_INT_BOTH_EDGE);
@@ -83,8 +83,6 @@ void GPIO_Init(void)
     GPIO_ENABLE_DEBOUNCE(PB, 0x3f);      /* Enable key debounce */
     GPIO_SET_DEBOUNCE_TIME(GPIO_DBCTL_DBCLKSRC_LIRC, GPIO_DBCTL_DBCLKSEL_256); /* Debounce sampling cycle = 64 clocks */
     NVIC_EnableIRQ(GPB_IRQn);
-
-
 }
 
 
@@ -124,7 +122,6 @@ void PowerDown()
     }
 
     printf("device wakeup!\n");
-
 }
 
 /*---------------------------------------------------------------------------------------------------------*/
@@ -232,8 +229,3 @@ int32_t main(void)
         HID_UpdateMouseData();
     }
 }
-
-
-
-/*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/
-

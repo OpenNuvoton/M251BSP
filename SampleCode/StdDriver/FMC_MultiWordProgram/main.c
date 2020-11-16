@@ -58,7 +58,7 @@ int32_t main(void)
 {
     uint32_t  u32LoopCnt, u32addr, u32maddr;          /* temporary variables */
 
-    /* Unlock protected registers */
+    /* Unlock protected registers to operate SYS_Init and FMC ISP function */
     SYS_UnlockReg();
 
     /* Init System, IP clock and multi-function I/O. */
@@ -125,6 +125,9 @@ int32_t main(void)
     }
 
     printf("\n\nMulti-word program demo done.\n");
+
+    /* Lock protected registers */
+    SYS_LockReg();
 
     while (1);
 

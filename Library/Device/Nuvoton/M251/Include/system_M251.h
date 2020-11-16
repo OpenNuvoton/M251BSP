@@ -4,7 +4,7 @@
  * @brief    System Setting Header File
  *
  * SPDX-License-Identifier: Apache-2.0
- * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2020 Nuvoton Technology Corp. All rights reserved.
  ****************************************************************************/
 
 #ifndef __SYSTEM_M251_H__
@@ -84,5 +84,3 @@ extern int IsDebugFifoEmpty(void);
 #endif
 
 #endif /* __SYSTEM_M251_H__ */
-
-/*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/

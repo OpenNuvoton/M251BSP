@@ -61,7 +61,7 @@ void SYS_Init(void)
 
 int main(void)
 {
-    /* Unlock protected registers */
+    /* Unlock protected registers to operate SYS_Init and FMC ISP function */
     SYS_UnlockReg();
 
     /* Init System, peripheral clock and multi-function I/O */

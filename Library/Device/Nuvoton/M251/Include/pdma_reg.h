@@ -487,9 +487,13 @@ typedef struct
      * |        |          |Please refer to the explanation of REQSRC0.
      */
     DSCT_T        DSCT[8];               /*!< [0x0000 ~ 0x007C] Control Register of PDMA Channel 0 ~ 7                  */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE0[32];
+    /// @endcond //HIDDEN_SYMBOLS
     __I  uint32_t CURSCAT[8];            /*!< [0x0100 ~ 0x11c] Current Scatter-gather Descriptor Table Address of PDMA Channel n */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE1[184];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t CHCTL;                 /*!< [0x0400] PDMA Channel Control Register                                    */
     __O  uint32_t PAUSE;                 /*!< [0x0404] PDMA Transfer Pause Control Register                             */
     __O  uint32_t SWREQ;                 /*!< [0x0408] PDMA Software Request Register                                   */
@@ -507,12 +511,18 @@ typedef struct
     __IO uint32_t TOUTIEN;               /*!< [0x0438] PDMA Time-out Interrupt Enable Register                          */
     __IO uint32_t SCATBA;                /*!< [0x043c] PDMA Scatter-gather Descriptor Table Base Address Register       */
     __IO uint32_t TOC0_1;                /*!< [0x0440] PDMA Time-out Counter Ch1 and Ch0 Register                       */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE2[7];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t CHRST;                 /*!< [0x0460] PDMA Channel Reset Register                                      */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE3[7];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t REQSEL0_3;             /*!< [0x0480] PDMA Request Source Select Register 0                            */
     __IO uint32_t REQSEL4_7;             /*!< [0x0484] PDMA Request Source Select Register 1                            */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE4[30];
+    /// @endcond //HIDDEN_SYMBOLS
     STRIDE_T      STRIDE[6];             /*!< [0x0500 ~ 0x528] Stride Register of PDMA Channel 0 ~ 5                    */
 } PDMA_T;
 

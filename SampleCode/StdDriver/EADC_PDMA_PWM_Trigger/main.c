@@ -172,7 +172,6 @@ void ReloadPDMA(void)
 /*---------------------------------------------------------------------------------------------------------*/
 void EADC_FunctionTest(void)
 {
-    uint8_t  u8Option;
     int32_t  i32ConversionData;
     uint32_t u32IntNum,  u32ModuleNum, u32ChannelNum;
 
@@ -198,6 +197,8 @@ void EADC_FunctionTest(void)
         printf("  [1] Basic EADC conversion (channel 0 only)\n");
         printf("  [2] Basic EADC conversion (channel 1 only)\n");
         printf("  Other keys: exit EADC test\n");
+
+        uint8_t  u8Option;
         u8Option = getchar();
 
         if (u8Option == '1')
@@ -230,7 +231,7 @@ void EADC_FunctionTest(void)
         /* Disable PWM0 channel 0 counter */
         PWM_ForceStop(PWM0, BIT0);  /* PWM0 counter stop running. */
 
-        printf("Conversion result of channel %d:\n", u32ChannelNum);
+        printf("Conversion result of channel %u:\n", u32ChannelNum);
 
         for (g_u32ConvNum = 0; g_u32ConvNum < 6; g_u32ConvNum++)
         {

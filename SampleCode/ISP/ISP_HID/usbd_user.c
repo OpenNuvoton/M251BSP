@@ -657,11 +657,9 @@ void USBD_PrepareCtrlOut(uint8_t *pu8Buf, uint32_t u32Size)
   */
 void USBD_CtrlOut(void)
 {
-    uint32_t u32Size;
-    uint32_t addr;
-
     if (g_usbd_CtrlOutSize < g_usbd_CtrlOutSizeLimit)
     {
+        uint32_t u32Size, addr;
         u32Size = USBD_GET_PAYLOAD_LEN(EP1);
         addr = USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP1);
         USBD_MemCopy((uint8_t *)g_usbd_CtrlOutPointer, (uint8_t *)addr, u32Size);

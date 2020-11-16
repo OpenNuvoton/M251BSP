@@ -167,7 +167,7 @@ uint32_t ProcessHardFault(uint32_t u32_lr, uint32_t u32msp, uint32_t u32psp)
         The number of interrupts, n, is 32
         */
 
-        printf("Hard fault is caused in IRQ #%d\n", u32exception_num - 16);
+        printf("Hard fault is caused in IRQ #%u\n", u32exception_num - 16);
 
         while (1);
     }
@@ -211,7 +211,6 @@ void TMR1_IRQHandler(void)
 int main(void)
 {
     void (*func)(void) = (void (*)(void))0x1000;
-    char i8ch;
 
     /* Init System, IP clock and multi-function I/O */
     SYS_Init();
@@ -228,6 +227,7 @@ int main(void)
         printf("| [1] Test Thumb/ARM mode Hard Fault                 |\n");
         printf("| [2] Test Hard Fault in ISR                         |\n");
         printf("+----------------------------------------------------+\n");
+        char i8ch;
         i8ch = getchar();
 
         switch (i8ch)

@@ -4,7 +4,7 @@
  * @brief    M251 series Debug Port and Semihost Setting Source File
  *
  * SPDX-License-Identifier: Apache-2.0
- * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2020 Nuvoton Technology Corp. All rights reserved.
  ****************************************************************************/
 
 #include <stdio.h>
@@ -23,33 +23,40 @@
     #endif
 #endif
 
-# define DEBUG_PORT   UART0
+#ifndef DEBUG_PORT
+    #define DEBUG_PORT   UART0
+#endif
 # define BUF_SIZE     512
 
 
 /*---------------------------------------------------------------------------------------------------------*/
 /* Global variables                                                                                        */
 /*---------------------------------------------------------------------------------------------------------*/
-
 #if !(defined(__ICCARM__) && (__VER__ >= 6010000))
 #if (__ARMCC_VERSION < 6040000)
 struct __FILE
 {
     int handle; /* Add whatever you need here */
 };
-#endif
+#else
+#if !defined(__MICROLIB)
+    #if (__OPTIMIZE__ == -O0)
+        __asm(".global __ARM_use_no_argv\n\t" "__ARM_use_no_argv:\n\t");
+    #endif /* (__OPTIMIZE__ == -O0) */
+#endif /* !defined(__MICROLIB) */
+#endif /* (__ARMCC_VERSION < 6040000) */
+
 #elif(__VER__ >= 8000000)
 struct __FILE
 {
     int handle; /* Add whatever you need here */
 };
-#endif
+#endif /* !(defined(__ICCARM__) && (__VER__ >= 6010000)) */
 
 FILE __stdout;
 FILE __stdin;
 
 #if defined (__ARMCC_VERSION) || defined (__ICCARM__)
-
     extern int32_t SH_DoCommand(int32_t n32In_R0, int32_t n32In_R1, int32_t *pn32Out_R0);
 
     #if defined( __ICCARM__ )
@@ -57,8 +64,8 @@ FILE __stdin;
     #else
         __attribute__((weak))
     #endif
-    uint32_t ProcessHardFault(uint32_t lr, uint32_t msp, uint32_t psp);
 
+    uint32_t ProcessHardFault(uint32_t lr, uint32_t msp, uint32_t psp);
 #endif
 
 int kbhit(void);
@@ -70,6 +77,7 @@ int fputc(int ch, FILE *stream);
     #if !defined (OS_USE_SEMIHOSTING)
         int _read(int fd, char *ptr, int len);
     #endif
+
     int _write(int fd, char *ptr, int len);
 #endif
 
@@ -93,16 +101,16 @@ enum { r0, r1, r2, r3, r12, lr, pc, psr};
  */
 static void DumpStack(uint32_t stack[])
 {
-/*
-    printf("r0 =0x%x\n", stack[r0]);
-    printf("r1 =0x%x\n", stack[r1]);
-    printf("r2 =0x%x\n", stack[r2]);
-    printf("r3 =0x%x\n", stack[r3]);
-    printf("r12=0x%x\n", stack[r12]);
-    printf("lr =0x%x\n", stack[lr]);
-    printf("pc =0x%x\n", stack[pc]);
-    printf("psr=0x%x\n", stack[psr]);
-*/
+    /*
+        printf("r0 =0x%x\n", stack[r0]);
+        printf("r1 =0x%x\n", stack[r1]);
+        printf("r2 =0x%x\n", stack[r2]);
+        printf("r3 =0x%x\n", stack[r3]);
+        printf("r12=0x%x\n", stack[r12]);
+        printf("lr =0x%x\n", stack[lr]);
+        printf("pc =0x%x\n", stack[pc]);
+        printf("psr=0x%x\n", stack[psr]);
+    */
 }
 
 
@@ -162,7 +170,6 @@ __attribute__((weak)) void HardFault_Handler(void)
 }
 
 #else
-
 int32_t SH_Return(int32_t n32In_R0, int32_t n32In_R1, int32_t *pn32Out_R0);
 int32_t SH_Return(int32_t n32In_R0, int32_t n32In_R1, int32_t *pn32Out_R0)
 {
@@ -256,12 +263,13 @@ void SendChar_ToUART(int ch)
 
     if ((char)ch == '\n')
     {
-		DEBUG_PORT->DAT = '\r';
+        DEBUG_PORT->DAT = '\r';
+
         while (DEBUG_PORT->FIFOSTS & UART_FIFOSTS_TXFULL_Msk) {}
-        
+
     }
-	
-	DEBUG_PORT->DAT = (uint32_t)ch;
+
+    DEBUG_PORT->DAT = (uint32_t)ch;
 }
 
 #else
@@ -291,9 +299,11 @@ void SendChar_ToUART(int ch)
                 i32Head = i32Tmp;
             }
         }
-		
-		i32Tmp = i32Head + 1;
+
+        i32Tmp = i32Head + 1;
+
         if (i32Tmp > BUF_SIZE) i32Tmp = 0;
+
         if (i32Tmp != i32Tail)
         {
             u8Buf[i32Head] = ch;
@@ -359,7 +369,7 @@ __WEAK void SendChar(int ch)
         }
         else
         {
-#if (DEBUG_ENABLE_SEMIHOST == 1) // Re-direct to UART Debug Port only when DEBUG_ENABLE_SEMIHOST=1           
+#if (DEBUG_ENABLE_SEMIHOST == 1) // Re-direct to UART Debug Port only when DEBUG_ENABLE_SEMIHOST=1
             int i;
 
             for (i = 0; i < g_buf_len; i++)
@@ -401,8 +411,7 @@ char GetChar(void)
         }
 
 #else
-
-        int nRet, nRet1;
+        int nRet;
 
         while (SH_DoCommand(0x101, 0, &nRet) != 0)
         {
@@ -432,7 +441,6 @@ char GetChar(void)
 
 #endif
     }
-
 
     return (0);
 
@@ -539,10 +547,11 @@ int _write(int fd, char *ptr, int len)
         if (*ptr == '\n')
         {
             DEBUG_PORT->DAT = '\r';
-			while (DEBUG_PORT->FIFOSTS & UART_FIFOSTS_TXFULL_Msk);
+
+            while (DEBUG_PORT->FIFOSTS & UART_FIFOSTS_TXFULL_Msk);
         }
-		
-		DEBUG_PORT->DAT = *ptr++;
+
+        DEBUG_PORT->DAT = *ptr++;
     }
 
     return len;

@@ -12,7 +12,7 @@
 
 int FMC_Proc(unsigned int u32Cmd, unsigned int addr_start, unsigned int addr_end, unsigned int *data)
 {
-    unsigned int u32Addr, Reg;
+    unsigned int u32Addr;
 
     for (u32Addr = addr_start; u32Addr < addr_end; data++)
     {
@@ -28,6 +28,8 @@ int FMC_Proc(unsigned int u32Cmd, unsigned int addr_start, unsigned int addr_end
         __ISB();
 
         while (FMC->ISPTRG & 0x1) ;  /* Wait for ISP command done. */
+
+        unsigned int Reg;
 
         Reg = FMC->ISPCTL;
 
@@ -127,11 +129,12 @@ void WriteData(unsigned int addr_start, unsigned int addr_end, unsigned int *dat
 
 int EraseAP(unsigned int addr_start, unsigned int size)
 {
-    unsigned int u32Addr, u32Cmd, u32Size;
+    unsigned int u32Addr;
     u32Addr = addr_start;
 
     while (size > 0)
     {
+        unsigned int u32Cmd, u32Size;
 
         u32Cmd = FMC_ISPCMD_PAGE_ERASE;
         u32Size = FMC_FLASH_PAGE_SIZE;

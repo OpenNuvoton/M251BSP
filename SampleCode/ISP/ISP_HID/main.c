@@ -76,7 +76,7 @@ void USBD_IRQHandler(void);
 /*---------------------------------------------------------------------------------------------------------*/
 int32_t main(void)
 {
-    /* Unlock write-protected registers */
+    /* Unlock write-protected registers to operate SYS_Init and FMC ISP function */
     SYS_UnlockReg();
 
     /* Init system and multi-function I/O */

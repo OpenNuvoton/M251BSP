@@ -4,7 +4,7 @@
  * @brief    EADC register definition header file
  *
  * SPDX-License-Identifier: Apache-2.0
- * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2020 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 
 #ifndef __EADC_REG_H__
@@ -157,7 +157,7 @@ typedef struct
      * |        |          |11 = ADC_CLK/16.
      * |[15:8]  |TRGDLYCNT |A/D Sample Module Start of Conversion Trigger Delay Time
      * |        |          |Trigger delay time = TRGDLYCNT x ADC_CLK x n (n=1,2,4,16 from TRGDLYDIV setting).
-     * |        |          |Note: If TRGDLYCNT is set to 1, Trigger delay time is actullay the same as TRGDLYCNT is set to 2 for hardware operation.
+     * |        |          |Note: If TRGDLYCNT is set to 1, Trigger delay time is actually the same as TRGDLYCNT is set to 2 for hardware operation.
      * |[20:16] |TRGSEL    |A/D Sample Module Start of Conversion Trigger Source Selection
      * |        |          |0H = Disable trigger.
      * |        |          |1H = External trigger from EADC0_ST pin input.
@@ -527,18 +527,6 @@ typedef struct
      * |        |          |6H = 64 conversion result will be accumulated.
      * |        |          |7H = 128 conversion result will be accumulated.
      * |        |          |8H = 256 conversion result will be accumulated.
-     * @var EADC_T::OFFSETCAL
-     * Offset: 0x208  A/D Result Offset Cancellation Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[4:0]   |OFFSETCANCEL|A/D Offset Cancellation Trim Bits
-     * |        |          |When CALEN(EADC_CTL[8]) is set to 1, the offset cancellation trim bits will compensate A/D result offset
-     * |        |          |When this bit is set to 0, the offset cancellation trim bits have no effect to A/D result.
-     * |        |          |Note:These 5 bits trim value wouln't latched into EADC_OFFSETCAL automatically when flash initalization
-     * |        |          |User must read DCR2 by ISP command first, then write the value to OFFSETCANCEL.
-     * |        |          |Note: OFFSETCANCEL is signed format
-     * |        |          |OFFSETCANCEL will sign extension to 12 bit by hardware to perform signed addition with ADC conversion result if CALEN is enabled.
      */
     __I  uint32_t DAT[19];               /*!< [0x0000~0x0048] A/D Data Register n for Sample Module n,  n=0~18          */
     __I  uint32_t CURDAT;                /*!< [0x004c] EADC PDMA Current Transfer Data Register                         */
@@ -546,26 +534,32 @@ typedef struct
     __O  uint32_t SWTRG;                 /*!< [0x0054] A/D Sample Module Software Start Register                        */
     __IO uint32_t PENDSTS;               /*!< [0x0058] A/D Start of Conversion Pending Flag Register                    */
     __IO uint32_t OVSTS;                 /*!< [0x005c] A/D Sample Module Start of Conversion Overrun Flag Register      */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE0[8];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t SCTL[16];              /*!< [0x0080~0x00bc] A/D Sample Module n Control Register n=0~15               */
     __IO uint32_t SCTL0[3];              /*!< [0x00c0~0x00c8] A/D Sample Module n Control Register n=16~18              */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE1[1];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t INTSRC[4];             /*!< [0x00d0~0x00dc] ADC Interrupt n Source Enable Control Register. n=0~3     */
     __IO uint32_t CMP[4];                /*!< [0x00e0~0x00ec] A/D Result Compare Register n, n=0~3                      */
     __I  uint32_t STATUS0;               /*!< [0x00f0] A/D Status Register 0                                            */
     __I  uint32_t STATUS1;               /*!< [0x00f4] A/D Status Register 1                                            */
     __IO uint32_t STATUS2;               /*!< [0x00f8] A/D Status Register 2                                            */
     __I  uint32_t STATUS3;               /*!< [0x00fc] A/D Status Register 3                                            */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE2[4];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t PWRCTL;                /*!< [0x0110] ADC Power Management Control Register                            */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE3[7];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t PDMACTL;               /*!< [0x0130] ADC PDMA Control Rgister                                         */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE4[3];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t MCTL1[16];             /*!< [0x0140~0x017c] A/D Sample Module n Control Register 1, n=0~15            */
-    __I  uint32_t RESERVE5[34];
-    __IO uint32_t OFFSETCAL;             /*!< [0x0208] A/D Result Offset Cancellation Register                          */
-
-
 } EADC_T;
 
 /**
@@ -602,9 +596,6 @@ typedef struct
 
 #define EADC_CTL_ADCIEN3_Pos             (5)                                               /*!< EADC_T::CTL: ADCIEN3 Position          */
 #define EADC_CTL_ADCIEN3_Msk             (0x1ul << EADC_CTL_ADCIEN3_Pos)                   /*!< EADC_T::CTL: ADCIEN3 Mask              */
-
-#define EADC_CTL_CALEN_Pos               (8)                                               /*!< EADC_T::CTL: CALEN Position            */
-#define EADC_CTL_CALEN_Msk               (0x1ul << EADC_CTL_CALEN_Pos)                     /*!< EADC_T::CTL: CALEN Mask                */
 
 #define EADC_SWTRG_SWTRG_Pos             (0)                                               /*!< EADC_T::SWTRG: SWTRG Position          */
 #define EADC_SWTRG_SWTRG_Msk             (0x7fffful << EADC_SWTRG_SWTRG_Pos)               /*!< EADC_T::SWTRG: SWTRG Mask              */
@@ -824,9 +815,6 @@ typedef struct
 
 #define EADC_PDMACTL_PDMATEN_Pos         (0)                                               /*!< EADC_T::PDMACTL: PDMATEN Position      */
 #define EADC_PDMACTL_PDMATEN_Msk         (0x7fffful << EADC_PDMACTL_PDMATEN_Pos)           /*!< EADC_T::PDMACTL: PDMATEN Mask          */
-
-#define EADC_OFFSETCAL_OFFSETCANCEL_Pos  (0)                                               /*!< EADC_T::OFFSETCAL: OFFSETCANCEL Position*/
-#define EADC_OFFSETCAL_OFFSETCANCEL_Msk  (0x1ful << EADC_OFFSETCAL_OFFSETCANCEL_Pos)       /*!< EADC_T::OFFSETCAL: OFFSETCANCEL Mask   */
 
 /**@}*/ /* EADC_CONST */
 /**@}*/ /* end of EADC register group */

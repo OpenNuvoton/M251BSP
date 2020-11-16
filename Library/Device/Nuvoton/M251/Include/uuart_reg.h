@@ -429,11 +429,17 @@ typedef struct
     __IO uint32_t CTL;                   /*!< [0x0000] USCI Control Register                                            */
     __IO uint32_t INTEN;                 /*!< [0x0004] USCI Interrupt Enable Register                                   */
     __IO uint32_t BRGEN;                 /*!< [0x0008] USCI Baud Rate Generator Register                                */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE0[1];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t DATIN0;                /*!< [0x0010] USCI Input Data Signal Configuration Register 0                  */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE1[3];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t CTLIN0;                /*!< [0x0020] USCI Input Control Signal Configuration Register 0               */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE2[1];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t CLKIN;                 /*!< [0x0028] USCI Input Clock Signal Configuration Register                   */
     __IO uint32_t LINECTL;               /*!< [0x002c] USCI Line Control Register                                       */
     __O  uint32_t TXDAT;                 /*!< [0x0030] USCI Transmit Data Register                                      */
@@ -441,14 +447,14 @@ typedef struct
     __IO uint32_t BUFCTL;                /*!< [0x0038] USCI Transmit/Receive Buffer Control Register                    */
     __IO uint32_t BUFSTS;                /*!< [0x003c] USCI Transmit/Receive Buffer Status Register                     */
     __IO uint32_t PDMACTL;               /*!< [0x0040] USCI PDMA Control Register                                       */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE3[4];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t WKCTL;                 /*!< [0x0054] USCI Wake-up Control Register                                    */
     __IO uint32_t WKSTS;                 /*!< [0x0058] USCI Wake-up Status Register                                     */
     __IO uint32_t PROTCTL;               /*!< [0x005c] USCI Protocol Control Register                                   */
     __IO uint32_t PROTIEN;               /*!< [0x0060] USCI Protocol Interrupt Enable Register                          */
     __IO uint32_t PROTSTS;               /*!< [0x0064] USCI Protocol Status Register                                    */
-    __I  uint32_t RESERVE4[998];
-
 } UUART_T;
 
 /**

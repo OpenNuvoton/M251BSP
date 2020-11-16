@@ -15,9 +15,16 @@ const uint32_t PDMA_TEST_LENGTH = 64;
 /*---------------------------------------------------------------------------------------------------------*/
 /* Global variables                                                                                        */
 /*---------------------------------------------------------------------------------------------------------*/
-uint8_t g_au8SrcArray[256];
-uint8_t g_au8DestArray0[256];
-uint8_t g_au8DestArray1[256];
+#ifdef __ICCARM__
+    #pragma data_alignment=4
+    uint8_t g_au8SrcArray[256];
+    uint8_t g_au8DestArray0[256];
+    uint8_t g_au8DestArray1[256];
+#else
+    __attribute__((aligned(4))) uint8_t g_au8SrcArray[256];
+    __attribute__((aligned(4))) uint8_t g_au8DestArray0[256];
+    __attribute__((aligned(4))) uint8_t g_au8DestArray1[256];
+#endif
 
 typedef struct dma_desc_t
 {
@@ -242,12 +249,12 @@ int main(void)
     {
         if (g_au8DestArray0[i] != g_au8SrcArray[i])
         {
-            printf("Data is not match [%d][Src]0x%x, [Des]0x%x\n", i, g_au8SrcArray[i], g_au8DestArray0[i]);
+            printf("Data is not match [%u][Src]0x%x, [Des]0x%x\n", i, g_au8SrcArray[i], g_au8DestArray0[i]);
         }
 
         if (g_au8DestArray1[i] != g_au8SrcArray[i])
         {
-            printf("Data is not match [%d][Src]0x%x, [Des]0x%x\n", i, g_au8SrcArray[i], g_au8DestArray1[i]);
+            printf("Data is not match [%u][Src]0x%x, [Des]0x%x\n", i, g_au8SrcArray[i], g_au8DestArray1[i]);
         }
     }
 

@@ -437,7 +437,9 @@ typedef struct
      * |[23:20] |TENYEAR    |10-Year Calendar Digit of TAMPER Calendar (0~9)
      */
     __IO uint32_t INIT;                  /*!< [0x0000] RTC Initiation Register                                          */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE0[1];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t FREQADJ;               /*!< [0x0008] RTC Frequency Compensation Register                              */
     __IO uint32_t TIME;                  /*!< [0x000c] RTC Time Loading Register                                        */
     __IO uint32_t CAL;                   /*!< [0x0010] RTC Calendar Loading Register                                    */
@@ -453,17 +455,24 @@ typedef struct
     __IO uint32_t CAMSK;                 /*!< [0x0038] RTC Calendar Alarm Mask Register                                 */
     __IO uint32_t SPRCTL;                /*!< [0x003c] RTC Spare Functional Control Register                            */
     __IO uint32_t SPR[5];                /*!< [0x0040 ~ 0x0050] RTC Spare Register 0 ~ 4                                */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE1[43];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t LXTCTL;                /*!< [0x0100] RTC 32KHz Oscillator Control Register                            */
     __IO uint32_t GPIOCTL0;              /*!< [0x0104] RTC GPIO Control 0 Register                                      */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE2[2];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t DSTCTL;                /*!< [0x0110] RTC Daylight Saving Time Control Register                        */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE3[3];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t TAMPCTL;               /*!< [0x0120] RTC Tamper Pin Control Register                                  */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE4[3];
+    /// @endcond //HIDDEN_SYMBOLS
     __I  uint32_t TAMPTIME;              /*!< [0x0130] RTC Tamper Time Register                                         */
     __I  uint32_t TAMPCAL;               /*!< [0x0134] RTC Tamper Calendar Register                                     */
-
 } RTC_T;
 
 /**

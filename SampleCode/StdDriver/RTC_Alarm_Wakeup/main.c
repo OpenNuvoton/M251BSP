@@ -17,7 +17,7 @@
 
 #define PD_MODE   0  // Power-down mode
 #define FWPD_MODE 1  // Fast wake up
-#define DPD_MODE  2  // Deep Power-down mode (M251 is not support)
+#define DPD_MODE  2  // Deep Power-down mode
 
 /*---------------------------------------------------------------------------------------------------------*/
 /*                                       Global variables                                                  */

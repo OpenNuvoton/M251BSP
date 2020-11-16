@@ -60,10 +60,11 @@ int32_t FillDataPattern(uint32_t u32StartAddr, uint32_t u32EndAddr, uint32_t u32
 int32_t  VerifyData(uint32_t u32StartAddr, uint32_t u32EndAddr, uint32_t u32Pattern)
 {
     uint32_t    u32Addr;
-    uint32_t    u32Data;
 
     for (u32Addr = u32StartAddr; u32Addr < u32EndAddr; u32Addr += 4)
     {
+        uint32_t    u32Data;
+
         u32Data = FMC_Read(u32Addr);
 
         if (u32Data != u32Pattern)
@@ -125,7 +126,7 @@ int32_t  FlashTest(uint32_t u32StartAddr, uint32_t u32EndAddr, uint32_t u32Patte
 
 int32_t main(void)
 {
-    uint32_t u32LoopCnt, u32Data;
+    uint32_t u32LoopCnt;
 
     /* Unlock protected registers */
     SYS_UnlockReg();
@@ -148,7 +149,7 @@ int32_t main(void)
     printf("|        FMC ISP Sample Code             |\n");
     printf("+----------------------------------------+\n");
 
-    /* Unlock protected registers */
+    /* Unlock protected registers to operate FMC ISP function */
     SYS_UnlockReg();
 
     /* Enable FMC ISP function */
@@ -166,6 +167,8 @@ int32_t main(void)
         goto lexit;
     }
 
+    uint32_t u32Data;
+
     u32Data = FMC_ReadCID();
     printf("  Company ID ............................ [0x%08x]\n", u32Data);
 
@@ -175,13 +178,13 @@ int32_t main(void)
     for (u32LoopCnt = 0; u32LoopCnt < 3; u32LoopCnt++)
     {
         u32Data = FMC_ReadUID(u32LoopCnt);
-        printf("  Unique ID %d ........................... [0x%08x]\n", u32LoopCnt, u32Data);
+        printf("  Unique ID %u ........................... [0x%08x]\n", u32LoopCnt, u32Data);
     }
 
     for (u32LoopCnt = 0; u32LoopCnt < 4; u32LoopCnt++)
     {
         u32Data = FMC_ReadUCID(u32LoopCnt);
-        printf("  Unique Customer ID %d .................. [0x%08x]\n", u32LoopCnt, u32Data);
+        printf("  Unique Customer ID %u .................. [0x%08x]\n", u32LoopCnt, u32Data);
     }
 
     /* Read User Configuration */

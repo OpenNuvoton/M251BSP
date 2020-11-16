@@ -89,7 +89,6 @@ void SYS_Init(void)
 
     /* Enable SPI0 clock pin (PD2) schmitt trigger */
     PD->SMTEN |= GPIO_SMTEN_SMTEN2_Msk;
-
 }
 
 void SPI_Init(void)
@@ -218,11 +217,10 @@ void SpiLoopTest_WithPDMA(void)
     PDMA->DSCT[SPI_SLAVE_TX_DMA_CH].CTL |= PDMA_DSCT_CTL_TBINTDIS_Msk;
 
     /* Enable SPI slave DMA function */
-    SPI_TRIGGER_RX_PDMA(SPI0);
-    SPI_TRIGGER_TX_PDMA(SPI0);
-    /* Enable SPI master DMA function */
-    QSPI_TRIGGER_TX_PDMA(QSPI0);
-    QSPI_TRIGGER_RX_PDMA(QSPI0);
+    SPI_TRIGGER_TX_RX_PDMA(SPI0);
+
+    /* Enable QSPI master DMA function */
+    QSPI_TRIGGER_TX_RX_PDMA(QSPI0);
 
     i32Err = 0;
 
@@ -248,9 +246,8 @@ void SpiLoopTest_WithPDMA(void)
                     /* Clear the PDMA transfer done flags */
                     PDMA_CLR_TD_FLAG(PDMA, (1 << SPI_MASTER_TX_DMA_CH) | (1 << SPI_MASTER_RX_DMA_CH) | (1 << SPI_SLAVE_TX_DMA_CH) | (1 << SPI_SLAVE_RX_DMA_CH));
 
-                    /* Disable SPI master's PDMA transfer function */
-                    QSPI_DISABLE_TX_PDMA(QSPI0);
-                    QSPI_DISABLE_RX_PDMA(QSPI0);
+                    /* Disable QSPI master's PDMA transfer function */
+                    QSPI_DISABLE_TX_RX_PDMA(QSPI0);
 
                     /* Check the transfer data */
                     for (u32DataCount = 0; u32DataCount < TEST_COUNT; u32DataCount++)
@@ -304,8 +301,7 @@ void SpiLoopTest_WithPDMA(void)
                     PDMA_SetTransferMode(PDMA, SPI_MASTER_RX_DMA_CH, PDMA_QSPI0_RX, FALSE, 0);
 
                     /* Enable master's DMA transfer function */
-                    SPI_TRIGGER_TX_PDMA(QSPI0);
-                    SPI_TRIGGER_RX_PDMA(QSPI0);
+                    QSPI_TRIGGER_TX_RX_PDMA(QSPI0);
                     break;
                 }
             }
@@ -322,10 +318,10 @@ void SpiLoopTest_WithPDMA(void)
             }
 
             /* Check the DMA time-out interrupt flag */
-            if (u32RegValue & 0x00000300)
+            if (u32RegValue & (PDMA_INTSTS_REQTOF0_Msk | PDMA_INTSTS_REQTOF1_Msk))
             {
                 /* Clear the time-out flag */
-                PDMA->INTSTS = u32RegValue & 0x00000300;
+                PDMA->INTSTS = u32RegValue & (PDMA_INTSTS_REQTOF0_Msk | PDMA_INTSTS_REQTOF1_Msk);
                 i32Err = 1;
                 break;
             }
@@ -346,8 +342,6 @@ void SpiLoopTest_WithPDMA(void)
     {
         printf(" [PASS]\n");
     }
-
-    return;
 }
 
 int main(void)
@@ -375,7 +369,7 @@ int main(void)
     printf("    QSPI0_SS  (PA3) <--> SPI0_SS(PD3)\n    QSPI0_CLK(PA2)  <--> SPI0_CLK(PD2)\n");
     printf("    QSPI0_MISO(PA1) <--> SPI0_MISO(PD1)\n    QSPI0_MOSI(PA0) <--> SPI0_MOSI(PD0)\n\n");
     printf("Please connect QSPI0 with SPI0, and press any key to start transmission ...");
-    //getchar();
+    getchar();
     printf("\n");
 
     SpiLoopTest_WithPDMA();
@@ -389,5 +383,3 @@ int main(void)
 
     while (1);
 }
-
-/*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/

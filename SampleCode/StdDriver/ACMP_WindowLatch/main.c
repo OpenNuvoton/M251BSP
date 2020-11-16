@@ -34,9 +34,9 @@ void ACMP01_IRQHandler(void)
 
     /* Check Comparator 1 Output Status */
     if (ACMP_GET_OUTPUT(ACMP01, 1))
-        printf("ACMP1_P voltage > Band-gap voltage (%d)\n", u32Cnt);
+        printf("ACMP1_P voltage > Band-gap voltage (%d) ACMP1_O(%d)\n", u32Cnt, PC0);
     else
-        printf("ACMP1_P voltage <= Band-gap voltage (%d)\n", u32Cnt);
+        printf("ACMP1_P voltage <= Band-gap voltage (%d) ACMP1_O(%d)\n", u32Cnt, PC0);
 
     u32Cnt++;
 }
@@ -92,6 +92,11 @@ void SYS_Init(void)
     CLK_EnableModuleClock(UART0_MODULE);
     /* Enable ACMP01 peripheral clock */
     CLK_EnableModuleClock(ACMP01_MODULE);
+    /* Enable GPB peripheral clock */
+    CLK_EnableModuleClock(GPB_MODULE);
+    /* Enable GPC peripheral clock */
+    CLK_EnableModuleClock(GPC_MODULE);
+
 
     /* Update System Core Clock */
     /* User can use SystemCoreClockUpdate() to calculate SystemCoreClock and CyclesPerUs automatically. */
@@ -159,8 +164,4 @@ int32_t main(void)
     NVIC_EnableIRQ(ACMP01_IRQn);
 
     while (1);
-
 }
-/*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/
-
-

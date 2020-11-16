@@ -15,6 +15,9 @@ typedef void (FN_FUNC_PTR)(void);
 
 void SYS_Init(void)
 {
+    /* Unlock protected registers */
+    SYS_UnlockReg();
+
     /* Enable Internal RC 48MHz clock */
     CLK_EnableXtalRC(CLK_PWRCTL_HIRCEN_Msk);
 
@@ -127,7 +130,7 @@ void Hard_Fault_Handler(uint32_t stack[])
 
 int main()
 {
-#ifdef __GNUC__                        /* for GNU C compiler */
+#if defined(__GNUC__) && !defined (__ARMCC_VERSION)    /* for GNU C compiler */
     uint32_t    u32Data;
 #endif
     FN_FUNC_PTR    *pfnfunc;           /* function pointer */
@@ -146,7 +149,7 @@ int main()
     PutString("|          [LDROM code]               |\n");
     PutString("+-------------------------------------+\n");
 
-    SYS_UnlockReg();                   /* Unlock protected registers */
+    SYS_UnlockReg();                   /* Unlock protected registers to operate FMC ISP function*/
 
     FMC_Open();                        /* Enable FMC ISP function */
 

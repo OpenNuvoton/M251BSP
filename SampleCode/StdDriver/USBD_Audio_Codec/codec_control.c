@@ -11,11 +11,22 @@ typedef enum
     E_RS_DOWN           // down sampling
 } RESAMPLE_STATE_T;
 
+void RecoveryFromArbLost(void)
+{
+    I2C0->CTL0 &= ~I2C_CTL0_I2CEN_Msk;
+    I2C0->CTL0 |= I2C_CTL0_I2CEN_Msk;
+}
+
 /*---------------------------------------------------------------------------------------------------------*/
 /*  Write 9-bit data to 7-bit address register of WAU8822 with I2C0                                        */
 /*---------------------------------------------------------------------------------------------------------*/
 void I2C_WriteWAU8822(uint8_t u8addr, uint16_t u16data)
 {
+
+    I2C_EnableTimeout(I2C0, 1);
+
+restart:
+
     /* Send START */
     I2C_START(I2C0);
     I2C_WAIT_READY(I2C0);
@@ -25,18 +36,56 @@ void I2C_WriteWAU8822(uint8_t u8addr, uint16_t u16data)
     I2C_SET_CONTROL_REG(I2C0, I2C_CTL_SI);
     I2C_WAIT_READY(I2C0);
 
+    if (I2C_GET_STATUS(I2C0) == 0x38)
+    {
+        RecoveryFromArbLost();
+        goto restart;
+    }
+    else if (I2C_GET_STATUS(I2C0) != 0x18)
+        goto stop;
+
+
     /* Send register number and MSB of data */
     I2C_SET_DATA(I2C0, (uint8_t)((u8addr << 1) | (u16data >> 8)));
     I2C_SET_CONTROL_REG(I2C0, I2C_CTL_SI);
     I2C_WAIT_READY(I2C0);
+
+    if (I2C_GET_STATUS(I2C0) == 0x38)
+    {
+        RecoveryFromArbLost();
+        goto restart;
+    }
+    else if (I2C_GET_STATUS(I2C0) != 0x28)
+        goto stop;
 
     /* Send data */
     I2C_SET_DATA(I2C0, (uint8_t)(u16data & 0x00FF));
     I2C_SET_CONTROL_REG(I2C0, I2C_CTL_SI);
     I2C_WAIT_READY(I2C0);
 
+    if (I2C_GET_STATUS(I2C0) == 0x38)
+    {
+        RecoveryFromArbLost();
+        goto restart;
+    }
+    else if (I2C_GET_STATUS(I2C0) != 0x28)
+        goto stop;
+
+stop:
+    I2C_EnableTimeout(I2C0, 1);
     /* Send STOP */
-    I2C_STOP(I2C0);
+    I2C0->CTL0 |= (I2C_CTL0_SI_Msk | I2C_CTL0_STO_Msk);
+
+    while (I2C0->CTL0 & I2C_CTL0_STO_Msk)
+    {
+        if (I2C_GET_TIMEOUT_FLAG(I2C0))
+        {
+            break;
+        }
+    }
+
+    I2C_ClearTimeoutFlag(I2C0);
+    I2C_DisableTimeout(I2C0);
 }
 
 
@@ -79,6 +128,8 @@ void WAU8822_Setup(void)
 
 uint8_t I2cWrite_MultiByteforNAU88L25(uint8_t chipadd, uint16_t subaddr, const uint8_t *p, uint32_t len)
 {
+
+restart:
     /* Send START */
     I2C_START(I2C0);
     I2C_WAIT_READY(I2C0);
@@ -86,30 +137,82 @@ uint8_t I2cWrite_MultiByteforNAU88L25(uint8_t chipadd, uint16_t subaddr, const u
     /* Send device address */
     I2C_SET_DATA(I2C0, chipadd);
     I2C_SET_CONTROL_REG(I2C0, I2C_CTL_SI);
-    I2C_WAIT_READY(I2C0);
+
+    if (I2C_GET_STATUS(I2C0) == 0x38)
+    {
+        RecoveryFromArbLost();
+        goto restart;
+    }
+    else if (I2C_GET_STATUS(I2C0) != 0x18)
+        goto stop;
 
     /* Send register number and MSB of data */
     I2C_SET_DATA(I2C0, (uint8_t)(subaddr >> 8));
     I2C_SET_CONTROL_REG(I2C0, I2C_CTL_SI);
     I2C_WAIT_READY(I2C0);
 
+    if (I2C_GET_STATUS(I2C0) == 0x38)
+    {
+        RecoveryFromArbLost();
+        goto restart;
+    }
+    else if (I2C_GET_STATUS(I2C0) != 0x28)
+        goto stop;
+
     /* Send register number and MSB of data */
     I2C_SET_DATA(I2C0, (uint8_t)(subaddr));
     I2C_SET_CONTROL_REG(I2C0, I2C_CTL_SI);
     I2C_WAIT_READY(I2C0);
+
+    if (I2C_GET_STATUS(I2C0) == 0x38)
+    {
+        RecoveryFromArbLost();
+        goto restart;
+    }
+    else if (I2C_GET_STATUS(I2C0) != 0x28)
+        goto stop;
 
     /* Send data */
     I2C_SET_DATA(I2C0, p[0]);
     I2C_SET_CONTROL_REG(I2C0, I2C_CTL_SI);
     I2C_WAIT_READY(I2C0);
 
+    if (I2C_GET_STATUS(I2C0) == 0x38)
+    {
+        RecoveryFromArbLost();
+        goto restart;
+    }
+    else if (I2C_GET_STATUS(I2C0) != 0x28)
+        goto stop;
+
     /* Send data */
     I2C_SET_DATA(I2C0, p[1]);
     I2C_SET_CONTROL_REG(I2C0, I2C_CTL_SI);
     I2C_WAIT_READY(I2C0);
 
+    if (I2C_GET_STATUS(I2C0) == 0x38)
+    {
+        RecoveryFromArbLost();
+        goto restart;
+    }
+    else if (I2C_GET_STATUS(I2C0) != 0x28)
+        goto stop;
+
+stop:
+    I2C_EnableTimeout(I2C0, 1);
     /* Send STOP */
-    I2C_STOP(I2C0);
+    I2C0->CTL0 |= (I2C_CTL0_SI_Msk | I2C_CTL0_STO_Msk);
+
+    while (I2C0->CTL0 & I2C_CTL0_STO_Msk)
+    {
+        if (I2C_GET_TIMEOUT_FLAG(I2C0))
+        {
+            break;
+        }
+    }
+
+    I2C_ClearTimeoutFlag(I2C0);
+    I2C_DisableTimeout(I2C0);
 
     return  0;
 }

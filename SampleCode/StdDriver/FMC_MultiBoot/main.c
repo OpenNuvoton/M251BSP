@@ -44,7 +44,7 @@ int32_t main(void)
 {
     uint8_t u8Ch;
 
-    /* Unlock protected registers */
+    /* Unlock protected registers to operate SYS_Init and FMC ISP function */
     SYS_UnlockReg();
 
     /* Init System, IP clock and multi-function I/O. */
@@ -100,15 +100,15 @@ int32_t main(void)
 
 
     printf("Select one boot image: \n");
-#if !defined(__GNUC__)
+#if defined (__ARMCC_VERSION) || defined (__ICCARM__)
     printf("[0] Boot 0, base = 0x4000\n");
 #endif
     printf("[1] Boot 1, base = 0x8000\n");
-#if !defined(__GNUC__)
+#if defined (__ARMCC_VERSION) || defined (__ICCARM__)
     printf("[2] Boot 2, base = 0xC000\n");
 #endif
     printf("[3] Boot 3, base = 0x10000\n");
-#if !defined(__GNUC__)
+#if defined (__ARMCC_VERSION) || defined (__ICCARM__)
     printf("[4] Boot 4, base = 0x100000\n");
 #endif
     printf("[Others] Boot, base = 0x0\n");
@@ -117,7 +117,7 @@ int32_t main(void)
 
     switch (u8Ch)
     {
-#if !defined(__GNUC__)
+#if defined (__ARMCC_VERSION) || defined (__ICCARM__)
 
         case '0':
             FMC_SetVectorPageAddr(0x4000);
@@ -127,7 +127,7 @@ int32_t main(void)
         case '1':
             FMC_SetVectorPageAddr(0x8000);
             break;
-#if !defined(__GNUC__)
+#if defined (__ARMCC_VERSION) || defined (__ICCARM__)
 
         case '2':
             FMC_SetVectorPageAddr(0xC000);
@@ -137,7 +137,7 @@ int32_t main(void)
         case '3':
             FMC_SetVectorPageAddr(0x10000);
             break;
-#if !defined(__GNUC__)
+#if defined (__ARMCC_VERSION) || defined (__ICCARM__)
 
         case '4':
             FMC_SetVectorPageAddr(0x100000);
@@ -151,9 +151,6 @@ int32_t main(void)
 
     /* Reset CPU only to reset to new vector page */
     SYS_ResetCPU();
-
-    /* Reset System to reset to new vector page. */
-    //NVIC_SystemReset();
 
     /* Disable ISP function */
     FMC_Close();

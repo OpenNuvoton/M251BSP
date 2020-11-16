@@ -52,7 +52,7 @@ void SYS_Init(void)
     /* Init System Clock                                                                                       */
     /*---------------------------------------------------------------------------------------------------------*/
 
-    /* Enable HIRC clock (Internal RC 12MHz) */
+    /* Enable HIRC clock (Internal RC 48MHz) */
     CLK_EnableXtalRC(CLK_PWRCTL_HIRCEN_Msk);
 
     /* Wait for HIRC clock ready */
@@ -64,6 +64,7 @@ void SYS_Init(void)
     /* Enable IP module clock */
     CLK_EnableModuleClock(UART0_MODULE);
     CLK_EnableModuleClock(WWDT_MODULE);
+    CLK_EnableModuleClock(GPB_MODULE);
 
     /* Peripheral clock source */
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HIRC, CLK_CLKDIV0_UART0(1));

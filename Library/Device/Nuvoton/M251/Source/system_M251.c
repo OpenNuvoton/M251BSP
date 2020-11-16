@@ -4,7 +4,7 @@
  * @brief    System Setting Source File
  *
  * SPDX-License-Identifier: Apache-2.0
- * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2020 Nuvoton Technology Corp. All rights reserved.
  ****************************************************************************/
 
 #include <arm_cmse.h>
@@ -116,7 +116,7 @@ void SystemInit(void)
 void AssertError(uint8_t *file, uint32_t line)
 {
 
-    printf("[%s] line %d : wrong parameters.\r\n", file, line);
+    printf("[%s] line %u : wrong parameters.\r\n", file, line);
 
     /* Infinite loop */
     while (1) ;

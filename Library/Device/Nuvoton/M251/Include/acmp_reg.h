@@ -144,7 +144,6 @@ typedef struct
     __IO uint32_t CTL[2];                /*!< [0x0000~0x0004] Analog Comparator 0/1 Control Register                    */
     __IO uint32_t STATUS;                /*!< [0x0008] Analog Comparator Status Register                                */
     __IO uint32_t VREF;                  /*!< [0x000c] Analog Comparator Reference Voltage Control Register             */
-
 } ACMP_T;
 
 /**

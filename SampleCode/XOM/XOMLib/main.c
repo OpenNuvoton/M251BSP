@@ -83,7 +83,7 @@ int32_t main(void)
     printf("|      FMC XOM Libary Build Example      |\n");
     printf("+----------------------------------------+\n");
 
-    /* Unlock protected registers */
+    /* Unlock protected registers to operate FMC ISP function */
     SYS_UnlockReg();
 
     /* Enable FMC ISP function and enable APROM active*/

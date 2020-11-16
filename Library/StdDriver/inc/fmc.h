@@ -4,7 +4,7 @@
  * @brief    M251 series Flash Memory Controller(FMC) driver header file
  *
  * SPDX-License-Identifier: Apache-2.0
- * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2020 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 
 #ifndef __FMC_H__
@@ -599,6 +599,3 @@ uint32_t FMC_Write128(uint32_t u32Addr, uint32_t pu32Buf[]);
 #endif
 
 #endif /* __FMC_H__ */
-
-/*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/
-

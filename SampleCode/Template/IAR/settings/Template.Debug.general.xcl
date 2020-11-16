@@ -1,0 +1,13 @@
+"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.2\arm\bin\armproc.dll" 
+
+"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.2\arm\..\..\..\Nuvoton Tools\Nu-Link_IAR\Nu-Link_IAR.dll " 
+
+"C:\Cloud\Git\hcrdgit4\M251\bsp\SampleCode\Template\IAR\Debug\Exe\Template.out" 
+
+--plugin="C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.2\arm\bin\armbat.dll" 
+
+--flash_loader="C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.2\arm\config\flashloader\Nuvoton\M251_APROM.board" 
+
+
+
+

@@ -228,7 +228,7 @@ int32_t main(void)
     NVIC_EnableIRQ(WDT_IRQn);
 
     /* Configure WDT settings and start WDT counting */
-    WDT_Open(WDT_TIMEOUT_2POW14, (uint32_t)NULL, FALSE, TRUE);
+    WDT_Open(WDT_TIMEOUT_2POW14, WDT_RESET_DELAY_1026CLK, FALSE, TRUE);
 
     /* Enable WDT interrupt function */
     WDT_EnableInt();

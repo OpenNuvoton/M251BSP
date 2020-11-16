@@ -94,7 +94,6 @@ void UART0_Init(void)
 /*---------------------------------------------------------------------------------------------------------*/
 void EADC_FunctionTest(void)
 {
-    uint8_t  u8Option;
     int32_t  i32ConversionData, i;
 
     printf("\n");
@@ -111,6 +110,8 @@ void EADC_FunctionTest(void)
         printf("  [1] Assign interrupt ADINT0~3 to Sample Module 0~3\n");
         printf("  [2] Assign interrupt ADINT3~0 to Sample Module 0~3\n");
         printf("  Other keys: exit EADC test\n");
+
+        uint8_t  u8Option;
         u8Option = getchar();
 
         if (u8Option == '1')

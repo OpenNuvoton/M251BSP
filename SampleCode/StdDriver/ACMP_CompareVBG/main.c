@@ -37,9 +37,9 @@ void ACMP01_IRQHandler(void)
 
     /* Check Comparator 0 Output Status */
     if (ACMP_GET_OUTPUT(ACMP01, 1))
-        printf("ACMP1_P voltage > VBG (%d)\n", u32Cnt);
+        printf("ACMP1_P voltage > VBG (%d) ACMP1_O(%d)\n", u32Cnt, PC0);
     else
-        printf("ACMP1_P voltage <= VBG (%d)\n", u32Cnt);
+        printf("ACMP1_P voltage <= VBG (%d) ACMP1_O(%d)\n", u32Cnt, PC0);
 
     u32Cnt++;
 }
@@ -63,8 +63,8 @@ void SYS_Init(void)
 
     /* Select HIRC as the clock source of UART */
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HIRC, CLK_CLKDIV0_UART0(1));
-#else
 
+#else
     /* Set XT1_OUT(PF.2) and XT1_IN(PF.3) to input mode */
     PF->MODE &= ~(GPIO_MODE_MODE2_Msk | GPIO_MODE_MODE3_Msk);
 
@@ -94,6 +94,10 @@ void SYS_Init(void)
     CLK_EnableModuleClock(UART0_MODULE);
     /* Enable ACMP01 peripheral clock */
     CLK_EnableModuleClock(ACMP01_MODULE);
+    /* Enable GPB peripheral clock */
+    CLK_EnableModuleClock(GPB_MODULE);
+    /* Enable GPC peripheral clock */
+    CLK_EnableModuleClock(GPC_MODULE);
 
     /* Update System Core Clock */
     /* User can use SystemCoreClockUpdate() to calculate SystemCoreClock and CyclesPerUs automatically. */
@@ -149,7 +153,6 @@ int32_t main(void)
     ACMP_SELECT_P(ACMP01, 1, ACMP_CTL_POSSEL_P1);
     /* Configure ACMP1. Enable ACMP1 and select VBG output as the source of ACMP negative input. */
     ACMP_Open(ACMP01, 1, ACMP_CTL_NEGSEL_VBG, ACMP_CTL_HYSTERESIS_DISABLE);
-    //   ACMP_Open(ACMP01, 1, ACMP_CTL_NEGSEL_PIN, ACMP_CTL_HYSTERESIS_DISABLE);
 
     /* Clear ACMP 1 interrupt flag */
     ACMP_CLR_INT_FLAG(ACMP01, 1);
@@ -160,9 +163,4 @@ int32_t main(void)
     NVIC_EnableIRQ(ACMP01_IRQn);
 
     while (1);
-
 }
-
-/*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/
-
-

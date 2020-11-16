@@ -68,7 +68,7 @@ void QSPI_Init(void)
 {
     /* Configure as a slave, clock idle low, 32-bit transaction, drive output on falling clock edge and latch input on rising edge. */
     /* Configure QSPI0 as a low level active device. */
-    QSPI_Open(QSPI0, QSPI_SLAVE, QSPI_MODE_0, 32, (uint32_t)NULL);
+    QSPI_Open(QSPI0, QSPI_SLAVE, QSPI_MODE_0, 32, 0);
 
     /* Disable QSPI Transfer control */
     QSPI0->CTL &= ~QSPI_CTL_QSPIEN_Msk;
@@ -144,7 +144,7 @@ int main(void)
 
     for (u32RxDataCount = 0; u32RxDataCount < TEST_COUNT; u32RxDataCount++)
     {
-        printf("%d:\t0x%X\n", u32RxDataCount, g_au32DestinationData[u32RxDataCount]);
+        printf("%u:\t0x%X\n", u32RxDataCount, g_au32DestinationData[u32RxDataCount]);
     }
 
     printf("The data transfer was done.\n");

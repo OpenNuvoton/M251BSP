@@ -8,10 +8,10 @@ This BSP folder
 - CMSIS.html<br>
 	Document of CMSIS version 5.1.1.
 
-- NuMicro M251_252 Series CMSIS BSP Driver Reference Guide.chm<br>
+- NuMicro M251_252_254_256_258 Series CMSIS BSP Driver Reference Guide.chm<br>
 	This document describes the usage of drivers in M251/M252/M254/M256/M258 BSP.
 
-- NuMicro M251_252 Series CMSIS BSP Revision History.pdf<br>
+- NuMicro M251_252_254_256_258 Series CMSIS BSP Revision History.pdf<br>
 	This document shows the revision history of M251/M252/M254/M256/M258 BSP.
 
 ## .\Library\
@@ -23,11 +23,17 @@ This BSP folder
 - Device<br>
 	CMSIS compliant device header file.
 
+- LCDLib<br>
+	Library for controlling LCD module.
+
 - SmartcardLib<br>
 	Smart card library binary and header file.
 
 - StdDriver<br>
 	All peripheral driver header and source files.
+
+- TKLib<br>
+	Library for controlling touch key module.
 
 ## .\Sample Code\
 
@@ -46,6 +52,9 @@ This BSP folder
 - ISP<br>
 	Sample codes for In-System-Programming.
 
+- NuMaker-M258KE<br>
+	Sample codes for NuMaker-M258KE board.
+
 - PowerManagement<br>
 	Power management sample code.
 
@@ -60,6 +69,12 @@ This BSP folder
 
 - XOM<br>
 	Demonstrate how to create XOM library and use it.
+
+
+## .\TK-Utility\
+
+
+- Touch key calibration tool.
 
 
 # License

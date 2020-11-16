@@ -224,13 +224,16 @@ typedef struct
      */
     __IO uint32_t CTL0;                  /*!< [0x0000] External Bus Interface Bank0 Control Register                    */
     __IO uint32_t TCTL0;                 /*!< [0x0004] External Bus Interface Bank0 Timing Control Register             */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE0[2];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t CTL1;                  /*!< [0x0010] External Bus Interface Bank1 Control Register                    */
     __IO uint32_t TCTL1;                 /*!< [0x0014] External Bus Interface Bank1 Timing Control Register             */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE1[2];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t CTL2;                  /*!< [0x0020] External Bus Interface Bank2 Control Register                    */
     __IO uint32_t TCTL2;                 /*!< [0x0024] External Bus Interface Bank2 Timing Control Register             */
-
 } EBI_T;
 
 /**

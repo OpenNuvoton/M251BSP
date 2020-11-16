@@ -4,7 +4,7 @@
  * @brief    DAC register definition header file
  *
  * SPDX-License-Identifier: Apache-2.0
- * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2020 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 
 #ifndef __DAC_REG_H__
@@ -135,7 +135,6 @@ typedef struct
     __I  uint32_t DATOUT;                /*!< [0x000c] DAC Data Output Register                                        */
     __IO uint32_t STATUS;                /*!< [0x0010] DAC Status Register                                             */
     __IO uint32_t TCTL;                  /*!< [0x0014] DAC Timing Control Register                                     */
-
 } DAC_T;
 
 /**

@@ -10,8 +10,6 @@
 #include <stdio.h>
 #include "NuMicro.h"
 
-#define APROM_TEST_BASE             0x3000
-#define TEST_PATTERN                0x5A5A5A5A
 
 void SYS_Init(void)
 {
@@ -44,11 +42,10 @@ void SYS_Init(void)
 
 int32_t main(void)
 {
-    uint32_t u32Data, u32RData;
     uint32_t u32Addr;
     uint32_t u32Cnt;
 
-    /* Unlock protected registers */
+    /* Unlock protected registers to operate SYS_Init and FMC ISP function */
     SYS_UnlockReg();
 
     /* Init System, IP clock and multi-function I/O. */
@@ -71,7 +68,7 @@ int32_t main(void)
        RO code is placed to 0x20000000 ~ 0x20001fff with RW is placed to 0x20002000 ~ 0x20003fff.
     */
 
-    /* Unlock protected registers */
+    /* Unlock protected registers to operate FMC ISP function */
     SYS_UnlockReg();
 
     /* Enable FMC ISP functions */
@@ -86,6 +83,7 @@ int32_t main(void)
 
     for (u32Cnt = 0; u32Cnt < 0x100; u32Cnt += 4)
     {
+        uint32_t u32Data, u32RData;
 
         /* Write Demo */
         u32Data = u32Cnt + 0x12345678;

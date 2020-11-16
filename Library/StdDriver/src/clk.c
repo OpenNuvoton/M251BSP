@@ -4,7 +4,7 @@
  * @brief    M251 series CLK driver source file
  *
  * SPDX-License-Identifier: Apache-2.0
- * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2020 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 
 #include "NuMicro.h"
@@ -248,7 +248,7 @@ uint32_t CLK_GetCPUFreq(void)
  *
  * @return   PLL clock output frequency
  *
- * @details  To get actual PLL clock output frequency. The clock uint is in Hz.
+ * @details  To get actual PLL clock output frequency. The clock unit is in Hz.
  */
 uint32_t CLK_GetPLLClockFreq(void)
 {
@@ -452,10 +452,10 @@ uint32_t CLK_EnablePLL(uint32_t u32PllClkSrc, uint32_t u32PllFreq)
 
     /* Enable and apply new PLL setting. */
     CLK->PLLCTL = u32ClkSrc | (u32MinNO << 14) | ((u32MinNR) << 9) | (u32MinNF);
-    //printf("\n u32ClkSrc %x, u32PllSrcClk %d, u32MinNO %d, u32MinNR %d, u32MinNF %d",u32ClkSrc,u32PllSrcClk,u32MinNO,u32MinNR,u32MinNF);
+
     /* Wait for PLL clock stable */
     CLK_WaitClockReady(CLK_STATUS_PLLSTB_Msk);
-    //printf("\n u32PllSrcClk %d u32MinNO %d u32MinNR %d u32MinNF %d",u32PllSrcClk,u32MinNO,u32MinNR,u32MinNF);
+
     /* Return actual PLL output clock frequency */
     return u32PllSrcClk / ((u32MinNO + 1UL) * u32MinNR) * u32MinNF;
 
@@ -655,8 +655,10 @@ uint32_t CLK_SetCoreClock(uint32_t u32Hclk)
   * |\ref BPWM0_MODULE   |\ref CLK_CLKSEL2_BPWM0SEL_PCLK0       | x                       |
   * |\ref BPWM1_MODULE   |\ref CLK_CLKSEL2_BPWM1SEL_PLL         | x                       |
   * |\ref BPWM1_MODULE   |\ref CLK_CLKSEL2_BPWM1SEL_PCLK1       | x                       |
-  * |\ref SLCD_MODULE    |\ref CLK_CLKSEL2_SLCDSEL_LIRC         | x                       |
-  * |\ref SLCD_MODULE    |\ref CLK_CLKSEL2_SLCDSEL_LXT          | x                       |
+  * |\ref LCD_MODULE     |\ref CLK_CLKSEL2_LCDSEL_LIRC          | x                       |
+  * |\ref LCD_MODULE     |\ref CLK_CLKSEL2_LCDSEL_LXT           | x                       |
+  * |\ref LCDCP_MODULE   |\ref CLK_CLKSEL2_LCDCPSEL_MIRC1P2M    | x                       |
+  * |\ref LCDCP_MODULE   |\ref CLK_CLKSEL2_LCDCPSEL_MIRC        | x                       |
   * |\ref PSIO_MODULE    |\ref CLK_CLKSEL2_PSIOSEL_HXT          |\ref CLK_CLKDIV1_PSIO(x) |
   * |\ref PSIO_MODULE    |\ref CLK_CLKSEL2_PSIOSEL_LXT          |\ref CLK_CLKDIV1_PSIO(x) |
   * |\ref PSIO_MODULE    |\ref CLK_CLKSEL2_PSIOSEL_PCLK1        |\ref CLK_CLKDIV1_PSIO(x) |
@@ -726,7 +728,7 @@ void CLK_SetSysTickClockSrc(uint32_t u32ClkSrc)
   * @return     None
   * @details    This function enable clock source. \n
   *             The register write-protection function should be disabled before using this function.
-  *             Notice that HXT and LXT are using commmon pin,
+  *             Notice that HXT and LXT are using common pin,
   *             that is the two clock(HXT, LXT) sources are mutual exclusive.
   *             So parameters, CLK_PWRCTL_HXTEN and CLK_PWRCTL_LXTEN, can not be applied at the same time.
   *             In other word, user should make sure that LXT is disabled if user want to enable HXT.
@@ -787,13 +789,14 @@ void CLK_DisableXtalRC(uint32_t u32ClkMask)
   *             - \ref UART2_MODULE
   *             - \ref USBD_MODULE
   *             - \ref EADC_MODULE
-  *             - \ref TCHK_MODULE
+  *             - \ref TK_MODULE
   *             - \ref SC0_MODULE
   *             - \ref USCI0_MODULE
   *             - \ref USCI1_MODULE
   *             - \ref USCI2_MODULE
   *             - \ref DAC_MODULE
-  *             - \ref SLCD_MODULE
+  *             - \ref LCD_MODULE
+  *             - \ref LCDCP_MODULE
   *             - \ref PWM0_MODULE
   *             - \ref PWM1_MODULE
   *             - \ref BPWM0_MODULE
@@ -843,13 +846,14 @@ void CLK_EnableModuleClock(uint32_t u32ModuleIdx)
   *             - \ref UART2_MODULE
   *             - \ref USBD_MODULE
   *             - \ref EADC_MODULE
-  *             - \ref TCHK_MODULE
+  *             - \ref TK_MODULE
   *             - \ref SC0_MODULE
   *             - \ref USCI0_MODULE
   *             - \ref USCI1_MODULE
   *             - \ref USCI2_MODULE
   *             - \ref DAC_MODULE
-  *             - \ref SLCD_MODULE
+  *             - \ref LCD_MODULE
+  *             - \ref LCDCP_MODULE
   *             - \ref PWM0_MODULE
   *             - \ref PWM1_MODULE
   *             - \ref BPWM0_MODULE
@@ -1117,7 +1121,8 @@ uint32_t CLK_GetPMUWKSrc(void)
   *             - \ref UART2_MODULE
   *             - \ref USBD_MODULE
   *             - \ref SC0_MODULE
-  *             - \ref SLCD_MODULE
+  *             - \ref LCD_MODULE
+  *             - \ref LCDCP_MODULE
   *             - \ref PWM0_MODULE
   *             - \ref PWM1_MODULE
   *             - \ref BPWM0_MODULE
@@ -1196,5 +1201,3 @@ uint32_t CLK_GetModuleClockDivider(uint32_t u32ModuleIdx)
 /*@}*/ /* end of group CLK_Driver */
 
 /*@}*/ /* end of group Standard_Driver */
-
-/*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/

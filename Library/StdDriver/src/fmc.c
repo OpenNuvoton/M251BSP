@@ -4,7 +4,7 @@
  * @brief    M251 series Flash Memory Controller(FMC) driver source file
  *
  * SPDX-License-Identifier: Apache-2.0
- * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2020 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 #include <stdio.h>
 #include "NuMicro.h"
@@ -269,7 +269,6 @@ uint32_t  FMC_CheckAllOne(uint32_t u32addr, uint32_t u32count)
   */
 int32_t FMC_Is_XOM_Actived(uint32_t xom_num)
 {
-    uint32_t u32act;
     int32_t  ret = 0;
 
     if (xom_num >= 1UL)
@@ -279,6 +278,7 @@ int32_t FMC_Is_XOM_Actived(uint32_t xom_num)
 
     if (ret >= 0)
     {
+        uint32_t u32act;
         u32act = (((FMC->XOMSTS) & 0xful) & (1ul << xom_num)) >> xom_num;
         ret = (int32_t)u32act;
     }
@@ -380,7 +380,6 @@ int32_t FMC_Config_XOM(uint32_t xom_num, uint32_t xom_base, uint8_t xom_page)
   */
 int32_t FMC_Erase_XOM(uint32_t xom_num)
 {
-    uint32_t u32Addr;
     int32_t i32Active, err = 0;
 
     if (xom_num >= 1UL)
@@ -393,6 +392,7 @@ int32_t FMC_Erase_XOM(uint32_t xom_num)
 
     if (i32Active)
     {
+        uint32_t u32Addr;
         u32Addr =  FMC->XOMR0STS0;
         FMC->ISPCMD = FMC_ISPCMD_PAGE_ERASE;
         FMC->ISPADDR = u32Addr;
@@ -525,7 +525,6 @@ uint32_t FMC_Write128(uint32_t u32Addr, uint32_t pu32Buf[])
 {
 
     uint32_t i, idx, u32OnProg;
-    int32_t err;
 
     idx = 0u;
     FMC->ISPCMD = FMC_ISPCMD_MULTI_PROG;
@@ -533,6 +532,7 @@ uint32_t FMC_Write128(uint32_t u32Addr, uint32_t pu32Buf[])
 
     do
     {
+        int32_t err;
         err = 0;
         u32OnProg = 1u;
         FMC->MPDAT0 = pu32Buf[idx + 0u];
@@ -606,7 +606,3 @@ uint32_t FMC_Write128(uint32_t u32Addr, uint32_t pu32Buf[])
 /*@}*/ /* end of group FMC_Driver */
 
 /*@}*/ /* end of group Standard_Driver */
-
-/*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/
-
-

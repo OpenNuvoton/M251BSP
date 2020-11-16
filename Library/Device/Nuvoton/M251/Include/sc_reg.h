@@ -653,10 +653,10 @@ typedef struct
     __IO uint32_t TMRCTL1;               /*!< [0x002c] SC Internal Timer1 Control Register                              */
     __IO uint32_t TMRCTL2;               /*!< [0x0030] SC Internal Timer2 Control Register                              */
     __IO uint32_t UARTCTL;               /*!< [0x0034] SC UART Mode Control Register                                    */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE0[5];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t ACTCTL;                /*!< [0x004c] SC Activation Control Register                                   */
-    __I  uint32_t RESERVE1[1004];
-
 } SC_T;
 
 /**

@@ -185,7 +185,7 @@
         </option>
         <option>
           <name>CCDefines</name>
-          <state>DEBUG_ENABLE_SEMIHOST</state>
+          <state></state>
         </option>
         <option>
           <name>CCPreprocFile</name>

@@ -4,7 +4,7 @@
  * @brief    M251 series SYS driver source file
  *
  * SPDX-License-Identifier: Apache-2.0
- * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2020 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 #include "NuMicro.h"
 /** @addtogroup Standard_Driver Standard Driver
@@ -134,6 +134,8 @@ void SYS_ResetCPU(void)
   *             - \ref EADC_RST
   *             - \ref SC0_RST
   *             - \ref USCI0_RST
+  *             - \ref LCD_RST
+  *             - \ref TK_RST
   *             - \ref USCI1_RST
   *             - \ref USCI2_RST
   *             - \ref DAC_RST
@@ -210,6 +212,8 @@ void SYS_SetPowerLevel(uint32_t u32PowerLevel)
 {
     /* Set power voltage level */
     SYS->PLCTL = (SYS->PLCTL & (~SYS_PLCTL_PLSEL_Msk)) | (u32PowerLevel);
+
+    while (SYS->PLSTS & SYS_PLSTS_PLCBUSY_Msk);
 }
 
 /*@}*/ /* end of group SYS_EXPORTED_FUNCTIONS */
@@ -217,5 +221,3 @@ void SYS_SetPowerLevel(uint32_t u32PowerLevel)
 /*@}*/ /* end of group SYS_Driver */
 
 /*@}*/ /* end of group Standard_Driver */
-
-/*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/

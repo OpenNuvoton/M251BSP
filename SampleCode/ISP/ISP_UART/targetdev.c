@@ -14,10 +14,10 @@ uint32_t GetApromSize()
 {
     //the smallest of APROM size is 2K
     uint32_t size = 0x800, data;
-    int result;
 
     do
     {
+        int result;
         result = FMC_Read_User(size, &data);
 
         if (result < 0)

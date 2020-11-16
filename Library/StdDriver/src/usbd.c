@@ -746,7 +746,7 @@ void USBD_SwReset(void)
     s_USBD_pu8CtrlOutPointer   = 0ul;
     s_USBD_u32CtrlOutSize      = 0ul;
     s_USBD_u32CtrlOutSizeLimit = 0ul;
-    g_USBD_u32EpStallLock        = 0ul;
+    g_USBD_u32EpStallLock      = 0ul;
     memset(g_USBD_au8SetupPacket, 0, 8ul);
 
     /* Reset PID DATA0 */
@@ -800,10 +800,6 @@ void USBD_LockEpStall(uint32_t u32EpBitmap)
 {
     g_USBD_u32EpStallLock = u32EpBitmap;
 }
-
-
-
-
 
 /*@}*/ /* end of group USBD_EXPORTED_FUNCTIONS */
 

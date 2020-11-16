@@ -8,11 +8,11 @@
  ******************************************************************************/
 
 /**
-  \mainpage NuMicro M251/M252 Series CMSIS BSP Driver Reference
+  \mainpage NuMicro M251/M252/M254/M256/M258 Series CMSIS BSP Driver Reference
   *
   * <b>Introduction</b>
   *
-  * This user manual describes the usage of M251/M252 Series MCU device driver
+  * This user manual describes the usage of M251/M252/M254/M256/M258 Series MCU device driver
   *
   * <b>Disclaimer</b>
   *
@@ -87,7 +87,7 @@ typedef enum IRQn
     IRCTRIM_IRQn              = 1,      /*!< Watch Dog Timer Interrupt                            */
     PWRWU_IRQn                = 2,      /*!< EINT0, EINT2 and EINT4 Interrupt                     */
     RESERVE0                  = 3,      /*!< Reserve 0                                            */
-    CLKFAIL_IRQn              = 4,      /*!< Clock fail dector Interrupt                          */
+    CLKFAIL_IRQn              = 4,      /*!< Clock fail detected Interrupt                          */
     RESERVE1                  = 5,      /*!< Reserve 1                                            */
     RTC_IRQn                  = 6,      /*!< Real Time Clock Interrupt                            */
     TAMPER_IRQn               = 7,      /*!< Tamper detection Interrupt                           */
@@ -144,8 +144,9 @@ typedef enum IRQn
     SC0_IRQn                  = 58,     /*!< Smart Card0 Interrupt                                */
     RESERVE5                  = 59,     /*!< Reserve 5                                            */
     USCI2_IRQn                = 60,     /*!< USCI2 Interrupt                                      */
-    RESERVE6                  = 61,     /*!< Reserve 6                                            */
+    LCD_IRQn                  = 61,     /*!< LCD Interrupt                                        */
     OPA_IRQn                  = 62,     /*!< OPA Interrupt                                        */
+    TK_IRQn                   = 63,     /*!< Touch Key Interrupt                                  */
 } IRQn_Type;
 
 /* ================================================================================ */
@@ -238,6 +239,8 @@ extern void SystemInit(void);
 #include "usbd_reg.h"
 #include "wdt_reg.h"
 #include "wwdt_reg.h"
+#include "lcd_reg.h"
+#include "tk_reg.h"
 
 /**@}*/ /* end of REGISTER group */
 
@@ -293,6 +296,7 @@ extern void SystemInit(void);
 #define USBD_BASE             (APBPERIPH_BASE + 0x80000UL)
 #define USCI0_BASE            (APBPERIPH_BASE + 0x90000UL)
 #define USCI2_BASE            (APBPERIPH_BASE + 0x92000UL)
+#define TK_BASE               (APBPERIPH_BASE + 0x82000UL)
 
 /*!< APB1 peripherals */
 #define RTC_BASE              (APBPERIPH_BASE + 0x01000UL)
@@ -307,6 +311,7 @@ extern void SystemInit(void);
 #define I2C1_BASE             (APBPERIPH_BASE + 0x41000UL)
 #define PSIO_BASE             (APBPERIPH_BASE + 0x83000UL)
 #define USCI1_BASE            (APBPERIPH_BASE + 0x91000UL)
+#define LCD_BASE              (APBPERIPH_BASE + 0x7B000UL)
 
 /**@}*/ /* end of group PERIPHERAL_BASE */
 
@@ -355,6 +360,7 @@ extern void SystemInit(void);
 #define UI2C2                ((UI2C_T *)            USCI2_BASE)
 #define USPI2                ((USPI_T *)            USCI2_BASE)
 #define UUART2               ((UUART_T *)           USCI2_BASE)
+#define TK                   ((TK_T *)              TK_BASE)
 
 /*!< APB1 peripherals */
 #define RTC                  ((RTC_T *)             RTC_BASE)
@@ -372,6 +378,7 @@ extern void SystemInit(void);
 #define UI2C1                ((UI2C_T *)            USCI1_BASE)
 #define USPI1                ((USPI_T *)            USCI1_BASE)
 #define UUART1               ((UUART_T *)           USCI1_BASE)
+#define LCD                  ((LCD_T *)             LCD_BASE)
 
 /**@}*/ /* end of group PERIPHERAL_DECLARATION */
 
@@ -637,5 +644,7 @@ typedef volatile unsigned short vu16;
 #include "psio.h"
 #include "sc.h"
 #include "scuart.h"
+#include "lcd.h"
+#include "tk.h"
 
 #endif  /* __M251_H__ */

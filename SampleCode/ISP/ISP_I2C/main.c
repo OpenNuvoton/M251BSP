@@ -22,6 +22,7 @@ __WEAK uint32_t CLK_GetPLLClockFreq(void)
 
 void SYS_Init(void)
 {
+    /* Unlock write-protected registers to operate SYS_Init and FMC ISP function */
     SYS_UnlockReg();
 
     /* Enable Internal RC clock */

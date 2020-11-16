@@ -4,7 +4,7 @@
  * @brief    M251 series USB driver header file
  *
  * SPDX-License-Identifier: Apache-2.0
- * @copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2020 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 
 #ifndef __USBD_H__
@@ -114,6 +114,7 @@ extern const S_USBD_INFO_T gsInfo;
 /*!<USB HID Descriptor Type */
 #define DESC_HID            0x21ul
 #define DESC_HID_RPT        0x22ul
+
 /*!<USB Descriptor Length */
 #define LEN_DEVICE          18ul
 #define LEN_QUALIFIER       10ul
@@ -185,11 +186,10 @@ extern const S_USBD_INFO_T gsInfo;
 #define USBD_CFGP_SSTALL        USBD_CFGP_SSTALL_Msk        /*!< Set Stall */
 #define USBD_CFG_CSTALL         USBD_CFG_CSTALL_Msk         /*!< Clear Stall */
 
-#define USBD_CFG_EPMODE_DISABLE (0ul << USBD_CFG_STATE_Pos)/*!< Endpoint Disable */
-#define USBD_CFG_EPMODE_OUT     (1ul << USBD_CFG_STATE_Pos)/*!< Out Endpoint */
-#define USBD_CFG_EPMODE_IN      (2ul << USBD_CFG_STATE_Pos)/*!< In Endpoint */
-#define USBD_CFG_TYPE_ISO       (1ul << USBD_CFG_ISOCH_Pos) /*!< Isochronous */
-
+#define USBD_CFG_EPMODE_DISABLE (0ul << USBD_CFG_STATE_Pos) /*!< Endpoint Disable */
+#define USBD_CFG_EPMODE_OUT     (1ul << USBD_CFG_STATE_Pos) /*!< Out Endpoint     */
+#define USBD_CFG_EPMODE_IN      (2ul << USBD_CFG_STATE_Pos) /*!< In Endpoint      */
+#define USBD_CFG_TYPE_ISO       (1ul << USBD_CFG_ISOCH_Pos) /*!< Isochronous      */
 
 /*@}*/ /* end of group USBD_EXPORTED_CONSTANTS */
 
@@ -579,12 +579,12 @@ __STATIC_INLINE void USBD_MemCopy(uint8_t *dest, uint8_t *src, uint32_t size)
   */
 __STATIC_INLINE void USBD_SetStall(uint8_t epnum)
 {
-    uint32_t u32CfgAddr;
-    uint32_t u32Cfg;
     uint32_t i;
 
     for (i = 0ul; i < USBD_MAX_EP; i++)
     {
+        uint32_t u32CfgAddr;
+        uint32_t u32Cfg;
         u32CfgAddr = (uint32_t)(i << 4) + (uint32_t)&USBD->EP[0].CFG; /* USBD_CFG0 */
         u32Cfg = *((__IO uint32_t *)(u32CfgAddr));
 
@@ -610,12 +610,12 @@ __STATIC_INLINE void USBD_SetStall(uint8_t epnum)
   */
 __STATIC_INLINE void USBD_ClearStall(uint8_t epnum)
 {
-    uint32_t u32CfgAddr;
-    uint32_t u32Cfg;
     uint32_t i;
 
     for (i = 0ul; i < USBD_MAX_EP; i++)
     {
+        uint32_t u32CfgAddr;
+        uint32_t u32Cfg;
         u32CfgAddr = (uint32_t)(i << 4) + (uint32_t)&USBD->EP[0].CFG; /* USBD_CFG0 */
         u32Cfg = *((__IO uint32_t *)(u32CfgAddr));
 
@@ -699,4 +699,4 @@ void USBD_LockEpStall(uint32_t u32EpBitmap);
 
 #endif /* __USBD_H__ */
 
-/*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/
+/*** (C) COPYRIGHT 2020 Nuvoton Technology Corp. ***/

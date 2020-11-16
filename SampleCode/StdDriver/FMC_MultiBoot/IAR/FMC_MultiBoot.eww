@@ -2,22 +2,22 @@
 
 <workspace>
   <project>
-    <path>$WS_DIR$\FMC_Base.ewp</path>
+    <path>$WS_DIR$\FMC_MultiBoot_Base.ewp</path>
   </project>
   <project>
-    <path>$WS_DIR$\FMC_Boot0.ewp</path>
+    <path>$WS_DIR$\FMC_MultiBoot_Boot0.ewp</path>
   </project>
   <project>
-    <path>$WS_DIR$\FMC_Boot1.ewp</path>
+    <path>$WS_DIR$\FMC_MultiBoot_Boot1.ewp</path>
   </project>
   <project>
-    <path>$WS_DIR$\FMC_Boot2.ewp</path>
+    <path>$WS_DIR$\FMC_MultiBoot_Boot2.ewp</path>
   </project>
   <project>
-    <path>$WS_DIR$\FMC_Boot3.ewp</path>
+    <path>$WS_DIR$\FMC_MultiBoot_Boot3.ewp</path>
   </project>
   <project>
-    <path>$WS_DIR$\FMC_BootLD.ewp</path>
+    <path>$WS_DIR$\FMC_MultiBoot_BootLD.ewp</path>
   </project>
   <batchBuild>
     <batchDefinition>

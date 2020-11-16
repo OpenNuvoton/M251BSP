@@ -112,8 +112,11 @@ void SYS_Init(void)
     CLK_EnableModuleClock(UART0_MODULE);
     /* Enable UART1 peripheral clock */
     CLK_EnableModuleClock(UART1_MODULE);
+    /* Enable GPA peripheral clock */
+    CLK_EnableModuleClock(GPA_MODULE);
     /* Enable SC0 peripheral clockk */
     CLK_EnableModuleClock(SC0_MODULE);
+
 
     /* Update System Core Clock */
     /* User can use SystemCoreClockUpdate() to calculate PllClock, SystemCoreClock and CycylesPerUs automatically. */
@@ -127,34 +130,23 @@ void SYS_Init(void)
     SYS->GPB_MFPL &= ~(SYS_GPB_MFPL_PB4MFP_Msk | SYS_GPB_MFPL_PB5MFP_Msk);
     SYS->GPB_MFPL |= (SYS_GPB_MFPL_PB5MFP_SC0_CLK | SYS_GPB_MFPL_PB4MFP_SC0_DAT);
 
+    /*Set PA0 IO status is Pull-up*/
+    GPIO_SetPullCtl(PA, BIT0, GPIO_PUSEL_PULL_UP);
+
+    /*Set PA2 IO status is Pull-up*/
+    GPIO_SetPullCtl(PA, BIT2, GPIO_PUSEL_PULL_UP);
+
     /* Set PA multi-function pins for UART0 RXD */
     SYS->GPA_MFPL &= ~(SYS_GPA_MFPL_PA0MFP_Msk);
     SYS->GPA_MFPL |= (SYS_GPA_MFPL_PA0MFP_UART0_RXD);
 
 
-    /* Set PF multi-function pins for UART0 RXD */
-    //    SYS->GPF_MFPL &= ~(SYS_GPF_MFPL_PF2MFP_Msk);
-    //    SYS->GPF_MFPL |= (SYS_GPF_MFPL_PF2MFP_UART0_RXD);
-
     /* Set PA multi-function pins for UART1 RXD */
     SYS->GPA_MFPL &= ~(SYS_GPA_MFPL_PA2MFP_Msk);
     SYS->GPA_MFPL |= (SYS_GPA_MFPL_PA2MFP_UART1_RXD);
 
-    /* Set PB multi-function pins for UART1 RXD */
-    //    SYS->GPB_MFPL &= ~(SYS_GPB_MFPL_PB2MFP_Msk);
-    //    SYS->GPB_MFPL |= (SYS_GPB_MFPL_PB2MFP_UART1_RXD);
 
 
-    /*Set PA0 IO status is Pull-up*/
-    GPIO_SetPullCtl(PA, BIT0, GPIO_PUSEL_PULL_UP);
-    /*Set PF2 IO status is Pull-up*/
-    //   GPIO_SetPullCtl(PF, BIT2, GPIO_PUSEL_PULL_UP);
-
-    /*Set PA2 IO status is Pull-up*/
-    GPIO_SetPullCtl(PA, BIT2, GPIO_PUSEL_PULL_UP);
-
-    /*Set PB2 IO status is Pull-up*/
-    //    GPIO_SetPullCtl(PB, BIT2, GPIO_PUSEL_PULL_UP);
     /* Lock protected registers */
     SYS_LockReg();
 }

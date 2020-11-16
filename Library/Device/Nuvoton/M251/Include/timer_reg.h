@@ -452,7 +452,9 @@ typedef struct
     __IO uint32_t EXTCTL;                /*!< [0x0014] Timer External Control Register                                 */
     __IO uint32_t EINTSTS;               /*!< [0x0018] Timer External Interrupt Status Register                        */
     __IO uint32_t TRGCTL;                /*!< [0x001c] Timer Trigger Control Register                                  */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE0[8];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t PWMCTL;                /*!< [0x0040] Timer PWM Control Register                                      */
     __IO uint32_t PWMCLKPSC;             /*!< [0x0044] Timer PWM Counter Clock Pre-scale Register                      */
     __IO uint32_t PWMCNTCLR;             /*!< [0x0048] Timer PWM Clear Counter Register                                */
@@ -467,7 +469,6 @@ typedef struct
     __IO uint32_t PWMSTATUS;             /*!< [0x006c] Timer PWM Status Register                                       */
     __I  uint32_t PWMPBUF;               /*!< [0x0070] Timer PWM Period Buffer Register                                */
     __I  uint32_t PWMCMPBUF;             /*!< [0x0074] Timer PWM Comparator Buffer Register                            */
-
 } TIMER_T;
 
 /**

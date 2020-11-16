@@ -42,7 +42,15 @@ uint32_t BPWM_ConfigCaptureChannel(BPWM_T *bpwm, uint32_t u32ChannelNum, uint32_
 
     if (bpwm == BPWM0)
     {
-        u32Src = CLK->CLKSEL2 & CLK_CLKSEL2_BPWM0SEL_Msk;
+        // M254/6/8 clock source is not supported PLL
+        if ((SYS->PDID & 0xff00) == 0x5800)
+        {
+            u32Src = CLK_CLKSEL2_BPWM0SEL_PCLK0;
+        }
+        else
+        {
+            u32Src = CLK->CLKSEL2 & CLK_CLKSEL2_BPWM0SEL_Msk;
+        }
     }
     else     /* (bpwm == BPWM1) */
     {
@@ -113,7 +121,7 @@ uint32_t BPWM_ConfigCaptureChannel(BPWM_T *bpwm, uint32_t u32ChannelNum, uint32_
 }
 
 /**
- * @brief This function Configure BPWM generator and get the nearest frequency in edge aligned(down countertype) auto-reload mode
+ * @brief This function Configure BPWM generator and get the nearest frequency in edge aligned(down count type) auto-reload mode
  * @param[in] bpwm The pointer of the specified BPWM module
  *                - BPWM0 : BPWM Group 0
  *                - BPWM1 : BPWM Group 1
@@ -133,7 +141,15 @@ uint32_t BPWM_ConfigOutputChannel(BPWM_T *bpwm, uint32_t u32ChannelNum, uint32_t
 
     if (bpwm == BPWM0)
     {
-        u32Src = CLK->CLKSEL2 & CLK_CLKSEL2_BPWM0SEL_Msk;
+        // M254/6/8 clock source is not supported PLL
+        if ((SYS->PDID & 0xff00) == 0x5800)
+        {
+            u32Src = CLK_CLKSEL2_BPWM0SEL_PCLK0;
+        }
+        else
+        {
+            u32Src = CLK->CLKSEL2 & CLK_CLKSEL2_BPWM0SEL_Msk;
+        }
     }
     else     /* (bpwm == BPWM1) */
     {
@@ -463,9 +479,12 @@ void BPWM_ClearCaptureIntFlag(BPWM_T *bpwm, uint32_t u32ChannelNum, uint32_t u32
  */
 uint32_t BPWM_GetCaptureIntFlag(BPWM_T *bpwm, uint32_t u32ChannelNum)
 {
-    return (((((bpwm)->CAPIF & (BPWM_CAPIF_CAPFIF0_Msk << u32ChannelNum)) ? 1UL : 0UL) << 1UL) | \
-            (((bpwm)->CAPIF & (BPWM_CAPIF_CAPRIF0_Msk << u32ChannelNum)) ? 1UL : 0UL));
+    uint32_t u32CapFFlag, u32CapRFlag ;
+    u32CapFFlag = (((bpwm)->CAPIF & (BPWM_CAPIF_CAPFIF0_Msk << u32ChannelNum)) ? 1UL : 0UL) ;
+    u32CapRFlag = (((bpwm)->CAPIF & (BPWM_CAPIF_CAPRIF0_Msk << u32ChannelNum)) ? 1UL : 0UL) ;
+    return ((u32CapFFlag << 1UL) | u32CapRFlag);
 }
+
 /**
  * @brief Enable duty interrupt of selected channel
  * @param[in] bpwm The pointer of the specified BPWM module

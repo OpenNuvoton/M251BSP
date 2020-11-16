@@ -194,7 +194,9 @@ void SYS_Init(void)
     /*---------------------------------------------------------------------------------------------------------*/
     /* Init I/O Multi-function                                                                                 */
     /*---------------------------------------------------------------------------------------------------------*/
+#if !(defined(DEBUG_ENABLE_SEMIHOST))
     Uart0DefaultMPF();
+#endif
 
     /* Set UUART0 multi-function pins */
     SYS->GPB_MFPH = SYS->GPB_MFPH & ~(SYS_GPB_MFPH_PB13MFP_Msk | SYS_GPB_MFPH_PB14MFP_Msk | SYS_GPB_MFPH_PB15MFP_Msk);
@@ -243,8 +245,9 @@ int main(void)
     SYS_LockReg();
 
     /* Init UART0 for printf */
+#if !(defined(DEBUG_ENABLE_SEMIHOST))
     UART0_Init();
-
+#endif
     /* Init USCI0 for test */
     USCI0_Init();
 

@@ -1,0 +1,17 @@
+"--endian=little" 
+
+"--cpu=Cortex-M23.no_se" 
+
+"--fpu=None" 
+
+"-p" 
+
+"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.2\arm\CONFIG\debugger\Nuvoton\iom251ae.ddf" 
+
+"--semihosting" 
+
+"--device=M251" 
+
+
+
+

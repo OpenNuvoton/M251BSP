@@ -89,6 +89,8 @@ void SYS_Init(void)
     CLK_EnableModuleClock(UART0_MODULE);
     /* Enable ACMP01 peripheral clock */
     CLK_EnableModuleClock(ACMP01_MODULE);
+    /* Enable GPB peripheral clock */
+    CLK_EnableModuleClock(GPB_MODULE);
 
     /* Update System Core Clock */
     /* User can use SystemCoreClockUpdate() to calculate SystemCoreClock and CyclesPerUs automatically. */
@@ -96,9 +98,6 @@ void SYS_Init(void)
 
     /* Set PB.2 and PB.4 to input mode */
     PB->MODE &= ~(GPIO_MODE_MODE2_Msk | GPIO_MODE_MODE4_Msk);
-
-    /* Set PB multi-function pins for DAC voltage output */
-    //    SYS->GPB_MFPH = SYS_GPB_MFPH_PB12MFP_DAC0_OUT;
 
     /* Set PB2 multi-function pin for ACMP0 positive input pin */
     SYS->GPB_MFPL = SYS_GPB_MFPL_PB2MFP_ACMP0_P1;

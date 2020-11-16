@@ -222,7 +222,7 @@ void DFU_ClassRequest(void)
             {
                 if (dfu_status.bState == STATE_dfuIDLE || dfu_status.bState == STATE_dfuUPLOAD_IDLE)
                 {
-                    if (wLength <= 0)
+                    if (wLength == 0)
                     {
                         dfu_status.bState = STATE_dfuIDLE;
                         return;

@@ -51,7 +51,6 @@ void UART_Init()
 
 static int SetIAPBoot(void)
 {
-    uint32_t au32Config[2];
     uint32_t u32CBS;
 
     /* Read current boot mode */
@@ -60,6 +59,7 @@ static int SetIAPBoot(void)
     if (u32CBS & 1)
     {
         /* Modify User Configuration when it is not in IAP mode */
+        uint32_t au32Config[2];
 
         FMC_ReadConfig(au32Config, 2);
 
@@ -130,12 +130,13 @@ int main(void)
     char *ai8BootMode[] = {"LDROM+IAP", "LDROM", "APROM+IAP", "APROM"};
     uint32_t u32CBS;
 
-    /* Unlock protected registers */
+    /* Unlock protected registers to operate SYS_Init and FMC ISP function */
     SYS_UnlockReg();
 
     /* Init system clock and multi-function I/O */
     SYS_Init();
 
+    /* Enable FMC ISP function */
     FMC_Open();
 
     /* Init UART */

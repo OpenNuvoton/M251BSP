@@ -439,7 +439,9 @@ typedef struct
     __IO uint32_t ADDRMSK1;              /*!< [0x0028] I2C Slave Address Mask Register1                                 */
     __IO uint32_t ADDRMSK2;              /*!< [0x002c] I2C Slave Address Mask Register2                                 */
     __IO uint32_t ADDRMSK3;              /*!< [0x0030] I2C Slave Address Mask Register3                                 */
+    /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE0[2];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t WKCTL;                 /*!< [0x003c] I2C Wake-up Control Register                                     */
     __IO uint32_t WKSTS;                 /*!< [0x0040] I2C Wake-up Status Register                                      */
     __IO uint32_t CTL1;                  /*!< [0x0044] I2C Control Register 1                                           */
