@@ -334,9 +334,8 @@ void UUART_EnableInt(UUART_T  *psUUART, uint32_t u32Mask)
  */
 uint32_t UUART_Open(UUART_T *psUUART, uint32_t u32Baudrate)
 {
-    uint32_t u32PCLKFreq, u32PDSCnt, u32DSCnt, u32ClkDiv;
+    uint32_t u32PCLKFreq, u32PDSCnt, u32DSCnt;
     uint32_t u32Tmp, u32Tmp2, u32Tmp3, u32Min, u32MinClkDiv, u32MinDSCnt;
-
     uint32_t u32Div;
 
     /* Get PCLK frequency */
@@ -389,10 +388,10 @@ uint32_t UUART_Open(UUART_T *psUUART, uint32_t u32Baudrate)
     u32MinDSCnt = 0;
     u32MinClkDiv = 0;
 
-    u32Tmp = 0;
-
     for (u32DSCnt = 6; u32DSCnt <= 0x10; u32DSCnt++)   /* DSCNT could be 0x5~0xF */
     {
+
+        uint32_t  u32ClkDiv;
 
         u32ClkDiv = u32Div / u32DSCnt;
 
@@ -428,8 +427,9 @@ uint32_t UUART_Open(UUART_T *psUUART, uint32_t u32Baudrate)
         }
     }
 
+    /* Disable USCI protocol */
+    psUUART->CTL = 0;
     /* Enable USCI_UART protocol */
-    psUUART->CTL &= ~UUART_CTL_FUNMODE_Msk;
     psUUART->CTL = 2 << UUART_CTL_FUNMODE_Pos;
 
     /* Set USCI_UART line configuration */
@@ -460,11 +460,11 @@ uint32_t UUART_Open(UUART_T *psUUART, uint32_t u32Baudrate)
  */
 uint32_t UUART_Read(UUART_T *psUUART, uint8_t pu8RxBuf[], uint32_t u32ReadBytes)
 {
-    uint32_t  u32Count, u32Delayno;
+    uint32_t  u32Count;
 
     for (u32Count = 0ul; u32Count < u32ReadBytes; u32Count++)
     {
-        u32Delayno = 0ul;
+        uint32_t u32Delayno = 0ul;
 
         while (psUUART->BUFSTS & UUART_BUFSTS_RXEMPTY_Msk)   /* Check RX empty => failed */
         {
@@ -514,10 +514,8 @@ uint32_t UUART_Read(UUART_T *psUUART, uint8_t pu8RxBuf[], uint32_t u32ReadBytes)
  */
 uint32_t UUART_SetLine_Config(UUART_T *psUUART, uint32_t u32Baudrate, uint32_t u32DataWidth, uint32_t u32Parity, uint32_t u32StopBits)
 {
-    uint32_t u32PCLKFreq, u32PDSCnt, u32DSCnt, u32ClkDiv;
-    uint32_t u32Tmp, u32Tmp2, u32Tmp3, u32Min, u32MinClkDiv, u32MinDSCnt;
-
-    uint32_t u32Div;
+    uint32_t u32PCLKFreq, u32PDSCnt;
+    uint32_t u32MinClkDiv, u32MinDSCnt;
 
     /* Get PCLK frequency */
     if ((psUUART == UUART0) || (psUUART == UUART2))
@@ -531,6 +529,10 @@ uint32_t UUART_SetLine_Config(UUART_T *psUUART, uint32_t u32Baudrate, uint32_t u
 
     if (u32Baudrate != 0)
     {
+        uint32_t  u32DSCnt;
+        uint32_t u32Tmp, u32Tmp2, u32Tmp3, u32Min;
+        uint32_t u32Div;
+
         u32Div = u32PCLKFreq / u32Baudrate;
         u32Tmp = (u32PCLKFreq / u32Div) - u32Baudrate;
         u32Tmp2 = u32Baudrate - (u32PCLKFreq / (u32Div + 1));
@@ -564,10 +566,10 @@ uint32_t UUART_SetLine_Config(UUART_T *psUUART, uint32_t u32Baudrate, uint32_t u
         u32MinDSCnt = 0;
         u32MinClkDiv = 0;
 
-        u32Tmp = 0;
-
         for (u32DSCnt = 6; u32DSCnt <= 0x10; u32DSCnt++)   /* DSCNT could be 0x5~0xF */
         {
+
+            uint32_t  u32ClkDiv;
 
             u32ClkDiv = u32Div / u32DSCnt;
 
@@ -637,11 +639,11 @@ uint32_t UUART_SetLine_Config(UUART_T *psUUART, uint32_t u32Baudrate, uint32_t u
  */
 uint32_t UUART_Write(UUART_T *psUUART, uint8_t pu8TxBuf[], uint32_t u32WriteBytes)
 {
-    uint32_t  u32Count, u32Delayno;
+    uint32_t  u32Count;
 
     for (u32Count = 0ul; u32Count != u32WriteBytes; u32Count++)
     {
-        u32Delayno = 0ul;
+        uint32_t u32Delayno = 0ul;
 
         while ((psUUART->BUFSTS & UUART_BUFSTS_TXEMPTY_Msk) == 0ul)   /* Wait Tx empty */
         {

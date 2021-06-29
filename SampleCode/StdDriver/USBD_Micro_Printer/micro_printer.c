@@ -293,9 +293,6 @@ void PTR_ClassRequest(void)
 /* Receive printer command and data from host */
 void PTR_Data_Receive(void)
 {
-    uint8_t *pu8Buf = (uint8_t *)(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP3));
-    uint32_t u32Size = USBD_GET_PAYLOAD_LEN(EP3);
-
     /* trigger next OUT data */
     USBD_SET_PAYLOAD_LEN(EP3, EP3_MAX_PKT_SIZE);
 }

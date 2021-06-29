@@ -22,8 +22,7 @@
 
 void TMR0_IRQHandler(void)
 {
-    static uint32_t s_u32Cnt = 0;
-    uint32_t u32Time0, u32Time1;
+    static uint32_t s_u32Cnt = 0, u32Time0;
 
     TIMER_ClearCaptureIntFlag(TIMER0);
 
@@ -34,6 +33,8 @@ void TMR0_IRQHandler(void)
     }
     else if (s_u32Cnt == 1)
     {
+        uint32_t u32Time1;
+
         u32Time1 = TIMER_GetCaptureData(TIMER0);
         s_u32Cnt++;
 

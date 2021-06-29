@@ -125,7 +125,7 @@ void SYS_PLL_Test(void)
         */
         CLK_SetCoreClock(g_au32HCLKSetting[i32Idx]);
 
-        printf("  Change system clock to %d Hz, PLL clock to %d Hz...................... ", SystemCoreClock, CLK_GetPLLClockFreq());
+        printf("  Change system clock to %u Hz, PLL clock to %u Hz...................... ", SystemCoreClock, CLK_GetPLLClockFreq());
 
         /* Output selected clock to CKO, CKO Clock = HCLK / 2^(1 + 1) */
         CLK_EnableCKO(CLK_CLKSEL1_CLKOSEL_HCLK, 1, 0);
@@ -247,7 +247,7 @@ int32_t main(void)
     /* Init UART0 for printf */
     UART0_Init();
 
-    printf("\n\nCPU @ %dHz\n", SystemCoreClock);
+    printf("\n\nCPU @ %uHz\n", SystemCoreClock);
     printf("+---------------------------------------+\n");
     printf("|      System Driver Sample Code        |\n");
     printf("+---------------------------------------+\n");

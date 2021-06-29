@@ -17,16 +17,18 @@ uint32_t g_au32DataArrary[4] = {0x00000000, 0xFFFFFFFF, 0x5A5A5A5A, 0xA5A5A5A5};
   */
 void SRAM_CompareFunction(uint32_t u32Param0, uint32_t u32Param1, uint32_t u32Param2, uint32_t u32Param3)
 {
-    uint32_t    u32ReadData, u32CmpData;
+    uint32_t    u32ReadData;
     uint32_t    u32Idx;
     uint32_t    u32EBIsize = u32Param1;
     uint32_t    u32Offset = u32Param2;
     uint32_t    u32WriteMode = u32Param3;
-    uint8_t     u8D0, u8D1, u8D2, u8D3;
-    uint16_t    u16D0, u16D1;
 
     if (u32Param0 == 4)     // 0x0, 0x1, 0x2, 0x3, 0x4 ... access with offset ......
     {
+        uint32_t    u32CmpData;
+        uint8_t     u8D0, u8D1, u8D2, u8D3;
+        uint16_t    u16D0, u16D1;
+
         /*---------------------------------------------------------------------------------------------------------*/
         /* To check unfixed data pattern                                                                             */
         /*---------------------------------------------------------------------------------------------------------*/
@@ -318,7 +320,7 @@ void SRAM_BS616LV4017(uint32_t u32MaxSize)
     uint32_t u32EBIsize;
 
     u32EBIsize = u32MaxSize;
-    printf(">> Data width is 16-bit and max. data size is %d KB << \n\n", (u32EBIsize / 1024));
+    printf(">> Data width is 16-bit and max. data size is %u KB << \n\n", (u32EBIsize / 1024));
 
     /* One Byte Write */
     printf("[[ One Byte Write test ]]\n");

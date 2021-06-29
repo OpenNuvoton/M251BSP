@@ -50,24 +50,19 @@
 			<locationURI>PARENT-4-PROJECT_LOC/Library/StdDriver/src</locationURI>
 		</link>
 		<link>
-			<name>User/buffer_control.c</name>
+			<name>User/audio_codec.c</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/buffer_control.c</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/audio_codec.c</locationURI>
 		</link>
 		<link>
-			<name>User/codec_control.c</name>
+			<name>User/config_pdma.c</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/codec_control.c</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/config_pdma.c</locationURI>
 		</link>
 		<link>
 			<name>User/descriptors.c</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/descriptors.c</locationURI>
-		</link>
-		<link>
-			<name>User/dma_control.c</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/dma_control.c</locationURI>
 		</link>
 		<link>
 			<name>User/main.c</name>
@@ -82,7 +77,7 @@
 	</linkedResources>
 	<filteredResources>
 		<filter>
-			<id>0</id>
+			<id>1609233920298</id>
 			<name>CMSIS/CMSIS</name>
 			<type>9</type>
 			<matcher>
@@ -187,6 +182,15 @@
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
 				<arguments>1.0-name-matches-false-false-gpio.c</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1609233953257</id>
+			<name>CMSIS/CMSIS/GCC</name>
+			<type>6</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-*.ld</arguments>
 			</matcher>
 		</filter>
 	</filteredResources>

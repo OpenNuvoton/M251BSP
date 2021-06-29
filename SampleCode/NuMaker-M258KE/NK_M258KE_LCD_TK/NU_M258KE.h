@@ -14,7 +14,8 @@ typedef enum
 {
     eMAIN_APP_IDLE_STATE,
     eMAIN_APP_TK_STATE,
-    eMAIN_APP_BLINK_STATE,
+    eMAIN_APP_IDLE_HOLD_STATE,
+    eMAIN_APP_TK_HOLD_STATE,
 } E_MAIN_APP_STATE;
 
 extern unsigned char tkct;

@@ -108,7 +108,7 @@ void UART0_Init()
 int main()
 {
     uint8_t u8RxData = 0, u8DataCnt = 0;
-    uint8_t u8Col = 0, u8Row = 0, u8Page = 0, u8CRC = 0;
+    uint8_t u8Col, u8Row, u8Page, u8CRC;
 
     /* Unlock protected registers */
     SYS_UnlockReg();

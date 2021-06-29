@@ -339,7 +339,7 @@ void UART_PDMATest(void)
  */
 void UART1_IRQHandler(void)
 {
-    uint32_t u32Data;
+
     uint32_t u32IntSts = UART1->INTSTS;
 
     if (u32IntSts & UART_INTSTS_HWRLSIF_Msk)
@@ -353,7 +353,8 @@ void UART1_IRQHandler(void)
         if (UART1->FIFOSTS & UART_FIFOSTS_PEF_Msk)
             printf("\n PEF \n");
 
-        u32Data = UART1->DAT; // read out data
+        uint32_t u32Data = UART1->DAT; // read out data
+
         printf("\n Error Data is '0x%x' \n", u32Data);
         UART1->FIFOSTS = (UART_FIFOSTS_BIF_Msk | UART_FIFOSTS_FEF_Msk | UART_FIFOSTS_PEF_Msk);
     }

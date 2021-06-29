@@ -144,8 +144,7 @@ void UART0_Init(void)
 int32_t main(void)
 {
     S_RTC_TIME_DATA_T sInitTime;
-    uint32_t u32SpareRegData = 0;
-    uint32_t u32Len;
+    uint32_t u32SpareRegData, u32Len;
 
     SYS_Init();
 
@@ -154,7 +153,7 @@ int32_t main(void)
 #endif
 
     UART0_Init();
-    printf("\n\nCPU @ %d Hz\n", SystemCoreClock);
+    printf("\n\nCPU @ %u Hz\n", SystemCoreClock);
     /* Time Setting */
     sInitTime.u32Year       = 2018;
     sInitTime.u32Month      = 12;
@@ -186,13 +185,13 @@ int32_t main(void)
 
         if (u32SpareRegData != u32Len)
         {
-            printf(" SPARE_REGISTER[%d] = 0x%x \n", u32Len, u32SpareRegData);
+            printf(" SPARE_REGISTER[%u] = 0x%x \n", u32Len, u32SpareRegData);
             printf(" Test Fail!! \n");
 
             while (1);
         }
         else
-            printf(" SPARE_REGISTER[%d] = 0x%x \n", u32Len, u32SpareRegData);
+            printf(" SPARE_REGISTER[%u] = 0x%x \n", u32Len, u32SpareRegData);
     }
 
     printf("\n Test Pass!! \n");

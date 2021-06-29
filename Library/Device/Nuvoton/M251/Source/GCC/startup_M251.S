@@ -115,13 +115,13 @@ __Vectors:
 	.long	UART2_IRQHandler      /* 48: UART2                      */
 	.long	Default_Handler       /* 49: Reserved                   */
 	.long	USCI0_IRQHandler      /* 50: UCSI0                      */
-	.long	Default_Handler       /* 51: Reserved                   */
+	.long	SPI1_IRQHandler       /* 51: SPI1                       */
 	.long	USCI1_IRQHandler      /* 52: USCI1                      */
 	.long	USBD_IRQHandler       /* 53: USBD                       */
 	.long	BPWM1_IRQHandler      /* 54: BPWM1                      */
 	.long	PSIO_IRQHandler       /* 55: PSIO                       */
 	.long	Default_Handler       /* 56: Reserved                   */
-	.long	Default_Handler       /* 57: Reserved                   */
+	.long	CRPT_IRQHandler       /* 57: CRPT                       */
 	.long	SC0_IRQHandler        /* 58: SC0                        */
 	.long	Default_Handler       /* 59: Reserved                   */
 	.long	USCI2_IRQHandler      /* 60: USCI2                      */
@@ -375,10 +375,12 @@ Default_Handler:
     def_irq_handler	EADC_INT3_IRQHandler
     def_irq_handler	UART2_IRQHandler
     def_irq_handler	USCI0_IRQHandler
+    def_irq_handler	SPI1_IRQHandler
     def_irq_handler	USCI1_IRQHandler
     def_irq_handler	USBD_IRQHandler
     def_irq_handler	BPWM1_IRQHandler
     def_irq_handler	PSIO_IRQHandler
+    def_irq_handler	CRPT_IRQHandler
     def_irq_handler	SC0_IRQHandler
     def_irq_handler	USCI2_IRQHandler
     def_irq_handler	LCD_IRQHandler

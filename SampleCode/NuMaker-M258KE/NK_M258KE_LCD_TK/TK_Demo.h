@@ -23,7 +23,7 @@
 #define UART1_DBG                                     /* Trace code with UART1 message */
 
 #define FIRMWARE_MAJOR_VERSION            (0x01)
-#define FIRMWARE_MINOR_VERSION            (0x00)
+#define FIRMWARE_MINOR_VERSION            (0x01)
 
 #define USER_ID                           (('N'<<24) | ('U'<<16) | ('V'<<8) | 'O')
 

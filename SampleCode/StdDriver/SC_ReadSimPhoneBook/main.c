@@ -100,13 +100,12 @@ void GPB_IRQHandler(void)
 void get_pin(void)
 {
     uint32_t u32Idx = 0;
-    uint8_t u8Char = 0;
 
     printf("Please input PIN number:");
 
     while (u32Idx < 8)
     {
-        u8Char = getchar();
+        uint8_t u8Char = getchar();
 
         if (u8Char >= 0x30 && u8Char <= 0x39)     // Valid input characters (0~9)
         {
@@ -175,7 +174,7 @@ int unlock_sim(uint32_t u32RetryCnt)
         else
         {
             u32RetryCnt--;
-            printf("Failed, remaining retry count: %d\n", u32RetryCnt);
+            printf("Failed, remaining retry count: %u\n", u32RetryCnt);
         }
     }
 
@@ -217,7 +216,7 @@ void read_phoneBook(uint32_t u32Cnt)
         if (g_au8Buf[0] == 0xFF) // This is an empty entry
             continue;
 
-        printf("\n======== %d ========", u32IdxI);
+        printf("\n======== %u ========", u32IdxI);
         printf("\nName: ");
 
         for (u32IdxJ = 0; g_au8Buf[u32IdxJ] != 0xFF; u32IdxJ++)

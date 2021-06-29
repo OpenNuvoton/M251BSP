@@ -361,7 +361,6 @@ void CHIDCtrlTransferTestDlg::GetDeviceCapabilities()
 void CHIDCtrlTransferTestDlg::DisplayInputReport()
 {
 	USHORT	ByteNumber;
-	CHAR	ReceivedByte;
 
 	//Display the received data in the log and the Bytes Received List boxes.
 	//Start at the top of the List Box.
@@ -373,7 +372,7 @@ void CHIDCtrlTransferTestDlg::DisplayInputReport()
 	for (ByteNumber=0; ByteNumber < Capabilities.InputReportByteLength; ByteNumber++)
 	{
 		//Get a byte.
-		ReceivedByte = InputReport[ByteNumber];
+		CHAR ReceivedByte = InputReport[ByteNumber];
 
 		//Display it.
 		if(ByteNumber>0)
@@ -412,7 +411,6 @@ bool CHIDCtrlTransferTestDlg::ConnectHID()
 	SP_DEVICE_INTERFACE_DATA			devInfoData;
 	bool								LastDevice = FALSE;
 	int									MemberIndex = 0;
-	LONG								Result;	
 	CString								UsageDescription;
 	CString								DebugStr;
 
@@ -450,6 +448,7 @@ bool CHIDCtrlTransferTestDlg::ConnectHID()
 
 	do
 	{
+		LONG	Result;	
 		/*
 		API function: SetupDiEnumDeviceInterfaces
 		On return, MyDeviceInterfaceData contains the handle to a
@@ -492,7 +491,7 @@ bool CHIDCtrlTransferTestDlg::ConnectHID()
 			//Get the Length value.
 			//The call will return with a "buffer too small" error which can be ignored.
 
-			Result = SetupDiGetDeviceInterfaceDetail 
+			SetupDiGetDeviceInterfaceDetail 
 				(hDevInfo, 
 				&devInfoData, 
 				NULL, 
@@ -510,7 +509,7 @@ bool CHIDCtrlTransferTestDlg::ConnectHID()
 
 			//Call the function again, this time passing it the returned buffer size.
 
-			Result = SetupDiGetDeviceInterfaceDetail 
+			SetupDiGetDeviceInterfaceDetail 
 				(hDevInfo, 
 				&devInfoData, 
 				detailData, 
@@ -578,7 +577,7 @@ bool CHIDCtrlTransferTestDlg::ConnectHID()
 					//Get the device's capablities.
 					GetDeviceCapabilities();
 
-					// ßQ•ŒHID Report Descriptor®”øÎ√—HID Transfer∏À∏m   
+					// Âà©Áî®HID Report Descriptor‰æÜËæ®Ë≠òHID TransferË£ùÁΩÆ   
 					DeviceUsage = (Capabilities.UsagePage * 256) + Capabilities.Usage;   
 
 					if (DeviceUsage != 0xFF0001)   // Report Descriptor
@@ -669,14 +668,12 @@ void CHIDCtrlTransferTestDlg::RegisterForDeviceNotifications()
 	// Also see WM_DEVICECHANGE in BEGIN_MESSAGE_MAP(CUsbhidiocDlg, CDialog).
 
 	DEV_BROADCAST_DEVICEINTERFACE DevBroadcastDeviceInterface;
-	HDEVNOTIFY DeviceNotificationHandle;
 
 	DevBroadcastDeviceInterface.dbcc_size = sizeof(DevBroadcastDeviceInterface);
 	DevBroadcastDeviceInterface.dbcc_devicetype = DBT_DEVTYP_DEVICEINTERFACE;
 	DevBroadcastDeviceInterface.dbcc_classguid = HidGuid;
 
-	DeviceNotificationHandle =
-		RegisterDeviceNotification(m_hWnd, &DevBroadcastDeviceInterface, DEVICE_NOTIFY_WINDOW_HANDLE);
+	RegisterDeviceNotification(m_hWnd, &DevBroadcastDeviceInterface, DEVICE_NOTIFY_WINDOW_HANDLE);
 
 }
 
@@ -806,19 +803,10 @@ void CHIDCtrlTransferTestDlg::ReadAndWriteToDevice()
 
 void CHIDCtrlTransferTestDlg::WriteOutputReport()
 {
-	//Send a report to the device.
-
-	DWORD	BytesWritten = 0;
-	INT		Index =0;
-	ULONG	Result;
-	CString	strBytesWritten = _T("");
-	INT BufSize = 0;
-
 	UpdateData(true);
 
 	for(int i = 0; i < 64; i++)
 		OutputReport[i] = i;
-	BufSize = 64;
 
 	//Send a report to the device.
 
@@ -834,33 +822,32 @@ void CHIDCtrlTransferTestDlg::WriteOutputReport()
 
 	if (WriteHandle != INVALID_HANDLE_VALUE)
 	{
-		Result = HidD_SetOutputReport
+		ULONG	Result = HidD_SetOutputReport
 		(WriteHandle,
 		OutputReport,
 		Capabilities.OutputReportByteLength);
+		
+		if (Result)
+		{
+			DisplayData(_T("An Output report was written to the device."));
+		}
+		else
+		{
+			//The write attempt failed, so close the handles, display a message,
+			//and set MyDeviceDetected to FALSE so the next attempt will look for the device.
+			CloseHandles();
+			DisplayData(_T("Can't write to device"));
+			MyDeviceDetected = FALSE;
+		}
 	}
 
-	if (Result)
-	{
-		DisplayData(_T("An Output report was written to the device."));
-	}
-	else
-	{
-		//The write attempt failed, so close the handles, display a message,
-		//and set MyDeviceDetected to FALSE so the next attempt will look for the device.
-		CloseHandles();
-		DisplayData(_T("Can't write to device"));
-		MyDeviceDetected = FALSE;
-	}
 }
 
 void CHIDCtrlTransferTestDlg::ReadInputReport()
 {
 
 	// Retrieve an Input report from the device.
-
-	CString	ByteToDisplay = _T("");
-
+	
 	DWORD	Result;
 
 	// Find out if the "Use Control Transfers Only" check box is checked.

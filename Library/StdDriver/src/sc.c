@@ -262,7 +262,7 @@ void SC_SetBlockGuardTime(SC_T *psSC, uint32_t u32BGT)
 void SC_SetCharGuardTime(SC_T *psSC, uint32_t u32CGT)
 {
     /* CGT is "START bit" + "8-bits" + "Parity bit" + "STOP bit(s)" + "EGT counts" */
-    u32CGT -= psSC->CTL & SC_CTL_NSB_Msk ? 11UL : 12UL;
+    u32CGT -= (psSC->CTL & SC_CTL_NSB_Msk) ? 11UL : 12UL;
     psSC->EGT = u32CGT;
 }
 

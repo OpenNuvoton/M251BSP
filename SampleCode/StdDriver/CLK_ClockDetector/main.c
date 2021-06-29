@@ -155,7 +155,7 @@ int32_t main(void)
     /* Init UART0 for printf */
     UART0_Init();
 
-    printf("\n\nCPU @ %d Hz\n", SystemCoreClock);
+    printf("\n\nCPU @ %u Hz\n", SystemCoreClock);
     printf("+-------------------------------------------------------------+\n");
     printf("|               Clock Detector Sample Code                    |\n");
     printf("+-------------------------------------------------------------+\n");

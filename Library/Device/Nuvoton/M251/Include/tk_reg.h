@@ -887,6 +887,7 @@ typedef struct
     __IO uint32_t TK_REFCBD2;            /*!< [0x0070] Touch Key Reference Capacitor Bank Data Register 2               */
     __IO uint32_t TK_REFCBD3;            /*!< [0x0074] Touch Key Reference Capacitor Bank Data Register 3               */
     __IO uint32_t TK_REFCBD4;            /*!< [0x0078] Touch Key Reference Capacitor Bank Data Register 4               */
+    __I  uint32_t RESERVED;              /*!< [0x007c] Reserved                                                         */
 
 } TK_T;
 
@@ -1293,6 +1294,33 @@ typedef struct
 
 #define TK_STA_TKIF16_Pos                (24)                                              /*!< TK_T::STA: TKIF16 Position             */
 #define TK_STA_TKIF16_Msk                (0x1ul << TK_STA_TKIF16_Pos)                      /*!< TK_T::STA: TKIF16 Mask                 */
+
+#define TK_STA_TKIF17_Pos                (0)                                               /*!< TK_T::STA: TKIF17 Position             */
+#define TK_STA_TKIF17_Msk                (0x1ul << TK_STA_TKIF17_Pos)                      /*!< TK_T::STA: TKIF17 Mask                 */
+
+#define TK_STA_TKIF18_Pos                (1)                                               /*!< TK_T::STA: TKIF18 Position             */
+#define TK_STA_TKIF18_Msk                (0x1ul << TK_STA_TKIF18_Pos)                      /*!< TK_T::STA: TKIF18 Mask                 */
+
+#define TK_STA_TKIF19_Pos                (2)                                               /*!< TK_T::STA: TKIF19 Position             */
+#define TK_STA_TKIF19_Msk                (0x1ul << TK_STA_TKIF19_Pos)                      /*!< TK_T::STA: TKIF19 Mask                 */
+
+#define TK_STA_TKIF20_Pos                (3)                                               /*!< TK_T::STA: TKIF20 Position             */
+#define TK_STA_TKIF20_Msk                (0x1ul << TK_STA_TKIF20_Pos)                      /*!< TK_T::STA: TKIF20 Mask                 */
+
+#define TK_STA_TKIF21_Pos                (4)                                               /*!< TK_T::STA: TKIF21 Position             */
+#define TK_STA_TKIF21_Msk                (0x1ul << TK_STA_TKIF21_Pos)                      /*!< TK_T::STA: TKIF21 Mask                 */
+
+#define TK_STA_TKIF22_Pos                (5)                                               /*!< TK_T::STA: TKIF22 Position             */
+#define TK_STA_TKIF22_Msk                (0x1ul << TK_STA_TKIF22_Pos)                      /*!< TK_T::STA: TKIF22 Mask                 */
+
+#define TK_STA_TKIF23_Pos                (6)                                               /*!< TK_T::STA: TKIF23 Position             */
+#define TK_STA_TKIF23_Msk                (0x1ul << TK_STA_TKIF23_Pos)                      /*!< TK_T::STA: TKIF23 Mask                 */
+
+#define TK_STA_TKIF24_Pos                (7)                                               /*!< TK_T::STA: TKIF24 Position             */
+#define TK_STA_TKIF24_Msk                (0x1ul << TK_STA_TKIF24_Pos)                      /*!< TK_T::STA: TKIF24 Mask                 */
+
+#define TK_STA_TKIF25_Pos                (8)                                               /*!< TK_T::STA: TKIF25 Position             */
+#define TK_STA_TKIF25_Msk                (0x1ul << TK_STA_TKIF25_Pos)                      /*!< TK_T::STA: TKIF25 Mask                 */
 
 #define TK_DAT0_TKDAT0_Pos               (0)                                               /*!< TK_T::DAT0: TKDAT0 Position            */
 #define TK_DAT0_TKDAT0_Msk               (0xfful << TK_DAT0_TKDAT0_Pos)                    /*!< TK_T::DAT0: TKDAT0 Mask                */

@@ -48,8 +48,7 @@ uint32_t UI2C_Open(UI2C_T *psUI2C, uint32_t u32BusClock)
     u32ClkDiv = (uint32_t)((((((u32Pclk / 2U) * 10U) / (u32BusClock)) + 5U) / 10U) - 1U); /* Compute proper divider for USCI_I2C clock */
 
     /* Enable USCI_I2C protocol */
-    psUI2C->CTL &= ~UI2C_CTL_FUNMODE_Msk;
-    psUI2C->CTL = 4U << UI2C_CTL_FUNMODE_Pos;
+    psUI2C->CTL = (psUI2C->CTL & ~UI2C_CTL_FUNMODE_Msk) | (4U << UI2C_CTL_FUNMODE_Pos);
 
     /* Data format configuration */
     /* 8 bit data length */

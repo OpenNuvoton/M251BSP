@@ -1,7 +1,7 @@
 /**************************************************************************//**
  * @file     main.c
  * @version  V0.10
- * @brief    Show a Master how to access Slave.
+ * @brief    Show how an I2C master accesses 7-bit address slave.
  *           This sample code needs to work with USCI_I2C_Slave.
  *
  * SPDX-License-Identifier: Apache-2.0
@@ -218,6 +218,9 @@ void SYS_Init(void)
     CLK_EnableModuleClock(UART0_MODULE);
     CLK_EnableModuleClock(USCI0_MODULE);
 
+    /* Enable GPIO clock */
+    CLK_EnableModuleClock(GPB_MODULE);
+
     /* Peripheral clock source */
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HIRC, CLK_CLKDIV0_UART0(1));
 
@@ -235,6 +238,9 @@ void SYS_Init(void)
     /* Set UI2C0 multi-function pins */
     SYS->GPB_MFPH = (SYS->GPB_MFPH & ~(SYS_GPB_MFPH_PB12MFP_Msk | SYS_GPB_MFPH_PB13MFP_Msk)) |
                     (SYS_GPB_MFPH_PB12MFP_USCI0_CLK | SYS_GPB_MFPH_PB13MFP_USCI0_DAT0);
+
+    /* I2C pins enable schmitt trigger */
+    PB->SMTEN |= GPIO_SMTEN_SMTEN12_Msk | GPIO_SMTEN_SMTEN13_Msk;
 }
 
 void UART0_Init(void)
@@ -265,12 +271,13 @@ void UI2C0_Init(void)
 int32_t  ReadWriteSlave(uint8_t u8SlvAddr)
 {
     uint32_t u32Idx;
-    uint8_t u8Temp;
 
     g_u8DeviceAddr = u8SlvAddr;
 
     for (u32Idx = 0; u32Idx < 2; u32Idx++)
     {
+        uint8_t u8Temp;
+
         g_au8MstTxData[0] = (uint8_t)((u32Idx & 0xFF00) >> 8);
         g_au8MstTxData[1] = (uint8_t)(u32Idx & 0x00FF);
         g_au8MstTxData[2] = (uint8_t)(g_au8MstTxData[1] + 3);

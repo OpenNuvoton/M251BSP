@@ -4,7 +4,7 @@
  * @brief
  *           Demonstrate how to implement a USB mouse device with BC1.2 (Battery Charging).
 *            which shows different type of charging port after connected USB port.
- *           The mouse cursor will move automatically when this mouse device connecting to PC by USB.
+ *           The mouse cursor will move automatically when this mouse device is connected to PC by USB.
  *
  * @copyright (C) 2020 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
@@ -94,8 +94,7 @@ S_USBD_BC12_PD_STATUS USBD_BC_Detect(TIMER_T *pu32TimerSrc)
      * value range of Systick  : 300ms ~ 349 ms if CPU@48 MHz
      * value range of H/W timer: 300ms ~ 850 ms if CPU@48 MHz, TIMER using HIRC(48MHz)
      */
-#define DCD_TIMEOUT_PERIOD_US 349000UL
-
+#define DCD_TIMEOUT_PERIOD_US 500000UL
 #define ENABLE_BC12_DBG_MSG 0
 #if ENABLE_BC12_DBG_MSG
 #define DBG_MSG printf
@@ -188,7 +187,6 @@ DCD_REPEAT_SYSTICK:
                     goto DCD_REPEAT_SYSTICK;
                 }
 
-                BC_DELAY(10000); // 10 ms: SPEC TDCD_DBNC
                 DBG_MSG(" - DCD Data Contact\n");
                 break;
             }
@@ -203,98 +201,101 @@ DCD_REPEAT_SYSTICK:
     }
     else   /*Use Hardware Timer*/
     {
-        uint32_t u32Usec = DCD_TIMEOUT_PERIOD_US;
-        uint32_t u32Clk = TIMER_GetModuleClock(pu32TimerSrc);
-        uint32_t u32Prescale = 0UL, u32Delay = (SystemCoreClock / u32Clk) + 1UL;
-        uint32_t u32Cmpr, u32NsecPerTick;
-
 DCD_REPEAT_TIMER:
-        // Clear current timer configuration/
-        pu32TimerSrc->CTL = 0UL;
-        pu32TimerSrc->EXTCTL = 0UL;
-
-        if (u32Clk <= 1000000UL) // min delay is 1000 us if timer clock source is <= 1 MHz
         {
-            if (u32Usec < 1000UL)
-                u32Usec = 1000UL;
+            uint32_t u32Usec = DCD_TIMEOUT_PERIOD_US;
+            uint32_t u32Clk = TIMER_GetModuleClock(pu32TimerSrc);
+            uint32_t u32Prescale = 0UL, u32Delay = (SystemCoreClock / u32Clk) + 1UL;
+            uint32_t u32Cmpr, u32NsecPerTick;
 
-            if (u32Usec > 1000000UL)
-                u32Usec = 1000000UL;
-        }
-        else
-        {
-            if (u32Usec < 100UL)
-                u32Usec = 100UL;
 
-            if (u32Usec > 1000000UL)
-                u32Usec = 1000000UL;
-        }
+            // Clear current timer configuration/
+            pu32TimerSrc->CTL = 0UL;
+            pu32TimerSrc->EXTCTL = 0UL;
 
-        if (u32Clk <= 1000000UL)
-        {
-            u32Prescale = 0UL;
-            u32NsecPerTick = 1000000000UL / u32Clk;
-            u32Cmpr = (u32Usec * 1000UL) / u32NsecPerTick;
-        }
-        else
-        {
-            u32Cmpr = u32Usec * (u32Clk / 1000000UL);
-            u32Prescale = (u32Cmpr >> 24); /* for 24 bits CMPDAT */
-
-            if (u32Prescale > 0UL)
-                u32Cmpr = u32Cmpr / (u32Prescale + 1UL);
-        }
-
-        pu32TimerSrc->CMP = u32Cmpr;
-        pu32TimerSrc->CTL = TIMER_CTL_CNTEN_Msk | TIMER_ONESHOT_MODE | u32Prescale;
-
-        // When system clock is faster than timer clock, it is possible timer active
-        // bit cannot set in time while we check it. And the while loop below return
-        // immediately, so put a tiny delay here allowing timer start counting and
-        // raise active flag.
-        for (; u32Delay > 0UL; u32Delay--)
-        {
-            __NOP();
-        }
-
-        while (1)
-        {
-            //using S/W debounce, TDCD_DBNC is 10 ms totally.
-            if ((USBD->BCDC & USBD_BCDC_DETSTS_Msk) ==
-                    USBD_BCDC_DETSTS_DCD_DATA_CONTACT)
+            if (u32Clk <= 1000000UL) // min delay is 1000 us if timer clock source is <= 1 MHz
             {
-                BC_DELAY(5000);
+                if (u32Usec < 1000UL)
+                    u32Usec = 1000UL;
 
-                if ((USBD->BCDC & USBD_BCDC_DETSTS_Msk) !=
-                        USBD_BCDC_DETSTS_DCD_DATA_CONTACT)
-                {
-                    goto DCD_REPEAT_TIMER;
-                }
+                if (u32Usec > 1000000UL)
+                    u32Usec = 1000000UL;
+            }
+            else
+            {
+                if (u32Usec < 100UL)
+                    u32Usec = 100UL;
 
-                BC_DELAY(2000);
-
-                if ((USBD->BCDC & USBD_BCDC_DETSTS_Msk) !=
-                        USBD_BCDC_DETSTS_DCD_DATA_CONTACT)
-                {
-                    goto DCD_REPEAT_TIMER;
-                }
-
-                BC_DELAY(3000);
-
-                if ((USBD->BCDC & USBD_BCDC_DETSTS_Msk) !=
-                        USBD_BCDC_DETSTS_DCD_DATA_CONTACT)
-                {
-                    goto DCD_REPEAT_TIMER;
-                }
-
-                DBG_MSG(" - DCD Data Contact\n");
-                break;
+                if (u32Usec > 1000000UL)
+                    u32Usec = 1000000UL;
             }
 
-            if (!(pu32TimerSrc->CTL & TIMER_CTL_ACTSTS_Msk))
+            if (u32Clk <= 1000000UL)
             {
-                DBG_MSG(" - DCD Timeout\n");
-                break;
+                u32Prescale = 0UL;
+                u32NsecPerTick = 1000000000UL / u32Clk;
+                u32Cmpr = (u32Usec * 1000UL) / u32NsecPerTick;
+            }
+            else
+            {
+                u32Cmpr = u32Usec * (u32Clk / 1000000UL);
+                u32Prescale = (u32Cmpr >> 24); /* for 24 bits CMPDAT */
+
+                if (u32Prescale > 0UL)
+                    u32Cmpr = u32Cmpr / (u32Prescale + 1UL);
+            }
+
+            pu32TimerSrc->CMP = u32Cmpr;
+            pu32TimerSrc->CTL = TIMER_CTL_CNTEN_Msk | TIMER_ONESHOT_MODE | u32Prescale;
+
+            // When system clock is faster than timer clock, it is possible timer active
+            // bit cannot set in time while we check it. And the while loop below return
+            // immediately, so put a tiny delay here allowing timer start counting and
+            // raise active flag.
+            for (; u32Delay > 0UL; u32Delay--)
+            {
+                __NOP();
+            }
+
+            while (1)
+            {
+                //using S/W debounce, TDCD_DBNC is 10 ms totally.
+                if ((USBD->BCDC & USBD_BCDC_DETSTS_Msk) ==
+                        USBD_BCDC_DETSTS_DCD_DATA_CONTACT)
+                {
+                    BC_DELAY(5000); //5000 us debounce
+
+                    if ((USBD->BCDC & USBD_BCDC_DETSTS_Msk) !=
+                            USBD_BCDC_DETSTS_DCD_DATA_CONTACT)
+                    {
+                        goto DCD_REPEAT_TIMER;
+                    }
+
+                    BC_DELAY(3000); //3000 us debounce
+
+                    if ((USBD->BCDC & USBD_BCDC_DETSTS_Msk) !=
+                            USBD_BCDC_DETSTS_DCD_DATA_CONTACT)
+                    {
+                        goto DCD_REPEAT_TIMER;
+                    }
+
+                    BC_DELAY(2000); //2000 us debounce
+
+                    if ((USBD->BCDC & USBD_BCDC_DETSTS_Msk) !=
+                            USBD_BCDC_DETSTS_DCD_DATA_CONTACT)
+                    {
+                        goto DCD_REPEAT_TIMER;
+                    }
+
+                    DBG_MSG(" - DCD Data Contact\n");
+                    break;
+                }
+
+                if (!(pu32TimerSrc->CTL & TIMER_CTL_ACTSTS_Msk))
+                {
+                    DBG_MSG(" - DCD Timeout\n");
+                    break;
+                }
             }
         }
     }
@@ -326,7 +327,7 @@ DCD_REPEAT_TIMER:
         if ((USBD->BCDC & USBD_BCDC_DETSTS_Msk) == USBD_BCDC_DETSTS_SD_CDP)
         {
             DBG_MSG("* CDP\n");
-            USBD->BCDC = 0; //important: to prevent next loop un-expected paulse
+            USBD->BCDC = 0; //important: to prevent next loop un-expected pulse
             return USBD_BC12_CDP;
         }
         else
@@ -350,7 +351,7 @@ void PowerDown()
 
     /* Wakeup Enable */
     USBD_ENABLE_INT(USBD_INTEN_WKEN_Msk);
-
+    SYS_UnlockReg();
     CLK_PowerDown();
 
     if (!(USBD->ATTR & USBD_ATTR_USBEN_Msk))
@@ -360,6 +361,7 @@ void PowerDown()
     if (CLK->PWRCTL & CLK_PWRCTL_PDEN_Msk)
         CLK->PWRCTL ^= CLK_PWRCTL_PDEN_Msk;
 
+    SYS_LockReg();
     printf("device wakeup!\n");
 }
 
@@ -371,10 +373,12 @@ int32_t main(void)
 #if CRYSTAL_LESS
     uint32_t u32TrimInit;
 #endif
+
     /* Unlock protected registers */
     SYS_UnlockReg();
     SYS_Init();
     SYS_LockReg();
+
     /* Configure UART0 and set UART0 Baudrate */
     UART_Open(UART0, 115200);
 
@@ -469,7 +473,7 @@ restart:
                                    (0x1 << SYS_HIRCTRIMCTL_FREQSEL_Pos) |
                                    (0x0 << SYS_HIRCTRIMCTL_LOOPSEL_Pos) |
                                    (0x1 << SYS_HIRCTRIMCTL_BOUNDEN_Pos) |
-                                   (10 << SYS_HIRCTRIMCTL_BOUNDARY_Pos);
+                                   (20 << SYS_HIRCTRIMCTL_BOUNDARY_Pos);
             }
         }
 
@@ -504,7 +508,7 @@ restart:
         if (g_u8Suspend && (USBD->VBUSDET & USBD_VBUSDET_VBUSDET_Msk))
             PowerDown();
 
-        HID_UpdateMouseData();
+        //HID_UpdateMouseData();
     }
 }
 

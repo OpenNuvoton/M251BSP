@@ -1,9 +1,7 @@
 /****************************************************************************//**
  * @file     main.c
  * @version  V0.10
- * @brief
- *           Demonstrate how to implement a USB Mass-Storage.
- *           It uses embedded data flash as storage.
+ * @brief    Use internal Flash as backend storage media to simulate a USB pen drive.
  *
  * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.

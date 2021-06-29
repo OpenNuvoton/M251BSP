@@ -132,15 +132,15 @@ typedef enum IRQn
     EADC_INT2_IRQn            = 46,     /*!< Enhance EADC Interrupt 2                             */
     EADC_INT3_IRQn            = 47,     /*!< Enhance EADC Interrupt 3                             */
     UART2_IRQn                = 48,     /*!< UART2 Interrupt                                      */
-    RESERVE2                  = 49,     /*!< Reserve 2                                            */
+    UART3_IRQn                = 49,     /*!< UART3 Interrupt                                      */
     USCI0_IRQn                = 50,     /*!< USCI0 Interrupt                                      */
-    RESERVE3                  = 51,     /*!< Reserve 3                                            */
+    SPI1_IRQn                 = 51,     /*!< SPI0 Interrupt                                       */
     USCI1_IRQn                = 52,     /*!< USCI1 Interrupt                                      */
     USBD_IRQn                 = 53,     /*!< USB Device Interrupt                                 */
     BPWM1_IRQn                = 54,     /*!< BPWM1 Interrupt                                      */
     PSIO_IRQn                 = 55,     /*!< PSIO Interrupt                                       */
     RESERVE4                  = 56,     /*!< Reserve 4                                            */
-    RESERVE7                  = 57,     /*!< Reserve 7                                            */
+    CRPT_IRQn                 = 57,     /*!< Crypto interrupt                                     */
     SC0_IRQn                  = 58,     /*!< Smart Card0 Interrupt                                */
     RESERVE5                  = 59,     /*!< Reserve 5                                            */
     USCI2_IRQn                = 60,     /*!< USCI2 Interrupt                                      */
@@ -216,6 +216,7 @@ extern void SystemInit(void);
 #include "bpwm_reg.h"
 #include "clk_reg.h"
 #include "crc_reg.h"
+#include "crypto_reg.h"
 #include "dac_reg.h"
 #include "eadc_reg.h"
 #include "ebi_reg.h"
@@ -280,6 +281,7 @@ extern void SystemInit(void);
 #define FMC_BASE              (AHBPERIPH_BASE + 0x0C000UL)
 #define EBI_BASE              (AHBPERIPH_BASE + 0x10000UL)
 #define CRC_BASE              (AHBPERIPH_BASE + 0x31000UL)
+#define CRPT_BASE             (AHBPERIPH_BASE + 0x32000UL)
 
 /*!< APB0 peripherals */
 #define WDT_BASE              (APBPERIPH_BASE + 0x00000UL)
@@ -289,6 +291,7 @@ extern void SystemInit(void);
 #define PWM0_BASE             (APBPERIPH_BASE + 0x18000UL)
 #define BPWM0_BASE            (APBPERIPH_BASE + 0x1A000UL)
 #define QSPI0_BASE            (APBPERIPH_BASE + 0x20000UL)
+#define SPI1_BASE             (APBPERIPH_BASE + 0x22000UL)
 #define UART0_BASE            (APBPERIPH_BASE + 0x30000UL)
 #define UART2_BASE            (APBPERIPH_BASE + 0x32000UL)
 #define I2C0_BASE             (APBPERIPH_BASE + 0x40000UL)
@@ -308,6 +311,7 @@ extern void SystemInit(void);
 #define BPWM1_BASE            (APBPERIPH_BASE + 0x1B000UL)
 #define SPI0_BASE             (APBPERIPH_BASE + 0x21000UL)
 #define UART1_BASE            (APBPERIPH_BASE + 0x31000UL)
+#define UART3_BASE            (APBPERIPH_BASE + 0x33000UL)
 #define I2C1_BASE             (APBPERIPH_BASE + 0x41000UL)
 #define PSIO_BASE             (APBPERIPH_BASE + 0x83000UL)
 #define USCI1_BASE            (APBPERIPH_BASE + 0x91000UL)
@@ -339,6 +343,7 @@ extern void SystemInit(void);
 #define FMC                  ((FMC_T *)             FMC_BASE)
 #define EBI                  ((EBI_T *)             EBI_BASE)
 #define CRC                  ((CRC_T *)             CRC_BASE)
+#define CRPT                 ((CRPT_T *)            CRPT_BASE)
 
 /*!< APB0 peripherals */
 #define WDT                  ((WDT_T *)             WDT_BASE)
@@ -349,6 +354,7 @@ extern void SystemInit(void);
 #define PWM0                 ((PWM_T *)             PWM0_BASE)
 #define BPWM0                ((BPWM_T *)            BPWM0_BASE)
 #define QSPI0                ((QSPI_T *)            QSPI0_BASE)
+#define SPI1                 ((SPI_T *)             SPI1_BASE)
 #define UART0                ((UART_T *)            UART0_BASE)
 #define UART2                ((UART_T *)            UART2_BASE)
 #define I2C0                 ((I2C_T *)             I2C0_BASE)
@@ -366,13 +372,15 @@ extern void SystemInit(void);
 #define RTC                  ((RTC_T *)             RTC_BASE)
 #define EADC                 ((EADC_T *)            EADC_BASE)
 #define ACMP01               ((ACMP_T *)            ACMP01_BASE)
-#define DAC                  ((DAC_T *)             DAC_BASE)
+#define DAC0                 ((DAC_T *)             DAC_BASE)
+#define DAC1                 ((DAC_T *)             (DAC_BASE+0x40UL))
 #define TIMER2               ((TIMER_T *)           TIMER23_BASE)
 #define TIMER3               ((TIMER_T *)           (TIMER23_BASE+ 0x100UL))
 #define PWM1                 ((PWM_T *)             PWM1_BASE)
 #define BPWM1                ((BPWM_T *)            BPWM1_BASE)
 #define SPI0                 ((SPI_T *)             SPI0_BASE)
 #define UART1                ((UART_T *)            UART1_BASE)
+#define UART3                ((UART_T *)            UART3_BASE)
 #define I2C1                 ((I2C_T *)             I2C1_BASE)
 #define PSIO                 ((PSIO_T *)            PSIO_BASE)
 #define UI2C1                ((UI2C_T *)            USCI1_BASE)
@@ -636,6 +644,7 @@ typedef volatile unsigned short vu16;
 #include "usbd.h"
 #include "rtc.h"
 #include "crc.h"
+#include "crypto.h"
 #include "wdt.h"
 #include "wwdt.h"
 #include "eadc.h"

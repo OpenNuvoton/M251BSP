@@ -194,7 +194,7 @@ int32_t main(void)
 #endif
 
     UART0_Init();
-    printf("\n\nCPU @ %d Hz\n", SystemCoreClock);
+    printf("\n\nCPU @ %u Hz\n", SystemCoreClock);
     printf("\n RTC Tamper Test Start:");
     printf("\n Please connect tamper pin to High ");
     printf("\n Press any key to start test.\n");

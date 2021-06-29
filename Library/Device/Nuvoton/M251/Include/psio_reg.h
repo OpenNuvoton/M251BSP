@@ -498,6 +498,7 @@ typedef struct
     __O  uint32_t OUTDAT;                /*!< PSIOn Output Data Register                                               */
     __IO uint32_t CPCTL0;                /*!< PSIOn Check Point Control 0 Register                                     */
     __IO uint32_t CPCTL1;                /*!< PSIOn Check Point Control1 Register                                      */
+    __I  uint32_t RESERVE0[1];
 } GNCT_T;
 
 typedef struct

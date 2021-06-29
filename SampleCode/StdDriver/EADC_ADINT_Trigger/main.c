@@ -115,7 +115,7 @@ void EADC_FunctionTest(void)
             printf("Config EADC sample modules as below:\n");
 
             u32IntNum = 0;
-            u32ModuleNum = 4;
+            u32ModuleNum = 0;
             u32ChannelNum = 0;
             u32IntMask = (BIT0 << u32IntNum);
             u32ModuleMask = (BIT0 << u32ModuleNum);
@@ -135,7 +135,7 @@ void EADC_FunctionTest(void)
             NVIC_EnableIRQ(EADC_INT0_IRQn);
 
             u32IntNum = 1;
-            u32ModuleNum = 5;
+            u32ModuleNum = 1;
             u32ChannelNum = 1;
             u32IntMask = (BIT0 << u32IntNum);
             u32ModuleMask = (BIT0 << u32ModuleNum);
@@ -159,8 +159,8 @@ void EADC_FunctionTest(void)
             /* Reset the EADC interrupt indicator and trigger sample module to start A/D conversion */
             g_u32EadcInt0Flag = 0;
             g_u32EadcInt1Flag = 0;
-            printf("Software trigger sample module 4 here !\n");
-            EADC_START_CONV(EADC, BIT4);    /* software trigger sample module 4 */
+            printf("Software trigger sample module 0 here !\n");
+            EADC_START_CONV(EADC, BIT0);    /* software trigger sample module 0 */
 
             /* Wait EADC interrupt (g_u32EadcInt0Flag will be set at EADC_INT0_IRQHandler() function) */
             while (g_u32EadcInt0Flag == 0);
@@ -171,17 +171,17 @@ void EADC_FunctionTest(void)
 
 
             /* Get the conversion result of the sample module */
-            i32ConversionData = EADC_GET_CONV_DATA(EADC, 4);
+            i32ConversionData = EADC_GET_CONV_DATA(EADC, 0);
             printf("Conversion result of channel %d: 0x%X (%d)\n", 0, i32ConversionData, i32ConversionData);
 
             /* Get the conversion result of the sample module */
-            i32ConversionData = EADC_GET_CONV_DATA(EADC, 5);
+            i32ConversionData = EADC_GET_CONV_DATA(EADC, 1);
             printf("Conversion result of channel %d: 0x%X (%d)\n\n", 1, i32ConversionData, i32ConversionData);
 
             /* Disable the ADINTx interrupt */
             EADC_DISABLE_INT(EADC, BIT0 | BIT1);
-            EADC_DISABLE_SAMPLE_MODULE_INT(EADC, 0, BIT0 << 4);
-            EADC_DISABLE_SAMPLE_MODULE_INT(EADC, 1, BIT0 << 5);
+            EADC_DISABLE_SAMPLE_MODULE_INT(EADC, 0, BIT0 << 0);
+            EADC_DISABLE_SAMPLE_MODULE_INT(EADC, 1, BIT0 << 1);
             NVIC_DisableIRQ(EADC_INT0_IRQn);
             NVIC_DisableIRQ(EADC_INT1_IRQn);
         }
@@ -190,7 +190,7 @@ void EADC_FunctionTest(void)
             printf("Config EADC sample modules as below:\n");
 
             u32IntNum = 0;
-            u32ModuleNum = 4;
+            u32ModuleNum = 0;
             u32ChannelNum = 0;
             u32IntMask = (BIT0 << u32IntNum);
             u32ModuleMask = (BIT0 << u32ModuleNum);
@@ -210,7 +210,7 @@ void EADC_FunctionTest(void)
             NVIC_EnableIRQ(EADC_INT0_IRQn);
 
             u32IntNum = 1;
-            u32ModuleNum = 5;
+            u32ModuleNum = 1;
             u32ChannelNum = 1;
             u32IntMask = (BIT0 << u32IntNum);
             u32ModuleMask = (BIT0 << u32ModuleNum);
@@ -227,7 +227,7 @@ void EADC_FunctionTest(void)
             NVIC_EnableIRQ(EADC_INT1_IRQn);
 
             u32IntNum = 2;
-            u32ModuleNum = 6;
+            u32ModuleNum = 2;
             u32ChannelNum = 3;
             u32IntMask = (BIT0 << u32IntNum);
             u32ModuleMask = (BIT0 << u32ModuleNum);
@@ -252,8 +252,8 @@ void EADC_FunctionTest(void)
             g_u32EadcInt0Flag = 0;
             g_u32EadcInt1Flag = 0;
             g_u32EadcInt2Flag = 0;
-            printf("Software trigger sample module 4 here !\n");
-            EADC_START_CONV(EADC, BIT4);    /* software trigger sample module 4 */
+            printf("Software trigger sample module 0 here !\n");
+            EADC_START_CONV(EADC, BIT0);    /* software trigger sample module 0 */
 
             /* Wait EADC interrupt (g_u32EadcInt0Flag will be set at EADC_INT0_IRQHandler() function) */
             while (g_u32EadcInt0Flag == 0);
@@ -266,22 +266,22 @@ void EADC_FunctionTest(void)
 
 
             /* Get the conversion result of the sample module */
-            i32ConversionData = EADC_GET_CONV_DATA(EADC, 4);
+            i32ConversionData = EADC_GET_CONV_DATA(EADC, 0);
             printf("Conversion result of channel %d: 0x%X (%d)\n", 0, i32ConversionData, i32ConversionData);
 
             /* Get the conversion result of the sample module */
-            i32ConversionData = EADC_GET_CONV_DATA(EADC, 5);
+            i32ConversionData = EADC_GET_CONV_DATA(EADC, 1);
             printf("Conversion result of channel %d: 0x%X (%d)\n", 1, i32ConversionData, i32ConversionData);
 
             /* Get the conversion result of the sample module */
-            i32ConversionData = EADC_GET_CONV_DATA(EADC, 6);
+            i32ConversionData = EADC_GET_CONV_DATA(EADC, 2);
             printf("Conversion result of channel %d: 0x%X (%d)\n\n", 3, i32ConversionData, i32ConversionData);
 
             /* Disable the ADINTx interrupt */
             EADC_DISABLE_INT(EADC, BIT0 | BIT1 | BIT2);
-            EADC_DISABLE_SAMPLE_MODULE_INT(EADC, 0, BIT0 << 4);
-            EADC_DISABLE_SAMPLE_MODULE_INT(EADC, 1, BIT0 << 5);
-            EADC_DISABLE_SAMPLE_MODULE_INT(EADC, 2, BIT0 << 6);
+            EADC_DISABLE_SAMPLE_MODULE_INT(EADC, 0, BIT0 << 0);
+            EADC_DISABLE_SAMPLE_MODULE_INT(EADC, 1, BIT0 << 1);
+            EADC_DISABLE_SAMPLE_MODULE_INT(EADC, 2, BIT0 << 2);
             NVIC_DisableIRQ(EADC_INT0_IRQn);
             NVIC_DisableIRQ(EADC_INT1_IRQn);
             NVIC_DisableIRQ(EADC_INT2_IRQn);
@@ -346,7 +346,7 @@ int32_t main(void)
     /* SAMPLE CODE                                                                                             */
     /*---------------------------------------------------------------------------------------------------------*/
 
-    printf("\nSystem clock rate: %d Hz", SystemCoreClock);
+    printf("\nSystem clock rate: %u Hz", SystemCoreClock);
 
     /* EADC function test */
     EADC_FunctionTest();

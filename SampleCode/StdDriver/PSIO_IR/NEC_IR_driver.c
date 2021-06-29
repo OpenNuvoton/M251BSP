@@ -34,8 +34,6 @@ volatile static uint8_t s_u8TransferDone = 0;
 /*---------------------------------------------------------------------------------------------------------*/
 void PSIO_IRQHandler(void)
 {
-    static uint32_t u32DataIndex = 1;
-
     /* INT0 interrupt */
     if (PSIO_GET_INT_FLAG(PSIO, PSIO_INTSTS_CON0IF_Msk))
     {
@@ -45,6 +43,8 @@ void PSIO_IRQHandler(void)
         /* Check output empty flag is 1 */
         if (PSIO_GET_TRANSFER_STATUS(PSIO, (PSIO_TRANSTS_OUTEPY0_Msk << (s_pPSIOConfig->u8TxPin * 4))) && (s_u8TransferDone == 0))
         {
+            static uint32_t u32DataIndex = 1;
+
             if (u32DataIndex < MAX_TX_CNT)
             {
                 PSIO_SET_OUTPUT_DATA(PSIO, s_pPSIOConfig->u8TxPin, s_au32InternalUse[u32DataIndex++]);
@@ -69,14 +69,15 @@ void PSIO_IRQHandler(void)
 static int PSIO_EncodePattern(uint8_t u8Repeat, uint8_t u8Address0, uint8_t u8Address1, uint8_t u8Command0, uint8_t u8Command1)
 {
     int i = 0, j = 0;
-    uint32_t u32Data = 0;
-    uint8_t u8DataIndex = 0;
 
     memset(s_au32InternalUse, 0x00, MAX_TX_CNT * sizeof(uint32_t));
 
     /* Encode data for send data mode or repeat mode */
     if (u8Repeat == eSEND_DATA)
     {
+        uint32_t u32Data = 0;
+        uint8_t u8DataIndex = 0;
+
         u32Data = (u8Command1 << 24) | (u8Command0 << 16) | (u8Address1 << 8) | (u8Address0);
 
         for (i = 0; i < MAX_TX_CNT; i++)
@@ -140,7 +141,7 @@ static int PSIO_EncodePattern(uint8_t u8Repeat, uint8_t u8Address0, uint8_t u8Ad
             }
             else                 //560us high
             {
-                s_au32InternalUse[0] |= (0x1 << j);
+                s_au32InternalUse[0] |= (0x1ul << j);
                 return j;
             }
         }

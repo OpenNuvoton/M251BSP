@@ -36,7 +36,7 @@ USHORT USB_PID;                    /* Product ID */
 
 #define USB_TIME_OUT    100
 
-// ¶È¦³ªº¤@­ÓÀ³¥Îµ{¦¡ª«¥ó
+// åƒ…æœ‰çš„ä¸€å€‹æ‡‰ç”¨ç¨‹å¼ç‰©ä»¶
 
 CWinApp theApp;
 
@@ -50,16 +50,16 @@ int _tmain(int argc, TCHAR* argv[], TCHAR* envp[])
     int nRetCode = 0;
 
 
-    // ªì©l¤Æ MFC ¨Ã©ó¥¢±Ñ®É¦C¦L¿ù»~
+    // åˆå§‹åŒ– MFC ä¸¦æ–¼å¤±æ•—æ™‚åˆ—å°éŒ¯èª¤
     if(!AfxWinInit(::GetModuleHandle(NULL), NULL, ::GetCommandLine(), 0))
     {
-        // TODO: °t¦X±zªº»İ­nÅÜ§ó¿ù»~½X
-        _tprintf(_T("ÄY­«¿ù»~: MFC ªì©l¤Æ¥¢±Ñ\n"));
+        // TODO: é…åˆæ‚¨çš„éœ€è¦è®Šæ›´éŒ¯èª¤ç¢¼
+        _tprintf(_T("åš´é‡éŒ¯èª¤: MFC åˆå§‹åŒ–å¤±æ•—\n"));
         nRetCode = 1;
     }
     else
     {
-        // TODO: ¦b¦¹¼¶¼gÀ³¥Îµ{¦¡¦æ¬°ªºµ{¦¡½X¡C
+        // TODO: åœ¨æ­¤æ’°å¯«æ‡‰ç”¨ç¨‹å¼è¡Œç‚ºçš„ç¨‹å¼ç¢¼ã€‚
         main();
     }
 
@@ -129,7 +129,7 @@ int ReadPages(unsigned char *pReadBuf, unsigned int startPage, unsigned int page
     {
         isDeviceOpened = TRUE;
         printf("USB HID Device VID[%04x] PID[%04x] Open Success.\n", USB_VID, USB_PID);
-        printf(">>> Read pages: %d - %d\n", startPage, startPage + pages - 1);
+        printf(">>> Read pages: %u - %u\n", startPage, startPage + pages - 1);
 
         cmd.cmd = HID_CMD_READ;
         cmd.len = sizeof(cmd) - 4; /* Not include checksum */
@@ -201,7 +201,7 @@ int EraseSectors(unsigned int startSector, unsigned int sectors)
 		//io.OpenDevice(USB_VID, USB_PID);
         isDeviceOpened = TRUE;
         printf("USB HID Device VID[%04x] PID[%04x] Open Success.\n", USB_VID, USB_PID);
-        printf(">>> Erase sectors: %d - %d\n", startSector, startSector + sectors - 1);
+        printf(">>> Erase sectors: %u - %u\n", startSector, startSector + sectors - 1);
 
         cmd.cmd = HID_CMD_ERASE;
         cmd.len = sizeof(cmd) - 4; /* Not include checksum */
@@ -260,7 +260,7 @@ int WritePages(unsigned char *pWriteBuf, unsigned int startPage, unsigned int pa
 		//io.OpenDevice(USB_VID, USB_PID);
         isDeviceOpened = TRUE;
         printf("USB HID Device VID[%04x] PID[%04x] Open Success.\n", USB_VID, USB_PID);
-        printf(">>> Write pages: %d - %d\n", startPage, startPage + pages - 1);
+        printf(">>> Write pages: %u - %u\n", startPage, startPage + pages - 1);
 
         cmd.cmd = HID_CMD_WRITE;
         cmd.len = sizeof(cmd) - 4; /* Not include checksum */
@@ -366,7 +366,7 @@ int main(void)
 	/* Set PID */
 	printf("Input PID : Please input the Hex Number\n");
 	//scanf("%s",buffer);
-	scanf("%[^ \n]",buffer);//±µ¦¬°£¤FªÅ¥Õ¤Î \n ¥H¥~ªº©Ò¦³¦r¤¸
+	scanf_s("%[^ \n]",buffer, sizeof(buffer));//æ¥æ”¶é™¤äº†ç©ºç™½åŠ \n ä»¥å¤–çš„æ‰€æœ‰å­—å…ƒ
 
 
 	USB_PID = (USHORT)strtol(buffer,NULL,16);

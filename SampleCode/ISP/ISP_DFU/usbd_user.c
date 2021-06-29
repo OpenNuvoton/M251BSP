@@ -459,7 +459,7 @@ void USBD_StandardRequest(void)
                 g_usbd_UsbAltInterface = g_usbd_SetupPacket[2];
 
                 if (g_usbd_pfnSetInterface != NULL)
-                    g_usbd_pfnSetInterface();
+                    g_usbd_pfnSetInterface(g_usbd_UsbAltInterface);
 
                 /* Status stage */
                 USBD_SET_DATA1(EP0);

@@ -74,8 +74,6 @@ public:
 		DWORD MemberIndex;
 		//DevInterfaceData，用來保存設備的驅動接口信息
 		SP_DEVICE_INTERFACE_DATA DevInterfaceData;
-		//定義一個BOOL變量，保存函數調用是否返回成功
-		BOOL Result;
 		//定義一個RequiredSize的變量，用來接收需要保存詳細信息的緩衝長度。
 		DWORD RequiredSize;
 		//定義一個指向設備詳細信息的結構體指針。
@@ -118,6 +116,9 @@ public:
 		MemberIndex=0;
 		while(1)
 		{
+			//定義一個BOOL變量，保存函數調用是否返回成功
+			BOOL Result;
+
 			//調用SetupDiEnumDeviceInterfaces在設備信息集合中獲取編號為
 			//MemberIndex的設備信息。
 			Result=SetupDiEnumDeviceInterfaces(hDevInfoSet,
@@ -137,7 +138,7 @@ public:
 			//第一次調用函數SetupDiGetDeviceInterfaceDetail來獲取。這時
 			//提供緩衝區和長度都為NULL的參數，並提供一個用來保存需要多大
 			//緩衝區的變量RequiredSize。
-			Result=SetupDiGetDeviceInterfaceDetail(hDevInfoSet,
+			SetupDiGetDeviceInterfaceDetail(hDevInfoSet,
 				&DevInterfaceData,
 				NULL,
 				NULL,
@@ -306,8 +307,6 @@ public:
 
 		if(pdwLength != NULL)
 			*pdwLength = 0;
-
-		DWORD dwStart2 = GetTickCount();
 
 		if(!::WriteFile(m_hWriteHandle, pcBuffer, szLen, NULL, &overlapped))
 			return FALSE;

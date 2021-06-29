@@ -75,9 +75,8 @@ uint32_t FMC_ProgramPage(uint32_t u32StartAddr, uint32_t *u32Buf)
 void DataFlashWrite(uint32_t addr, uint32_t size, uint32_t buffer)
 {
     /* This is low level write function of USB Mass Storage */
-    int32_t len, i, offset;
+    int32_t len;
     uint32_t *pu32;
-    uint32_t alignAddr;
 
     /* Modify the address to MASS_STORAGE_OFFSET */
     addr += MASS_STORAGE_OFFSET;
@@ -103,7 +102,8 @@ void DataFlashWrite(uint32_t addr, uint32_t size, uint32_t buffer)
     {
         do
         {
-            alignAddr = addr & 0x1FE00;
+            int32_t i, offset;
+            uint32_t alignAddr = addr & 0x1FE00;
 
             /* Get the sector offset*/
             offset = (addr & (FLASH_PAGE_SIZE - 1));

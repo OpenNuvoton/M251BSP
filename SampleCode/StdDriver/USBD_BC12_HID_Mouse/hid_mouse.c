@@ -22,7 +22,6 @@ uint8_t g_u8MoveLen, g_u8MouseMode = 1;
 uint8_t volatile g_u8Suspend = 0;
 
 uint8_t g_u8Idle = 0, g_u8Protocol = 0;
-uint32_t volatile vbus_det = 0;
 
 uint8_t volatile g_u8EP2Ready = 0;
 
@@ -42,21 +41,19 @@ void USBD_IRQHandler(void)
             /* USB Plug In */
             //USBD_ENABLE_USB();
             printf("-INT Attach-\n");
-            vbus_det = 1;
         }
         else
         {
             /* USB Un-plug */
             //USBD_DISABLE_USB();
             printf("-INT detach-\n");
-            vbus_det = 0;
         }
     }
 
     if (u32IntSts & USBD_INTSTS_BCDIF_Msk)
     {
         USBD_CLR_INT_FLAG(USBD_INTSTS_BCDIF_Msk);
-        printf("-BC INT-\n");
+        //printf("-BC INT-\n");
     }
 
     //------------------------------------------------------------------
@@ -78,7 +75,7 @@ void USBD_IRQHandler(void)
         {
             /* Enter power down to wait USB attached */
             g_u8Suspend = 1;
-            printf("-INT suspend-\n");
+            //printf("-INT suspend-\n");
             /* Enable USB but disable PHY */
             USBD_DISABLE_PHY();
         }
@@ -87,7 +84,7 @@ void USBD_IRQHandler(void)
         {
             /* Enable USB and enable PHY */
             USBD_ENABLE_USB();
-            printf("-INT resume-\n");
+            //printf("-INT resume-\n");
             g_u8Suspend = 0;
         }
 
@@ -278,16 +275,22 @@ void HID_ClassRequest(void)
             //             }
 
             case GET_IDLE:
-
-            //             {
-            //                 break;
-            //             }
+            {
+                /* Setup error, stall the device */
+                USBD_SetStall(0);
+                break;
+            }
 
             case GET_PROTOCOL:
-
-            //            {
-            //                break;
-            //            }
+            {
+                /* Data stage */
+                M8(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0)) = g_u8Protocol;
+                USBD_SET_DATA1(EP0);
+                USBD_SET_PAYLOAD_LEN(EP0, 1);
+                /* Status stage */
+                USBD_PrepareCtrlOut(0, 0);
+                break;
+            }
 
             default:
             {
@@ -323,10 +326,14 @@ void HID_ClassRequest(void)
             }
 
             case SET_PROTOCOL:
+            {
+                g_u8Protocol = buf[2];
 
-            //             {
-            //                 break;
-            //             }
+                USBD_SET_DATA1(EP0);
+                USBD_SET_PAYLOAD_LEN(EP0, 0);
+                break;
+            }
+
             default:
             {
                 // Stall

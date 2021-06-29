@@ -152,7 +152,6 @@ void USCI0_IRQHandler(void)
 /*---------------------------------------------------------------------------------------------------------*/
 void USCI_UART_TEST_HANDLE()
 {
-    uint8_t u8InChar = 0xFF;
     uint32_t u32IntSts = UUART0->PROTSTS;
 
     if (u32IntSts & UUART_PROTSTS_RXENDIF_Msk)
@@ -168,7 +167,7 @@ void USCI_UART_TEST_HANDLE()
         {
 
             /* Get the character from USCI UART Buffer */
-            u8InChar = UUART_READ(UUART0);
+            uint8_t u8InChar = UUART_READ(UUART0);
 
             printf("%c ", u8InChar);
 
@@ -198,8 +197,6 @@ void USCI_UART_TEST_HANDLE()
 /*---------------------------------------------------------------------------------------------------------*/
 void USCI_UART_FunctionTest()
 {
-    uint8_t u8InChar = 0xFF;
-    uint32_t u32Temp;
 
     printf("+-----------------------------------------------------------+\n");
     printf("|  USCI UART Function Test                                  |\n");
@@ -222,11 +219,11 @@ void USCI_UART_FunctionTest()
 
     while (g_i8Wait)
     {
-        u32Temp = g_u32ComRtail;
+        uint32_t u32Temp = g_u32ComRtail;
 
         if (g_u32ComRhead != u32Temp)
         {
-            u8InChar = g_au8RecData[g_u32ComRhead];
+            uint8_t u8InChar = g_au8RecData[g_u32ComRhead];
 
             while (UUART_IS_TX_FULL(UUART0)); /* Wait Tx is not full to transmit data */
 

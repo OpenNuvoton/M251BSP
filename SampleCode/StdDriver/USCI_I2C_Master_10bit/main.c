@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     main.c
  * @version  V0.10
- * @brief    Show a Master how to access 10-bit address Slave
- *           This sample code need works with USCI_I2C_Slave_10bit sample code
+ * @brief    Show how an I2C master accesses 10-bit address slave.
+ *           This sample code needs works with USCI_I2C_Slave_10bit sample code
  *
  * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
@@ -247,6 +247,9 @@ void SYS_Init(void)
     CLK_EnableModuleClock(UART0_MODULE);
     CLK_EnableModuleClock(USCI0_MODULE);
 
+    /* Enable GPIO clock */
+    CLK_EnableModuleClock(GPB_MODULE);
+
     /* Peripheral clock source */
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HIRC, CLK_CLKDIV0_UART0(1));
 
@@ -264,6 +267,9 @@ void SYS_Init(void)
     /* Set UI2C0 multi-function pins */
     SYS->GPB_MFPH = (SYS->GPB_MFPH & ~(SYS_GPB_MFPH_PB12MFP_Msk | SYS_GPB_MFPH_PB13MFP_Msk)) |
                     (SYS_GPB_MFPH_PB12MFP_USCI0_CLK | SYS_GPB_MFPH_PB13MFP_USCI0_DAT0);
+
+    /* I2C pins enable schmitt trigger */
+    PB->SMTEN |= GPIO_SMTEN_SMTEN12_Msk | GPIO_SMTEN_SMTEN13_Msk;
 }
 
 void UART0_Init(void)
@@ -301,7 +307,6 @@ void UI2C0_Init(uint32_t u32ClkSpeed)
 int32_t ReadWriteSlave(uint16_t u16SlvAddr)
 {
     uint32_t u32Idx;
-    uint8_t u8Temp;
 
     /* Init Send 10-bit Addr */
     g_u8DeviceHAddr = (u16SlvAddr >> 8) | SLV_10BIT_ADDR;
@@ -309,6 +314,7 @@ int32_t ReadWriteSlave(uint16_t u16SlvAddr)
 
     for (u32Idx = 0; u32Idx < 0x100; u32Idx++)
     {
+        uint8_t u8Temp;
         g_au8MstTxData[0] = (uint8_t)((u32Idx & 0xFF00) >> 8);
         g_au8MstTxData[1] = (uint8_t)(u32Idx & 0x00FF);
         g_au8MstTxData[2] = (uint8_t)(g_au8MstTxData[1] + 3);

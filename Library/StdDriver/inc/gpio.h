@@ -424,10 +424,10 @@ extern "C"
 *
 * @param[in]   port            GPIO port. It could be PA, PB, PC, PD, PE or PF.
 * @param[in]   u32Pin          The pin of specified GPIO port.
-*                              It could be BIT0 ~ BIT15 for PA, PB, and PE.
-*                              It could be BIT0 ~ BIT12, and BIT14 ~ BIT15 for PC.
-*                              It could be BIT0 ~ BIT13, and BIT15 for PD.
-*                              It could be BIT0 ~ BIT7 for PF.
+*                              It could be 0 ~ 15 for PA, PB, and PE. \n
+*                              It could be 0 ~ 12, 14, 15 for PC. \n
+*                              It could be 0 ~ 13, 15 for PD. \n
+*                              It could be 0 ~ 7 for PF. \n
 *
 * @param[in]   u32IntAttribs   The interrupt attribute of specified GPIO pin. It could be \n
 *                              GPIO_INT_RISING, GPIO_INT_FALLING, GPIO_INT_BOTH_EDGE, GPIO_INT_HIGH, GPIO_INT_LOW.
@@ -443,10 +443,10 @@ extern "C"
 *
 * @param[in]   port        GPIO port. It could be PA, PB, PC, PD, PE or PF.
 * @param[in]   u32Pin      The pin of specified GPIO port.
-*                          It could be BIT0 ~ BIT15 for PA, PB, and PE.
-*                          It could be BIT0 ~ BIT12, and BIT14 ~ BIT15 for PC.
-*                          It could be BIT0 ~ BIT13, and BIT15 for PD.
-*                          It could be BIT0 ~ BIT7 for PF.
+*                              It could be 0 ~ 15 for PA, PB, and PE. \n
+*                              It could be 0 ~ 12, 14, 15 for PC. \n
+*                              It could be 0 ~ 13, 15 for PD. \n
+*                              It could be 0 ~ 7 for PF. \n
 *
 * @return      None
 *

@@ -106,8 +106,7 @@ uint32_t CalNewDutyCMR(PWM_T *pwm, uint32_t u32ChannelNum, uint32_t u32DutyCycle
 /*---------------------------------------------------------------------------------------------------------*/
 int32_t main(void)
 {
-    uint8_t  u8Option;
-    uint32_t u32NewDutyCycle = 0, u32NewCMR = 0;
+    uint32_t u32NewDutyCycle = 0;
 
     /* Init System, IP clock and multi-function I/O
        In the end of SYS_Init() will issue SYS_LockReg()
@@ -156,6 +155,9 @@ int32_t main(void)
 
     while (1)
     {
+        uint8_t  u8Option;
+        uint32_t u32NewCMR;
+
         printf("\nSelect new duty: \n");
         printf("[1] 100%% \n");
         printf("[2] 75%% \n");

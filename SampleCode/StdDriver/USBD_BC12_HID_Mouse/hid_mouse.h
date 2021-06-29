@@ -92,6 +92,5 @@ void EP2_Handler(void);
 void HID_UpdateMouseData(void);
 
 extern uint8_t volatile g_u8Suspend;
-extern uint32_t volatile vbus_det;
 
 #endif  /* __USBD_HID_H_ */

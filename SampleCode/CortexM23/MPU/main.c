@@ -19,7 +19,7 @@
 void SYS_Init(void);
 void UART0_Init(void);
 void HardFault_Handler(void);
-uint32_t ReadMemCore(uint32_t address);
+uint32_t ReadMemCore(uint32_t *address);
 void MPU_Test(void);
 
 /* MPU Region Base Address Register: Shareablity Definition */
@@ -51,9 +51,16 @@ void MPU_Test(void);
 #define DEVICE_MEM_NG_R_E                0x08UL /* Non-Gathering, Reordering, Early-Write-Acknowledgement */
 #define DEVICE_MEM_G_R_E                 0x0CUL /* Gathering, Reordering, Early-Write-Acknowledgement */
 
-uint32_t ReadMemCore(uint32_t address)
+uint32_t ReadMemCore(uint32_t *address)
 {
-    return *(__IO uint32_t *)address;
+    if (address != NULL)
+    {
+        return *address;
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 /* NOTE: Cortex-M23 does not supported the MemManage exception.
@@ -197,7 +204,7 @@ void MPU_Test(void)
 
     while (i32TestItem != '1') i32TestItem = getchar();
 
-    printf("\n Read value from 0x%08X is 0x%08X.\n", (uint32_t)(REGION_1_ADDR), ReadMemCore(REGION_1_ADDR));
+    printf("\n Read value from 0x%08X is 0x%08X.\n", (uint32_t)(REGION_1_ADDR), ReadMemCore((uint32_t *)REGION_1_ADDR));
 
     printf("\n\n ==============================================\n");
     printf(" Memory Region 2 (SRAM Memory) configuration:\n");
@@ -212,7 +219,7 @@ void MPU_Test(void)
 
     while (i32TestItem != '2') i32TestItem = getchar();
 
-    printf("\n Read value from 0x%08X is 0x%08X.\n", (uint32_t)(REGION_2_ADDR), ReadMemCore(REGION_2_ADDR));
+    printf("\n Read value from 0x%08X is 0x%08X.\n", (uint32_t)(REGION_2_ADDR), ReadMemCore((uint32_t *)REGION_2_ADDR));
 
     printf("\n\n ==============================================\n");
     printf(" Memory Region 3 (Test Memory) configuration:\n");
@@ -247,7 +254,7 @@ void MPU_Test(void)
     /* Write address 0x20001800 */
     M32(REGION_3_ADDR) = 0x55AAAA55;
     printf("\n Write value to 0x%08X success.\n", (uint32_t)(REGION_3_ADDR));
-    printf("\n Read value from 0x%08X is 0x%08X.\n", (uint32_t)(REGION_3_ADDR), ReadMemCore(REGION_3_ADDR));
+    printf("\n Read value from 0x%08X is 0x%08X.\n", (uint32_t)(REGION_3_ADDR), ReadMemCore((uint32_t *)REGION_3_ADDR));
     printf("\n Test finish!\n");
 }
 

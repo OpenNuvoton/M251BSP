@@ -49,7 +49,7 @@ void RTC_Init(void)
     /* Init RTC in the start of sample code */
     if (RTC->INIT != RTC_INIT_ACTIVE_Msk)
     {
-        printf("\n\nCPU @ %dHz\n", SystemCoreClock);
+        printf("\n\nCPU @ %uHz\n", SystemCoreClock);
         printf("+------------------------------------------+\n");
         printf("|    Power-down and Wake-up Sample Code    |\n");
         printf("+------------------------------------------+\n\n");
@@ -97,7 +97,7 @@ void CheckPowerSource(void)
     /* Check Power Manager Status is wake-up by RTC */
     if (u32Status & CLK_PMUSTS_RTCWK_Msk)
     {
-        printf("\n\nCPU @ %dHz\n", SystemCoreClock);
+        printf("\n\nCPU @ %uHz\n", SystemCoreClock);
         printf("+------------------------------------------+\n");
         printf("|    Power-down and Wake-up Sample Code    |\n");
         printf("+------------------------------------------+\n\n");
@@ -107,7 +107,7 @@ void CheckPowerSource(void)
 
         /* Read current RTC date/time */
         RTC_GetDateAndTime(&sReadRTC);
-        printf("# Get RTC current date/time: %d/%02d/%02d %02d:%02d:%02d.\n",
+        printf("# Get RTC current date/time: %u/%02u/%02u %02u:%02u:%02u.\n",
                sReadRTC.u32Year, sReadRTC.u32Month, sReadRTC.u32Day, sReadRTC.u32Hour, sReadRTC.u32Minute, sReadRTC.u32Second);
     }
 }
@@ -262,7 +262,7 @@ int32_t main(void)
 
         /* Read current RTC date/time after wake-up */
         RTC_GetDateAndTime(&sReadRTC);
-        printf("# Get RTC current date/time: %d/%02d/%02d %02d:%02d:%02d.\n\n\r",
+        printf("# Get RTC current date/time: %u/%02u/%02u %02u:%02u:%02u.\n\n\r",
                sReadRTC.u32Year, sReadRTC.u32Month, sReadRTC.u32Day, sReadRTC.u32Hour, sReadRTC.u32Minute, sReadRTC.u32Second);
 
     }

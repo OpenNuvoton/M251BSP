@@ -98,13 +98,13 @@ __vector_table
         DCD     UART2_IRQHandler          ; 48: UART2
         DCD     DEFAULT_IRQHandler        ; 49: Reserved
         DCD     USCI0_IRQHandler          ; 50: USCI0
-        DCD     DEFAULT_IRQHandler        ; 51: Reserved
+        DCD     SPI1_IRQHandler           ; 51: SPI1
         DCD     USCI1_IRQHandler          ; 52: USCI1
         DCD     USBD_IRQHandler           ; 53: USB device
         DCD     BPWM1_IRQHandler          ; 54: BPWM1
         DCD     PSIO_IRQHandler           ; 55: PSIO
         DCD     DEFAULT_IRQHandler        ; 56: Reserved
-        DCD     DEFAULT_IRQHandler        ; 57: Reserved
+        DCD     CRPT_IRQHandler           ; 57: CRPT
         DCD     SC0_IRQHandler            ; 58: Smart Card0
         DCD     DEFAULT_IRQHandler        ; 59: Reserved
         DCD     USCI2_IRQHandler          ; 60: USCI2
@@ -252,10 +252,12 @@ SysTick_Handler
         PUBWEAK  EADC_INT3_IRQHandler
         PUBWEAK  UART2_IRQHandler
         PUBWEAK  USCI0_IRQHandler
+        PUBWEAK  SPI1_IRQHandler
         PUBWEAK  USCI1_IRQHandler
         PUBWEAK  USBD_IRQHandler
         PUBWEAK  BPWM1_IRQHandler
         PUBWEAK  PSIO_IRQHandler
+        PUBWEAK  CRPT_IRQHandler
         PUBWEAK  SC0_IRQHandler
         PUBWEAK  USCI2_IRQHandler
         PUBWEAK  LCD_IRQHandler
@@ -311,10 +313,12 @@ EADC_INT2_IRQHandler
 EADC_INT3_IRQHandler
 UART2_IRQHandler
 USCI0_IRQHandler
+SPI1_IRQHandler
 USCI1_IRQHandler
 USBD_IRQHandler
 BPWM1_IRQHandler
 PSIO_IRQHandler
+CRPT_IRQHandler
 SC0_IRQHandler
 USCI2_IRQHandler
 LCD_IRQHandler

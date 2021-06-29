@@ -17,7 +17,8 @@
 #define REVEIVE_MODE            (0)
 #define TRANSMIT_MODE           (1)
 
-__WEAK uint32_t CLK_GetPLLClockFreq(void)
+/* This is a dummy implementation to replace the same function in clk.c for size limitation. */
+uint32_t CLK_GetPLLClockFreq(void)
 {
     return FREQ_48MHZ;
 }
@@ -40,6 +41,9 @@ void SYS_Init(void)
 
     /* Enable UART module clock */
     CLK->APBCLK0 |= CLK_APBCLK0_UART1CKEN_Msk;
+
+    /* Enable GPB clock */
+    CLK->AHBCLK |= CLK_AHBCLK_GPBCKEN_Msk;
 
     /* Select UART module clock source */
     CLK->CLKSEL1 &= ~CLK_CLKSEL1_UART1SEL_Msk;
@@ -70,7 +74,7 @@ int main(void)
     /* Init UART to 115200-8n1 */
     UART_Init();
 
-    CLK->AHBCLK |= CLK_AHBCLK_ISPCKEN_Msk;
+    CLK->AHBCLK |= CLK_AHBCLK_ISPCKEN_Msk | CLK_AHBCLK_EXSTCKEN_Msk;
     FMC->ISPCTL |= FMC_ISPCTL_ISPEN_Msk | FMC_ISPCTL_APUEN_Msk;
 
     g_apromSize = GetApromSize();

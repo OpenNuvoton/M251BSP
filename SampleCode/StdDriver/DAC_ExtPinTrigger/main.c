@@ -25,15 +25,15 @@ static uint32_t g_u32Index = 0;
 
 void DAC_IRQHandler(void)
 {
-    if (DAC_GET_INT_FLAG(DAC, 0))
+    if (DAC_GET_INT_FLAG(DAC0, 0))
     {
         if (g_u32Index == g_u32ArraySize)
             g_u32Index = 0;
         else
         {
-            DAC_WRITE_DATA(DAC, 0, g_au16Sine[g_u32Index++]);
+            DAC_WRITE_DATA(DAC0, 0, g_au16Sine[g_u32Index++]);
             /* Clear the DAC conversion complete finish flag */
-            DAC_CLR_INT_FLAG(DAC, 0);
+            DAC_CLR_INT_FLAG(DAC0, 0);
         }
     }
 
@@ -60,7 +60,10 @@ void SYS_Init(void)
 
     /* Select UART module clock source as HIRC and UART module clock divider as 1 */
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HIRC, CLK_CLKDIV0_UART0(1));
-
+    /* Enable GPA peripheral clock */
+    CLK_EnableModuleClock(GPA_MODULE);
+    /* Enable GPB peripheral clock */
+    CLK_EnableModuleClock(GPB_MODULE);
     /* Enable DAC module clock */
     CLK_EnableModuleClock(DAC_MODULE);
 
@@ -107,19 +110,19 @@ int32_t main(void)
     printf("Please connect PA0 with PA1, use PA1 to trigger DAC conversion\n");
 
     /* Set the falling edge trigger DAC and enable D/A converter */
-    DAC_Open(DAC, 0, DAC_FALLING_EDGE_TRIGGER);
+    DAC_Open(DAC0, 0, DAC_FALLING_EDGE_TRIGGER);
 
     /* The DAC conversion settling time is 1us */
-    DAC_SetDelayTime(DAC, 1);
+    DAC_SetDelayTime(DAC0, 1);
 
     /* Set DAC 12-bit holding data */
-    DAC_WRITE_DATA(DAC, 0, g_au16Sine[g_u32Index]);
+    DAC_WRITE_DATA(DAC0, 0, g_au16Sine[g_u32Index]);
 
     /* Clear the DAC conversion complete finish flag for safe */
-    DAC_CLR_INT_FLAG(DAC, 0);
+    DAC_CLR_INT_FLAG(DAC0, 0);
 
     /* Enable the DAC interrupt */
-    DAC_ENABLE_INT(DAC, 0);
+    DAC_ENABLE_INT(DAC0, 0);
     NVIC_EnableIRQ(DAC_IRQn);
 
     GPIO_SetMode(PA, BIT1, GPIO_MODE_OUTPUT);

@@ -585,7 +585,7 @@ int32_t HID_CmdEraseSectors(CMD_T *pCmd)
     u32StartSector = pCmd->u32Arg1 - START_SECTOR;
     u32Sectors = pCmd->u32Arg2;
 
-    printf("Erase command - Sector: %d   Sector Cnt: %d\n", u32StartSector, u32Sectors);
+    printf("Erase command - Sector: %u   Sector Cnt: %u\n", u32StartSector, u32Sectors);
 
     /* TODO: To erase the sector of storage */
     memset(g_u8TestPages + u32StartSector * SECTOR_SIZE, 0xFF, sizeof(uint8_t) * u32Sectors * SECTOR_SIZE);
@@ -605,7 +605,7 @@ int32_t HID_CmdReadPages(CMD_T *pCmd)
     u32StartPage = pCmd->u32Arg1;
     u32Pages     = pCmd->u32Arg2;
 
-    printf("Read command - Start page: %d    Pages Numbers: %d\n", u32StartPage, u32Pages);
+    printf("Read command - Start page: %u    Pages Numbers: %u\n", u32StartPage, u32Pages);
 
     if (u32Pages)
     {
@@ -635,7 +635,7 @@ int32_t HID_CmdWritePages(CMD_T *pCmd)
     u32StartPage = pCmd->u32Arg1;
     u32Pages     = pCmd->u32Arg2;
 
-    printf("Write command - Start page: %d    Pages Numbers: %d\n", u32StartPage, u32Pages);
+    printf("Write command - Start page: %u    Pages Numbers: %u\n", u32StartPage, u32Pages);
     g_u32BytesInPageBuf = 0;
 
     /* The signature is used to page counter */
@@ -773,7 +773,7 @@ void HID_GetOutReport(uint8_t *pu8EpBuf, uint32_t u32Size)
         /* The HOST must make sure the data is PAGE_SIZE alignment */
         if (g_u32BytesInPageBuf >= PAGE_SIZE)
         {
-            printf("Writing page %d\n", u32StartPage + u32PageCnt);
+            printf("Writing page %u\n", u32StartPage + u32PageCnt);
             /* TODO: We should program received data to storage here */
             memcpy(g_u8TestPages + u32PageCnt * PAGE_SIZE, g_u8PageBuff, sizeof(g_u8PageBuff));
             u32PageCnt++;
@@ -808,7 +808,6 @@ void HID_SetInReport(void)
     uint32_t u32StartPage;
     uint32_t u32TotalPages;
     uint32_t u32PageCnt;
-    uint8_t *ptr;
     uint8_t u8Cmd;
 
     u8Cmd        = g_sCmd.u8Cmd;
@@ -828,11 +827,13 @@ void HID_SetInReport(void)
         }
         else
         {
+            uint8_t *ptr;
+
             if (g_u32BytesInPageBuf == 0)
             {
                 /* The previous page has sent out. Read new page to page buffer */
                 /* TODO: We should update new page data here. (0xFF is used in this sample code) */
-                printf("Reading page %d\n", u32StartPage + u32PageCnt);
+                printf("Reading page %u\n", u32StartPage + u32PageCnt);
                 memcpy(g_u8PageBuff, g_u8TestPages + u32PageCnt * PAGE_SIZE, sizeof(g_u8PageBuff));
 
                 g_u32BytesInPageBuf = PAGE_SIZE;
@@ -925,7 +926,6 @@ void MSC_ReadFormatCapacity(void)
 
 void MSC_Read(void)
 {
-    uint32_t u32Len;
 
     if (USBD_GET_EP_BUF_ADDR(EP4) == g_u32BulkBuf1)
         USBD_SET_EP_BUF_ADDR(EP4, g_u32BulkBuf0);
@@ -957,7 +957,7 @@ void MSC_Read(void)
         }
         else
         {
-            u32Len = g_u32Length;
+            uint32_t u32Len = g_u32Length;
 
             if (u32Len > STORAGE_BUFFER_SIZE)
                 u32Len = STORAGE_BUFFER_SIZE;
@@ -985,7 +985,6 @@ void MSC_Read(void)
 
 void MSC_ReadTrig(void)
 {
-    uint32_t u32Len;
 
     if (g_u32Length)
     {
@@ -1006,7 +1005,7 @@ void MSC_ReadTrig(void)
         }
         else
         {
-            u32Len = g_u32Length;
+            uint32_t u32Len = g_u32Length;
 
             if (u32Len > STORAGE_BUFFER_SIZE)
                 u32Len = STORAGE_BUFFER_SIZE;
@@ -1172,7 +1171,6 @@ void MSC_ModeSense10(void)
 
 void MSC_Write(void)
 {
-    uint32_t lba, len;
 
     if (g_u32OutSkip == 0)
     {
@@ -1216,10 +1214,9 @@ void MSC_Write(void)
 
             if ((g_sCBW.u8OPCode == UFI_WRITE_10) || (g_sCBW.u8OPCode == UFI_WRITE_12))
             {
-                lba = get_be32(&g_sCBW.au8Data[0]);
-                len = g_sCBW.dCBWDataTransferLength;
+                uint32_t lba = get_be32(&g_sCBW.au8Data[0]);
 
-                len = lba * UDC_SECTOR_SIZE + g_sCBW.dCBWDataTransferLength - g_u32DataFlashStartAddr;
+                uint32_t len = lba * UDC_SECTOR_SIZE + g_sCBW.dCBWDataTransferLength - g_u32DataFlashStartAddr;
 
                 if (len)
                 {
@@ -1235,9 +1232,6 @@ void MSC_Write(void)
 
 void MSC_ProcessCmd(void)
 {
-    uint8_t u8Len;
-    int32_t i;
-    uint32_t Hcount, Dcount;
 
     if (g_u8EP5Ready)
     {
@@ -1245,7 +1239,9 @@ void MSC_ProcessCmd(void)
 
         if (g_u8BulkState == BULK_CBW)
         {
-            u8Len = USBD_GET_PAYLOAD_LEN(EP5);
+            int32_t i;
+            uint32_t Hcount, Dcount;
+            uint8_t u8Len = USBD_GET_PAYLOAD_LEN(EP5);
 
             if (u8Len > 31) u8Len = 31;
 
@@ -1767,8 +1763,6 @@ void MSC_ProcessCmd(void)
 void MSC_AckCmd(void)
 {
     /* Bulk IN */
-    int32_t volatile idx;
-
     if (g_u8BulkState == BULK_CSW)
     {
         /* Prepare to receive the CBW */
@@ -1914,10 +1908,6 @@ void MSC_AckCmd(void)
 void MSC_ReadMedia(uint32_t addr, uint32_t size, uint8_t *buffer)
 {
     DataFlashRead(addr, size, (uint32_t)buffer);
-}
-
-void MSC_WriteMedia(uint32_t addr, uint32_t size, uint8_t *buffer)
-{
 }
 
 void MSC_SetConfig(void)

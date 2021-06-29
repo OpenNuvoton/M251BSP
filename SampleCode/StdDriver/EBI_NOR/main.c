@@ -138,7 +138,7 @@ void UART0_Init(void)
 int main(void)
 {
     uint32_t u32Addr, u32MaxEBISize;
-    uint16_t u16WData, u16RData;
+    uint16_t u16WData;
     uint16_t au16IDTable[2];
 
     /* Unlock protected registers */
@@ -240,6 +240,8 @@ int main(void)
 
     for (u32Addr = 0; u32Addr < u32MaxEBISize; u32Addr += 2)
     {
+        uint16_t    u16RData;
+
         u16WData = (0x7657 + u32Addr / 2) & 0xFFFF;
         u16RData = NOR_MX29LV320T_READ(EBI_BANK1, u32Addr);
 

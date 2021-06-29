@@ -29,11 +29,12 @@
 void PWM0_P0_IRQHandler(void)
 {
     static uint32_t u32Cnt;
-    static uint32_t u32Out;
 
     /* Channel 0 frequency is 6000Hz, every 1 second enter this IRQ handler 6000 times. */
     if (++u32Cnt == 6000)
     {
+        static uint32_t u32Out;
+
         if (u32Out)
             PWM_EnableOutput(PWM0, PWM_CH_0_MASK | PWM_CH_1_MASK | PWM_CH_2_MASK | PWM_CH_3_MASK);
         else

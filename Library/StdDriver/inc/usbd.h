@@ -666,10 +666,10 @@ __STATIC_INLINE uint32_t USBD_GetStall(uint8_t epnum)
 extern volatile uint8_t g_USBD_u8RemoteWakeupEn;
 
 
-typedef void (*VENDOR_REQ)(void);           /*!< Functional pointer type definition for Vendor class                                    */
-typedef void (*CLASS_REQ)(void);            /*!< Functional pointer type declaration for USB class request callback handler             */
-typedef void (*SET_INTERFACE_REQ)(void);    /*!< Functional pointer type declaration for USB set interface request callback handler     */
-typedef void (*SET_CONFIG_CB)(void);        /*!< Functional pointer type declaration for USB set configuration request callback handler */
+typedef void (*VENDOR_REQ)(void);                               /*!< Functional pointer type definition for Vendor class                                    */
+typedef void (*CLASS_REQ)(void);                                /*!< Functional pointer type declaration for USB class request callback handler             */
+typedef void (*SET_INTERFACE_REQ)(uint32_t u32AltInterface);    /*!< Functional pointer type declaration for USB set interface request callback handler     */
+typedef void (*SET_CONFIG_CB)(void);                            /*!< Functional pointer type declaration for USB set configuration request callback handler */
 
 
 /*--------------------------------------------------------------------*/

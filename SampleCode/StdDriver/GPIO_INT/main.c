@@ -29,8 +29,10 @@ void GPB_IRQHandler(void)
     }
     else
     {
+        uint32_t u32Status;
+        u32Status = PB->INTSRC;
         /* Un-expected interrupt. Just clear all PB interrupts */
-        PB->INTSRC = PB->INTSRC;
+        PB->INTSRC = u32Status;
         printf("Un-expected interrupts.\n");
     }
 }
@@ -54,8 +56,10 @@ void GPC_IRQHandler(void)
     }
     else
     {
+        uint32_t u32Status;
+        u32Status = PC->INTSRC;
         /* Un-expected interrupt. Just clear all PC interrupts */
-        PC->INTSRC = PC->INTSRC;
+        PC->INTSRC = u32Status;
         printf("Un-expected interrupts.\n");
     }
 }

@@ -159,6 +159,12 @@ void TK_SetTkPol(uint32_t u32Mask, uint32_t u32PolSel)
         if ((1ul << i) & u32Mask)
             TK->POLSEL = (TK->POLSEL & ~(TK_POLSEL_POL0_Msk << (i * 2))) | (u32PolSel << (i * 2));
     }
+
+    for (i = 17 ; i < 26 ; i++)
+    {
+        if ((1ul << i) & u32Mask)
+            TK[1].POLSEL = (TK[1].POLSEL & ~(TK_POLSEL_POL0_Msk << ((i - 17) * 2))) | (u32PolSel << ((i - 17) * 2));
+    }
 }
 
 /**
@@ -171,7 +177,8 @@ void TK_SetTkPol(uint32_t u32Mask, uint32_t u32PolSel)
  */
 void TK_EnableTkPolarity(uint32_t u32Mask)
 {
-    TK->POLC |= (u32Mask << TK_POLC_POLEN0_Pos);
+    TK->POLC |= ((u32Mask & 0x1FFFF) << TK_POLC_POLEN0_Pos);
+    TK[1].POLC |= (u32Mask >> 17);
 }
 
 /**
@@ -184,7 +191,8 @@ void TK_EnableTkPolarity(uint32_t u32Mask)
  */
 void TK_DisableTkPolarity(uint32_t u32Mask)
 {
-    TK->POLC &= ~(u32Mask << TK_POLC_POLEN0_Pos);
+    TK->POLC &= ~((u32Mask & 0x1FFFF) << TK_POLC_POLEN0_Pos);
+    TK[1].POLC &= ~(u32Mask >> 17);
 }
 
 /**
@@ -197,8 +205,8 @@ void TK_DisableTkPolarity(uint32_t u32Mask)
  */
 void TK_SetCompCapBankData(uint32_t u32TKNum, uint32_t u32CapData)
 {
-    *(__IO uint32_t *)(&(TK->CCBD0) + (u32TKNum >> 2)) &= ~(TK_CCBD0_CCBD0_Msk << (u32TKNum % 4 * 8));
-    *(__IO uint32_t *)(&(TK->CCBD0) + (u32TKNum >> 2)) |= (u32CapData << (u32TKNum % 4 * 8));
+    *(__IO uint32_t *)(&(TK[u32TKNum / 17].CCBD0) + ((u32TKNum % 17) >> 2)) &= ~(TK_CCBD0_CCBD0_Msk << ((u32TKNum % 17) % 4 * 8));
+    *(__IO uint32_t *)(&(TK[u32TKNum / 17].CCBD0) + ((u32TKNum % 17) >> 2)) |= (u32CapData << ((u32TKNum % 17) % 4 * 8));
 }
 
 /**
@@ -224,8 +232,8 @@ void TK_SetRefKeyCapBankData(uint32_t u32CapData)
 
 void TK_SetRefCapBankData(uint32_t u32TKNum, uint32_t u32CapData)
 {
-    *(__IO uint32_t *)(&(TK->TK_REFCBD0) + (u32TKNum >> 2)) &= ~(TK_REFCBD0_CBD0_Msk << (u32TKNum % 4 * 8));
-    *(__IO uint32_t *)(&(TK->TK_REFCBD0) + (u32TKNum >> 2)) |= (u32CapData << (u32TKNum % 4 * 8));
+    *(__IO uint32_t *)(&(TK[u32TKNum / 17].TK_REFCBD0) + ((u32TKNum % 17) >> 2)) &= ~(TK_REFCBD0_CBD0_Msk << ((u32TKNum % 17) % 4 * 8));
+    *(__IO uint32_t *)(&(TK[u32TKNum / 17].TK_REFCBD0) + ((u32TKNum % 17) >> 2)) |= (u32CapData << ((u32TKNum % 17) % 4 * 8));
 }
 
 /**
@@ -238,8 +246,8 @@ void TK_SetRefCapBankData(uint32_t u32TKNum, uint32_t u32CapData)
  */
 void TK_SetScanThreshold(uint32_t u32TKNum, uint32_t u32HighLevel)
 {
-    *(__IO uint32_t *)(&(TK->THC01) + (u32TKNum >> 1)) &= ~((TK_THC01_HTH0_Msk) << ((u32TKNum & 0x1) * 16));
-    *(__IO uint32_t *)(&(TK->THC01) + (u32TKNum >> 1)) |= (u32HighLevel << (TK_THC01_HTH0_Pos + (u32TKNum & 0x1) * 16));
+    *(__IO uint32_t *)(&(TK[u32TKNum / 17].THC01) + ((u32TKNum % 17) >> 1)) &= ~((TK_THC01_HTH0_Msk) << (((u32TKNum % 17) & 0x1) * 16));
+    *(__IO uint32_t *)(&(TK[u32TKNum / 17].THC01) + ((u32TKNum % 17) >> 1)) |= (u32HighLevel << (TK_THC01_HTH0_Pos + ((u32TKNum % 17) & 0x1) * 16));
 }
 
 /**
@@ -281,6 +289,7 @@ void TK_DisableInt(uint32_t u32Msk)
 void TK_DisableAllChannel(void)
 {
     TK->SCANC &= ~(0x1FFFF);
+    TK[1].SCANC &= ~(0x1F);
 }
 
 
@@ -292,9 +301,9 @@ void TK_DisableAllChannel(void)
   */
 void TK_ClearTKIF(void)
 {
-    TK->STA |= 0x1FFFFC3;
+    TK->STA |= 0x1FFFFC3UL;
+    TK[1].STA |= 0x1FUL;
 }
-
 
 /**
   * @brief      To enable scan all function to wake up system by any touch keys as low power mode
@@ -312,7 +321,6 @@ void TK_EnableScanAll(uint8_t u8RefcbAll, uint8_t u8CcbAll, uint8_t u8HThAll)
     TK->CCBD4 = (TK->CCBD4 & (~TK_CCBD4_CCBD_ALL_Msk)) | (u8CcbAll << TK_CCBD4_CCBD_ALL_Pos);
     TK->THC16 = (TK->THC16 & (~TK_THC16_HTH_ALL_Msk))  | (u8HThAll << TK_THC16_HTH_ALL_Pos);
 }
-
 
 /**
   * @brief      To disable scan all function to wake up system by any touch keys as low power mode

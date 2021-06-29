@@ -546,7 +546,9 @@ void USBD_StandardRequest(void)
                 s_USBD_u32UsbAltInterface = g_USBD_au8SetupPacket[2];
 
                 if (g_USBD_pfnSetInterface != NULL)
-                    g_USBD_pfnSetInterface();
+                {
+                    g_USBD_pfnSetInterface(s_USBD_u32UsbAltInterface);
+                }
 
                 /* Status stage */
                 USBD_SET_DATA1(EP0);
@@ -698,16 +700,15 @@ void USBD_PrepareCtrlOut(uint8_t *pu8Buf, uint32_t u32Size)
   */
 void USBD_CtrlOut(void)
 {
-    uint32_t u32Size;
-    uint32_t addr;
-
-
     if (s_USBD_u32CtrlOutToggle != (USBD->EPSTS0 & 0xf0))
     {
         s_USBD_u32CtrlOutToggle = USBD->EPSTS0 & 0xf0; //keep H/W EP1 toggle status
 
         if (s_USBD_u32CtrlOutSize < s_USBD_u32CtrlOutSizeLimit)
         {
+            uint32_t u32Size;
+            uint32_t addr;
+
             u32Size = USBD_GET_PAYLOAD_LEN(EP1);
             addr = USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP1);
             USBD_MemCopy((uint8_t *)s_USBD_pu8CtrlOutPointer, (uint8_t *)addr, u32Size);

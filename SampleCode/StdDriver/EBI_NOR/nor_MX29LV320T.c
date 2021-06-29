@@ -202,10 +202,11 @@ int32_t NOR_MX29LV320T_EraseChip(uint32_t u32Bank, uint32_t u32IsCheckBlank)
     {
         /* Run blank check */
         volatile uint32_t u32Addr;
-        uint16_t u16RData;
 
         for (u32Addr = 0; u32Addr < EBI_MAX_SIZE; u32Addr += 2)
         {
+            uint16_t u16RData;
+
             u16RData = NOR_MX29LV320T_READ(u32Bank, u32Addr);
 
             if (u16RData != 0xFFFF)

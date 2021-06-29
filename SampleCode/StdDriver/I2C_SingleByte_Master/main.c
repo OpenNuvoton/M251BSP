@@ -37,6 +37,9 @@ void SYS_Init(void)
     /* Enable I2C0 clock */
     CLK_EnableModuleClock(I2C0_MODULE);
 
+    /* Enable GPIO clock */
+    CLK_EnableModuleClock(GPB_MODULE);
+
     /* Select UART clock source from HIRC */
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HIRC, CLK_CLKDIV0_UART0(1));
 
@@ -52,6 +55,9 @@ void SYS_Init(void)
     /* Set I2C0 multi-function pins */
     SYS->GPB_MFPL = (SYS->GPB_MFPL & ~(SYS_GPB_MFPL_PB4MFP_Msk | SYS_GPB_MFPL_PB5MFP_Msk)) |
                     (SYS_GPB_MFPL_PB4MFP_I2C0_SDA | SYS_GPB_MFPL_PB5MFP_I2C0_SCL);
+
+    /* I2C pins enable schmitt trigger */
+    PB->SMTEN |= GPIO_SMTEN_SMTEN4_Msk | GPIO_SMTEN_SMTEN5_Msk;
 }
 
 
@@ -88,7 +94,7 @@ void I2C0_Close(void)
 int32_t main(void)
 {
     uint32_t i;
-    uint8_t u8Data, u8Tmp, u8Err;
+    uint8_t u8Err;
 
     /* Unlock protected registers */
     SYS_UnlockReg();
@@ -124,6 +130,8 @@ int32_t main(void)
 
     for (i = 0; i < 256; i++)
     {
+        uint8_t u8Data, u8Tmp;
+
         u8Tmp = (uint8_t)i + 3;
 
         /* Single Byte Write (Two Registers) */
@@ -135,7 +143,7 @@ int32_t main(void)
         if (u8Data != u8Tmp)
         {
             u8Err = 1;
-            printf("%03d: Single byte write data fail,  W(0x%X)/R(0x%X) \n", i, u8Tmp, u8Data);
+            printf("%03u: Single byte write data fail,  W(0x%X)/R(0x%X) \n", i, u8Tmp, u8Data);
         }
     }
 

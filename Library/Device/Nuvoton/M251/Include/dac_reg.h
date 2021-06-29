@@ -72,6 +72,10 @@ typedef struct
      * |        |          |00 = data is 12 bits.
      * |        |          |01 = data is 8 bits.
      * |        |          |Others = reserved.
+     * |[16]    |GRPEN     |DAC Group Mode Enable Bit
+     * |        |          |0 = DAC0 and DAC1 are not grouped.
+     * |        |          |1 = DAC0 and DAC1 are grouped.
+     * |        |          |Note:This function only supports having two DAC channels.
      * @var DAC_T::SWTRG
      * Offset: 0x04  DAC Software Trigger Control Register
      * ---------------------------------------------------------------------------------------------------
@@ -171,6 +175,9 @@ typedef struct
 
 #define DAC_CTL_BWSEL_Pos                (14)                                              /*!< DAC_T::CTL: BWSEL Position             */
 #define DAC_CTL_BWSEL_Msk                (0x3ul << DAC_CTL_BWSEL_Pos)                      /*!< DAC_T::CTL: BWSEL Mask                 */
+
+#define DAC_CTL_GRPEN_Pos                (16)                                              /*!< DAC_T::CTL: GRPEN Position             */
+#define DAC_CTL_GRPEN_Msk                (0x3ul << DAC_CTL_GRPEN_Pos)                      /*!< DAC_T::CTL: GRPEN Mask                 */
 
 #define DAC_SWTRG_SWTRG_Pos              (0)                                               /*!< DAC_T::SWTRG: SWTRG Position           */
 #define DAC_SWTRG_SWTRG_Msk              (0x1ul << DAC_SWTRG_SWTRG_Pos)                    /*!< DAC_T::SWTRG: SWTRG Mask               */

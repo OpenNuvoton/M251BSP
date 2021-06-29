@@ -1,43 +1,70 @@
-/****************************************************************************//**
+/******************************************************************************
  * @file     usbd_audio.c
- * @version  V0.10
- * @brief    NuMicro series USBD audio sample file
+ * @brief    NuMicro series USBD driver Sample file
  *
- * SPDX-License-Identifier: Apache-2.0
- * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
+ * @copyright SPDX-License-Identifier: Apache-2.0
+ * @copyright Copyright (C) 2020 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
+
 /*!<Includes */
 #include <string.h>
 #include <stdio.h>
 #include "NuMicro.h"
 #include "usbd_audio.h"
-#include "buffer_control.h"
+
+uint32_t volatile g_usbd_SampleRate = AUDIO_RATE;
+/*--------------------------------------------------------------------------*/
+static volatile uint8_t g_u8PlayVolumeLAdjust = FALSE;
+static volatile uint8_t g_u8PlayVolumeRAdjust = FALSE;
+
 /*--------------------------------------------------------------------------*/
 /* Global variables for Audio class */
-volatile uint32_t g_usbd_UsbAudioState = 0;
+uint32_t g_usbd_UsbAudioState = 0;
 
-volatile uint8_t g_usbd_RecMute       = 0x00;     /* Record MUTE control. 0 = normal. 1 = MUTE */
-volatile int16_t g_usbd_RecVolumeL    = 0x1000;   /* Record left channel volume. Range is -32768 ~ 32767 */
-volatile int16_t g_usbd_RecVolumeR    = 0x1000;   /* Record right channel volume. Range is -32768 ~ 32767 */
-volatile int16_t g_usbd_RecMaxVolume  = 0x7FFF;
-volatile int16_t g_usbd_RecMinVolume  = 0x8000;
-volatile int16_t g_usbd_RecResVolume  = 0x400;
+static uint8_t  s_u8UsbdRecMute = 0x01;
+static int16_t  s_u16UsbdRecVolume = 0x1000;
+static int16_t  s_u16UsbdRecMaxVolume = 0x7FFF;
+static int16_t  s_u16UsbdRecMinVolume = (int16_t)0x8000;
+static int16_t  s_u16UsbdRecResVolume = 0x400;
 
-volatile uint8_t g_usbd_PlayMute      = 0x01;     /* Play MUTE control. 0 = normal. 1 = MUTE */
-volatile int16_t g_usbd_PlayVolumeL   = 0x1000;   /* Play left channel volume. Range is -32768 ~ 32767 */
-volatile int16_t g_usbd_PlayVolumeR   = 0x1000;   /* Play right channel volume. Range is -32768 ~ 32767 */
-volatile int16_t g_usbd_PlayMaxVolume = 0x7FFF;
-volatile int16_t g_usbd_PlayMinVolume = 0x8000;
-volatile int16_t g_usbd_PlayResVolume = 0x400;
+static uint8_t  s_u8UsbdPlayMute = 0x01;
+static int16_t  s_u16UsbdPlayVolumeL = 0x1000;
+static int16_t  s_u16UsbdPlayVolumeR = 0x1000;
+static int16_t  s_u16UsbdPlayMaxVolume = 0x7FFF;
+static int16_t  s_u16UsbdPlayMinVolume = (int16_t)0x8000;
+static int16_t  s_u16UsbdPlayResVolume = 0x400;
 
-volatile uint8_t g_u8RecEn       = 0;
-volatile uint8_t g_u8PlayEn      = 0;    /* To indicate data is output to I2S */
-volatile int32_t g_i32AdjFlag    = 0;    /* To indicate current I2S frequency adjustment status */
+static uint8_t volatile s_u8PlayEn = 0;
+uint8_t volatile g_u8AudioPlaying = 0;
+uint8_t volatile g_u8TxDataCntInBuffer = 0;
+uint8_t volatile g_u8PDMATxIdx = 0;
 
+static uint8_t volatile s_u8RecEn = 0;
+uint8_t volatile g_u8PDMARxIdx = 0;
 
+uint32_t volatile g_u32BuffLen = 0, g_u32RxBuffLen = 0;
 
+/* Player Buffer and its pointer */
+#ifdef __ICCARM__
+#pragma data_alignment=4
+uint32_t g_au32PcmPlayBuff[PDMA_TXBUFFER_CNT][BUFF_LEN] = {0};
+
+uint8_t g_au8PcmRecBuff[PDMA_RXBUFFER_CNT][BUFF_LEN] = {0};
+uint8_t g_au8PcmRxBufFull[PDMA_RXBUFFER_CNT] = {0};
+#else
+uint32_t g_au32PcmPlayBuff[PDMA_TXBUFFER_CNT][BUFF_LEN] __attribute__((aligned(4))) = {{0}};
+
+uint8_t g_au8PcmRecBuff[PDMA_RXBUFFER_CNT][BUFF_LEN] __attribute__((aligned(4))) = {{0}};
+uint8_t g_au8PcmRxBufFull[PDMA_RXBUFFER_CNT] __attribute__((aligned(4))) = {0};
+#endif
+
+static volatile uint32_t s_u32BufPlayIdx = 0;
+static volatile uint32_t s_u32PlayBufPos = 0;
+static volatile uint32_t s_u32BufRecIdx = 0;
+
+void USBD_IRQHandler(void);
+void TMR0_IRQHandler(void);
 /*--------------------------------------------------------------------------*/
-
 
 /**
  * @brief       USBD Interrupt Service Routine
@@ -63,13 +90,19 @@ void USBD_IRQHandler(void)
         {
             /* USB Plug In */
             USBD_ENABLE_USB();
-
         }
         else
         {
             /* USB Un-plug */
             USBD_DISABLE_USB();
         }
+    }
+
+    //------------------------------------------------------------------
+    if (u32IntSts & USBD_INTSTS_WAKEUP)
+    {
+        /* Clear event flag */
+        USBD_CLR_INT_FLAG(USBD_INTSTS_WAKEUP);
     }
 
     //------------------------------------------------------------------
@@ -83,7 +116,6 @@ void USBD_IRQHandler(void)
             /* Bus reset */
             USBD_ENABLE_USB();
             USBD_SwReset();
-
         }
 
         if (u32State & USBD_STATE_SUSPEND)
@@ -97,34 +129,6 @@ void USBD_IRQHandler(void)
             /* Enable USB and enable PHY */
             USBD_ENABLE_USB();
         }
-
-#ifdef SUPPORT_LPM
-
-        if (u32State & USBD_STATE_L1SUSPEND)
-        {
-            /*
-               TODO: Implement LPM SUSPEND flag here.
-                     Recommend implementing the power-saving function in main loop.
-            */
-        }
-
-        if (u32State & USBD_STATE_L1RESUME)
-        {
-            /*
-               TODO: Implement LPM RESUME flag here.
-            */
-        }
-
-#endif
-    }
-
-    if (u32IntSts & USBD_INTSTS_NEVWKIF_Msk)
-    {
-        /*Clear no-event wake up interrupt */
-        USBD_CLR_INT_FLAG(USBD_INTSTS_NEVWKIF_Msk);
-        /*
-           TODO: Implement the function that will be executed when device is woken by non-USB event.
-        */
     }
 
     //------------------------------------------------------------------
@@ -149,7 +153,6 @@ void USBD_IRQHandler(void)
         {
             /* Clear event flag */
             USBD_CLR_INT_FLAG(USBD_INTSTS_EP0);
-
             // control IN
             USBD_CtrlIn();
         }
@@ -158,7 +161,6 @@ void USBD_IRQHandler(void)
         {
             /* Clear event flag */
             USBD_CLR_INT_FLAG(USBD_INTSTS_EP1);
-
             // control OUT
             USBD_CtrlOut();
         }
@@ -167,7 +169,6 @@ void USBD_IRQHandler(void)
         {
             /* Clear event flag */
             USBD_CLR_INT_FLAG(USBD_INTSTS_EP2);
-
             // Isochronous IN
             EP2_Handler();
         }
@@ -176,7 +177,6 @@ void USBD_IRQHandler(void)
         {
             /* Clear event flag */
             USBD_CLR_INT_FLAG(USBD_INTSTS_EP3);
-
             // Isochronous OUT
             EP3_Handler();
         }
@@ -229,7 +229,6 @@ void USBD_IRQHandler(void)
             USBD_CLR_INT_FLAG(USBD_INTSTS_EP11);
         }
     }
-
 }
 
 /**
@@ -239,76 +238,33 @@ void USBD_IRQHandler(void)
  *
  * @return      None
  *
- * @details     This function is used to process EP2 event for recording.
+ * @details     This function is used to process EP2 event
  */
-
+/* Record */
 void EP2_Handler(void)
 {
     /* ISO IN transfer ACK */
     if (g_usbd_UsbAudioState == UAC_START_AUDIO_RECORD)
-    {
-        UAC_DeviceEnable(UAC_MICROPHONE);
-        g_usbd_UsbAudioState = UAC_PROCESSING_AUDIO_RECORD;
-    }
-    else if (g_usbd_UsbAudioState == UAC_PROCESSING_AUDIO_RECORD)
-        g_usbd_UsbAudioState = UAC_BUSY_AUDIO_RECORD;
-
-    if (g_usbd_UsbAudioState == UAC_BUSY_AUDIO_RECORD)
-    {
         UAC_SendRecData();
-    }
-    else
-        USBD_SET_PAYLOAD_LEN(EP2, 0);
-
 }
 
 /**
- * @brief       EP3 Handler (ISO OUT interrupt handler)
+ * @brief       EP3 Handler
  *
  * @param[in]   None
  *
  * @return      None
  *
- * @details     This function is used to process EP3 event (ISO OUT transfer ACK) for play audio.
+ * @details     This function is used to process EP3 event
  */
+/* Play */
 void EP3_Handler(void)
 {
-    uint8_t *pu8Buf;
-    uint8_t *pu8Src;
+    /* ISO OUT transfer ACK */
+    UAC_GetPlayData((uint8_t *)((uint32_t)USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP3)), (uint32_t)USBD_GET_PAYLOAD_LEN(EP3));
 
-    /* Get the address in USB buffer */
-    pu8Src = (uint8_t *)((uint32_t)USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP3));
-
-    /* Prepare for nex OUT packet */
     USBD_SET_PAYLOAD_LEN(EP3, EP3_MAX_PKT_SIZE);
-
-    /* Get the temp buffer */
-    pu8Buf = (uint8_t *)&g_au32PLayBuffer[g_i8PlayBuffe_idx_IN][0];
-
-    USBD_MemCopy(pu8Buf, pu8Src, EP3_MAX_PKT_SIZE);
-
-    g_i8PlayBuffe_idx_IN++; //update buffer index
-
-    /*Ring buffer*/
-    if (g_i8PlayBuffe_idx_IN >= PLAY_BUFFER_DEPTH)
-    {
-        g_i8PlayBuffe_idx_IN = 0;
-    }
-
-    if (g_u8PlayEn == 0)
-    {
-        /* Start play data output through I2S only when we have enough data in buffer */
-        if (get_1ms_SamplesInPlayBuf() >= (PLAY_BUFFER_DEPTH / 2))
-        {
-            g_u8PlayEn = 1;
-            SPII2S_ENABLE_TX(SPI0);
-            SPII2S_ENABLE_TXDMA(SPI0);
-        }
-    }
-
 }
-
-
 
 /*--------------------------------------------------------------------------*/
 /**
@@ -322,6 +278,17 @@ void EP3_Handler(void)
  */
 void UAC_Init(void)
 {
+    if ((g_usbd_SampleRate % 8000) == 0)
+    {
+        g_u32BuffLen = 768;
+        g_u32RxBuffLen = (g_usbd_SampleRate / 1000) * 4;
+    }
+    else
+    {
+        g_u32BuffLen = 441;
+        g_u32RxBuffLen = 444;
+    }
+
     /* Init setup packet buffer */
     /* Buffer for setup packet -> [0 ~ 0x7] */
     USBD->STBUFSEG = SETUP_BUF_BASE;
@@ -352,7 +319,6 @@ void UAC_Init(void)
     USBD_SET_PAYLOAD_LEN(EP3, EP3_MAX_PKT_SIZE);
 }
 
-
 /**
  * @brief       UAC class request
  *
@@ -368,70 +334,72 @@ void UAC_ClassRequest(void)
 
     USBD_GetSetupPacket(buf);
 
-    if (buf[0] & 0x80)   /* request data transfer direction */
+    if (buf[0] & 0x80)
     {
+        /* request data transfer direction */
         // Device to host
         switch (buf[1])
         {
             case UAC_GET_CUR:
             {
-                switch (buf[3])
+                if ((buf[0] & 0x0f) == 0x2)
                 {
-                    case MUTE_CONTROL:
+                    M8(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0)) = (uint8_t)g_usbd_SampleRate;
+                    M8(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0) + 1) = (uint8_t)(g_usbd_SampleRate >> 8);
+                    M8(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0) + 2) = (uint8_t)(g_usbd_SampleRate >> 16);
+                    /* Data stage */
+                    USBD_SET_DATA1(EP0);
+                    USBD_SET_PAYLOAD_LEN(EP0, buf[6]);
+                }
+                else
+                {
+                    switch (buf[3])
                     {
-                        if (REC_FEATURE_UNITID == buf[5])
-                            M8(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0)) = g_usbd_RecMute;
-                        else if (PLAY_FEATURE_UNITID == buf[5])
-                            M8(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0)) = g_usbd_PlayMute;
-
-                        /* Data stage */
-                        USBD_SET_DATA1(EP0);
-                        USBD_SET_PAYLOAD_LEN(EP0, 1);
-                        break;
-                    }
-
-                    case VOLUME_CONTROL:
-                    {
-                        if (REC_FEATURE_UNITID == buf[5])
+                        case MUTE_CONTROL:
                         {
-                            /* Left or right channel */
-                            if (buf[2] == 1)
-                            {
-                                M8(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0)) = g_usbd_RecVolumeL;
-                                M8(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0) + 1) = g_usbd_RecVolumeL >> 8;
-                            }
-                            else
-                            {
-                                M8(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0)) = g_usbd_RecVolumeR;
-                                M8(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0) + 1) = g_usbd_RecVolumeR >> 8;
-                            }
+                            if (REC_FEATURE_UNITID == buf[5])
+                                M8(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0)) = s_u8UsbdRecMute;
+                            else if (PLAY_FEATURE_UNITID == buf[5])
+                                M8(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0)) = s_u8UsbdPlayMute;
 
-                        }
-                        else if (PLAY_FEATURE_UNITID == buf[5])
-                        {
-                            /* Left or right channel */
-                            if (buf[2] == 1)
-                            {
-                                M8(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0)) = g_usbd_PlayVolumeL;
-                                M8(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0) + 1) = g_usbd_PlayVolumeL >> 8;
-                            }
-                            else
-                            {
-                                M8(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0)) = g_usbd_PlayVolumeR;
-                                M8(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0) + 1) = g_usbd_PlayVolumeR >> 8;
-                            }
+                            /* Data stage */
+                            USBD_SET_DATA1(EP0);
+                            USBD_SET_PAYLOAD_LEN(EP0, 1);
+                            break;
                         }
 
-                        /* Data stage */
-                        USBD_SET_DATA1(EP0);
-                        USBD_SET_PAYLOAD_LEN(EP0, 2);
-                        break;
-                    }
+                        case VOLUME_CONTROL:
+                        {
+                            if (REC_FEATURE_UNITID == buf[5])
+                            {
+                                M8(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0)) = (uint8_t)s_u16UsbdRecVolume;
+                                M8(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0) + 1) = (uint8_t)(s_u16UsbdRecVolume >> 8);
+                            }
+                            else if (PLAY_FEATURE_UNITID == buf[5])
+                            {
+                                if (buf[2] == 1)
+                                {
+                                    M8(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0)) = (uint8_t)s_u16UsbdPlayVolumeL;
+                                    M8(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0) + 1) = (uint8_t)(s_u16UsbdPlayVolumeL >> 8);
+                                }
+                                else
+                                {
+                                    M8(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0)) = (uint8_t)s_u16UsbdPlayVolumeR;
+                                    M8(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0) + 1) = (uint8_t)(s_u16UsbdPlayVolumeR >> 8);
+                                }
+                            }
 
-                    default:
-                    {
-                        /* Setup error, stall the device */
-                        USBD_SetStall(0);
+                            /* Data stage */
+                            USBD_SET_DATA1(EP0);
+                            USBD_SET_PAYLOAD_LEN(EP0, 2);
+                            break;
+                        }
+
+                        default:
+                        {
+                            /* Setup error, stall the device */
+                            USBD_SetStall(0);
+                        }
                     }
                 }
 
@@ -449,13 +417,13 @@ void UAC_ClassRequest(void)
                     {
                         if (REC_FEATURE_UNITID == buf[5])
                         {
-                            M8(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0)) = g_usbd_RecMinVolume;
-                            M8(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0) + 1) = g_usbd_RecMinVolume >> 8;
+                            M8(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0)) = (uint8_t)s_u16UsbdRecMinVolume;
+                            M8(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0) + 1) = (uint8_t)(s_u16UsbdRecMinVolume >> 8);
                         }
                         else if (PLAY_FEATURE_UNITID == buf[5])
                         {
-                            M8(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0)) = g_usbd_PlayMinVolume;
-                            M8(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0) + 1) = g_usbd_PlayMinVolume >> 8;
+                            M8(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0)) = (uint8_t)s_u16UsbdPlayMinVolume;
+                            M8(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0) + 1) = (uint8_t)(s_u16UsbdPlayMinVolume >> 8);
                         }
 
                         /* Data stage */
@@ -483,13 +451,13 @@ void UAC_ClassRequest(void)
                     {
                         if (REC_FEATURE_UNITID == buf[5])
                         {
-                            M8(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0)) = g_usbd_RecMaxVolume;
-                            M8(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0) + 1) = g_usbd_RecMaxVolume >> 8;
+                            M8(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0)) = (uint8_t)s_u16UsbdRecMaxVolume;
+                            M8(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0) + 1) = (uint8_t)(s_u16UsbdRecMaxVolume >> 8);
                         }
                         else if (PLAY_FEATURE_UNITID == buf[5])
                         {
-                            M8(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0)) = g_usbd_PlayMaxVolume;
-                            M8(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0) + 1) = g_usbd_PlayMaxVolume >> 8;
+                            M8(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0)) = (uint8_t)s_u16UsbdPlayMaxVolume;
+                            M8(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0) + 1) = (uint8_t)(s_u16UsbdPlayMaxVolume >> 8);
                         }
 
                         /* Data stage */
@@ -517,13 +485,13 @@ void UAC_ClassRequest(void)
                     {
                         if (REC_FEATURE_UNITID == buf[5])
                         {
-                            M8(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0)) = g_usbd_RecResVolume;
-                            M8(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0) + 1) = g_usbd_RecResVolume >> 8;
+                            M8(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0)) = (uint8_t)s_u16UsbdRecResVolume;
+                            M8(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0) + 1) = (uint8_t)(s_u16UsbdRecResVolume >> 8);
                         }
                         else if (PLAY_FEATURE_UNITID == buf[5])
                         {
-                            M8(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0)) = g_usbd_PlayResVolume;
-                            M8(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0) + 1) = g_usbd_PlayResVolume >> 8;
+                            M8(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0)) = (uint8_t)s_u16UsbdPlayResVolume;
+                            M8(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0) + 1) = (uint8_t)(s_u16UsbdPlayResVolume >> 8);
                         }
 
                         /* Data stage */
@@ -557,61 +525,71 @@ void UAC_ClassRequest(void)
         {
             case UAC_SET_CUR:
             {
-                switch (buf[3])
+                if ((buf[0] & 0x0f) == 0x02)
                 {
-                    case MUTE_CONTROL:
-                        if (REC_FEATURE_UNITID == buf[5])
-                            USBD_PrepareCtrlOut((uint8_t *)&g_usbd_RecMute, buf[6]);
-                        else if (PLAY_FEATURE_UNITID == buf[5])
-                        {
-                            USBD_PrepareCtrlOut((uint8_t *)&g_usbd_PlayMute, buf[6]);
-                        }
-
-                        /* Status stage */
-                        USBD_SET_DATA1(EP0);
-                        USBD_SET_PAYLOAD_LEN(EP0, 0);
-                        break;
-
-                    case VOLUME_CONTROL:
-                        if (REC_FEATURE_UNITID == buf[5])
-                        {
-                            if (buf[2] == 1)
-                            {
-                                /* Prepare the buffer for new record volume of left channel */
-                                USBD_PrepareCtrlOut((uint8_t *)&g_usbd_RecVolumeL, buf[6]);
-                            }
-                            else
-                            {
-                                /* Prepare the buffer for new record volume of right channel */
-                                USBD_PrepareCtrlOut((uint8_t *)&g_usbd_RecVolumeR, buf[6]);
-                            }
-                        }
-                        else if (PLAY_FEATURE_UNITID == buf[5])
-                        {
-                            if (buf[2] == 1)
-                            {
-                                /* Prepare the buffer for new play volume of left channel */
-                                USBD_PrepareCtrlOut((uint8_t *)&g_usbd_PlayVolumeL, buf[6]);
-                            }
-                            else
-                            {
-                                /* Prepare the buffer for new play volume of right channel */
-                                USBD_PrepareCtrlOut((uint8_t *)&g_usbd_PlayVolumeR, buf[6]);
-                            }
-                        }
-
-                        /* Status stage */
-                        USBD_SET_DATA1(EP0);
-                        USBD_SET_PAYLOAD_LEN(EP0, 0);
-                        break;
-
-                    default:
-                        /* STALL control pipe */
-                        USBD_SetStall(0);
-                        break;
+                    USBD_PrepareCtrlOut((uint8_t *)(uint32_t)&g_usbd_SampleRate, buf[6]);
+                    /* Status stage */
+                    USBD_SET_DATA1(EP0);
+                    USBD_SET_PAYLOAD_LEN(EP0, 0);
+                    break;
                 }
+                else
+                {
+                    switch (buf[3])
+                    {
+                        case MUTE_CONTROL:
+                            if (REC_FEATURE_UNITID == buf[5])
+                                USBD_PrepareCtrlOut((uint8_t *)&s_u8UsbdRecMute, buf[6]);
+                            else if (PLAY_FEATURE_UNITID == buf[5])
+                                USBD_PrepareCtrlOut((uint8_t *)&s_u8UsbdPlayMute, buf[6]);
 
-                break;
+                            /* Status stage */
+                            USBD_SET_DATA1(EP0);
+                            USBD_SET_PAYLOAD_LEN(EP0, 0);
+                            break;
+
+                        case VOLUME_CONTROL:
+                            if (REC_FEATURE_UNITID == buf[5])
+                                USBD_PrepareCtrlOut((uint8_t *)&s_u16UsbdRecVolume, buf[6]);
+                            else if (PLAY_FEATURE_UNITID == buf[5])
+                            {
+                                if (buf[2] == 1)
+                                {
+                                    USBD_PrepareCtrlOut((uint8_t *)&s_u16UsbdPlayVolumeL, buf[6]);
+
+                                    if (s_u16UsbdPlayVolumeL & 0x8000)
+                                        s_u16UsbdPlayVolumeL = (s_u16UsbdPlayVolumeL & 0x7FFF) >> 8;
+                                    else
+                                        s_u16UsbdPlayVolumeL = (s_u16UsbdPlayVolumeL >> 7);
+
+                                    g_u8PlayVolumeLAdjust = TRUE; //ATOM_I2C_WriteWAU8822(11, i16PlayVolumeL | 0x100);   /* Set left DAC volume */
+                                }
+                                else
+                                {
+                                    USBD_PrepareCtrlOut((uint8_t *)&s_u16UsbdPlayVolumeR, buf[6]);
+
+                                    if (s_u16UsbdPlayVolumeR & 0x8000)
+                                        s_u16UsbdPlayVolumeR = (s_u16UsbdPlayVolumeR & 0x7FFF) >> 8;
+                                    else
+                                        s_u16UsbdPlayVolumeR = (s_u16UsbdPlayVolumeR >> 7);
+
+                                    g_u8PlayVolumeRAdjust = TRUE; //ATOM_I2C_WriteWAU8822(12, i16PlayVolumeR | 0x100);   /* Set right DAC volume */
+                                }
+                            }
+
+                            /* Status stage */
+                            USBD_SET_DATA1(EP0);
+                            USBD_SET_PAYLOAD_LEN(EP0, 0);
+                            break;
+
+                        default:
+                            /* STALL control pipe */
+                            USBD_SetStall(0);
+                            break;
+                    }
+
+                    break;
+                }
             }
 
             default:
@@ -633,14 +611,11 @@ void UAC_ClassRequest(void)
  *
  * @details     This function is used to set UAC Class relative setting
  */
-void UAC_SetInterface(void)
+void UAC_SetInterface(uint32_t u32AltInterface)
 {
     uint8_t buf[8];
-    uint32_t u32AltInterface;
 
     USBD_GetSetupPacket(buf);
-
-    u32AltInterface = buf[2];
 
     if (buf[4] == 1)
     {
@@ -650,12 +625,11 @@ void UAC_SetInterface(void)
             g_usbd_UsbAudioState = UAC_START_AUDIO_RECORD;
             USBD_SET_DATA1(EP2);
             USBD_SET_PAYLOAD_LEN(EP2, 0);
-            UAC_DeviceEnable(UAC_MICROPHONE);
-
+            UAC_DeviceEnable(0);
         }
         else if (u32AltInterface == 0)
         {
-            UAC_DeviceDisable(UAC_MICROPHONE);
+            UAC_DeviceDisable(0);
             USBD_SET_DATA1(EP2);
             USBD_SET_PAYLOAD_LEN(EP2, 0);
             g_usbd_UsbAudioState = UAC_STOP_AUDIO_RECORD;
@@ -667,11 +641,161 @@ void UAC_SetInterface(void)
         if (u32AltInterface == 1)
         {
             USBD_SET_PAYLOAD_LEN(EP3, EP3_MAX_PKT_SIZE);
-            UAC_DeviceEnable(UAC_SPEAKER);
+            UAC_DeviceEnable(1);
         }
         else
-            UAC_DeviceDisable(UAC_SPEAKER);
+            UAC_DeviceDisable(1);
     }
+}
+
+/**
+  * @brief  UAC_DeviceEnable. To enable the device to play or record audio data.
+  * @param  None.
+  * @retval None.
+  */
+void UAC_DeviceEnable(uint32_t u32IsPlay)
+{
+    if (u32IsPlay)
+    {
+        /* Enable play hardware */
+        s_u8PlayEn = 1;
+        TIMER_Start(TIMER0);
+    }
+    else
+    {
+        /* Enable record hardware */
+        if (!s_u8RecEn)
+        {
+            AudioStartRecord(g_usbd_SampleRate);
+        }
+
+        s_u8RecEn = 1;
+    }
+}
+
+/**
+  * @brief  UAC_DeviceDisable. To disable the device to play or record audio data.
+  * @param  None.
+  * @retval None.
+  */
+void UAC_DeviceDisable(uint32_t u32IsPlay)
+{
+    if (u32IsPlay)
+    {
+        /* Disable play hardware/stop play */
+        s_u8PlayEn = 0;
+        /* Disable I2S Tx function */
+        SPII2S_DISABLE_TXDMA(SPI0);
+        SPII2S_DISABLE_TX(SPI0);
+
+        /* Disable PDMA channel */
+        PDMA->PAUSE |= (1 << PDMA_I2S_TX_CH);
+        printf("Stop Play ...\n");
+
+        /* Reset some variables */
+        s_u32BufPlayIdx = 0;
+        s_u32PlayBufPos = 0;
+        g_u8PDMATxIdx = 0;
+        g_u8AudioPlaying = 0;
+        g_u8TxDataCntInBuffer = 0;
+
+        /* flush PCM buffer */
+        memset(g_au32PcmPlayBuff, 0, sizeof(g_au32PcmPlayBuff));
+        TIMER0->CNT = 0x7657;
+
+    }
+    else
+    {
+        /* Disable record hardware/stop record */
+        s_u8RecEn = 0;
+        /* Disable I2S Rx function */
+        SPII2S_DISABLE_RXDMA(SPI0);
+        SPII2S_DISABLE_RX(SPI0);
+
+        /* Disable PDMA channel */
+        PDMA->PAUSE |= (1 << PDMA_I2S_RX_CH);
+        printf("Stop Record ..\n");
+
+        /* Reset some variables */
+        s_u32BufRecIdx = 0;
+        g_u8PDMARxIdx = 0;
+
+        /* flush PCM buffer */
+        memset(g_au8PcmRxBufFull, 0, sizeof(g_au8PcmRxBufFull));
+    }
+}
+
+/**
+  * @brief  GetPlayData, To get data from ISO OUT to play buffer.
+  * @param  pi16src: The data buffer of ISO OUT.
+  *         i16Samples: The sample number in data buffer.
+  * @retval None.
+  */
+void UAC_GetPlayData(uint8_t *pu8Src, uint32_t u32Samples)
+{
+    uint32_t i, u32len;
+    uint32_t *pu32Buff;
+    uint32_t *pu32Src;
+
+    /* if buffer has enough data, play it!! */
+    if (!g_u8AudioPlaying && (g_u8TxDataCntInBuffer >= (PDMA_TXBUFFER_CNT / 2 + 1)))
+    {
+        AudioStartPlay(g_usbd_SampleRate);
+        g_u8AudioPlaying = 1;
+    }
+
+    u32len = u32Samples / 4;
+
+    /* Ring buffer check */
+    if ((s_u32PlayBufPos + u32len) > g_u32BuffLen)
+    {
+        s_u32PlayBufPos = 0;
+        s_u32BufPlayIdx ++;
+
+        /* change buffer index */
+        if (s_u32BufPlayIdx >= PDMA_TXBUFFER_CNT)
+            s_u32BufPlayIdx = 0;
+
+        /* increase data count in buffer */
+        g_u8TxDataCntInBuffer ++;
+    }
+
+    pu32Buff = &g_au32PcmPlayBuff[s_u32BufPlayIdx][s_u32PlayBufPos];
+    pu32Src = (uint32_t *)(uint32_t)pu8Src;
+
+    for (i = 0; i < u32len; i++)
+    {
+        pu32Buff[i] = pu32Src[i];
+    }
+
+    s_u32PlayBufPos += u32len;
+}
+
+void AudioStartPlay(uint32_t u32SampleRate)
+{
+    UAC_DeviceEnable(1);
+
+    /* Configure TX PDMA SG table */
+    PDMA_WriteTxSGTable();
+
+    /* Configure codec to specific sample rate */
+#if NAU8822
+    NAU8822_ConfigSampleRate(u32SampleRate);
+#else
+    NAU88L25_ConfigSampleRate(u32SampleRate);
+#endif
+
+    /* Enable I2S Tx function */
+    SPII2S_ENABLE_TXDMA(SPI0);
+    SPII2S_ENABLE_TX(SPI0);
+
+    /* Enable PDMA channel */
+    PDMA->CHCTL |= (1 << PDMA_I2S_TX_CH);
+    printf("Start Play ... \n");
+
+    // workaround for PDMA suspend
+    PDMA->DSCT[PDMA_I2S_TX_CH].CTL = 0;
+    PDMA->DSCT[PDMA_I2S_TX_CH].CTL = 2;
 }
 
 /**
@@ -679,27 +803,23 @@ void UAC_SetInterface(void)
   * @param  None.
   * @retval None.
   */
-__INLINE void UAC_SendRecData(void)
+void UAC_SendRecData(void)
 {
-    uint8_t *pu8Dst;
-    uint8_t *pu8Src;
-
-    if (get_1ms_SamplesInRecordBuf() > 0)
+    /* When record buffer full, send data to host */
+    if (g_au8PcmRxBufFull[s_u32BufRecIdx])
     {
-        /* Get the address in USB buffer */
-        pu8Dst = (uint8_t *)((uint32_t)USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP2));
-        pu8Src = (uint8_t *)(&g_au32RecordBuffer[g_i8RecordBuffer_idx_OUT][0]);
+        /* Set empty flag */
+        g_au8PcmRxBufFull[s_u32BufRecIdx] = 0;
 
-        g_i8RecordBuffer_idx_OUT++;
+        USBD_MemCopy((uint8_t *)((uint32_t)USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP2)), (void *)&g_au8PcmRecBuff[s_u32BufRecIdx][0], g_u32RxBuffLen);
+        USBD_SET_PAYLOAD_LEN(EP2, g_u32RxBuffLen);
 
-        /*//wrap around*/
-        if (g_i8RecordBuffer_idx_OUT >= RECORD_BUFFER_DEPTH)
-            g_i8RecordBuffer_idx_OUT = 0;
+        /* Change to next PCM buffer */
+        s_u32BufRecIdx ++;
 
-        /* Prepare the data to USB IN buffer */
-        USBD_MemCopy(pu8Dst, pu8Src, EP2_MAX_PKT_SIZE);
+        if (s_u32BufRecIdx >= PDMA_RXBUFFER_CNT)
+            s_u32BufRecIdx = 0;
 
-        USBD_SET_PAYLOAD_LEN(EP2, EP2_MAX_PKT_SIZE);
     }
     else
     {
@@ -707,85 +827,42 @@ __INLINE void UAC_SendRecData(void)
     }
 }
 
-
-/**
-  * @brief  UAC_DeviceEnable. To enable the device to play or record audio data.
-  * @param  u8Object: To select the device, UAC_MICROPHONE or UAC_SPEAKER.
-  * @retval None.
-  */
-void UAC_DeviceEnable(uint8_t u8Object)
+void AudioStartRecord(uint32_t u32SampleRate)
 {
-    if (u8Object == UAC_MICROPHONE)
-    {
-        /* Enable record hardware */
-        if (g_u8RecEn == 0)
-        {
-            /* Reset record buffer */
-            memset(g_au32RecordBuffer, 0, RECORD_BUFFER_DEPTH * RECORD_BUFFER_LENHTH_IN_BYTES);
-            g_i8RecordBuffer_idx_OUT = 0;
-            g_i8RecordBuffer_idx_IN = 0;
-            //printf("Start Record\n");
-        }
+    /* Configure RX PDMA SG table */
+    PDMA_WriteRxSGTable();
 
-        g_u8RecEn = 1;
+    /* Configure codec to specific sample rate */
+#if NAU8822
+    NAU8822_ConfigSampleRate(u32SampleRate);
+#else
+    NAU88L25_ConfigSampleRate(u32SampleRate);
+#endif
 
-    }
-    else
-    {
-        /* Eanble play hardware */
+    /* Enable I2S Tx function */
+    SPII2S_ENABLE_RXDMA(SPI0);
+    SPII2S_ENABLE_RX(SPI0);
 
-        /* Reset Play buffer */
-        if (g_u8PlayEn == 0)
-        {
+    /* Enable PDMA channel */
+    PDMA->CHCTL |= (1 << PDMA_I2S_RX_CH);
+    printf("Start Record ... \n");
 
-            /* Fill 0x0 to buffer before playing for buffer operation smooth */
-            memset(g_au32PLayBuffer, 0, PLAY_BUFFER_DEPTH * PLAY_BUFFER_LENHTH_IN_BYTES);
-
-            g_i8PlayBuffe_idx_IN  = 0;
-            g_i8PlayBuffe_idx_OUT = 0;
-
-            //printf("Start Play\n");
-
-        }
-
-    }
+    PDMA->DSCT[PDMA_I2S_RX_CH].CTL = 0;
+    PDMA->DSCT[PDMA_I2S_RX_CH].CTL = 2;
 }
 
-
-/**
-  * @brief  UAC_DeviceDisable. To disable the device to play or record audio data.
-  * @param  u8Object: To select the device, UAC_MICROPHONE or UAC_SPEAKER.
-  * @retval None.
-  */
-void UAC_DeviceDisable(uint8_t u8Object)
+//======================================================
+void TMR0_IRQHandler(void)
 {
-    if (u8Object ==  UAC_MICROPHONE)
+    TIMER_ClearIntFlag(TIMER0);
+
+    if (s_u8PlayEn)
     {
-        /* Disable record hardware/stop record */
-        g_u8RecEn = 0;
-
-        //printf("Stop Record\n");
-    }
-    else
-    {
-        /* Disable play hardware/stop play */
-        g_u8PlayEn = 0;
-
-        SPII2S_DISABLE_TX(SPI0);
-        SPII2S_DISABLE_TXDMA(SPI0);
-
-        //printf("Stop Play\n");
+        if ((g_u8TxDataCntInBuffer >= (PDMA_TXBUFFER_CNT / 2)) && (g_u8TxDataCntInBuffer <= (PDMA_TXBUFFER_CNT / 2 + 1)))
+            AdjustCodecPll(E_RS_NONE);
+        else if (g_u8TxDataCntInBuffer >= (PDMA_TXBUFFER_CNT - 2))
+            AdjustCodecPll(E_RS_UP);
+        else
+            AdjustCodecPll(E_RS_DOWN);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,7 +1,7 @@
 /**************************************************************************//**
  * @file     main.c
  * @version  V0.10
- * @brief    This is a USCI_UART PDMA demo and need to connect UACI_UART TX and RX.
+ * @brief    This is a USCI_UART PDMA demo and needs to connect UACI_UART TX and RX.
  *
  * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.

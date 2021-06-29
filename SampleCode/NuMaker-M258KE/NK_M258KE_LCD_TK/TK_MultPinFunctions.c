@@ -29,6 +29,8 @@
  * TK14     PD.6/2
  * TK15     PD.5/1
  * TK16     PD.4/0
+ * TKx      PD.12
+ * TKx      PB.14
  ******************************************************************************/
 
 /**************************************************************************//**
@@ -41,6 +43,8 @@
 void SetTkMultiFun(uint32_t u32TkMsk)
 {
     /* Avoid using the pointer to set multiple pin function registers */
+    S_TKFEAT *psTkFeat;
+    psTkFeat = TK_GetFeaturePtr();
     unsigned int i;
 
     for (i = 0; i < TKLIB_TOL_NUM_KEY; i++)
@@ -102,19 +106,43 @@ void SetTkMultiFun(uint32_t u32TkMsk)
                     break;
 
                 case 13: /* HAG040 : PD.7/3 */
-                    SYS->GPD_MFPL = (SYS->GPD_MFPL & (~SYS_GPD_MFPL_PD7MFP_Msk)) | SYS_GPD_MFPL_PD7MFP_TK_TK13;
+                    if (((psTkFeat->u32PinSel >> (13 * 2)) & 0x3) == 0)
+                        SYS->GPD_MFPL = (SYS->GPD_MFPL & (~SYS_GPD_MFPL_PD7MFP_Msk)) | SYS_GPD_MFPL_PD7MFP_TK_TK13;
+                    else
+                        SYS->GPD_MFPL = (SYS->GPD_MFPL & (~SYS_GPD_MFPL_PD3MFP_Msk)) | SYS_GPD_MFPL_PD3MFP_TK_TK13;
+
                     break;
 
                 case 14: /* HAG040 : PD.6/2 */
-                    SYS->GPD_MFPL = (SYS->GPD_MFPL & (~SYS_GPD_MFPL_PD6MFP_Msk)) | SYS_GPD_MFPL_PD6MFP_TK_TK14;
+                    if (((psTkFeat->u32PinSel >> (14 * 2)) & 0x3) == 0)
+                        SYS->GPD_MFPL = (SYS->GPD_MFPL & (~SYS_GPD_MFPL_PD6MFP_Msk)) | SYS_GPD_MFPL_PD6MFP_TK_TK14;
+                    else
+                        SYS->GPD_MFPL = (SYS->GPD_MFPL & (~SYS_GPD_MFPL_PD2MFP_Msk)) | SYS_GPD_MFPL_PD2MFP_TK_TK14;
+
                     break;
 
                 case 15: /* HAG040 : PD.5/1 */
-                    SYS->GPD_MFPL = (SYS->GPD_MFPL & (~SYS_GPD_MFPL_PD5MFP_Msk)) | SYS_GPD_MFPL_PD5MFP_TK_TK15;
+                    if (((psTkFeat->u32PinSel >> (15 * 2)) & 0x3) == 0)
+                        SYS->GPD_MFPL = (SYS->GPD_MFPL & (~SYS_GPD_MFPL_PD5MFP_Msk)) | SYS_GPD_MFPL_PD5MFP_TK_TK15;
+                    else
+                        SYS->GPD_MFPL = (SYS->GPD_MFPL & (~SYS_GPD_MFPL_PD1MFP_Msk)) | SYS_GPD_MFPL_PD1MFP_TK_TK15;
+
                     break;
 
                 case 16: /* HAG040 : PD.4/0 */
-                    SYS->GPD_MFPL = (SYS->GPD_MFPL & (~SYS_GPD_MFPL_PD4MFP_Msk)) | SYS_GPD_MFPL_PD4MFP_TK_TK16;
+                    if (((psTkFeat->u32PinSel1) & 0x3) == 0)
+                        SYS->GPD_MFPL = (SYS->GPD_MFPL & (~SYS_GPD_MFPL_PD4MFP_Msk)) | SYS_GPD_MFPL_PD4MFP_TK_TK16;
+                    else
+                        SYS->GPD_MFPL = (SYS->GPD_MFPL & (~SYS_GPD_MFPL_PD0MFP_Msk)) | SYS_GPD_MFPL_PD0MFP_TK_TK16;
+
+                    break;
+
+                case 17: /* HBG040 : PB.14 */
+                    SYS->GPB_MFPH = (SYS->GPB_MFPH & (~SYS_GPB_MFPH_PB14MFP_Msk)) | SYS_GPB_MFPH_PB14MFP_TK_SE;
+                    break;
+
+                case 18: /* HBG040 : PD.12 */
+                    SYS->GPD_MFPH = (SYS->GPD_MFPH & (~SYS_GPD_MFPH_PD12MFP_Msk)) | SYS_GPD_MFPH_PD12MFP_TK_SE;
                     break;
 
                 default:

@@ -35,9 +35,9 @@ void OPA_IRQHandler(void)
 
     /* Check OPA0 digital output state */
     if (OPA_GET_DIGITAL_OUTPUT(OPA, 0))
-        printf("OP0_P voltage > OP0_N voltage (%d)\n", u32Cnt);
+        printf("OP0_P voltage > OP0_N voltage (%d)\n", (int)u32Cnt);
     else
-        printf("OP0_P voltage <= OP0_N voltage (%d)\n", u32Cnt);
+        printf("OP0_P voltage <= OP0_N voltage (%d)\n", (int)u32Cnt);
 
     u32Cnt++;
 }

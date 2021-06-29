@@ -107,6 +107,8 @@ void USBD_IRQHandler(void)
     //------------------------------------------------------------------
     if (u32IntSts & USBD_INTSTS_USB)
     {
+        extern uint8_t g_USBD_au8SetupPacket[];
+
         // USB event
         if (u32IntSts & USBD_INTSTS_SETUP)
         {
@@ -138,6 +140,13 @@ void USBD_IRQHandler(void)
 
             // control OUT
             USBD_CtrlOut();
+
+            /* UART setting */
+            if (g_USBD_au8SetupPacket[4] == 0) /* VCOM-1 */
+                VCOM_LineCoding(0);
+
+            if (g_USBD_au8SetupPacket[4] == 2) /* VCOM-2 */
+                VCOM_LineCoding(1);
         }
 
         if (u32IntSts & USBD_INTSTS_EP2)
@@ -400,13 +409,6 @@ void VCOM_ClassRequest(void)
                 USBD_SET_DATA1(EP0);
                 USBD_SET_PAYLOAD_LEN(EP0, 0);
 
-                /* UART setting */
-                if (buf[4] == 0) /* VCOM-1 */
-                    VCOM_LineCoding(0);
-
-                if (buf[4] == 2) /* VCOM-2 */
-                    VCOM_LineCoding(1);
-
                 break;
             }
 
@@ -424,8 +426,9 @@ void VCOM_ClassRequest(void)
 
 void VCOM_LineCoding(uint8_t port)
 {
-    uint32_t u32Reg;
-    uint32_t u32Baud_Div;
+    uint32_t u32DataWidth;
+    uint32_t u32Parity;
+    uint32_t u32StopBits;
 
     if (port == 0)
     {
@@ -442,52 +445,58 @@ void VCOM_LineCoding(uint8_t port)
         // Reset hardware FIFO
         UART0->FIFO = UART_FIFO_RXRST_Msk | UART_FIFO_TXRST_Msk;
 
-        // Set baudrate
-        u32Baud_Div = UART_BAUD_MODE2_DIVIDER(__HIRC, g_sLineCoding0.u32DTERate);
-
-        if (u32Baud_Div > 0xFFFF)
-            UART0->BAUD = (UART_BAUD_MODE0 | UART_BAUD_MODE0_DIVIDER(__HIRC, g_sLineCoding0.u32DTERate));
-        else
-            UART0->BAUD = (UART_BAUD_MODE2 | u32Baud_Div);
-
         // Set parity
-        if (g_sLineCoding0.u8ParityType == 0)
-            u32Reg = 0; // none parity
-        else if (g_sLineCoding0.u8ParityType == 1)
-            u32Reg = 0x08; // odd parity
-        else if (g_sLineCoding0.u8ParityType == 2)
-            u32Reg = 0x18; // even parity
-        else
-            u32Reg = 0;
+        switch (g_sLineCoding0.u8ParityType)
+        {
+            case 0:
+                u32Parity = UART_PARITY_NONE; // none parity
+                break;
+
+            case 1:
+                u32Parity = UART_PARITY_ODD; // odd parity
+                break;
+
+            case 2:
+                u32Parity = UART_PARITY_EVEN; // even parity
+                break;
+
+            default:
+                u32Parity = UART_PARITY_NONE; // none parity
+
+        }
 
         // bit width
         switch (g_sLineCoding0.u8DataBits)
         {
             case 5:
-                u32Reg |= 0;
+                u32DataWidth = UART_WORD_LEN_5;
                 break;
 
             case 6:
-                u32Reg |= 1;
+                u32DataWidth = UART_WORD_LEN_6;
                 break;
 
             case 7:
-                u32Reg |= 2;
+                u32DataWidth = UART_WORD_LEN_7;
                 break;
 
             case 8:
-                u32Reg |= 3;
+                u32DataWidth = UART_WORD_LEN_8;
                 break;
 
             default:
+                u32DataWidth = UART_WORD_LEN_8;
                 break;
         }
 
         // stop bit
         if (g_sLineCoding0.u8CharFormat > 0)
-            u32Reg |= 0x4; // 2 or 1.5 bits
+            u32StopBits = UART_STOP_BIT_2; // 2 or 1.5 bits
+        else
+            u32StopBits = UART_STOP_BIT_1;
 
-        UART0->LINE = u32Reg;
+        UART_SetLine_Config(UART0, g_sLineCoding0.u32DTERate, u32DataWidth, u32Parity, u32StopBits);
+
 
         // Re-enable UART interrupt
         NVIC_EnableIRQ(UART0_IRQn);
@@ -508,51 +517,57 @@ void VCOM_LineCoding(uint8_t port)
         UART1->FIFO = UART_FIFO_RXRST_Msk | UART_FIFO_TXRST_Msk;
 
         // Set baudrate
-        u32Baud_Div = UART_BAUD_MODE2_DIVIDER(__HIRC, g_sLineCoding1.u32DTERate);
-
-        if (u32Baud_Div > 0xFFFF)
-            UART1->BAUD = (UART_BAUD_MODE0 | UART_BAUD_MODE0_DIVIDER(__HIRC, g_sLineCoding1.u32DTERate));
-        else
-            UART1->BAUD = (UART_BAUD_MODE2 | u32Baud_Div);
-
         // Set parity
-        if (g_sLineCoding1.u8ParityType == 0)
-            u32Reg = 0; // none parity
-        else if (g_sLineCoding1.u8ParityType == 1)
-            u32Reg = 0x08; // odd parity
-        else if (g_sLineCoding1.u8ParityType == 2)
-            u32Reg = 0x18; // even parity
-        else
-            u32Reg = 0;
+        switch (g_sLineCoding1.u8ParityType)
+        {
+            case 0:
+                u32Parity = UART_PARITY_NONE; // none parity
+                break;
+
+            case 1:
+                u32Parity = UART_PARITY_ODD; // odd parity
+                break;
+
+            case 2:
+                u32Parity = UART_PARITY_EVEN; // even parity
+                break;
+
+            default:
+                u32Parity = UART_PARITY_NONE; // none parity
+
+        }
 
         // bit width
         switch (g_sLineCoding1.u8DataBits)
         {
             case 5:
-                u32Reg |= 0;
+                u32DataWidth = UART_WORD_LEN_5;
                 break;
 
             case 6:
-                u32Reg |= 1;
+                u32DataWidth = UART_WORD_LEN_6;
                 break;
 
             case 7:
-                u32Reg |= 2;
+                u32DataWidth = UART_WORD_LEN_7;
                 break;
 
             case 8:
-                u32Reg |= 3;
+                u32DataWidth = UART_WORD_LEN_8;
                 break;
 
             default:
+                u32DataWidth = UART_WORD_LEN_8;
                 break;
         }
 
         // stop bit
         if (g_sLineCoding1.u8CharFormat > 0)
-            u32Reg |= 0x4; // 2 or 1.5 bits
+            u32StopBits = UART_STOP_BIT_2; // 2 or 1.5 bits
+        else
+            u32StopBits = UART_STOP_BIT_1;
 
-        UART1->LINE = u32Reg;
+        UART_SetLine_Config(UART1, g_sLineCoding1.u32DTERate, u32DataWidth, u32Parity, u32StopBits);
 
         // Re-enable UART interrupt
         NVIC_EnableIRQ(UART1_IRQn);

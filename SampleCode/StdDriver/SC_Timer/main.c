@@ -39,16 +39,16 @@ uint32_t g_u32Len;
   */
 void SC0_IRQHandler(void)
 {
-    static uint32_t u32Sec = 1;
-
     // Please don't remove any of the function calls below
     if (SCLIB_CheckCDEvent(SC_INTF))
         return; // Card insert/remove event occurred, no need to check other event...
 
     if (SC_INTSTS_TMR0IF_Msk == SC_CHECK_INTSTS(SC0, SC_INTSTS_TMR0IF_Msk))
     {
+        static uint32_t u32Sec = 1;
+
         SC_CLEAR_INTSTS(SC0, SC_INTSTS_TMR0IF_Msk);
-        printf("%d sec\n", u32Sec++);
+        printf("%u sec\n", u32Sec++);
     }
 
     return;

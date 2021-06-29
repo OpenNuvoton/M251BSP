@@ -117,6 +117,7 @@ void SYS_ResetCPU(void)
   *             - \ref PDMA_RST
   *             - \ref EBI_RST
   *             - \ref CRC_RST
+  *             - \ref CRYPT_RST
   *             - \ref GPIO_RST
   *             - \ref TMR0_RST
   *             - \ref TMR1_RST
@@ -127,9 +128,11 @@ void SYS_ResetCPU(void)
   *             - \ref I2C1_RST
   *             - \ref QSPI0_RST
   *             - \ref SPI0_RST
+  *             - \ref SPI1_RST
   *             - \ref UART0_RST
   *             - \ref UART1_RST
   *             - \ref UART2_RST
+  *             - \ref UART3_RST
   *             - \ref USBD_RST
   *             - \ref EADC_RST
   *             - \ref SC0_RST

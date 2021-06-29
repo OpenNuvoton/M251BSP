@@ -42,6 +42,9 @@ void SYS_Init(void)
     CLK_EnableModuleClock(UART0_MODULE);
     CLK_EnableModuleClock(USCI0_MODULE);
 
+    /* Enable GPIO clock */
+    CLK_EnableModuleClock(GPB_MODULE);
+
     /* Peripheral clock source */
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HIRC, CLK_CLKDIV0_UART0(1));
 
@@ -59,6 +62,9 @@ void SYS_Init(void)
     /* Set UI2C0 multi-function pins */
     SYS->GPB_MFPH = (SYS->GPB_MFPH & ~(SYS_GPB_MFPH_PB12MFP_Msk | SYS_GPB_MFPH_PB13MFP_Msk)) |
                     (SYS_GPB_MFPH_PB12MFP_USCI0_CLK | SYS_GPB_MFPH_PB13MFP_USCI0_DAT0);
+
+    /* I2C pins enable schmitt trigger */
+    PB->SMTEN |= GPIO_SMTEN_SMTEN12_Msk | GPIO_SMTEN_SMTEN13_Msk;
 }
 
 void UART0_Init(void)
@@ -167,7 +173,7 @@ int main(void)
     for (u32Idx = 0; u32Idx < 256; u32Idx++)
     {
         if (au8TxBuf[u32Idx] != au8RDataBuf[u32Idx])
-            printf("Data compare fail... R[%d] Data: 0x%X\n", u32Idx, au8RDataBuf[u32Idx]);
+            printf("Data compare fail... R[%u] Data: 0x%X\n", u32Idx, au8RDataBuf[u32Idx]);
     }
 
     printf("Multi bytes Read access Pass.....\n");

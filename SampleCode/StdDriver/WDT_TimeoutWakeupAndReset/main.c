@@ -109,7 +109,7 @@ int main(void)
     /* Init UART0 for printf */
     UART0_Init();
 
-    printf("\n\nCPU @ %d Hz\n", SystemCoreClock);
+    printf("\n\nCPU @ %u Hz\n", SystemCoreClock);
     printf("+----------------------------------------+\n");
     printf("|    WDT Time-out Wake-up Sample Code    |\n");
     printf("+----------------------------------------+\n\n");

@@ -211,7 +211,7 @@ int32_t main(void)
 
     SYS_Init();
     UART0_Init();
-    printf("\n\nCPU @ %d Hz\n", SystemCoreClock);
+    printf("\n\nCPU @ %u Hz\n", SystemCoreClock);
     /* Time Setting */
     sInitTime.u32Year       = 2018;
     sInitTime.u32Month      = 12;
@@ -231,7 +231,7 @@ int32_t main(void)
     /* Get the current time */
     RTC_GetDateAndTime(&sCurTime);
 
-    printf(" Current Time:%d/%02d/%02d %02d:%02d:%02d\n", sCurTime.u32Year, sCurTime.u32Month,
+    printf(" Current Time:%u/%02u/%02u %02u:%02u:%02u\n", sCurTime.u32Year, sCurTime.u32Month,
            sCurTime.u32Day, sCurTime.u32Hour, sCurTime.u32Minute, sCurTime.u32Second);
 
     /* Wait the UART FIFO buffer is empty */
@@ -262,7 +262,7 @@ int32_t main(void)
     /* Get the current time */
     RTC_GetDateAndTime(&sCurTime);
 
-    printf(" Current Time:%d/%02d/%02d %02d:%02d:%02d\n", sCurTime.u32Year, sCurTime.u32Month,
+    printf(" Current Time:%u/%02u/%02u %02u:%02u:%02u\n", sCurTime.u32Year, sCurTime.u32Month,
            sCurTime.u32Day, sCurTime.u32Hour, sCurTime.u32Minute, sCurTime.u32Second);
 
     printf("\n RTC Alarm Interrupt Wake-up Test End !!\n");

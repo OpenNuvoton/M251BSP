@@ -135,12 +135,14 @@ int main(void)
 /*---------------------------------------------------------------------------------------------------------*/
 void USCI0_IRQHandler(void)
 {
-    uint32_t u32Temp;
+
     volatile uint32_t u32ProtSts = UUART_GET_PROT_STATUS(UUART0);
     volatile uint32_t u32BufSts = UUART_GET_BUF_STATUS(UUART0);
 
     if (u32ProtSts & UUART_PROTSTS_RXENDIF_Msk)     /* Receive end interrupt */
     {
+        uint32_t u32Temp;
+
         /* Handle received data */
         UUART_CLR_PROT_INT_FLAG(UUART0, UUART_PROTSTS_RXENDIF_Msk);
         u32Temp = UUART_READ(UUART0);
@@ -203,8 +205,8 @@ void USCI_AutoFlow_FunctionRxTest()
         if (g_au8RecData[u32Idx] != (u32Idx & 0xFF))
         {
             printf("\n Compare Data Failed  \n");
-            printf("u32Idx = %d\n", u32Idx);
-            printf("g_au8RecData[%d] = %d\n", u32Idx, g_au8RecData[u32Idx]);
+            printf("u32Idx = %u\n", u32Idx);
+            printf("g_au8RecData[%u] = %u\n", u32Idx, g_au8RecData[u32Idx]);
 
             while (1);
         }

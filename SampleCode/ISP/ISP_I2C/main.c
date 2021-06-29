@@ -15,7 +15,8 @@
 uint32_t Pclk0;
 uint32_t Pclk1;
 
-__WEAK uint32_t CLK_GetPLLClockFreq(void)
+/* This is a dummy implementation to replace the same function in clk.c for size limitation. */
+uint32_t CLK_GetPLLClockFreq(void)
 {
     return FREQ_48MHZ;
 }
@@ -41,15 +42,19 @@ void SYS_Init(void)
     Pclk0           = SystemCoreClock / 2;
     Pclk1           = SystemCoreClock / 2;
 
-    /* Enable I2C1 clock */
-    CLK->APBCLK0 |= CLK_APBCLK0_I2C1CKEN_Msk;
+    /* Enable I2C0 clock */
+    CLK->APBCLK0 |= CLK_APBCLK0_I2C0CKEN_Msk;
 
-    /* Set I2C1 multi-function pins */
-    SYS->GPB_MFPL = (SYS->GPB_MFPL & ~(SYS_GPB_MFPL_PB0MFP_Msk | SYS_GPB_MFPL_PB1MFP_Msk)) |
-                    (SYS_GPB_MFPL_PB0MFP_I2C1_SDA | SYS_GPB_MFPL_PB1MFP_I2C1_SCL);
+    /* Set I2C0 multi-function pins */
+    SYS->GPC_MFPH = (SYS->GPC_MFPH & ~(SYS_GPC_MFPH_PC8MFP_Msk)) |
+                    (SYS_GPC_MFPH_PC8MFP_I2C0_SDA);
+    SYS->GPE_MFPH = (SYS->GPE_MFPH & ~(SYS_GPE_MFPH_PE13MFP_Msk)) |
+                    (SYS_GPE_MFPH_PE13MFP_I2C0_SCL);
 
     /* I2C clock pin enable schmitt trigger */
-    PB->SMTEN |= GPIO_SMTEN_SMTEN1_Msk;
+    PC->SMTEN |= GPIO_SMTEN_SMTEN8_Msk;
+    PE->SMTEN |= GPIO_SMTEN_SMTEN13_Msk;
+
 }
 
 int main(void)
@@ -57,7 +62,7 @@ int main(void)
     uint32_t cmd_buff[16];
     SYS_Init();
 
-    CLK->AHBCLK |= CLK_AHBCLK_ISPCKEN_Msk;
+    CLK->AHBCLK |= CLK_AHBCLK_ISPCKEN_Msk | CLK_AHBCLK_EXSTCKEN_Msk;
     FMC->ISPCTL |= (FMC_ISPCTL_ISPEN_Msk | FMC_ISPCTL_APUEN_Msk);
 
     g_apromSize = GetApromSize();

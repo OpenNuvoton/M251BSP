@@ -21,7 +21,6 @@ uint8_t g_u8Stop = 0;
 void PSIO_IRQHandler(void)
 {
     static uint8_t u8BitNumber = 0;
-    uint32_t u32Data;
     uint8_t u8INT0Flag;
 
     /* Get INT0 interrupt flag */
@@ -40,6 +39,8 @@ void PSIO_IRQHandler(void)
     /* Read data */
     if (PSIO_PS2_GET_STATUS() == eDEVICE_READ)
     {
+        uint32_t u32Data;
+
         /* Wait input buffer full */
         while (!PSIO_GET_TRANSFER_STATUS(PSIO, PSIO_TRANSTS_INFULL0_Msk << (g_sConfig.u8DataPin * 4)));
 
@@ -144,7 +145,7 @@ void UART0_Init()
 
 int main()
 {
-    uint8_t u8TxData = 0, u8RxData = 0x0, u8Parity = 0;
+    uint8_t u8RxData = 0x0, u8Parity = 0;
 
     /* Unlock protected registers */
     SYS_UnlockReg();
@@ -198,6 +199,8 @@ int main()
         /* Send data */
         if (!(UART0->FIFOSTS & UART_FIFOSTS_RXEMPTY_Msk))
         {
+            uint8_t u8TxData;
+
             u8TxData = UART0->DAT;
             printf("Send[0x%x]\n", u8TxData);
             PSIO_PS2_DeviceSend(&g_sConfig, &u8TxData);

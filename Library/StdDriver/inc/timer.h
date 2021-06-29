@@ -60,11 +60,30 @@ extern "C"
 #define TIMER_TRG_TO_DAC                (TIMER_TRGCTL_TRGDAC_Msk)
 #define TIMER_TRG_TO_TK                 (TIMER_TRGCTL_TRGTK_Msk)
 
-/* Capture Sourdce Selection */
-#define TIMER_CAPTURE_FROM_EXTERNAL     (0UL << TIMER_CTL_CAPSRC_Pos)
-#define TIMER_CAPTURE_FROM_INTERNAL     (1UL << TIMER_CTL_CAPSRC_Pos)
+/* Capture Source Selection */
+#define TIMER_CAPSRC_TX_EXT                     (0UL << TIMER_CTL_CAPSRC_Pos)      /*!< Capture source from Tx_EXT pin */
+#define TIMER_CAPSRC_INTERNAL                   (1UL << TIMER_CTL_CAPSRC_Pos)      /*!< Capture source from Internal event such as LIRC or ACMP0/1 */
 
-/* Capture Sourdce Divider */
+/* Internal Capture Source Selection */
+#define TIMER_INTER_CAPTURE_FROM_ACMP0  (0UL << TIMER_EXTCTL_INTERCAPSEL_Pos)
+#define TIMER_INTER_CAPTURE_FROM_ACMP1  (1UL << TIMER_EXTCTL_INTERCAPSEL_Pos)
+#define TIMER_INTER_CAPTURE_FROM_HXT    (2UL << TIMER_EXTCTL_INTERCAPSEL_Pos)
+#define TIMER_INTER_CAPTURE_FROM_LXT    (3UL << TIMER_EXTCTL_INTERCAPSEL_Pos)
+#define TIMER_INTER_CAPTURE_FROM_HIRC   (4UL << TIMER_EXTCTL_INTERCAPSEL_Pos)
+#define TIMER_INTER_CAPTURE_FROM_LIRC   (5UL << TIMER_EXTCTL_INTERCAPSEL_Pos)
+#define TIMER_INTER_CAPTURE_FROM_MIRC   (6UL << TIMER_EXTCTL_INTERCAPSEL_Pos)
+
+#define TIMER_CAPTURE_FROM_ACMP0                (TIMER_INTER_CAPTURE_FROM_ACMP0)          /*!< Capture source from Internal event ACMP0  */
+#define TIMER_CAPTURE_FROM_ACMP1                (TIMER_INTER_CAPTURE_FROM_ACMP1)          /*!< Capture source from Internal event ACMP1  */
+#define TIMER_CAPTURE_FROM_HXT                  (TIMER_INTER_CAPTURE_FROM_HXT)            /*!< Capture source from Internal event HXT  */
+#define TIMER_CAPTURE_FROM_LXT                  (TIMER_INTER_CAPTURE_FROM_LXT)            /*!< Capture source from Internal event LXT  */
+#define TIMER_CAPTURE_FROM_HIRC                 (TIMER_INTER_CAPTURE_FROM_HIRC)           /*!< Capture source from Internal event HIRC  */
+#define TIMER_CAPTURE_FROM_LIRC                 (TIMER_INTER_CAPTURE_FROM_LIRC)           /*!< Capture source from Internal event LIRC   */
+#define TIMER_CAPTURE_FROM_MIRC                 (TIMER_INTER_CAPTURE_FROM_MIRC)           /*!< Capture source from Internal event MIRC   */
+#define TIMER_CAPTURE_FROM_INTERNAL             (TIMER_CAPTURE_FROM_ACMP0)                /*!< Capture source from Internal event ACMP0  */
+#define TIMER_CAPTURE_FROM_EXTERNAL             (0xFFUL)                                  /*!< Capture source from Tx_EXT pin            */
+
+/* Capture Source Divider */
 #define TIMER_CAPTURE_SRCDIV_1          (0UL << TIMER_EXTCTL_CAPDIVSCL_Pos)
 #define TIMER_CAPTURE_SRCDIV_2          (1UL << TIMER_EXTCTL_CAPDIVSCL_Pos)
 #define TIMER_CAPTURE_SRCDIV_4          (2UL << TIMER_EXTCTL_CAPDIVSCL_Pos)
@@ -74,15 +93,6 @@ extern "C"
 #define TIMER_CAPTURE_SRCDIV_64         (6UL << TIMER_EXTCTL_CAPDIVSCL_Pos)
 #define TIMER_CAPTURE_SRCDIV_128        (7UL << TIMER_EXTCTL_CAPDIVSCL_Pos)
 #define TIMER_CAPTURE_SRCDIV_256        (8UL << TIMER_EXTCTL_CAPDIVSCL_Pos)
-
-/* Internal Capture Sourdce Selection */
-#define TIMER_INTER_CAPTURE_FROM_ACMP0  (0UL << TIMER_EXTCTL_INTERCAPSEL_Pos)
-#define TIMER_INTER_CAPTURE_FROM_ACMP1  (1UL << TIMER_EXTCTL_INTERCAPSEL_Pos)
-#define TIMER_INTER_CAPTURE_FROM_HXT    (2UL << TIMER_EXTCTL_INTERCAPSEL_Pos)
-#define TIMER_INTER_CAPTURE_FROM_LXT    (3UL << TIMER_EXTCTL_INTERCAPSEL_Pos)
-#define TIMER_INTER_CAPTURE_FROM_HIRC   (4UL << TIMER_EXTCTL_INTERCAPSEL_Pos)
-#define TIMER_INTER_CAPTURE_FROM_LIRC   (5UL << TIMER_EXTCTL_INTERCAPSEL_Pos)
-#define TIMER_INTER_CAPTURE_FROM_MIRC   (6UL << TIMER_EXTCTL_INTERCAPSEL_Pos)
 
 /*@}*/ /* end of group TIMER_EXPORTED_CONSTANTS */
 

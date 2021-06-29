@@ -192,7 +192,7 @@ void RS485_HANDLE(void)
         if (UART1->FIFOSTS & UART_FIFOSTS_ADDRDETF_Msk)   /* ADD_IF, RS485 mode */
         {
             u32Addr = UART1->DAT;
-            UART_RS485_CLEAR_ADDR_FLAG(UART1);        /* clear ADD_IF flag */
+            UART_RS485_CLEAR_ADDR_FLAG(UART1);           /* clear ADD_IF flag */
             printf("\nAddr=0x%x,Get:", u32Addr);
 
 #if (IS_USE_RS485NMM ==1) //RS485_NMM
@@ -218,7 +218,7 @@ void RS485_HANDLE(void)
     {
         /* Handle received data */
         while (!UART_GET_RX_EMPTY(UART1))
-            printf("%2d,", UART1->DAT);
+            printf("%2u,", UART1->DAT);
 
     }
     else if (u32IntSts & UART_INTSTS_BUFERRINT_Msk)     /* Buffer Error INT */
@@ -269,6 +269,9 @@ void RS485_9bitModeMaster(void)
     UART_SelectRS485Mode(UART1, UART_ALTCTL_RS485AUD_Msk, 0);
 
     UART1->MODEM &= ~UART_MODEM_RTSACTLV_Msk;
+
+    /*Set the TX Delay Time */
+    UART1->TOUT |= (0x20 << UART_TOUT_DLY_Pos);
 
     /* Prepare Data to transmit*/
     for (i32LenCnt = 0; i32LenCnt < 10; i32LenCnt++)

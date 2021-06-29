@@ -182,6 +182,13 @@ void TIMER_EnableCapture(TIMER_T *timer, uint32_t u32CapMode, uint32_t u32Edge)
   * @param[in]  u32Src      Timer capture source. Possible values are
   *                         - \ref TIMER_CAPTURE_FROM_EXTERNAL
   *                         - \ref TIMER_CAPTURE_FROM_INTERNAL
+  *                         - \ref TIMER_CAPTURE_FROM_ACMP0
+  *                         - \ref TIMER_CAPTURE_FROM_ACMP1
+  *                         - \ref TIMER_CAPTURE_FROM_HXT
+  *                         - \ref TIMER_CAPTURE_FROM_LXT
+  *                         - \ref TIMER_CAPTURE_FROM_HIRC
+  *                         - \ref TIMER_CAPTURE_FROM_LIRC
+  *                         - \ref TIMER_CAPTURE_FROM_MIRC
   *
   * @return     None
   *
@@ -189,7 +196,18 @@ void TIMER_EnableCapture(TIMER_T *timer, uint32_t u32CapMode, uint32_t u32Edge)
   */
 void TIMER_CaptureSelect(TIMER_T *timer, uint32_t u32Src)
 {
-    timer->CTL = (timer->CTL & (~TIMER_CTL_CAPSRC_Msk)) | u32Src;
+    if (u32Src == TIMER_CAPTURE_FROM_EXTERNAL)
+    {
+        timer->CTL = (timer->CTL & ~(TIMER_CTL_CAPSRC_Msk)) |
+                     (TIMER_CAPSRC_TX_EXT);
+    }
+    else
+    {
+        timer->CTL = (timer->CTL & ~(TIMER_CTL_CAPSRC_Msk)) |
+                     (TIMER_CAPSRC_INTERNAL);
+        timer->EXTCTL = (timer->EXTCTL & ~(TIMER_EXTCTL_INTERCAPSEL_Msk)) |
+                        (u32Src);
+    }
 }
 
 /**

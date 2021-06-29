@@ -50,10 +50,11 @@ void RS485_HANDLE()
 {
     volatile uint32_t u32ProtSts = UUART_GET_PROT_STATUS(UUART0);
     volatile uint32_t u32BufSts = UUART_GET_BUF_STATUS(UUART0);
-    uint32_t u32Data;
 
     if (u32ProtSts & UUART_PROTSTS_RXENDIF_Msk)     /* Receive end interrupt */
     {
+        uint32_t u32Data;
+
         /* Handle received data */
         UUART_CLR_PROT_INT_FLAG(UUART0, UUART_PROTSTS_RXENDIF_Msk);
         u32Data = UUART_READ(UUART0);
@@ -113,7 +114,7 @@ void RS485_9bitModeSlave()
 
         for (u32DataIdx = u32AddrIdx * 10; u32DataIdx < (u32AddrIdx + 1) * 10; u32DataIdx++)
         {
-            printf(" %d,", g_au8RecData[u32DataIdx]);
+            printf(" %u,", g_au8RecData[u32DataIdx]);
         }
     }
 

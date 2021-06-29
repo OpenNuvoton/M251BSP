@@ -24,7 +24,6 @@ volatile uint32_t g_u32RxACK = 1;
 void PSIO_IRQHandler(void)
 {
     static uint8_t u8BitNumber = 0;
-    static uint32_t u32RxBuffer = 0;
     uint8_t u8INT0Flag;
 
     /* Get INT0 interrupt flag */
@@ -42,6 +41,8 @@ void PSIO_IRQHandler(void)
 
     if ((PSIO_PS2_GET_STATUS() == eHOST_READ) | (PSIO_PS2_GET_STATUS() == eHOST_READY_TO_READ))
     {
+        static uint32_t u32RxBuffer = 0;
+
         /* Trigger slot controller */
         PSIO_START_SC(PSIO, g_sConfig.u8DataSC);
 
@@ -182,8 +183,6 @@ void UART0_Init()
 
 int main()
 {
-    uint32_t u32Data = 0;
-
     /* Unlock protected registers */
     SYS_UnlockReg();
 
@@ -236,6 +235,8 @@ int main()
         /* Send data */
         if (!(UART0->FIFOSTS & UART_FIFOSTS_RXEMPTY_Msk))
         {
+            uint32_t u32Data;
+
             u32Data = UART0->DAT;
             g_u32TxData = PSIO_Encode_TxData(&u32Data);
             printf("[Host send to device]0x%x, 0x%x\n", u32Data, g_u32TxData);

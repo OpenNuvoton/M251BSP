@@ -37,9 +37,9 @@ void ACMP01_IRQHandler(void)
 
     /* Check Comparator 0 Output Status */
     if (ACMP_GET_OUTPUT(ACMP01, 1))
-        printf("ACMP1_P voltage > VBG (%d) ACMP1_O(%d)\n", u32Cnt, PC0);
+        printf("ACMP1_P voltage > VBG (%u) ACMP1_O(%d)\n", u32Cnt, PC0);
     else
-        printf("ACMP1_P voltage <= VBG (%d) ACMP1_O(%d)\n", u32Cnt, PC0);
+        printf("ACMP1_P voltage <= VBG (%u) ACMP1_O(%d)\n", u32Cnt, PC0);
 
     u32Cnt++;
 }

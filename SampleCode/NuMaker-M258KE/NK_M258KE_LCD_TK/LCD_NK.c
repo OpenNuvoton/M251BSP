@@ -149,14 +149,14 @@ void LCD_frame2(void)
     LCDLIB_SetSymbol(SYMBOL_BAT_3, 1);
 
     /* Show Char */
-    LCDLIB_Printf(0, "TOUCH");
+    LCDLIB_Printf(0, "PD STAT");
 
     temp = internal_Temperature();
     LCDLIB_PrintNumber(ZONE_TEMP_DIGIT, temp);
     LCDLIB_SetSymbol(SYMBOL_TEMP_C, 1);
 
     /* Show counter */
-    LCDLIB_PrintNumber(ZONE_PPM_DIGIT, (tkct << 12));
+    LCDLIB_PrintNumber(ZONE_PPM_DIGIT, tkct);
 
     /* Show bsp version */
     LCDLIB_PrintNumber(ZONE_VER_DIGIT, (TKLIB_MAJOR_VERSION * 100000) + (TKLIB_MINOR_VERSION * 1000) + TOUCHKEY_VERSION);

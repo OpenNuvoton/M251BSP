@@ -44,7 +44,7 @@ int32_t main(void);
 
 void DAC_IRQHandler(void)
 {
-    if (DAC_GET_INT_FLAG(DAC, 0))
+    if (DAC_GET_INT_FLAG(DAC0, 0))
     {
 
         if (g_u32Index == g_u32ArraySize)
@@ -53,14 +53,13 @@ void DAC_IRQHandler(void)
         }
         else
         {
-            DAC_WRITE_DATA(DAC, 0, g_au16Square[g_u32Index++]);
-            DAC_START_CONV(DAC);
+            DAC_WRITE_DATA(DAC0, 0, g_au16Square[g_u32Index++]);
+            DAC_START_CONV(DAC0);
             /* Clear the DAC conversion complete finish flag */
-            DAC_CLR_INT_FLAG(DAC, 0);
+            DAC_CLR_INT_FLAG(DAC0, 0);
         }
     }
 
-    return;
 }
 
 void ACMP01_IRQHandler(void)
@@ -73,11 +72,11 @@ void ACMP01_IRQHandler(void)
     /* Check Comparator 0 Output Status */
     if (ACMP_GET_OUTPUT(ACMP01, 1))
     {
-        printf("ACMP1_P voltage >  DAC voltage (%d)\n", u32Cnt);
+        printf("ACMP1_P voltage >  DAC voltage (%u)\n", u32Cnt);
     }
     else
     {
-        printf("ACMP1_P voltage <= DAC voltage (%d)\n", u32Cnt);
+        printf("ACMP1_P voltage <= DAC voltage (%u)\n", u32Cnt);
     }
 
     u32Cnt++;
@@ -197,25 +196,25 @@ int32_t main(void)
     getchar();
 
     /* Set the software trigger, enable DAC even trigger mode and enable D/A converter */
-    DAC_Open(DAC, 0, DAC_SOFTWARE_TRIGGER);
+    DAC_Open(DAC0, 0, DAC_SOFTWARE_TRIGGER);
 
     /* The DAC conversion settling time is 1ms */
-    DAC_SetDelayTime(DAC, 100);
+    DAC_SetDelayTime(DAC0, 100);
 
 
     /* Set DAC 12-bit holding data */
-    DAC_WRITE_DATA(DAC, 0, 0x0);
+    DAC_WRITE_DATA(DAC0, 0, 0x0);
 
     /* Clear the DAC conversion complete finish flag for safe */
-    DAC_CLR_INT_FLAG(DAC, 0);
+    DAC_CLR_INT_FLAG(DAC0, 0);
 
     /* Enable the DAC interrupt */
-    DAC_ENABLE_INT(DAC, 0);
+    DAC_ENABLE_INT(DAC0, 0);
 
     NVIC_EnableIRQ(DAC_IRQn);
 
     /* Start A/D conversion */
-    DAC_START_CONV(DAC);
+    DAC_START_CONV(DAC0);
 
     /* Configure ACMP1. Enable ACMP1 and select DAC voltage as the source of ACMP negative input. */
     ACMP_Open(ACMP01, 1, ACMP_CTL_NEGSEL_DAC, ACMP_CTL_HYSTERESIS_DISABLE);

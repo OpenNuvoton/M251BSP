@@ -14,7 +14,6 @@
 #include "tklib.h"
 #include "TK_Demo.h"
 
-extern S_TKINFO *psTkInfo;
 extern volatile int8_t i8SliderPercentage;
 extern volatile int8_t i8WheelPercentage;
 
@@ -29,7 +28,8 @@ extern volatile int8_t i8WheelPercentage;
 #define E_CMD_TYPE1_SPECIFY_RESET_VOL         (0x6)
 #define E_CMD_TYPE1_SPECIFY_STORE_ADDR        (0x7)
 #define E_CMD_TYPE1_SPECIFY_NEIGHBORING       (0x8)
-#define E_CMD_TYPE1_NUM_LAST_COMMAND          E_CMD_TYPE1_SPECIFY_NEIGHBORING
+#define E_CMD_TYPE1_SPECIFY_CHANNEL_PIN       (0x9)
+#define E_CMD_TYPE1_NUM_LAST_COMMAND          E_CMD_TYPE1_SPECIFY_CHANNEL_PIN
 
 #define E_CMD_TYPE1_START_CALIBRATION         ('A')
 #define E_CMD_TYPE1_RESET_CALIBRATION1        ('B')
@@ -53,6 +53,7 @@ extern volatile int8_t i8WheelPercentage;
 #define E_CMD_TYPE2_READ_RESET_VOL            (0x16)
 #define E_CMD_TYPE2_READ_STORE_ADDR           (0x17)
 #define E_CMD_TYPE2_READ_NEIGHBORING          (0x18)
+#define E_CMD_TYPE2_READ_CHANNEL_PIN          (0x19)
 
 #define E_CMD_TYPE2_CHECK_CALIBRATION_DONE    ('a')
 #define E_CMD_TYPE2_GET_CALIBRATION1          ('b')
@@ -61,9 +62,10 @@ extern volatile int8_t i8WheelPercentage;
 #define E_CMD_TYPE2_GET_IIR_PARAMETER         ('i')
 #define E_CMD_TYPE2_GET_DEBOUNCE_PARAMETER    ('j')
 #define E_CMD_TYPE2_SET_SCAN_KEY              ('k')
+#define E_CMD_TYPE2_EXPORT_CALIBRATION        ('n')
 
 #ifdef MASS_FINETUNE
-    #define E_CMD_TYPE2_GET_UID                   ('l')
+    #define E_CMD_TYPE2_GET_UID               ('l')
     void TK_MP_Open(void);                              /* Used for internal mass production */
     volatile uint8_t gbIsFineTuneDone = 0;
     volatile uint8_t gFineTuneDoneTimeOut = 0;
@@ -144,6 +146,7 @@ volatile uint8_t gu8CmdSts = E_CMD_WAIT;
 volatile uint8_t gu8comRtail = 0;
 volatile uint8_t gu8ChkSum = 0;
 volatile uint8_t gu8RunTimeKeyInfo = 0;
+extern volatile uint8_t u8EventKeyScan;
 
 void UART_StateInit(void)
 {
@@ -172,6 +175,7 @@ int8_t TK_CmdType1(uint8_t *pu8RXBuf)
     uint32_t u32Data;
     S_TKFEAT *psTkFeat;
     S_KEYINFO *pKeyInfo;
+    S_TKINFO *psTkInfo;
 
 #ifdef OPT_NEIGHBOR
     S_NEIGHBOR *psKeyNeighbor;
@@ -180,6 +184,7 @@ int8_t TK_CmdType1(uint8_t *pu8RXBuf)
 
     psTkFeat = TK_GetFeaturePtr();
     pKeyInfo = TK_GetKeyInfoPtr();
+    psTkInfo = TK_GetTKInfoPtr();
 
     *((uint8_t *)&u32Data) = pu8RXBuf[4];
     *((uint8_t *)&u32Data + 1) = pu8RXBuf[3];
@@ -234,6 +239,14 @@ int8_t TK_CmdType1(uint8_t *pu8RXBuf)
             psKeyNeighbor[pu8RXBuf[1]].left = pu8RXBuf[2];
             psKeyNeighbor[pu8RXBuf[1]].right = pu8RXBuf[3];
 #endif
+            break;
+
+        case E_CMD_TYPE1_SPECIFY_CHANNEL_PIN:
+            if (pu8RXBuf[1] < 16)
+                psTkFeat->u32PinSel = (psTkFeat->u32PinSel & ~(0x3 << (pu8RXBuf[1]) * 2)) | ((pu8RXBuf[2] & 0x3) << (pu8RXBuf[1] * 2));
+            else
+                psTkFeat->u32PinSel1 = (psTkFeat->u32PinSel1 & ~(0x3 << ((pu8RXBuf[1] - 16) * 2))) | ((pu8RXBuf[2] & 0x3) << ((pu8RXBuf[1] - 16) * 2));
+
             break;
 
         case E_CMD_TYPE1_START_CALIBRATION:     /* It took a long time to calibration */
@@ -362,7 +375,7 @@ int8_t TK_CmdType2(uint8_t *pu8RXBuf)
     psKeyInfo = TK_GetKeyInfoPtr();
     psTkInfo = TK_GetTKInfoPtr();
 
-    u32KeyStoreAddr = psTkInfo->u32StoreAddr + FMC_FLASH_PAGE_SIZE;
+    u32KeyStoreAddr = psTkInfo->u32StoreAddr + TK_BLOCK_OFFSET;
 
     for (chan = 0; chan < 5; chan = chan + 1)
     {
@@ -391,7 +404,7 @@ int8_t TK_CmdType2(uint8_t *pu8RXBuf)
             gu8TXBuf[1] = psTkInfo->u32EnWheelMsk >> 8;
             gu8TXBuf[2] = psTkInfo->u32EnWheelMsk >> 16;
             gu8TXBuf[3] = psTkInfo->u32EnWheelMsk >> 24;
-            gu8TXBuf[4] = 'A';
+            //gu8TXBuf[4] = 'A';
             break;
 
         case E_CMD_TYPE2_READ_REF_SHIELD_NO:
@@ -441,6 +454,10 @@ int8_t TK_CmdType2(uint8_t *pu8RXBuf)
             gu8TXBuf[0] = psKeyNeighbor[pu8RXBuf[1]].left;
             gu8TXBuf[1] = psKeyNeighbor[pu8RXBuf[1]].right;
 #endif
+            break;
+
+        case E_CMD_TYPE2_READ_CHANNEL_PIN:
+            gu8TXBuf[0] = (((pu8RXBuf[1] >= 16) ? psTkFeat->u32PinSel1 : psTkFeat->u32PinSel) >> ((pu8RXBuf[1] % 16) * 2)) & 0x3;
             break;
 
         case E_CMD_TYPE2_GET_CALIBRATION1:
@@ -512,6 +529,14 @@ int8_t TK_CmdType2(uint8_t *pu8RXBuf)
 
             break;
 
+        case E_CMD_TYPE2_EXPORT_CALIBRATION:
+            u32KeyStoreAddr = psTkInfo->u32StoreAddr + pu8RXBuf[1] * 4;
+            gu8TXBuf[0] = inp8(u32KeyStoreAddr);
+            gu8TXBuf[1] = inp8(u32KeyStoreAddr + 1);
+            gu8TXBuf[2] = inp8(u32KeyStoreAddr + 2);
+            gu8TXBuf[3] = inp8(u32KeyStoreAddr + 3);
+            break;
+
 #if defined(MASS_FINETUNE)
 
         case E_CMD_TYPE2_GET_UID:
@@ -523,7 +548,7 @@ int8_t TK_CmdType2(uint8_t *pu8RXBuf)
 
 #endif
 
-        case E_CMD_TYPE2_FIRMWARE_VERSION:/* 2020-0324 */
+        case E_CMD_TYPE2_FIRMWARE_VERSION:
             if (pu8RXBuf[1] == 0)
             {
                 gu8TXBuf[0] = FIRMWARE_MAJOR_VERSION;
@@ -554,6 +579,9 @@ void TK_RawDataView(void);
 int8_t TK_GetPacket(uint32_t *pu32ChanelMsk)
 {
     int8_t i8Ret = 0;
+    S_TKINFO *psTkInfo;
+
+    psTkInfo = TK_GetTKInfoPtr();
 
     do
     {
@@ -777,5 +805,3 @@ void UART_SetCalibrationDone(void)
 {
     gu8Calibration = E_CALIBRATION_DONE;     /* 0 mean not under calibration */
 }
-
-

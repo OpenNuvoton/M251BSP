@@ -22,10 +22,10 @@ volatile uint32_t g_u32Period;
 
 void TMR0_IRQHandler(void)
 {
-    static uint32_t s_u32Toggle = 0;
-
     if (TPWM_GET_PERIOD_INT_FLAG(TIMER0))
     {
+        static uint32_t s_u32Toggle = 0;
+
         if (s_u32Toggle == 0)
         {
             /* Set PWM period to generate output frequency 36000 Hz */

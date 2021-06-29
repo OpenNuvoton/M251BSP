@@ -15,11 +15,9 @@
 #include "targetdev.h"
 #include "hid_transfer.h"
 
-#define PLLCON_SETTING          CLK_PLLCTL_96MHz_MIRC
-#define PLL_CLOCK               96000000
-#define HCLK_DIV                        2
-#define USBD_DIV                        2
+#define PLL_CLOCK               48000000
 
+/* This is a dummy implementation to replace the same function in clk.c for size limitation. */
 uint32_t CLK_GetPLLClockFreq(void)
 {
     return PLL_CLOCK;
@@ -31,37 +29,25 @@ void SYS_Init(void)
     /*---------------------------------------------------------------------------------------------------------*/
     /* Init System Clock                                                                                       */
     /*---------------------------------------------------------------------------------------------------------*/
-    /* Set XT1_OUT(PF.2) and XT1_IN(PF.3) to input mode */
-    PF->MODE &= ~(GPIO_MODE_MODE2_Msk | GPIO_MODE_MODE3_Msk);
-    /* Enable Internal RC clock and external XTAL clock */
+    /* Enable Internal RC clock */
     CLK->PWRCTL |= CLK_PWRCTL_HIRCEN_Msk;
 
     /* Waiting for external XTAL clock ready */
     while (!(CLK->STATUS & CLK_STATUS_HIRCSTB_Msk));
 
-    /* Set core clock as PLL_CLOCK from PLL */
-    CLK->PLLCTL = PLLCON_SETTING;
-
-    while (!(CLK->STATUS & CLK_STATUS_PLLSTB_Msk));
-
-    CLK->CLKDIV0 &= ~CLK_CLKDIV0_HCLKDIV_Msk;
-    CLK->CLKDIV0 |= CLK_CLKDIV0_HCLK(HCLK_DIV);
-    CLK->CLKDIV0 &= ~CLK_CLKDIV0_USBDIV_Msk;
-    CLK->CLKDIV0 |= CLK_CLKDIV0_USB(USBD_DIV);
     CLK->CLKSEL0 &= (~CLK_CLKSEL0_HCLKSEL_Msk);
-    CLK->CLKSEL0 |= CLK_CLKSEL0_HCLKSEL_PLL;
+    CLK->CLKSEL0 |= CLK_CLKSEL0_HCLKSEL_HIRC;
     /* Update System Core Clock */
     /* User can use SystemCoreClockUpdate() to calculate PllClock, SystemCoreClock and CycylesPerUs automatically. */
-    //SystemCoreClockUpdate();
-    PllClock        = PLL_CLOCK;                        // PLL
-    SystemCoreClock = PLL_CLOCK / HCLK_DIV;             // HCLK
+
+    SystemCoreClock = __HIRC;             // HCLK
     CyclesPerUs     = SystemCoreClock / 1000000;  // For SYS_SysTickDelay()
     /* Set both PCLK0 and PCLK1 as HCLK/2 */
     CLK->PCLKDIV = CLK_PCLKDIV_APB0DIV_DIV2 | CLK_PCLKDIV_APB1DIV_DIV2;
 
     /* Enable module clock */
     CLK->APBCLK0 |= CLK_APBCLK0_USBDCKEN_Msk;
-    CLK->AHBCLK |= CLK_AHBCLK_ISPCKEN_Msk;
+    CLK->AHBCLK |= CLK_AHBCLK_ISPCKEN_Msk | CLK_AHBCLK_GPACKEN_Msk | CLK_AHBCLK_EXSTCKEN_Msk;
     /*---------------------------------------------------------------------------------------------------------*/
     /* Init I/O Multi-function                                                                                 */
     /*---------------------------------------------------------------------------------------------------------*/

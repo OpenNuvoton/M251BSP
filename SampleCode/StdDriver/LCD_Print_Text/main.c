@@ -160,7 +160,7 @@ void UART_Init(void)
 /*---------------------------------------------------------------------------------------------------------*/
 int main(void)
 {
-    uint32_t u32ActiveFPS, idx = 0;
+    uint32_t u32ActiveFPS;
     char input, text[LCD_ALPHABET_NUM + 1];
 
     /* Unlock protected registers */
@@ -234,7 +234,7 @@ int main(void)
 
     while (1)
     {
-        idx = 0;
+        uint32_t idx = 0;
 
         printf("Input text: \n");
 

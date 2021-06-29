@@ -359,7 +359,7 @@ uint8_t CheckPattern(uint32_t u32Addr0, uint32_t u32Addr1, uint32_t u32Length)
     {
         if (pu8Addr0[u32Index] != pu8Addr1[u32Index])
         {
-            printf("Data Error Idex=%d,tx =%d,rx=%d\n", u32Index, pu8Addr0[u32Index], pu8Addr1[u32Index]) ;
+            printf("Data Error Idex=%u,tx =%u,rx=%u\n", u32Index, pu8Addr0[u32Index], pu8Addr1[u32Index]) ;
             u8Result = 0;
         }
     }

@@ -1,9 +1,7 @@
 /******************************************************************************//**
  * @file     main.c
  * @version  V0.10
- * @brief   Demonstrate how to implement a USB mouse device.
- *           It use PB0 ~ PB5 to control mouse direction and mouse key.
- *           It also supports USB suspend and remote wakeup.
+ * @brief    Simulate a HID mouse supporting USB suspend and remote wakeup.
  *
  * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.

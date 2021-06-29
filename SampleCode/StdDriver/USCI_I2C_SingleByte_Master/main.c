@@ -41,6 +41,9 @@ void SYS_Init(void)
     CLK_EnableModuleClock(UART0_MODULE);
     CLK_EnableModuleClock(USCI0_MODULE);
 
+    /* Enable GPIO clock */
+    CLK_EnableModuleClock(GPB_MODULE);
+
     /* Peripheral clock source */
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HIRC, CLK_CLKDIV0_UART0(1));
 
@@ -58,6 +61,9 @@ void SYS_Init(void)
     /* Set UI2C0 multi-function pins */
     SYS->GPB_MFPH = (SYS->GPB_MFPH & ~(SYS_GPB_MFPH_PB12MFP_Msk | SYS_GPB_MFPH_PB13MFP_Msk)) |
                     (SYS_GPB_MFPH_PB12MFP_USCI0_CLK | SYS_GPB_MFPH_PB13MFP_USCI0_DAT0);
+
+    /* I2C pins enable schmitt trigger */
+    PB->SMTEN |= GPIO_SMTEN_SMTEN12_Msk | GPIO_SMTEN_SMTEN13_Msk;
 }
 
 void UART0_Init(void)
@@ -160,7 +166,7 @@ int main(void)
         if (u8Data != u8Tmp)
         {
             u8Err = 1;
-            printf("%03d: Single byte write data fail,  W(0x%X)/R(0x%X) \n", u32Idx, u8Tmp, u8Data);
+            printf("%03u: Single byte write data fail,  W(0x%X)/R(0x%X) \n", u32Idx, u8Tmp, u8Data);
         }
     }
 

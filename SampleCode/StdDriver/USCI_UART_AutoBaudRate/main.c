@@ -264,7 +264,7 @@ void USCI_AutoBaudRate_RxTest()
     {
         /* Clear auto baud rate detect finished flag */
         UUART_CLR_PROT_INT_FLAG(UUART0, UUART_PROTSTS_ABRDETIF_Msk);
-        printf("Baud rate is %dbps.\n", GetUuartBaudrate(UUART0));
+        printf("Baud rate is %ubps.\n", GetUuartBaudrate(UUART0));
     }
     else if (UUART_GET_PROT_STATUS(UUART0) & UUART_PROTSTS_ABERRSTS_Msk)
     {

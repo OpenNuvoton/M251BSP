@@ -40,21 +40,28 @@ uint32_t BPWM_ConfigCaptureChannel(BPWM_T *bpwm, uint32_t u32ChannelNum, uint32_
     uint16_t u16Prescale = 1UL, u16CNR = 0xFFFFUL;
     uint8_t u8BreakLoop = 0UL;
 
-    if (bpwm == BPWM0)
+    // M254/6/8 clock source is not supported PLL
+    if ((SYS->PDID & 0xff00) == 0x5800)
     {
-        // M254/6/8 clock source is not supported PLL
-        if ((SYS->PDID & 0xff00) == 0x5800)
+        if (bpwm == BPWM0)
         {
             u32Src = CLK_CLKSEL2_BPWM0SEL_PCLK0;
         }
-        else
+        else     /* (bpwm == BPWM1) */
+        {
+            u32Src = CLK_CLKSEL2_BPWM1SEL_PCLK1;
+        }
+    }
+    else
+    {
+        if (bpwm == BPWM0)
         {
             u32Src = CLK->CLKSEL2 & CLK_CLKSEL2_BPWM0SEL_Msk;
         }
-    }
-    else     /* (bpwm == BPWM1) */
-    {
-        u32Src = CLK->CLKSEL2 & CLK_CLKSEL2_BPWM1SEL_Msk;
+        else     /* (bpwm == BPWM1) */
+        {
+            u32Src = CLK->CLKSEL2 & CLK_CLKSEL2_BPWM1SEL_Msk;
+        }
     }
 
     if (u32Src == 0UL)
@@ -139,21 +146,28 @@ uint32_t BPWM_ConfigOutputChannel(BPWM_T *bpwm, uint32_t u32ChannelNum, uint32_t
     uint32_t i;
     uint16_t u16Prescale = 1UL, u16CNR = 0xFFFFUL;
 
-    if (bpwm == BPWM0)
+    // M254/6/8 clock source is not supported PLL
+    if ((SYS->PDID & 0xff00) == 0x5800)
     {
-        // M254/6/8 clock source is not supported PLL
-        if ((SYS->PDID & 0xff00) == 0x5800)
+        if (bpwm == BPWM0)
         {
             u32Src = CLK_CLKSEL2_BPWM0SEL_PCLK0;
         }
-        else
+        else     /* (bpwm == BPWM1) */
+        {
+            u32Src = CLK_CLKSEL2_BPWM1SEL_PCLK1;
+        }
+    }
+    else
+    {
+        if (bpwm == BPWM0)
         {
             u32Src = CLK->CLKSEL2 & CLK_CLKSEL2_BPWM0SEL_Msk;
         }
-    }
-    else     /* (bpwm == BPWM1) */
-    {
-        u32Src = CLK->CLKSEL2 & CLK_CLKSEL2_BPWM1SEL_Msk;
+        else     /* (bpwm == BPWM1) */
+        {
+            u32Src = CLK->CLKSEL2 & CLK_CLKSEL2_BPWM1SEL_Msk;
+        }
     }
 
     if (u32Src == 0UL)

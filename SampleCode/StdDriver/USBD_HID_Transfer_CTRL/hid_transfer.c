@@ -235,8 +235,7 @@ void HID_Init(void)
 void HID_ClassRequest(void)
 {
     uint8_t buf[8];
-    uint8_t SendBuffer[64], g_SendLen;
-    int i;
+    uint8_t SendBuffer[64];
 
     USBD_GetSetupPacket(buf);
 
@@ -247,11 +246,12 @@ void HID_ClassRequest(void)
         {
             case GET_REPORT:
             {
+                int i;
+                uint8_t g_SendLen = 64;
+
                 /* Control IN : Send Report */
                 for (i = 0; i < 64; i++)
                     SendBuffer[i] = 64 - i;
-
-                g_SendLen = 64;
 
                 USBD_MemCopy((uint8_t *)(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0)), (uint8_t *)&SendBuffer, g_SendLen);
 

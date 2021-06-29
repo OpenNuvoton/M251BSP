@@ -1,7 +1,7 @@
 /**************************************************************************//**
  * @file     main.c
  * @version  V0.10
- * @brief    Show a Master how to access 7-bit address Slave (loopback).
+ * @brief    Show how an I2C master accesses 7-bit address slave via loopback of 2 USCI ports.
  *
  * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
@@ -327,6 +327,9 @@ void SYS_Init(void)
     CLK_EnableModuleClock(USCI0_MODULE);
     CLK_EnableModuleClock(USCI1_MODULE);
 
+    /* Enable GPIO clock */
+    CLK_EnableModuleClock(GPB_MODULE);
+
     /* Peripheral clock source */
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HIRC, CLK_CLKDIV0_UART0(1));
 
@@ -348,6 +351,10 @@ void SYS_Init(void)
     /* Set UI2C1 multi-function pins */
     SYS->GPB_MFPL = (SYS->GPB_MFPL & ~(SYS_GPB_MFPL_PB1MFP_Msk | SYS_GPB_MFPL_PB2MFP_Msk)) |
                     (SYS_GPB_MFPL_PB1MFP_USCI1_CLK | SYS_GPB_MFPL_PB2MFP_USCI1_DAT0);
+
+    /* I2C pins enable schmitt trigger */
+    PB->SMTEN |= GPIO_SMTEN_SMTEN1_Msk  | GPIO_SMTEN_SMTEN2_Msk;
+    PB->SMTEN |= GPIO_SMTEN_SMTEN12_Msk | GPIO_SMTEN_SMTEN13_Msk;
 }
 
 void UART0_Init(void)
@@ -407,12 +414,13 @@ void UI2C1_Init(uint32_t u32ClkSpeed)
 int32_t Read_Write_SLAVE(uint8_t slvaddr)
 {
     uint32_t u32Idx;
-    uint8_t u8Temp;
 
     g_u8DeviceAddr = slvaddr;
 
     for (u32Idx = 0; u32Idx < 0x100; u32Idx++)
     {
+        uint8_t u8Temp;
+
         g_au8MstTxData[0] = (uint8_t)((u32Idx & 0xFF00) >> 8);
         g_au8MstTxData[1] = (uint8_t)(u32Idx & 0x00FF);
         g_au8MstTxData[2] = (uint8_t)(g_au8MstTxData[1] + 3);

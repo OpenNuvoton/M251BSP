@@ -71,7 +71,7 @@ DMA_DESC_T DMA_DESC[1];
 
 uint32_t GetPDMAChecksum(uint32_t u32Address, uint32_t u32Size)
 {
-    volatile uint32_t loop = 0;
+    volatile uint32_t loop = 0, status;
 
     /* Enable PDMA module clock */
     CLK->AHBCLK |= CLK_AHBCLK_PDMACKEN_Msk;
@@ -90,7 +90,8 @@ uint32_t GetPDMAChecksum(uint32_t u32Address, uint32_t u32Size)
     PDMA->DSCT[0].CTL = PDMA_OP_SCATTER;
     PDMA->DSCT[0].NEXT = (uint32_t)&DMA_DESC[0] - (PDMA->SCATBA);
 
-    PDMA->INTSTS = PDMA->INTSTS;
+    status = PDMA->INTSTS;
+    PDMA->INTSTS = status;
     PDMA->INTEN = (1 << 0);
 
     /* Trigger PDMA CH0 transfer ... */
@@ -130,7 +131,7 @@ int main(void)
     printf("\n\nCPU @ %d Hz\n", SystemCoreClock);
     printf("+-----------------------------------------------------+\n");
     printf("|    CRC32 with PDMA Sample Code                      |\n");
-    printf("|       - Get APROM first %d bytes CRC result by    |\n", size);
+    printf("|       - Get APROM first %u bytes CRC result by    |\n", size);
     printf("|          a.) FMC checksum command                   |\n");
     printf("|          b.) CPU write CRC data register directly   |\n");
     printf("|          c.) PDMA write CRC data register           |\n");
@@ -164,7 +165,7 @@ int main(void)
     CRC_Open(CRC_32, (CRC_WDATA_RVS | CRC_CHECKSUM_RVS | CRC_CHECKSUM_COM), 0xFFFFFFFF, CRC_CPU_WDATA_32);
     u32PDMAChecksum = GetPDMAChecksum(0x0, size);
 
-    printf("APROM first %d bytes checksum:\n", size);
+    printf("APROM first %u bytes checksum:\n", size);
     printf("   - by FMC command: 0x%08X\n", u32FMCChecksum);
     printf("   - by CPU write:   0x%08X\n", u32CRC32Checksum);
     printf("   - by PDMA write:  0x%08X\n", u32PDMAChecksum);

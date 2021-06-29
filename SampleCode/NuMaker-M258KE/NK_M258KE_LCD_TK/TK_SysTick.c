@@ -34,7 +34,7 @@ volatile uint32_t u32Tick = 0;
 
 void TickClearTickEvent(uint8_t u8TimeEventID)
 {
-    if (u8TimeEventID > TICKEVENTCOUNT)
+    if (u8TimeEventID >= TICKEVENTCOUNT)
         return;
 
     if (tTime0Event[u8TimeEventID].active == TRUE)
@@ -95,7 +95,6 @@ void Init_SysTick(void)
 
 void TMR2_IRQHandler(void)
 {
-    uint8_t i;
     TIMER_ClearIntFlag(TIMER2);
 
     u32Tick += 1;
@@ -107,6 +106,8 @@ void TMR2_IRQHandler(void)
 
     if (_sys_uTime0EventCount)
     {
+        uint8_t i;
+
         for (i = 0; i < TICKEVENTCOUNT; i++)
         {
             if (tTime0Event[i].active)

@@ -144,7 +144,7 @@ int main(void)
 
             while (!(*sConfig.pu8RcvDone));
 
-            printf("%d: 0x%02X\n", i, (uint8_t)DMX512_GET_DATA(au16RxBuf[0]));
+            printf("%u: 0x%02X\n", i, (uint8_t)DMX512_GET_DATA(au16RxBuf[0]));
         }
     }
 }

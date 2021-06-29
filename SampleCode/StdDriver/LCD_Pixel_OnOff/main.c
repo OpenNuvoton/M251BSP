@@ -57,16 +57,16 @@ long long char_to_int(char c)
 
 long long local_atoi(char text[])
 {
-    int len = (int)strlen(text);
-    int len2, negflag = 0;
+    int i, len = (int)strlen(text);
+    int negflag = 0;
     long long mul = len;
-    long long i = 0, j = 0, mul2 = 1;
+    long long mul2 = 1;
     long long result = 0;
 
     if (text[0] == '-')
     {
         negflag = 1;
-        len2 = len - 1;
+        int len2 = len - 1;
 
         for (i = 0; i < len2; i++)
         {
@@ -80,10 +80,17 @@ long long local_atoi(char text[])
 
     for (i = 0; i < len; i++)
     {
-        if (mul == 1) mul2 = 1;
+        if (mul == 1)
+        {
+            mul2 = 1;
+        }
         else if (mul > 1)
+        {
+            long long j;
+
             for (j = 0; j < (mul - 1); j++)
                 mul2 *= 10;
+        }
 
         result += mul2 * char_to_int(text[i]);
         mul--;
@@ -263,7 +270,7 @@ void UART_Init(void)
 /*---------------------------------------------------------------------------------------------------------*/
 int main(void)
 {
-    uint32_t com, seg, onoff, u32ActiveFPS;
+    uint32_t u32ActiveFPS;
 
     /* Unlock protected registers */
     SYS_UnlockReg();
@@ -336,7 +343,8 @@ int main(void)
     while (1)
     {
         printf("Pixel On/Off (1:On, 0:Off): ");
-        onoff = sysGetNum();
+
+        uint32_t onoff = sysGetNum();
 
         if (onoff > 0)
             onoff = 1;
@@ -346,10 +354,12 @@ int main(void)
         printf(" ... %s\n", (onoff == 1) ? "On" : "Off");
 
         printf("Input Com: ");
-        com = sysGetNum();
+
+        uint32_t com = sysGetNum();
 
         printf("\nInput Segment: ");
-        seg = sysGetNum();
+
+        uint32_t seg = sysGetNum();
 
         if (onoff)
             LCD_SetPixel(com, seg, 1);

@@ -21,7 +21,7 @@
 void TMR0_IRQHandler(void)
 {
     static uint32_t s_u32Sec = 1;
-    printf("%d sec\n", s_u32Sec++);
+    printf("%u sec\n", s_u32Sec++);
 
     // clear timer interrupt flag
     TIMER_ClearIntFlag(TIMER0);

@@ -121,15 +121,15 @@ __Vectors       DCD     __initial_sp               ;     Top of Stack
                 DCD     EADC_INT2_IRQHandler       ; 46
                 DCD     EADC_INT3_IRQHandler       ; 47
                 DCD     UART2_IRQHandler           ; 48
-                DCD     DEFAULT_IRQHandler         ; 49
+                DCD     UART3_IRQHandler           ; 49
                 DCD     USCI0_IRQHandler           ; 50
-                DCD     DEFAULT_IRQHandler         ; 51
+                DCD     SPI1_IRQHandler            ; 51
                 DCD     USCI1_IRQHandler           ; 52
                 DCD     USBD_IRQHandler            ; 53
                 DCD     BPWM1_IRQHandler           ; 54
                 DCD     PSIO_IRQHandler            ; 55
                 DCD     DEFAULT_IRQHandler         ; 56
-                DCD     DEFAULT_IRQHandler         ; 57
+                DCD     CRPT_IRQHandler            ; 57
                 DCD     SC0_IRQHandler             ; 58
                 DCD     DEFAULT_IRQHandler         ; 59
                 DCD     USCI2_IRQHandler           ; 60
@@ -153,7 +153,7 @@ Reset_Handler   PROC
                 IMPORT  SystemInit
                 IMPORT  __main
 
-                ; Unlock Register
+                ; Unlock register
     ;IF :DEF: __ARM_FEATURE_CMSE
     ;IF __ARM_FEATURE_CMSE = 3
                 LDR     R0, =0x40000100
@@ -166,6 +166,13 @@ Reset_Handler   PROC
 
                 LDR     R0, =SystemInit
                 BLX     R0
+
+                ; Disable internal function
+                LDR     R0, =0x40000180
+                LDR     R1, [R0]
+                MOVS    R2, #0x80
+                BICS    R1, R1, R2
+                STR     R1, [R0]
 
                 ; Init POR
                 LDR     R2, =0x40000024
@@ -268,15 +275,15 @@ Default_Handler PROC
                 EXPORT  EADC_INT2_IRQHandler      [WEAK] ; 46
                 EXPORT  EADC_INT3_IRQHandler      [WEAK] ; 47
                 EXPORT  UART2_IRQHandler          [WEAK] ; 48
-               ;EXPORT  0                         [WEAK] ; 49
+                EXPORT  UART3_IRQHandler          [WEAK] ; 49
                 EXPORT  USCI0_IRQHandler          [WEAK] ; 50
-               ;EXPORT  0                         [WEAK] ; 51
+                EXPORT  SPI1_IRQHandler           [WEAK] ; 51
                 EXPORT  USCI1_IRQHandler          [WEAK] ; 52
                 EXPORT  USBD_IRQHandler           [WEAK] ; 53
                 EXPORT  BPWM1_IRQHandler          [WEAK] ; 54
                 EXPORT  PSIO_IRQHandler           [WEAK] ; 55
                ;EXPORT  0                         [WEAK] ; 56
-               ;EXPORT  0                         [WEAK] ; 57
+                EXPORT  CRPT_IRQHandler           [WEAK] ; 57
                 EXPORT  SC0_IRQHandler            [WEAK] ; 58
                ;EXPORT  0                         [WEAK] ; 59
                 EXPORT  USCI2_IRQHandler          [WEAK] ; 60
@@ -288,7 +295,7 @@ Default_Handler PROC
 
                 EXPORT  DEFAULT_IRQHandler        [WEAK]
 
-BOD_IRQHandler		       ; 0
+BOD_IRQHandler             ; 0
 IRCTRIM_IRQHandler         ; 1
 PWRWU_IRQHandler           ; 2
 ;0                         ; 3
@@ -337,15 +344,15 @@ BPWM0_IRQHandler           ; 45
 EADC_INT2_IRQHandler       ; 46
 EADC_INT3_IRQHandler       ; 47
 UART2_IRQHandler           ; 48
-;0                         ; 49
+UART3_IRQHandler           ; 49
 USCI0_IRQHandler           ; 50
-;0                         ; 51
+SPI1_IRQHandler            ; 51
 USCI1_IRQHandler           ; 52
 USBD_IRQHandler            ; 53
 BPWM1_IRQHandler           ; 54
 PSIO_IRQHandler            ; 55
 ;0                         ; 56
-;0                         ; 57
+CRPT_IRQHandler            ; 57
 SC0_IRQHandler             ; 58
 ;0                         ; 59
 USCI2_IRQHandler           ; 60

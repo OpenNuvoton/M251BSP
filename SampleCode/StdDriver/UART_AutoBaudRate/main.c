@@ -226,7 +226,7 @@ void AutoBaudRateTxTest(void)
 /*---------------------------------------------------------------------------------------------------------*/
 uint32_t GetUartBaudrate(UART_T *uart)
 {
-    uint8_t u8UartClkSrcSel, u8UartClkDivNum;
+    uint8_t u8UartClkSrcSel = 0ul, u8UartClkDivNum;
     uint32_t au32ClkTbl[6] = {__HXT, 0ul, __LXT, __HIRC, 0ul, __LIRC};
     uint32_t u32Baud_Div;
 
@@ -251,6 +251,13 @@ uint32_t GetUartBaudrate(UART_T *uart)
         /* Get UART clock divider number */
         u8UartClkDivNum = (CLK->CLKDIV4 & CLK_CLKDIV4_UART2DIV_Msk) >> CLK_CLKDIV4_UART2DIV_Pos;
     }
+    else if (uart == (UART_T *)UART3)
+    {
+        /* Get UART clock source selection */
+        u8UartClkSrcSel = (CLK->CLKSEL3 & CLK_CLKSEL3_UART3SEL_Msk) >> CLK_CLKSEL3_UART3SEL_Pos;
+        /* Get UART clock divider number */
+        u8UartClkDivNum = (CLK->CLKDIV4 & CLK_CLKDIV4_UART3DIV_Msk) >> CLK_CLKDIV4_UART3DIV_Pos;
+    }
 
 
     /* Get PLL clock frequency if UART clock source selection is PLL */
@@ -261,9 +268,10 @@ uint32_t GetUartBaudrate(UART_T *uart)
     /* Get PCLK clock frequency if UART clock source selection is PCLK */
     else if (u8UartClkSrcSel == 4ul)
     {
+        /* UART Port as UART0 or UART2 */
         if (uart == (UART_T *)UART0 || uart == (UART_T *)UART2)
             au32ClkTbl[u8UartClkSrcSel] =  CLK_GetPCLK0Freq();
-        else if (uart == (UART_T *)UART1)
+        else /* UART Port as UART1 or UART3*/
             au32ClkTbl[u8UartClkSrcSel] =  CLK_GetPCLK1Freq();
     }
 
@@ -307,7 +315,7 @@ void AutoBaudRateRxTest(void)
     {
         /* Clear auto baud rate detect finished flag */
         UART1->FIFOSTS = UART_FIFOSTS_ABRDIF_Msk;
-        printf("Baud rate is %dbps.\n", GetUartBaudrate(UART1));
+        printf("Baud rate is %ubps.\n", GetUartBaudrate(UART1));
     }
     else if (UART0->FIFOSTS & UART_FIFOSTS_ABRDTOIF_Msk)
     {
@@ -315,10 +323,6 @@ void AutoBaudRateRxTest(void)
         UART1->FIFOSTS = UART_FIFOSTS_ABRDTOIF_Msk;
         printf("Time-out!\n");
     }
-    else
-    {
-    }
-
 
 }
 

@@ -354,7 +354,7 @@ typedef struct
   *             When the timing of power saving mode is reversed, the original power saving period becomes no power saving,
   *             and the original no power saving period becomes power saving.
   */
-#define LCD_PWR_SAVING_MODE(mode)       (LCD->DCTL = (LCD->DCTL & ~LCD_DCTL_PSVEN_Msk) | (mode))
+#define LCD_PWR_SAVING_MODE(mode)       (LCD->DCTL = (LCD->DCTL & ~LCD_DCTL_PSVREV_Msk) | (mode))
 
 /**
   * @brief      Set Power Saving T1 Period

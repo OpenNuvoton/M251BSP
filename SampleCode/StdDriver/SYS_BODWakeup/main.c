@@ -181,7 +181,7 @@ int32_t main(void)
     /* Init UART0 for printf */
     UART0_Init();
 
-    printf("\n\nCPU @ %d Hz\n", SystemCoreClock);
+    printf("\n\nCPU @ %u Hz\n", SystemCoreClock);
     printf("+------------------------------------------------+\n");
     printf("|      Power-down and Wake-up Sample Code        |\n");
     printf("+------------------------------------------------+\n");
@@ -206,7 +206,7 @@ int32_t main(void)
     NVIC_EnableIRQ(PWRWU_IRQn);
 
     printf("System enter to Power-down mode.\n");
-    printf("System wake-up if VDD voltage is lower than 3.0V.\n\n");
+    printf("System wake-up if AVDD voltage is lower than 3.0V.\n\n");
 
     /* Enter to Power-down mode */
     PowerDownFunction();

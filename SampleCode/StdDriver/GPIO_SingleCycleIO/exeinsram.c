@@ -100,7 +100,7 @@ void GPIO_SingleCycleIO_Test(void);
     /* Print result */
     printf("Toggle speed measurement result\n");
     printf("=================================================\n");
-    printf("GPIO Falling Edge Counts (A)        : %d\n",        u32CounterTMR2);
-    printf("Total Elapsed Time       (B)        : %d.%02d(us)\n",  u32MicroSec, (u32CounterTMR0 - (u32MicroSec * CyclesPerUs)) * 100 / CyclesPerUs);
-    printf("Average Toggle Speed     (C)=(A)/(B): %d.%02d(MHz)\n", u32MHz, ((u32CounterTMR2 * CyclesPerUs) - (u32MHz * u32CounterTMR0)) * 100 / u32CounterTMR0);
+    printf("GPIO Falling Edge Counts (A)        : %u\n",        u32CounterTMR2);
+    printf("Total Elapsed Time       (B)        : %u.%02u(us)\n",  u32MicroSec, (u32CounterTMR0 - (u32MicroSec * CyclesPerUs)) * 100 / CyclesPerUs);
+    printf("Average Toggle Speed     (C)=(A)/(B): %u.%02u(MHz)\n", u32MHz, ((u32CounterTMR2 * CyclesPerUs) - (u32MHz * u32CounterTMR0)) * 100 / u32CounterTMR0);
 }

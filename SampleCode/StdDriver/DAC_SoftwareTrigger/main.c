@@ -25,17 +25,17 @@ const uint32_t g_u32ArraySize = sizeof(g_au16Sine) / sizeof(uint16_t);
 
 void DAC_IRQHandler(void)
 {
-    if (DAC_GET_INT_FLAG(DAC, 0))
+    if (DAC_GET_INT_FLAG(DAC0, 0))
     {
 
         if (g_u32Index == g_u32ArraySize)
             g_u32Index = 0;
         else
         {
-            DAC_WRITE_DATA(DAC, 0, g_au16Sine[g_u32Index++]);
-            DAC_START_CONV(DAC);
+            DAC_WRITE_DATA(DAC0, 0, g_au16Sine[g_u32Index++]);
+            DAC_START_CONV(DAC0);
             /* Clear the DAC conversion complete finish flag */
-            DAC_CLR_INT_FLAG(DAC, 0);
+            DAC_CLR_INT_FLAG(DAC0, 0);
         }
     }
 
@@ -70,7 +70,7 @@ void SYS_Init(void)
     //    Uart0DefaultMPF() ;
 
     /* Set PB multi-function pins for DAC voltage output */
-    SYS->GPB_MFPL = (SYS->GPB_MFPL & ~SYS_GPB_MFPH_PB12MFP_Msk) | SYS_GPB_MFPH_PB12MFP_DAC0_OUT;
+    SYS->GPB_MFPH = (SYS->GPB_MFPH & ~SYS_GPB_MFPH_PB12MFP_Msk) | SYS_GPB_MFPH_PB12MFP_DAC0_OUT;
 
     /* Set PB.12 to input mode */
     PB->MODE &= ~(GPIO_MODE_MODE12_Msk) ;
@@ -103,23 +103,23 @@ int32_t main(void)
     getchar();
 
     /* Set the software trigger DAC and enable D/A converter */
-    DAC_Open(DAC, 0, DAC_SOFTWARE_TRIGGER);
+    DAC_Open(DAC0, 0, DAC_SOFTWARE_TRIGGER);
 
     /* The DAC conversion settling time is 1us */
-    DAC_SetDelayTime(DAC, 1);
+    DAC_SetDelayTime(DAC0, 1);
 
     /* Set DAC 12-bit holding data */
-    DAC_WRITE_DATA(DAC, 0, 0x400);
+    DAC_WRITE_DATA(DAC0, 0, 0x400);
 
     /* Clear the DAC conversion complete finish flag for safe */
-    DAC_CLR_INT_FLAG(DAC, 0);
+    DAC_CLR_INT_FLAG(DAC0, 0);
 
     /* Enable the DAC interrupt */
-    DAC_ENABLE_INT(DAC, 0);
+    DAC_ENABLE_INT(DAC0, 0);
     NVIC_EnableIRQ(DAC_IRQn);
 
     /* Start A/D conversion */
-    DAC_START_CONV(DAC);
+    DAC_START_CONV(DAC0);
 
     while (1);
 

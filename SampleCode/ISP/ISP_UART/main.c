@@ -16,10 +16,9 @@
 #include "uart_transfer.h"
 
 
-#define PLLCON_SETTING          CLK_PLLCTL_96MHz_MIRC
-#define PLL_CLOCK               96000000
-#define HCLK_DIV                       2
+#define PLL_CLOCK               48000000
 
+/* This is a dummy implementation to replace the same function in clk.c for size limitation. */
 uint32_t CLK_GetPLLClockFreq(void)
 {
     return PLL_CLOCK;
@@ -33,20 +32,12 @@ void SYS_Init(void)
     /* Waiting for Internal RC clock ready */
     while (!(CLK->STATUS & CLK_STATUS_HIRCSTB_Msk));
 
-    /* Set core clock as PLL_CLOCK from PLL */
-    CLK->PLLCTL = PLLCON_SETTING;
-
-    while (!(CLK->STATUS & CLK_STATUS_PLLSTB_Msk));
-
-    CLK->CLKDIV0 &= ~CLK_CLKDIV0_HCLKDIV_Msk;
-    CLK->CLKDIV0 |= CLK_CLKDIV0_HCLK(HCLK_DIV);
-    CLK->CLKSEL0 = (CLK->CLKSEL0 & (~CLK_CLKSEL0_HCLKSEL_Msk)) | CLK_CLKSEL0_HCLKSEL_PLL;
+    CLK->CLKSEL0 = (CLK->CLKSEL0 & (~CLK_CLKSEL0_HCLKSEL_Msk)) | CLK_CLKSEL0_HCLKSEL_HIRC;
 
     /* Update System Core Clock */
     /* User can use SystemCoreClockUpdate() to calculate PllClock, SystemCoreClock and CycylesPerUs automatically. */
-    //SystemCoreClockUpdate();
-    PllClock        = PLL_CLOCK;                        // PLL
-    SystemCoreClock = PLL_CLOCK / HCLK_DIV;             // HCLK
+
+    SystemCoreClock = __HIRC;
     CyclesPerUs     = SystemCoreClock / 1000000;  // For SYS_SysTickDelay()
     /* Enable UART module clock */
     CLK->APBCLK0 |= CLK_APBCLK0_UART0CKEN_Msk;
@@ -78,7 +69,7 @@ int main(void)
     /* Init UART to 115200-8n1 */
     UART_Init();
 
-    CLK->AHBCLK |= CLK_AHBCLK_ISPCKEN_Msk;
+    CLK->AHBCLK |= CLK_AHBCLK_ISPCKEN_Msk | CLK_AHBCLK_EXSTCKEN_Msk;
     FMC->ISPCTL |= FMC_ISPCTL_ISPEN_Msk;
     g_apromSize = GetApromSize();
     GetDataFlashInfo(&g_dataFlashAddr, &g_dataFlashSize);

@@ -11,8 +11,8 @@
 #include "targetdev.h"
 #include "spi_transfer.h"
 
-
-__WEAK uint32_t CLK_GetPLLClockFreq(void)
+/* This is a dummy implementation to replace the same function in clk.c for size limitation. */
+uint32_t CLK_GetPLLClockFreq(void)
 {
     return FREQ_48MHZ;
 }

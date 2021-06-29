@@ -217,11 +217,6 @@ void I2C_PDMA_SlaveTx(uint32_t u32Status)
     {
         I2C_SET_CONTROL_REG(I2C1, I2C_CTL_SI_AA);
     }
-    else if (u32Status == 0x88)                 /* Previously addressed with own SLA address; NOT ACK has
-                                                   been returned */
-    {
-        I2C_SET_CONTROL_REG(I2C1, I2C_CTL_SI_AA);
-    }
     else
     {
         /* TO DO */
@@ -360,6 +355,10 @@ void SYS_Init(void)
     CLK_EnableModuleClock(I2C1_MODULE);
     CLK_EnableModuleClock(PDMA_MODULE);
 
+    /* Enable GPIO clock */
+    CLK_EnableModuleClock(GPA_MODULE);
+    CLK_EnableModuleClock(GPB_MODULE);
+
     /* Select UART clock source from HIRC */
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HIRC, CLK_CLKDIV0_UART0(1));
 
@@ -379,6 +378,10 @@ void SYS_Init(void)
     /* Set I2C1 multi-function pins */
     SYS->GPA_MFPL = (SYS->GPA_MFPL & ~(SYS_GPA_MFPL_PA2MFP_Msk | SYS_GPA_MFPL_PA3MFP_Msk)) |
                     (SYS_GPA_MFPL_PA2MFP_I2C1_SDA | SYS_GPA_MFPL_PA3MFP_I2C1_SCL);
+
+    /* I2C pins enable schmitt trigger */
+    PA->SMTEN |= GPIO_SMTEN_SMTEN2_Msk | GPIO_SMTEN_SMTEN3_Msk;
+    PB->SMTEN |= GPIO_SMTEN_SMTEN4_Msk | GPIO_SMTEN_SMTEN5_Msk;
 }
 
 void UART0_Init()

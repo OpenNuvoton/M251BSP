@@ -160,7 +160,7 @@ void  WakeUpRTCAlarmFunction(uint32_t u32PDMode)
     RTC_SetAlarmDateAndTime(&sWriteRTC);
 
     printf("# Set RTC current date/time: 2017/07/26 15:04:10.\n");
-    printf("# Set RTC alarm date/time:   2017/07/26 15:04:%d.\n", sWriteRTC.u32Second);
+    printf("# Set RTC alarm date/time:   2017/07/26 15:04:%u.\n", sWriteRTC.u32Second);
 
 
     /* clear alarm status */
@@ -377,7 +377,7 @@ int32_t main(void)
     /* Init UART0 for printf */
     UART0_Init();
 
-    printf("\n\nCPU @ %d Hz\n", SystemCoreClock);
+    printf("\n\nCPU @ %u Hz\n", SystemCoreClock);
     CLK_EnableCKO(CLK_CLKSEL1_CLKOSEL_HCLK, 0, 1);
 
     /* Get power manager wake up source */

@@ -17,7 +17,7 @@
 
 #define PLL_CLOCK               48000000
 
-
+/* This is a dummy implementation to replace the same function in clk.c for size limitation. */
 uint32_t CLK_GetPLLClockFreq(void)
 {
     return PLL_CLOCK;

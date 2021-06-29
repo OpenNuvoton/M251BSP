@@ -1,61 +1,46 @@
-/****************************************************************************//**
+/******************************************************************************
  * @file     usbd_audio.h
- * @version  V0.10
- * @brief    NuMicro series USB audio header file
+ * @brief    NuMicro series USB driver header file
  *
- * SPDX-License-Identifier: Apache-2.0
- * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
+ * @copyright SPDX-License-Identifier: Apache-2.0
+ * @copyright Copyright (C) 2020 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #ifndef __USBD_UAC_H__
 #define __USBD_UAC_H__
-#include <stdio.h>
-#include <stdint.h>
 
-#define NAU8822 0 //select audio codec.
+#define NAU8822     0
 
 /* Define the vendor id and product id */
 #define USBD_VID        0x0416
-#define USBD_PID        0xB006
+#define USBD_PID        0x1284
 
-#define UAC_MICROPHONE  0
-#define UAC_SPEAKER     1
+#define AUDIO_RATE  AUDIO_RATE_48K
 
-#define AUDIO_PLAY_RATE_48K 48000
+#define AUDIO_RATE_48K   48000       /* The audo play sampling rate. The setting is 48KHz */
+#define AUDIO_RATE_96K   96000       /* The audo play sampling rate. The setting is 96KHz */
+#define AUDIO_RATE_441K  44100       /* The audo play sampling rate. The setting is 44.1KHz */
 
 /*!<Define Audio information */
-#define PLAY_RATE      AUDIO_PLAY_RATE_48K        /* The audo play sampling rate. */
+#define PLAY_CHANNELS   2
+#define PLAY_BIT_RATE   0x10    /* 16-bit data rate */
 
-#define PLAY_CHANNELS   2           /* Number of channels. Don't Change */
-#define REC_RATE        PLAY_RATE   /* The record sampling rate. Must be the same with PLAY_RATE */
-
-#define REC_CHANNELS    2           /* Number of channels. Don't Change */
+#define REC_CHANNELS    2
+#define REC_BIT_RATE    0x10    /* 16-bit data rate */
 
 #define REC_FEATURE_UNITID      0x05
 #define PLAY_FEATURE_UNITID     0x06
 
+#define BUFF_LEN    800
 
 /* Define Descriptor information */
 #if(PLAY_CHANNELS == 1)
     #define PLAY_CH_CFG     1
+    #define REC_CH_CFG      0
 #endif
 #if(PLAY_CHANNELS == 2)
     #define PLAY_CH_CFG     3
+    #define REC_CH_CFG      3
 #endif
-
-#if(REC_CHANNELS == 1)
-    #define REC_CH_CFG     1
-#endif
-#if(REC_CHANNELS == 2)
-    #define REC_CH_CFG     3
-#endif
-
-#define PLAY_RATE_LO    (PLAY_RATE & 0xFF)
-#define PLAY_RATE_MD    ((PLAY_RATE >> 8) & 0xFF)
-#define PLAY_RATE_HI    ((PLAY_RATE >> 16) & 0xFF)
-
-#define REC_RATE_LO     (REC_RATE & 0xFF)
-#define REC_RATE_MD     ((REC_RATE >> 8) & 0xFF)
-#define REC_RATE_HI     ((REC_RATE >> 16) & 0xFF)
 
 /********************************************/
 /* Audio Class Current State                */
@@ -88,12 +73,10 @@
 
 /*-------------------------------------------------------------*/
 /* Define EP maximum packet size */
-#define EP0_MAX_PKT_SIZE    8
+#define EP0_MAX_PKT_SIZE    64
 #define EP1_MAX_PKT_SIZE    EP0_MAX_PKT_SIZE
-
-#define EP2_MAX_PKT_SIZE (REC_RATE*REC_CHANNELS*2/1000)
-
-#define EP3_MAX_PKT_SIZE    (PLAY_RATE*PLAY_CHANNELS*2/1000)
+#define EP2_MAX_PKT_SIZE    384 //(AUDIO_RATE*REC_CHANNELS*2/1000)
+#define EP3_MAX_PKT_SIZE    384 //(AUDIO_RATE*PLAY_CHANNELS*2/1000)
 
 #define SETUP_BUF_BASE      0
 #define SETUP_BUF_LEN       8
@@ -110,54 +93,73 @@
 #define ISO_IN_EP_NUM    0x01
 #define ISO_OUT_EP_NUM   0x02
 
+#define PDMA_TXBUFFER_CNT     2
+#define PDMA_RXBUFFER_CNT     3
+
+#define PDMA_I2S_TX_CH  1
+#define PDMA_I2S_RX_CH  2
+
+/* For I2C transfer */
+typedef enum
+{
+    E_RS_NONE,          // no re-sampling
+    E_RS_UP,            // up sampling
+    E_RS_DOWN           // down sampling
+} RESAMPLE_STATE_T;
+
+
 /*-------------------------------------------------------------*/
-extern volatile uint32_t g_usbd_UsbAudioState;
+extern uint32_t volatile g_u32BuffLen, g_u32RxBuffLen;
+extern uint32_t g_usbd_UsbAudioState;
+extern volatile uint8_t g_u8AudioPlaying;
+extern volatile uint8_t g_u8TxDataCntInBuffer;
+extern uint32_t volatile g_usbd_SampleRate;
 
+extern uint32_t g_au32PcmPlayBuff[PDMA_TXBUFFER_CNT][BUFF_LEN];
+extern uint8_t g_au8PcmRecBuff[PDMA_RXBUFFER_CNT][BUFF_LEN];
+extern uint8_t g_au8PcmRxBufFull[PDMA_RXBUFFER_CNT];
+extern volatile uint8_t g_u8PDMATxIdx;
+extern volatile uint8_t g_u8PDMARxIdx;
 
-extern volatile uint8_t g_usbd_RecMute;
-extern volatile int16_t g_usbd_RecVolumeL;
-extern volatile int16_t g_usbd_RecVolumeR;
-extern volatile int16_t g_usbd_RecMaxVolume;
-extern volatile int16_t g_usbd_RecMinVolume;
-extern volatile int16_t g_usbd_RecResVolume;
-
-extern volatile uint8_t g_usbd_PlayMute;
-extern volatile int16_t g_usbd_PlayVolumeL;
-extern volatile int16_t g_usbd_PlayVolumeR;
-extern volatile int16_t g_usbd_PlayMaxVolume;
-extern volatile int16_t g_usbd_PlayMinVolume;
-extern volatile int16_t g_usbd_PlayResVolume;
-
-extern volatile uint8_t g_u8RecEn;
-extern volatile uint8_t g_u8PlayEn;
-extern volatile int32_t g_i32AdjFlag;
-
-void UAC_DeviceEnable(uint8_t u8Object);
-void UAC_DeviceDisable(uint8_t u8Object);
+void UAC_DeviceEnable(uint32_t u32IsPlay);
+void UAC_DeviceDisable(uint32_t u32IsPlay);
 void UAC_SendRecData(void);
-void UAC_GetPlayData(int16_t *pi16src, int16_t i16Samples);
+void UAC_GetPlayData(uint8_t *pu8Src, uint32_t u32Samples);
 
-
+void AudioStartPlay(uint32_t u32SampleRate);
+void AudioStartRecord(uint32_t u32SampleRate);
 /*-------------------------------------------------------------*/
 void UAC_Init(void);
 void UAC_ClassRequest(void);
-void UAC_SetInterface(void);
+void UAC_SetInterface(uint32_t u32AltInterface);
 
 void EP2_Handler(void);
 void EP3_Handler(void);
-
-void WAU8822_Setup(void);
-void AdjFreq(void);
-void VolumnControl(void);
-void I2C_WriteWAU8822(uint8_t u8addr, uint16_t u16data);
-
+void timer_init(void);
+void AdjustCodecPll(RESAMPLE_STATE_T r);
 #if NAU8822
-    void WAU8822_Setup(void);
+    void NAU8822_Setup(void);
+    void NAU8822_ConfigSampleRate(uint32_t u32SampleRate);
+    void I2C_WriteNAU8822(uint8_t u8Addr, uint16_t u16Data);
+    void RecoveryFromArbLost(void);
 #else
     void NAU88L25_Reset(void);
     void NAU88L25_Setup(void);
+    void NAU88L25_ConfigSampleRate(uint32_t u32SampleRate);
+    uint8_t I2C_WriteNAU88L25(uint16_t u16Addr, uint16_t u16Dat);
+    uint8_t I2C_WriteMultiByteforNAU88L25(uint8_t u8ChipAddr, uint16_t u16SubAddr, const uint8_t *p, uint32_t u32Len);
 #endif
 
-#endif  /* __USBD_UAC_H_ */
+typedef struct dma_desc_t
+{
+    uint32_t ctl;
+    uint32_t src;
+    uint32_t dest;
+    uint32_t offset;
+} DMA_DESC_T;
 
-/*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/
+extern void PDMA_Init(void);
+extern void PDMA_WriteTxSGTable(void);
+extern void PDMA_WriteRxSGTable(void);
+
+#endif  /* __USBD_UAC_H_ */

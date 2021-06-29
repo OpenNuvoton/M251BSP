@@ -105,6 +105,8 @@ void USBD_IRQHandler(void)
     //------------------------------------------------------------------
     if (u32IntSts & USBD_INTSTS_USB)
     {
+        extern uint8_t g_USBD_au8SetupPacket[];
+
         // USB event
         if (u32IntSts & USBD_INTSTS_SETUP)
         {
@@ -135,6 +137,13 @@ void USBD_IRQHandler(void)
 
             // control OUT
             USBD_CtrlOut();
+
+            // In ACK of SET_LINE_CODE
+            if (g_USBD_au8SetupPacket[1] == SET_LINE_CODE)
+            {
+                if (g_USBD_au8SetupPacket[4] == 0) /* VCOM-1 */
+                    VCOM_LineCoding(0); /* Apply UART settings */
+            }
         }
 
         if (u32IntSts & USBD_INTSTS_EP2)
@@ -392,9 +401,6 @@ void HID_ClassRequest(void)
                 USBD_SET_DATA1(EP0);
                 USBD_SET_PAYLOAD_LEN(EP0, 0);
 
-                /* UART setting */
-                if (buf[4] == 0) /* VCOM-1 */
-                    VCOM_LineCoding(0);
 
                 break;
             }
@@ -443,11 +449,12 @@ void HID_ClassRequest(void)
 
 void VCOM_LineCoding(uint8_t port)
 {
-    uint32_t u32Reg;
-    uint32_t u32Baud_Div;
 
     if (port == 0)
     {
+        uint32_t u32Reg;
+        uint32_t u32Baud_Div;
+
         NVIC_DisableIRQ(UART0_IRQn);
         // Reset software FIFO
         g_u16ComRbytes = 0;
@@ -555,7 +562,7 @@ int32_t HID_CmdEraseSectors(CMD_T *pCmd)
     u32StartSector = pCmd->u32Arg1 - START_SECTOR;
     u32Sectors = pCmd->u32Arg2;
 
-    printf("Erase command - Sector: %d   Sector Cnt: %d\n", u32StartSector, u32Sectors);
+    printf("Erase command - Sector: %u   Sector Cnt: %u\n", u32StartSector, u32Sectors);
 
     /* TODO: To erase the sector of storage */
     memset(g_u8TestPages + u32StartSector * SECTOR_SIZE, 0xFF, sizeof(uint8_t) * u32Sectors * SECTOR_SIZE);
@@ -575,7 +582,7 @@ int32_t HID_CmdReadPages(CMD_T *pCmd)
     u32StartPage = pCmd->u32Arg1;
     u32Pages     = pCmd->u32Arg2;
 
-    printf("Read command - Start page: %d    Pages Numbers: %d\n", u32StartPage, u32Pages);
+    printf("Read command - Start page: %u    Pages Numbers: %u\n", u32StartPage, u32Pages);
 
     if (u32Pages)
     {
@@ -605,7 +612,7 @@ int32_t HID_CmdWritePages(CMD_T *pCmd)
     u32StartPage = pCmd->u32Arg1;
     u32Pages     = pCmd->u32Arg2;
 
-    printf("Write command - Start page: %d    Pages Numbers: %d\n", u32StartPage, u32Pages);
+    printf("Write command - Start page: %u    Pages Numbers: %u\n", u32StartPage, u32Pages);
     g_u32BytesInPageBuf = 0;
 
     /* The signature is used to page counter */
@@ -743,7 +750,7 @@ void HID_GetOutReport(uint8_t *pu8EpBuf, uint32_t u32Size)
         /* The HOST must make sure the data is PAGE_SIZE alignment */
         if (g_u32BytesInPageBuf >= PAGE_SIZE)
         {
-            printf("Writing page %d\n", u32StartPage + u32PageCnt);
+            printf("Writing page %u\n", u32StartPage + u32PageCnt);
             /* TODO: We should program received data to storage here */
             memcpy(g_u8TestPages + u32PageCnt * PAGE_SIZE, g_u8PageBuff, sizeof(g_u8PageBuff));
             u32PageCnt++;
@@ -779,7 +786,6 @@ void HID_SetInReport(void)
     uint32_t u32StartPage;
     uint32_t u32TotalPages;
     uint32_t u32PageCnt;
-    uint8_t *ptr;
     uint8_t u8Cmd;
 
     u8Cmd        = g_sCmd.u8Cmd;
@@ -799,11 +805,13 @@ void HID_SetInReport(void)
         }
         else
         {
+            uint8_t *ptr;
+
             if (g_u32BytesInPageBuf == 0)
             {
                 /* The previous page has sent out. Read new page to page buffer */
                 /* TODO: We should update new page data here. (0xFF is used in this sample code) */
-                printf("Reading page %d\n", u32StartPage + u32PageCnt);
+                printf("Reading page %u\n", u32StartPage + u32PageCnt);
                 memcpy(g_u8PageBuff, g_u8TestPages + u32PageCnt * PAGE_SIZE, sizeof(g_u8PageBuff));
 
                 g_u32BytesInPageBuf = PAGE_SIZE;

@@ -26,7 +26,6 @@ volatile uint32_t  g_u32TICK = 0;
 /*---------------------------------------------------------------------------------------------------------*/
 void RTC_TickHandle(void);
 void RTC_IRQHandler(void);
-void Delay(uint32_t ucnt);
 void LXT_Enable(void);
 void SYS_Init(void);
 void UART0_Init(void);
@@ -46,7 +45,7 @@ void RTC_TickHandle(void)
     /* Get the current time */
     RTC_GetDateAndTime(&sCurTime);
 
-    printf(" Current Time:%d/%02d/%02d %02d:%02d:%02d\n", sCurTime.u32Year, sCurTime.u32Month, sCurTime.u32Day, sCurTime.u32Hour, sCurTime.u32Minute, sCurTime.u32Second);
+    printf(" Current Time:%u/%02u/%02u %02u:%02u:%02u\n", sCurTime.u32Year, sCurTime.u32Month, sCurTime.u32Day, sCurTime.u32Hour, sCurTime.u32Minute, sCurTime.u32Second);
 
     g_u32TICK++;
 }
@@ -66,13 +65,6 @@ void RTC_IRQHandler(void)
         RTC_TickHandle();
     }
 
-}
-
-void Delay(uint32_t u32Cnt)
-{
-    volatile uint32_t u32DlyCnt = u32Cnt;
-
-    while (u32DlyCnt--);
 }
 
 /*---------------------------------------------------------------------------------------------------------*/
@@ -194,7 +186,7 @@ int32_t main(void)
 #endif
 
     UART0_Init();
-    printf("\n\nCPU @ %d Hz\n", SystemCoreClock);
+    printf("\n\nCPU @ %u Hz\n", SystemCoreClock);
     /* Time Setting */
     sInitTime.u32Year       = 2018;
     sInitTime.u32Month      = 12;

@@ -319,7 +319,7 @@
           <state>$PROJ_DIR$\..\..\..\..\Library\Device\Nuvoton\M251\Include</state>
           <state>$PROJ_DIR$\..\..\..\..\Library\StdDriver\inc</state>
           <state>$PROJ_DIR$\..\..\..\..\Library\CMSIS\Include</state>
-          <state>$PROJ_DIR$\..\..\..\..\Library\TKLib</state>
+          <state>$PROJ_DIR$\..\..\..\..\Library\TKLib\Include</state>
           <state>$PROJ_DIR$\..\..\..\..\Library\LCDLib\Include</state>
         </option>
         <option>
@@ -1287,7 +1287,7 @@
           <state>$PROJ_DIR$\..\..\..\..\Library\Device\Nuvoton\M251\Include</state>
           <state>$PROJ_DIR$\..\..\..\..\Library\StdDriver\inc</state>
           <state>$PROJ_DIR$\..\..\..\..\Library\CMSIS\Include</state>
-          <state>$PROJ_DIR$\..\..\..\..\Library\TKLib</state>
+          <state>$PROJ_DIR$\..\..\..\..\Library\TKLib\Include</state>
           <state>$PROJ_DIR$\..\..\..\..\Library\LCDLib\Include</state>
         </option>
         <option>
@@ -1643,7 +1643,7 @@
         </option>
         <option>
           <name>IlinkKeepSymbols</name>
-          <state></state>
+          <state>TK_Data</state>
         </option>
         <option>
           <name>IlinkRawBinaryFile</name>
@@ -1735,7 +1735,7 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
-          <state></state>
+          <state>--no_remove</state>
         </option>
         <option>
           <name>IlinkLowLevelInterfaceSlave</name>
@@ -1945,6 +1945,9 @@
       <name>$PROJ_DIR$\..\..\..\..\Library\StdDriver\src\clk.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$\..\..\..\..\Library\StdDriver\src\fmc.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\..\..\..\..\Library\StdDriver\src\gpio.c</name>
     </file>
     <file>
@@ -1958,6 +1961,15 @@
     </file>
     <file>
       <name>$PROJ_DIR$\..\..\..\..\Library\StdDriver\src\uart.c</name>
+    </file>
+  </group>
+  <group>
+    <name>Inc</name>
+    <file>
+      <name>$PROJ_DIR$\..\TK_Data.c</name>
+      <excluded>
+        <configuration>TK_Calibration</configuration>
+      </excluded>
     </file>
   </group>
   <group>

@@ -403,7 +403,7 @@ int32_t HID_CmdEraseSectors(CMD_T *psCmd)
     u32StartSector = psCmd->u32Arg1 - START_SECTOR;
     u32Sectors = psCmd->u32Arg2;
 
-    printf("Erase command - Sector: %d   Sector Cnt: %d\n", u32StartSector, u32Sectors);
+    printf("Erase command - Sector: %u   Sector Cnt: %u\n", u32StartSector, u32Sectors);
 
     /* TODO: To erase the sector of storage */
     memset(g_au8TestPages + u32StartSector * SECTOR_SIZE, 0xFF, sizeof(uint8_t) * u32Sectors * SECTOR_SIZE);
@@ -423,7 +423,7 @@ int32_t HID_CmdReadPages(CMD_T *psCmd)
     u32StartPage = psCmd->u32Arg1;
     u32Pages     = psCmd->u32Arg2;
 
-    printf("Read command - Start page: %d    Pages Numbers: %d\n", u32StartPage, u32Pages);
+    printf("Read command - Start page: %u    Pages Numbers: %u\n", u32StartPage, u32Pages);
 
     if (u32Pages)
     {
@@ -453,7 +453,7 @@ int32_t HID_CmdWritePages(CMD_T *psCmd)
     u32StartPage = psCmd->u32Arg1;
     u32Pages     = psCmd->u32Arg2;
 
-    printf("Write command - Start page: %d    Pages Numbers: %d\n", u32StartPage, u32Pages);
+    printf("Write command - Start page: %u    Pages Numbers: %u\n", u32StartPage, u32Pages);
     g_u32BytesInPageBuf = 0;
 
     /* The signature is used to page counter */
@@ -591,7 +591,7 @@ void HID_GetOutReport(uint8_t *pu8EpBuf, uint32_t u32Size)
         /* The HOST must make sure the data is PAGE_SIZE alignment */
         if (g_u32BytesInPageBuf >= PAGE_SIZE)
         {
-            printf("Writing page %d\n", u32StartPage + u32PageCnt);
+            printf("Writing page %u\n", u32StartPage + u32PageCnt);
             /* TODO: We should program received data to storage here */
             memcpy(g_au8TestPages + u32PageCnt * PAGE_SIZE, g_au8PageBuff, sizeof(g_au8PageBuff));
 
@@ -628,7 +628,6 @@ void HID_SetInReport(void)
     uint32_t u32StartPage;
     uint32_t u32TotalPages;
     uint32_t u32PageCnt;
-    uint8_t *pu8Ptr;
     uint8_t u8Cmd;
 
     u8Cmd        = g_sCmd.u8Cmd;
@@ -648,11 +647,13 @@ void HID_SetInReport(void)
         }
         else
         {
+            uint8_t *pu8Ptr;
+
             if (g_u32BytesInPageBuf == 0)
             {
                 /* The previous page has sent out. Read new page to page buffer */
                 /* TODO: We should update new page data here. (0xFF is used in this sample code) */
-                printf("Reading page %d\n", u32StartPage + u32PageCnt);
+                printf("Reading page %u\n", u32StartPage + u32PageCnt);
                 memcpy(g_au8PageBuff, g_au8TestPages + u32PageCnt * PAGE_SIZE, sizeof(g_au8PageBuff));
 
                 g_u32BytesInPageBuf = PAGE_SIZE;
@@ -675,20 +676,19 @@ void HID_SetInReport(void)
 
 void HID_UpdateKbData(void)
 {
-    int32_t i;
-    uint8_t *pu8Buf;
-    uint32_t u32Key = 0xF;
-    static uint32_t u32PreKey;
-
     if (g_u8EP4Ready)
     {
-        pu8Buf = (uint8_t *)(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP4));
+        static uint32_t u32PreKey;
+        uint8_t *pu8Buf = (uint8_t *)(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP4));
+        uint32_t u32Key;
 
         /* If PB.15 = 0, just report it is key 'a' */
         u32Key = (PB->PIN & (1 << 15)) ? 0 : 1;
 
         if (u32Key == 0)
         {
+            int32_t i;
+
             for (i = 0; i < 8; i++)
             {
                 pu8Buf[i] = 0;

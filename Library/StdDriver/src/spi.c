@@ -341,7 +341,7 @@ void SPI_SetFIFO(SPI_T *spi, uint32_t u32TxThreshold, uint32_t u32RxThreshold)
 uint32_t SPI_GetBusClock(SPI_T *spi)
 {
     uint32_t u32Div;
-    uint32_t u32ClkSrc;
+    uint32_t u32ClkSrc = __HIRC;
 
     /* Get DIVIDER setting */
     u32Div = (spi->CLKDIV & SPI_CLKDIV_DIVIDER_Msk) >> SPI_CLKDIV_DIVIDER_Pos;
@@ -830,7 +830,7 @@ uint32_t SPI_GetStatus2(SPI_T *spi, uint32_t u32Mask)
   */
 static uint32_t SPII2S_GetSourceClockFreq(SPI_T *i2s)
 {
-    uint32_t u32Freq;
+    uint32_t u32Freq = __HIRC;
 
     if (i2s == SPI0)
     {
@@ -885,7 +885,8 @@ static uint32_t SPII2S_GetSourceClockFreq(SPI_T *i2s)
 uint32_t SPII2S_Open(SPI_T *i2s, uint32_t u32MasterSlave, uint32_t u32SampleRate, uint32_t u32WordWidth, uint32_t u32Channels, uint32_t u32DataFormat)
 {
     uint32_t u32Divider;
-    uint32_t u32BitRate, u32SrcClk, u32RetValue;
+    uint32_t u32BitRate, u32SrcClk,
+             u32RetValue = 0;
 
     /* Reset SPI/I2S */
     if (i2s == SPI0)

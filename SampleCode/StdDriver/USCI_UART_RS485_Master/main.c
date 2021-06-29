@@ -63,7 +63,6 @@ void RS485_9bitModeMaster()
     uint8_t g_u8SendDataGroup2[10] = {0};
     uint8_t g_u8SendDataGroup3[10] = {0};
     uint8_t g_u8SendDataGroup4[10] = {0};
-    uint32_t u32Temp;
 
     printf("\n");
     printf("+-----------------------------------------------------------+\n");
@@ -86,11 +85,10 @@ void RS485_9bitModeMaster()
     /* Prepare data to transmit */
     for (u32Idx = 0; u32Idx < 10; u32Idx++)
     {
-        u32Temp = u32Idx;
-        g_u8SendDataGroup1[u32Idx] = u32Temp;
-        g_u8SendDataGroup2[u32Idx] = u32Temp + 10;
-        g_u8SendDataGroup3[u32Idx] = u32Temp + 20;
-        g_u8SendDataGroup4[u32Idx] = u32Temp + 30;
+        g_u8SendDataGroup1[u32Idx] = u32Idx;
+        g_u8SendDataGroup2[u32Idx] = u32Idx + 10;
+        g_u8SendDataGroup3[u32Idx] = u32Idx + 20;
+        g_u8SendDataGroup4[u32Idx] = u32Idx + 30;
     }
 
     /* Send different address and data for test */

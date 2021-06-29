@@ -366,11 +366,11 @@ void VCOM_ClassRequest(void)
 
 void VCOM_LineCoding(uint8_t port)
 {
-    uint32_t u32Reg;
-    uint32_t u32Baud_Div;
-
     if (port == 0)
     {
+        uint32_t u32Baud_Div;
+        uint32_t u32Reg;
+
         NVIC_DisableIRQ(UART0_IRQn);
         // Reset software FIFO
         g_u16ComRbytes = 0;

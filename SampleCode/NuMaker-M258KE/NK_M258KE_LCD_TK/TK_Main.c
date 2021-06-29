@@ -18,7 +18,7 @@
 volatile uint8_t u8EventKeyScan = 0;
 volatile int8_t i8SliderPercentage = 0;
 volatile int8_t i8WheelPercentage = 0;
-volatile int8_t i8KeyVal;
+volatile int8_t i8KeyVal, i8KeyValPre;
 unsigned char tkct = 1;
 
 #ifdef MASS_FINETUNE
@@ -56,9 +56,7 @@ int8_t SliderPercentage(int8_t *pu8SliderBuf, uint8_t u8Count)
 void TK_RawDataView(void)
 {
 
-    int8_t i8Ret = 0;
     int8_t ai8Signal[TKLIB_TOL_NUM_KEY];
-    int8_t ai8TmpSignal[TKLIB_TOL_NUM_KEY];
 
     if (u8EventKeyScan == 1)
     {
@@ -68,12 +66,15 @@ void TK_RawDataView(void)
           * i8Ret : Key/slider/wheel channel with max amplitude. -1: means no any key's amplitude over the key's threshold.
           * ai8Signal[]: The buffer size is equal to the M258 TK channels. It reports the signal amplitude on this round
           */
-        i8Ret = TK_ScanKey(&ai8Signal[0]);
+        int8_t i8Ret = TK_ScanKey(&ai8Signal[0]);
+
         i8KeyVal = i8Ret;
 
 #ifdef MASS_FINETUNE
         TK_MassProduction(ai8Signal);
 #endif
+
+        int8_t ai8TmpSignal[TKLIB_TOL_NUM_KEY];
 
 #if defined(OPT_SLIDER)
 
@@ -82,7 +83,6 @@ void TK_RawDataView(void)
               * Remember that the buffer will be destroied
               */
             uint16_t u16ChnMsk;
-            uint8_t u8Count = 0, i;
             static uint8_t updatecount = 0;
 
             updatecount = updatecount + 1;
@@ -96,6 +96,9 @@ void TK_RawDataView(void)
 
             if (TK_CheckSliderWheelPressed(TK_SLIDER) == 1)
             {
+
+                uint8_t u8Count = 0, i;
+
                 for (i = 0; i < TKLIB_TOL_NUM_KEY ; i++)
                 {
                     if (u16ChnMsk & (1ul << i))
@@ -116,13 +119,14 @@ void TK_RawDataView(void)
             /** To save buffer size, re-used the ai8Signal[] buffer
               * Remember that the buffer will be destroyed
               */
-            uint32_t u32ChnMsk;
-            uint8_t u8Count = 0, i;
 
-            u32ChnMsk = TK_GetEnabledChannelMask(TK_WHEEL);
+            uint32_t u32ChnMsk = TK_GetEnabledChannelMask(TK_WHEEL);
 
             if (TK_CheckSliderWheelPressed(TK_WHEEL)  == 1)
             {
+
+                uint8_t i, u8Count = 0;
+
                 for (i = 0; i < TKLIB_TOL_NUM_KEY ; i++)
                 {
                     if (u32ChnMsk & (1ul << i))
@@ -256,7 +260,6 @@ void SYS_Init(void)
 int32_t main(void)
 {
     uint32_t u32ChanelMsk;
-    int8_t i8Ret = 0;
 
     SYS_Init();
 
@@ -269,13 +272,14 @@ int32_t main(void)
     printf("UART Init\n");
 #endif
 
-    i8Ret = TK_LoadPara(&u32ChanelMsk);
+    int8_t i8Ret = TK_LoadPara(&u32ChanelMsk);
 
 
 #ifdef DEMO_CALIBRATION
 
     /* Initialize FMC to Load TK setting and calibration data from flash */
-    _TK_FMC_Open();
+    FMC_Open();
+    FMC_ENABLE_AP_UPDATE();
 
     if (i8Ret == -1)
     {
@@ -347,44 +351,80 @@ int32_t main(void)
     /* Install Tick Event Handler To Drive Key Scan */
     TickSetTickEvent(1, (void *)TickCallback_KeyScan);
 
+    g_u8MainState = eMAIN_APP_IDLE_STATE;
+    i8KeyValPre = 0xff;
 
     do
     {
         TK_RawDataView();
 
-        /* LCD Display base on TK */
-        if (i8KeyVal != -1)
+        if (i8KeyVal != i8KeyValPre)
         {
-            g_u8MainState = eMAIN_APP_TK_STATE;
-        }
-        else
-        {
-            g_u8MainState = eMAIN_APP_IDLE_STATE;
-        }
 
-        switch (g_u8MainState)
-        {
-            case eMAIN_APP_IDLE_STATE:
-                LCD_frame1();
-                break;
+            if ((i8KeyVal == 14) && (i8KeyValPre == (int8_t)0xff))
+            {
+                if (g_u8MainState == eMAIN_APP_IDLE_STATE)
+                    g_u8MainState = eMAIN_APP_IDLE_HOLD_STATE;
+                else if (g_u8MainState == eMAIN_APP_TK_STATE)
+                    g_u8MainState = eMAIN_APP_TK_HOLD_STATE;
+            }
+            else if ((i8KeyVal == (int8_t)0xFF) && (i8KeyValPre == (int8_t)14))
+            {
+                if (g_u8MainState == eMAIN_APP_IDLE_HOLD_STATE)
+                    g_u8MainState = eMAIN_APP_TK_STATE;
+                else if (g_u8MainState == eMAIN_APP_TK_HOLD_STATE)
+                    g_u8MainState = eMAIN_APP_IDLE_STATE;
+            }
 
-            case eMAIN_APP_TK_STATE:
-                switch (i8KeyVal)
-                {
 
-                    case 14:
-                        LCD_frame2();
-                        tkct++;
-                        break;
+            /* LCD Display base on TK */
+            i8KeyValPre = i8KeyVal;
 
-                    default:
-                        break;
-                }
 
-                break;
+            switch (g_u8MainState)
+            {
+                case eMAIN_APP_IDLE_STATE:
+                    LCD_frame1();
+                    break;
 
-            default:
-                break;
+                case eMAIN_APP_TK_STATE:
+
+                    LCD_frame2();
+                    CLK_SetModuleClock(TMR2_MODULE, CLK_CLKSEL1_TMR2SEL_LIRC, 0);
+                    TIMER_Open(TIMER2, TIMER_PERIODIC_MODE, 50);
+                    NVIC_DisableIRQ(TMR2_IRQn);
+                    TIMER_ClearIntFlag(TIMER2);
+                    TIMER2->INTSTS = TIMER2->INTSTS;
+
+                    TK_ConfigPowerDown(0);
+                    TIMER2->TRGCTL |= TIMER_TRGCTL_TRGTK_Msk;
+                    TIMER_Start(TIMER2);
+
+                    while ((DEBUG_PORT->FIFOSTS & UART_FIFOSTS_TXEMPTY_Msk) == 0) {}
+
+                    CLK_SetPowerDownMode(CLK_PMUCTL_PDMSEL_PD);
+                    CLK_PowerDown();
+
+                    /* Disable TMRTRG */
+                    TIMER2->TRGCTL &= ~TIMER_TRGCTL_TRGTK_Msk;
+                    FMC_ENABLE_ISP();
+                    CLK_SetModuleClock(TMR2_MODULE, CLK_CLKSEL1_TMR2SEL_PCLK1, 0);
+                    TIMER_ClearIntFlag(TIMER2);
+
+
+                    /* Init systick 20ms/tick */
+                    Init_SysTick();
+
+                    /* Install Tick Event Handler To Drive Key Scan */
+                    TickSetTickEvent(1, (void *)TickCallback_KeyScan);
+                    tkct++;
+
+                    break;
+
+                default:
+                    break;
+            }
+
         }
     } while (1);
 

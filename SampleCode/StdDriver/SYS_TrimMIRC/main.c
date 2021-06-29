@@ -75,8 +75,8 @@ void UART0_Init(void)
 
 void TrimMIRC()
 {
-    uint32_t u32CapVal0 = 0, u32CapVal1 = 0, u32CapVal_Interval = 0;
-    uint32_t u32TrimLoopIndex = 0, u32RCValue = 0;
+    uint32_t u32CapVal0, u32CapVal1, u32CapVal_Interval;
+    uint32_t u32TrimLoopIndex, u32RCValue;
     uint32_t u32Freq_PCLK0_DIV_MIRC = ((CLK_GetPCLK0Freq() * 10) / __MIRC + 5) / 10;
 
     /* Set timer continuous counting mode */

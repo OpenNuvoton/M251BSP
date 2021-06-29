@@ -123,6 +123,9 @@ void SYS_Init(void)
     /* Enable I2C0 clock */
     CLK_EnableModuleClock(I2C0_MODULE);
 
+    /* Enable GPIO clock */
+    CLK_EnableModuleClock(GPB_MODULE);
+
     /* Select UART clock source from HIRC */
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HIRC, CLK_CLKDIV0_UART0(1));
 
@@ -138,6 +141,9 @@ void SYS_Init(void)
     /* Set I2C0 multi-function pins */
     SYS->GPB_MFPL = (SYS->GPB_MFPL & ~(SYS_GPB_MFPL_PB4MFP_Msk | SYS_GPB_MFPL_PB5MFP_Msk)) |
                     (SYS_GPB_MFPL_PB4MFP_I2C0_SDA | SYS_GPB_MFPL_PB5MFP_I2C0_SCL);
+
+    /* I2C pins enable schmitt trigger */
+    PB->SMTEN |= GPIO_SMTEN_SMTEN4_Msk | GPIO_SMTEN_SMTEN5_Msk;
 
 }
 
@@ -224,7 +230,7 @@ int32_t main(void)
 
     printf("Configure I2C0 as a slave.\n");
     printf("The I/O connection for I2C0:\n");
-    printf("I2C0_SDA(PA.4), I2C0_SCL(PA.5)\n");
+    printf("I2C0_SDA(PB.4), I2C0_SCL(PB.5)\n");
 
     /* Init I2C0 */
     I2C0_Init();

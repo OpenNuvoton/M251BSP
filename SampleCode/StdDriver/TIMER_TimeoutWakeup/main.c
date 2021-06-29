@@ -184,7 +184,7 @@ int main(void)
     while (1)
     {
         CLK_PowerDown();
-        printf("Wake up %d\n", u32Idx++);
+        printf("Wake up %u\n", u32Idx++);
 
         while (!UART_IS_TX_EMPTY(UART0));
     }
