@@ -27,9 +27,9 @@
  * @param[in]   port        GPIO port. It could be PA, PB, PC, PD, PE or PF.
  * @param[in]   u32PinMask  The single or multiple pins of specified GPIO port.
  *                          It could be BIT0 ~ BIT15 for PA, PB, and PE.
- *                          It could be BIT0 ~ BIT12, and BIT14 ~ BIT15 for PC.
+ *                          It could be BIT0 ~ BIT12, and BIT14 for PC.
  *                          It could be BIT0 ~ BIT13, and BIT15 for PD.
- *                          It could be BIT0 ~ BIT7 for PF.
+ *                          It could be BIT0 ~ BIT7, and BIT14 ~ BIT15 for PF.
  * @param[in]   u32Mode     Operation mode.  It could be \n
  *                          GPIO_MODE_INPUT, GPIO_MODE_OUTPUT, GPIO_MODE_OPEN_DRAIN, GPIO_MODE_QUASI.
  *
@@ -56,9 +56,9 @@ void GPIO_SetMode(GPIO_T *port, uint32_t u32PinMask, uint32_t u32Mode)
  * @param[in]   port            GPIO port. It could be PA, PB, PC, PD, PE or PF.
  * @param[in]   u32Pin          The pin of specified GPIO port.
  *                              It could be 0 ~ 15 for PA, PB, and PE. \n
- *                              It could be 0 ~ 12, 14, 15 for PC. \n
+ *                              It could be 0 ~ 12, 14 for PC. \n
  *                              It could be 0 ~ 13, 15 for PD. \n
- *                              It could be 0 ~ 7 for PF. \n
+ *                              It could be 0 ~ 7, 14, 15 for PF. \n
  * @param[in]   u32IntAttribs   The interrupt attribute of specified GPIO pin. It could be \n
  *                              GPIO_INT_RISING, GPIO_INT_FALLING, GPIO_INT_BOTH_EDGE, GPIO_INT_HIGH, GPIO_INT_LOW.
  *
@@ -79,9 +79,9 @@ void GPIO_EnableInt(GPIO_T *port, uint32_t u32Pin, uint32_t u32IntAttribs)
  * @param[in]   port        GPIO port. It could be PA, PB, PC, PD, PE or PF.
  * @param[in]   u32Pin      The pin of specified GPIO port.
  *                              It could be 0 ~ 15 for PA, PB, and PE. \n
- *                              It could be 0 ~ 12, 14, 15 for PC. \n
+ *                              It could be 0 ~ 12, 14 for PC. \n
  *                              It could be 0 ~ 13, 15 for PD. \n
- *                              It could be 0 ~ 7 for PF. \n
+ *                              It could be 0 ~ 7, 14, 15 for PF. \n
  * @return      None
  *
  * @details     This function is used to enable specified GPIO pin interrupt.
@@ -100,9 +100,9 @@ void GPIO_DisableInt(GPIO_T *port, uint32_t u32Pin)
  * @param[in]   port        GPIO port. It could be PA, PB, PC, PD, PE or PF.
  * @param[in]   u32PinMask  The single or multiple pins of specified GPIO port.
  *                          It could be BIT0 ~ BIT15 for PA, PB, and PE.
- *                          It could be BIT0 ~ BIT12, and BIT14 ~ BIT15 for PC.
+ *                          It could be BIT0 ~ BIT12, and BIT14 for PC.
  *                          It could be BIT0 ~ BIT13, and BIT15 for PD.
- *                          It could be BIT0 ~ BIT7 for PF.
+ *                          It could be BIT0 ~ BIT7, and BIT14 ~ BIT15 for PF.
  * @param[in]   u32Mode     Slew rate mode.  It could be
  *                          - \ref GPIO_SLEWCTL_NORMAL (minimum 16 MHz at 2.7V)
  *                          - \ref GPIO_SLEWCTL_HIGH (minimum 25 MHz at 2.7V)
@@ -131,9 +131,9 @@ void GPIO_SetSlewCtl(GPIO_T *port, uint32_t u32PinMask, uint32_t u32Mode)
  * @param[in]   port        GPIO port. It could be PA, PB, PC, PD, PE, or PF.
  * @param[in]   u32PinMask  The single or multiple pins of specified GPIO port.
  *                          It could be BIT0 ~ BIT15 for PA, PB, and PE.
- *                          It could be BIT0 ~ BIT12, and BIT14 ~ BIT15 for PC.
+ *                          It could be BIT0 ~ BIT12, and BIT14 for PC.
  *                          It could be BIT0 ~ BIT13, and BIT15 for PD.
- *                          It could be BIT0 ~ BIT7 for PF.
+ *                          It could be BIT0 ~ BIT7, and BIT14 ~ BIT15 for PF.
  * @param[in]   u32Mode     The pin mode of specified GPIO pin. It could be
  *                          - \ref GPIO_PUSEL_DISABLE
  *                          - \ref GPIO_PUSEL_PULL_UP
