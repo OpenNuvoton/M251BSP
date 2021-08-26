@@ -41,13 +41,13 @@ uint32_t BPWM_ConfigCaptureChannel(BPWM_T *bpwm, uint32_t u32ChannelNum, uint32_
     uint8_t u8BreakLoop = 0UL;
 
     // M254/6/8 clock source is not supported PLL
-    if ((SYS->PDID & 0xff00) == 0x5800)
+    if ((SYS->PDID & 0xff00) == 0x5800 || (SYS->PDID & 0xff00) == 0x5600 || (SYS->PDID & 0xff00) == 0x5400)
     {
         if (bpwm == BPWM0)
         {
             u32Src = CLK_CLKSEL2_BPWM0SEL_PCLK0;
         }
-        else     /* (bpwm == BPWM1) */
+        else     /* (bpwm == BPWM1) for M258G */
         {
             u32Src = CLK_CLKSEL2_BPWM1SEL_PCLK1;
         }
@@ -147,13 +147,13 @@ uint32_t BPWM_ConfigOutputChannel(BPWM_T *bpwm, uint32_t u32ChannelNum, uint32_t
     uint16_t u16Prescale = 1UL, u16CNR = 0xFFFFUL;
 
     // M254/6/8 clock source is not supported PLL
-    if ((SYS->PDID & 0xff00) == 0x5800)
+    if ((SYS->PDID & 0xff00) == 0x5800 || (SYS->PDID & 0xff00) == 0x5600 || (SYS->PDID & 0xff00) == 0x5400)
     {
         if (bpwm == BPWM0)
         {
             u32Src = CLK_CLKSEL2_BPWM0SEL_PCLK0;
         }
-        else     /* (bpwm == BPWM1) */
+        else     /* (bpwm == BPWM1) for M258G */
         {
             u32Src = CLK_CLKSEL2_BPWM1SEL_PCLK1;
         }
