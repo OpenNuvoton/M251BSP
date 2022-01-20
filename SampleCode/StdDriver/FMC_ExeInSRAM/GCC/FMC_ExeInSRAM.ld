@@ -1,9 +1,9 @@
 /* Linker script to configure memory regions. */
 MEMORY
 {
-  FLASH (rx) : ORIGIN = 0x00000000, LENGTH = 0x8000    /* 32k */
-  RAM (rwx)  : ORIGIN = 0x20000000, LENGTH = 0x1800    /* 6k  */
-  RAM2 (rwx) : ORIGIN = 0x20001800, LENGTH = 0x600    /* 2k */
+    FLASH (rx) : ORIGIN = 0x00000000, LENGTH = 0x2000    /* 8k */
+    RAM (rwx)  : ORIGIN = 0x20000000, LENGTH = 0x1000    /* 4k  */
+    RAM2 (rwx) : ORIGIN = 0x20001000, LENGTH = 0x1000    /* 4k */
 }
 
 /* Library configurations */
@@ -93,8 +93,9 @@ SECTIONS
 	__ExeSramBase = .;
 	.ExeSramCode :
 	{
-	   . = ALIGN(4);
-		./User/main.o(.text*)
+		. = ALIGN(4);
+		./Library/Library/*.o (.text*)
+		./User/main.o (.text*)
 		__ExeSramEnd = .; 
 	} > RAM2 AT > FLASH
 	
@@ -112,8 +113,8 @@ SECTIONS
 		LONG (__data_start__)
 		LONG (__data_end__ - __data_start__)
 		LONG (__ExeSramBase)
-		LONG (0x20001800)
-		LONG (__ExeSramEnd - 0x20001800)
+		LONG (0x20001000)
+		LONG (__ExeSramEnd - 0x20001000)
 		__copy_table_end__ = .;
 	} > FLASH
 

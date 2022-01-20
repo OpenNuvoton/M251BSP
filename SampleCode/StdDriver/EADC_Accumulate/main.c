@@ -50,6 +50,14 @@ void SYS_Init(void)
     CLK_EnableModuleClock(EADC_MODULE);
 
     /* EADC clock source is PCLK1, set divider to 8, ADC clock is PCLK1/8 MHz */
+    /* Note: The EADC_CLK speed should meet datasheet spec (<16MHz) and rules in following table.   */
+    /* +--------------+------------------+                                                          */
+    /* | PCLK divider | EADC_CLK divider |                                                          */
+    /* +--------------+------------------+                                                          */
+    /* | 1            | 1, 2, 3, 4, ...  |                                                          */
+    /* +--------------+------------------+                                                          */
+    /* | 2, 4, 8, 16  | 2, 4, 6, 8, ...  |                                                          */
+    /* +--------------+------------------+                                                          */
     CLK_SetModuleClock(EADC_MODULE, 0, CLK_CLKDIV0_EADC(8));
 
     /*---------------------------------------------------------------------------------------------------------*/
@@ -191,15 +199,17 @@ void EADC_FunctionTest(void)
         EADC_START_CONV(EADC, u32ModuleMask);
 
         /* Wait EADC interrupt (g_u32EadcInt0Flag will be set at EADC_INT0_IRQHandler() function) */
-        while (g_u32EadcInt0Flag == 0);
+        while (g_u32EadcInt0Flag == 0) {};
 
         int32_t  i32ConversionData;
 
         /* Get the conversion result of the sample module */
         i32ConversionData = EADC_GET_CONV_DATA(EADC, u32ModuleNum);
+
         printf("Conversion result of channel %u: 0x%X (%d)\n", u32ChannelNum, i32ConversionData, i32ConversionData);
 
         i32ConversionData = EADC_Accumulate_LeftShift(i32ConversionData, 8);
+
         printf("Conversion result of channel %u after left shifted: 0x%X (%d)\n", u32ChannelNum, i32ConversionData, i32ConversionData);
 
         printf("The average that calculated by software is 0x%X (%d)\n\n", (int)(i32ConversionData / 8), (int)(i32ConversionData / 8));
@@ -209,7 +219,9 @@ void EADC_FunctionTest(void)
 
         /* Disable the sample module interrupt.  */
         EADC_DISABLE_INT(EADC, u32IntMask);
+
         EADC_DISABLE_SAMPLE_MODULE_INT(EADC, u32IntNum, u32ModuleMask);
+
         NVIC_DisableIRQ(EADC_INT0_IRQn);
     }   /* End of while(1) */
 

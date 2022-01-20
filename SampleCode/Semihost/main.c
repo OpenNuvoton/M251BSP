@@ -66,30 +66,39 @@ void SYS_Init(void)
 int32_t main()
 {
     /*
-    To enable semihost, user must define "DEBUG_ENABLE_SEMIHOST" constant when buildind sample code.
-    If defined DEBUG_ENABLE_SEMIHOST = 1 or 2 and ICE connected, the message will output to ICE.
-    if defined DEBUG_ENABLE_SEMIHOST = 1 and ICE off line, the message will re-direct to UART debug port.
-    if defined DEBUG_ENABLE_SEMIHOST = 2 and ICE off line, no any debug message output.
-
     This sample code is used to show how to print message/getchar on IDE debug environment.
-    It will echo all input character back on UART #1 of KEIL IDE.
 
-    In KEIL MDK, user need to open "View->Serial Window->UART #0" windows in debug mode.
-    In IAR Workbench, user need to open "View->Terminal I/O" in debug mode.
+    To enable semihost in KEIL MDK or IAR Workbench
+        User must define "DEBUG_ENABLE_SEMIHOST" constant when building sample code.
+        If defined DEBUG_ENABLE_SEMIHOST = 1 or 2 and ICE connected, the message will output to ICE.
+        If defined DEBUG_ENABLE_SEMIHOST = 1 and ICE off line, the message will re-direct to UART debug port.
+        If defined DEBUG_ENABLE_SEMIHOST = 2 and ICE off line, no any debug message output.
 
-    NOTE1: Hardfault_Handler is used for semihost. User cannot overwrite it when using semihost.
+        In KEIL MDK, user need to open "View->Serial Window->UART #1" windows in debug mode.
+        In IAR Workbench, user need to open "View->Terminal I/O" in debug mode.
+
+        NOTE1: Hardfault_Handler is used for semihost. User cannot overwrite it when using semihost.
            If it is necessary to process hardfault, user can append code to ProcessHardfault of retarget.c
-    NOTE2: Semihost only works with Nuvoton NuLink ICE Dongle in debug mode.
-    NOTE3: The message will output to debug port if Nuvoton NuLink ICE Dongle is not connected.
+        NOTE2: Semihost only works with Nuvoton NuLink ICE Dongle in debug mode.
+        NOTE3: The message will output to debug port if Nuvoton NuLink ICE Dongle is not connected.
 
 
-    Semihost On/Off | NuLink Connected | Output Path
-    ==============================================================
+        Semihost On/Off | NuLink Connected | Output Path
+        ==============================================================
           1         |         1        |  ICE
           1         |         0        |  UART Debug Port / NULL when DEBUG_ENABLE_SEMIHOST=2
           0         |         1        |  UART Debug Port
           0         |         0        |  UART Debug Port
-    --------------------------------------------------------------
+        --------------------------------------------------------------
+
+    To enable semihost in NuEclipse IDE
+        1. Call initialise_monitor_handles() before calling printf
+        2. User must define "OS_USE_SEMIHOSTING" constant when building sample code.
+        3. Check "Enable ARM semihosting" is enabled in
+           Debug Configuration->GDB Nuvoton Nu-Link Debugging->Startup
+
+        If defined OS_USE_SEMIHOSTING, message will output to NuEclipse IDE console.
+        If not defined OS_USE_SEMIHOSTING, message will output to UART debug port.
     */
 
     /* Init System, IP clock and multi-function I/O */

@@ -170,7 +170,7 @@ int main(void)
     /* Init UART to 115200-8n1 for print message */
     UART_Open(UART0, 115200);
 
-    printf("\n\nCPU @ %d Hz\n", SystemCoreClock);
+    printf("\n\nCPU @ %dHz(PLL@ %dHz)\n", SystemCoreClock, PllClock);
     printf("+--------------------------------------------+\n");
     printf("|    Timer Periodic Interrupt Sample Code    |\n");
     printf("+--------------------------------------------+\n\n");

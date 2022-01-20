@@ -1572,7 +1572,7 @@
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state>PDMA_ScatterGather.srec</state>
+          <state>PDMA_ScatterGather_PingPongBuffer.srec</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>

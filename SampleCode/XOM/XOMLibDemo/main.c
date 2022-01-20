@@ -67,7 +67,7 @@ int32_t main(void)
         This sample code is used to show how to call XOM libary.
 
         The XOM libary is build by XOMLib project.
-        User need to add include path of xomlib.h and add object file xomlib.o to using XOM library built by XOMLib project.
+        User need to add include path of xomlib.h and add object file xomlib.lib(Keil)/xomlib.a(IAR) to using XOM library built by XOMLib project.
     */
 
     printf("\n\n");

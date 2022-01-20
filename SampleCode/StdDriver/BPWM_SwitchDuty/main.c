@@ -127,8 +127,7 @@ int32_t main(void)
     /* Init UART to 115200-8n1 for print message */
     UART0_Init();
 
-    printf("\n\nCPU @ %dHz\n", SystemCoreClock);
-    printf("BPWM0 clock is from %s\n", (CLK->CLKSEL2 & CLK_CLKSEL2_BPWM0SEL_Msk) ? "CPU" : "PLL");
+    printf("\n\nCPU @ %dHz(PLL@ %dHz)\n", SystemCoreClock, PllClock);
     printf("+-----------------------------------------------------------------------------------+\n");
     printf("|                          BPWM Driver Sample Code                                  |\n");
     printf("+-----------------------------------------------------------------------------------+\n");

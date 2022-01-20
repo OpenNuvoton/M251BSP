@@ -98,6 +98,9 @@ void SYS_Init(void)
     CLK_SetModuleClock(TMR2_MODULE, CLK_CLKSEL1_TMR2SEL_HIRC, 0);
     CLK_SetModuleClock(TMR3_MODULE, CLK_CLKSEL1_TMR3SEL_PCLK1, 0);
 
+    /* Update System Core Clock */
+    SystemCoreClockUpdate();
+
     /* Set multi-function pins for UART0 RXD(PA.0) and TXD(PA.1) */
     SYS->GPA_MFPL &= ~(SYS_GPA_MFPL_PA0MFP_Msk | SYS_GPA_MFPL_PA1MFP_Msk);
     SYS->GPA_MFPL |= (SYS_GPA_MFPL_PA0MFP_UART0_RXD | SYS_GPA_MFPL_PA1MFP_UART0_TXD);
@@ -133,7 +136,7 @@ int main(void)
     /* Init UART for printf */
     UART_Open(UART0, 115200);
 
-    printf("\n\nCPU @ %d Hz\n", SystemCoreClock);
+    printf("\n\nCPU @ %dHz(PLL@ %dHz)\n", SystemCoreClock, PllClock);
     printf("+------------------------------------------+\n");
     printf("|    Timer2 Capture Counter Sample Code    |\n");
     printf("+------------------------------------------+\n\n");

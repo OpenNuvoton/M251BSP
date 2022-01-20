@@ -16,7 +16,7 @@ const uint16_t g_au16Sine[] = {2047, 2251, 2453, 2651, 2844, 3028, 3202, 3365, 3
                                238,  343,  465,  602,  754,  919, 1095, 1281, 1475, 1674, 1876
                               };
 
-static uint32_t g_u32Index = 0;
+volatile uint32_t g_u32Index = 0;
 const uint32_t g_u32ArraySize = sizeof(g_au16Sine) / sizeof(uint16_t);
 
 #if defined (__GNUC__) && !defined(__ARMCC_VERSION) && defined(OS_USE_SEMIHOSTING)
@@ -121,7 +121,7 @@ int32_t main(void)
     /* Start A/D conversion */
     DAC_START_CONV(DAC0);
 
-    while (1);
+    while (1) {};
 
 }
 

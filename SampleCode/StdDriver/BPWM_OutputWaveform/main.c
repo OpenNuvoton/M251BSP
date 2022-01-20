@@ -107,13 +107,18 @@ int32_t main(void)
     /* Init UART to 115200-8n1 for print message */
     UART0_Init();
 
-    printf("\n\nCPU @ %dHz\n", SystemCoreClock);
-    printf("BPWM0 clock is from %s\n", (CLK->CLKSEL2 & CLK_CLKSEL2_BPWM0SEL_Msk) ? "CPU" : "PLL");
+    printf("\n\nCPU @ %dHz(PLL@ %dHz)\n", SystemCoreClock, PllClock);
     printf("+------------------------------------------------------------------------+\n");
     printf("|                          BPWM Driver Sample Code                       |\n");
     printf("+------------------------------------------------------------------------+\n");
     printf("  This sample code will output waveform with BPWM0 and BPWM1 channel 0~5.\n");
     printf("  I/O configuration:\n");
+    printf("  BPWM0 channel 0: 30000 Hz, duty 10%%.\n");
+    printf("  BPWM0 channel 1: 30000 Hz, duty 20%%.\n");
+    printf("  BPWM0 channel 2: 30000 Hz, duty 35%%.\n");
+    printf("  BPWM0 channel 3: 30000 Hz, duty 40%%.\n");
+    printf("  BPWM0 channel 4: 30000 Hz, duty 50%%.\n");
+    printf("  BPWM0 channel 5: 30000 Hz, duty 60%%.\n");
     printf("    waveform output pin: BPWM0_CH0(PA.0), BPWM0_CH1(PA.1), BPWM0_CH2(PA.2), BPWM0_CH3(PA.3), BPWM0_CH4(PF.5), BPWM0_CH5(PF.4)\n");
 
 

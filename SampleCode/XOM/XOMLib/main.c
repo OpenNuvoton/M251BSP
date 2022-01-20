@@ -62,7 +62,7 @@ int32_t main(void)
     /*
         This sample code is used to show how to build an XOM libary.
 
-        The location of XOM region is defined by scatter file: xom_scatter.scf
+        The location of XOM region is defined by linker file: xom_scatter.scf(Keil)/xom.icf(IAR)
         The API header file is xomapi.h
         The XOM functions are implemented in xom.c
 
@@ -70,11 +70,11 @@ int32_t main(void)
         To enable XOM region, please use "NuMicro ICP Programming Tool".
 
         example flow:
-        1. Build XOMlib
-        2. Download XOMlib code by press key "F8" in Keil MDK.
-        3. Open "NuMicro ICP Programming Tool" to enable XOM region and according to xom_scatter.scf settings.
-        4. The library (xomlib.o) and header (xomlib.h) is located at lib directory.
-        5. Pass xomlib.o & xomlib.h to the people who will call the funcitons in XOM.
+        1. Build XOMLib_Code
+        2. Download XOMLib_Code by press key "F8" in Keil MDK.
+        3. Open "NuMicro ICP Programming Tool" to enable XOM region and according to xom_scatter.scf/xom.icf settings.
+        4. Build XOMLib to generate library (xomlib.lib in Keil or xomlib.a in IAR) located at lib directory.
+        5. Pass xomlib.lib(Keil)/xomlib.a(IAR) & xomlib.h to the people who will call the funcitons in XOM.
 
     */
 
@@ -91,7 +91,7 @@ int32_t main(void)
     FMC_EnableAPUpdate();
 
     /* Read User Configuration */
-    printf("\b");
+    printf("\n");
     printf("XOM Status = 0x%X\n", FMC->XOMSTS);
 
     /* Run XOM function */

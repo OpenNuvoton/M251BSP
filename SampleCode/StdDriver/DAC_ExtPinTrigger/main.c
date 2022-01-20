@@ -17,7 +17,7 @@ const uint16_t g_au16Sine[] = {2047, 2251, 2453, 2651, 2844, 3028, 3202, 3365, 3
                               };
 
 const uint32_t g_u32ArraySize = sizeof(g_au16Sine) / sizeof(uint16_t);
-static uint32_t g_u32Index = 0;
+volatile uint32_t g_u32Index = 0;
 
 #if defined (__GNUC__) && !defined(__ARMCC_VERSION) && defined(OS_USE_SEMIHOSTING)
     extern void initialise_monitor_handles(void);
@@ -84,7 +84,8 @@ void SYS_Init(void)
 
     /* Set PA multi-function pin for GPIO */
     SYS->GPA_MFPL = (SYS->GPA_MFPL & ~SYS_GPA_MFPL_PA1MFP_Msk) ;
-
+    /* Set the PA1 is Output mode*/
+    GPIO_SetMode(PA, BIT1, GPIO_MODE_OUTPUT);
     /* Lock protected registers */
     SYS_LockReg();
 
@@ -108,13 +109,13 @@ int32_t main(void)
     printf("|            DAC Driver Sample Code                        |\n");
     printf("+----------------------------------------------------------+\n");
     printf("Please connect PA0 with PA1, use PA1 to trigger DAC conversion\n");
-
-    /* Set the falling edge trigger DAC and enable D/A converter */
-    DAC_Open(DAC0, 0, DAC_FALLING_EDGE_TRIGGER);
+    /*Set PA1 Outpur level is Low*/
+    PA1 = 0;
+    /* Set the rising edge trigger DAC and enable D/A converter */
+    DAC_Open(DAC0, 0, DAC_RISING_EDGE_TRIGGER);
 
     /* The DAC conversion settling time is 1us */
     DAC_SetDelayTime(DAC0, 1);
-
     /* Set DAC 12-bit holding data */
     DAC_WRITE_DATA(DAC0, 0, g_au16Sine[g_u32Index]);
 
@@ -124,8 +125,6 @@ int32_t main(void)
     /* Enable the DAC interrupt */
     DAC_ENABLE_INT(DAC0, 0);
     NVIC_EnableIRQ(DAC_IRQn);
-
-    GPIO_SetMode(PA, BIT1, GPIO_MODE_OUTPUT);
 
     while (1)
     {

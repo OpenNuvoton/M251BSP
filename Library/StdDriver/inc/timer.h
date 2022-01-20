@@ -94,6 +94,8 @@ extern "C"
 #define TIMER_CAPTURE_SRCDIV_128        (7UL << TIMER_EXTCTL_CAPDIVSCL_Pos)
 #define TIMER_CAPTURE_SRCDIV_256        (8UL << TIMER_EXTCTL_CAPDIVSCL_Pos)
 
+#define TIMER_TIMEOUT_ERR                       (-1L)                             /*!< TIMER operation abort due to timeout error \hideinitializer */
+
 /*@}*/ /* end of group TIMER_EXPORTED_CONSTANTS */
 
 
@@ -194,7 +196,6 @@ __STATIC_INLINE uint32_t TIMER_GetWakeupFlag(TIMER_T *timer);
 __STATIC_INLINE void TIMER_ClearWakeupFlag(TIMER_T *timer);
 __STATIC_INLINE uint32_t TIMER_GetCaptureData(TIMER_T *timer);
 __STATIC_INLINE uint32_t TIMER_GetCounter(TIMER_T *timer);
-__STATIC_INLINE void TIMER_ResetCounter(TIMER_T *timer);
 
 /**
   * @brief      Start Timer Counting
@@ -508,28 +509,9 @@ __STATIC_INLINE uint32_t TIMER_GetCounter(TIMER_T *timer)
     return timer->CNT;
 }
 
-/**
-  * @brief      Reset Counter
-  *
-  * @param[in]  timer       The pointer of the specified Timer module. It could be TIMER0, TIMER1, TIMER2, TIMER3.
-  *
-  * @return     None
-  *
-  * @details    This function is used to reset current counter value and internal prescale counter value.
-  */
-__STATIC_INLINE void TIMER_ResetCounter(TIMER_T *timer)
-{
-    timer->CNT = 0UL;
-
-    while ((timer->CNT & TIMER_CNT_RSTACT_Msk) == TIMER_CNT_RSTACT_Msk)
-    {
-        ;
-    }
-}
-
 uint32_t TIMER_Open(TIMER_T *timer, uint32_t u32Mode, uint32_t u32Freq);
 void TIMER_Close(TIMER_T *timer);
-void TIMER_Delay(TIMER_T *timer, uint32_t u32Usec);
+int32_t TIMER_Delay(TIMER_T *timer, uint32_t u32Usec);
 void TIMER_EnableCapture(TIMER_T *timer, uint32_t u32CapMode, uint32_t u32Edge);
 void TIMER_CaptureSelect(TIMER_T *timer, uint32_t u32Src);
 void TIMER_DisableCapture(TIMER_T *timer);
@@ -540,6 +522,7 @@ void TIMER_DisableEventCounter(TIMER_T *timer);
 uint32_t TIMER_GetModuleClock(TIMER_T *timer);
 void TIMER_EnableFreqCounter(TIMER_T *timer, uint32_t u32DropCount, uint32_t u32Timeout, uint32_t u32EnableInt);
 void TIMER_DisableFreqCounter(TIMER_T *timer);
+int32_t TIMER_ResetCounter(TIMER_T *timer);
 
 /*@}*/ /* end of group TIMER_EXPORTED_FUNCTIONS */
 

@@ -26,7 +26,6 @@ __ALIGNED(4) uint8_t g_u8SlaveRx_Buffer[PDMA_TEST_LENGTH];
 
 volatile uint32_t PDMA_DONE = 0;
 volatile uint8_t g_u8DeviceAddr = 0x16;
-volatile uint8_t g_u8EndFlag = 0;
 volatile uint8_t g_u8MasterDataLen = 0;
 volatile uint8_t g_u8SlaveDataLen = 0;
 volatile uint16_t g_u8SlaveBufferAddr = 0;
@@ -404,12 +403,6 @@ void I2C0_Init(void)
     /* Get I2C0 Bus Clock */
     printf("I2C0 clock %d Hz\n", I2C_GetBusClockFreq(I2C0));
 
-    /* Set I2C 4 Slave Addresses */
-    I2C_SetSlaveAddr(I2C0, 0, 0x15, 0);   /* Slave Address : 0x15 */
-    I2C_SetSlaveAddr(I2C0, 1, 0x35, 0);   /* Slave Address : 0x35 */
-    I2C_SetSlaveAddr(I2C0, 2, 0x55, 0);   /* Slave Address : 0x55 */
-    I2C_SetSlaveAddr(I2C0, 3, 0x75, 0);   /* Slave Address : 0x75 */
-
     /* Enable I2C interrupt */
     I2C_EnableInt(I2C0);
     NVIC_EnableIRQ(I2C0_IRQn);
@@ -439,8 +432,8 @@ void PDMA_Init(void)
     /* Open PDMA Channel */
     PDMA_Open(PDMA, 1 << I2C0_PDMA_TX_CH); // Channel 0 for I2C0 TX
     PDMA_Open(PDMA, 1 << I2C1_PDMA_RX_CH); // Channel 1 for I2C1 RX
-    PDMA_Open(PDMA, 1 << I2C0_PDMA_RX_CH); // Channel 0 for I2C0 RX
-    PDMA_Open(PDMA, 1 << I2C1_PDMA_TX_CH); // Channel 1 for I2C1 TX
+    PDMA_Open(PDMA, 1 << I2C0_PDMA_RX_CH); // Channel 2 for I2C0 RX
+    PDMA_Open(PDMA, 1 << I2C1_PDMA_TX_CH); // Channel 3 for I2C1 TX
     // Select basic mode
     PDMA_SetTransferMode(PDMA, I2C0_PDMA_TX_CH, PDMA_I2C0_TX, 0, 0);
     PDMA_SetTransferMode(PDMA, I2C1_PDMA_RX_CH, PDMA_I2C1_RX, 0, 0);

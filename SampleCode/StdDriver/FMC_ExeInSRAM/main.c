@@ -61,11 +61,14 @@ int32_t main(void)
     printf("+-----------------------------------------------------------+\n");
     printf("|      FMC Write/Read code execute in SRAM Sample Code      |\n");
     printf("+-----------------------------------------------------------+\n");
+    printf("Check FMC function execution address\n");
+    printf("FMC_Erase: 0x%X, FMC_Write: 0x%X, FMC_Read: 0x%X\n",
+           (uint32_t)FMC_Erase, (uint32_t)FMC_Write, (uint32_t)FMC_Read);
 
     /*
        This sample code is used to demonstrate how to implement a code to execute in SRAM.
        By setting scatter loading file (scatter.scf),
-       RO code is placed to 0x20000000 ~ 0x20001fff with RW is placed to 0x20002000 ~ 0x20003fff.
+       RO code is placed to 0x20000000 ~ 0x20000fff with RW is placed to 0x20001000 ~ 0x20001fff.
     */
 
     /* Unlock protected registers to operate FMC ISP function */

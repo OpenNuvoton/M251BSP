@@ -59,19 +59,32 @@ void SYS_Init(void)
  * @param[in] us
  * @return none
  */
-void systickDly(TIMER_T *dummy_for_compatible __attribute__((unused)), uint32_t us)
+int32_t systickDly(TIMER_T *dummy_for_compatible __attribute__((unused)), uint32_t us)
 {
+    uint32_t u32TimeOutCnt = SystemCoreClock;
+
     SysTick->CTRL = 0;
     SysTick->VAL = 0x00;
 
     SysTick->LOAD = us * (SystemCoreClock / 1000000); /*depend on core clock*/
     SysTick->CTRL = SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_ENABLE_Msk;
 
+    g_CLK_i32ErrCode = 0;
+
     /* Waiting for down-count to zero */
-    while ((SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk) == 0);
+    while ((SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk) == 0)
+    {
+        if (--u32TimeOutCnt == 0)
+        {
+            g_CLK_i32ErrCode = CLK_TIMEOUT_ERR;
+            break;
+        }
+    }
 
     /* Disable SysTick counter */
     SysTick->CTRL = 0;
+
+    return g_CLK_i32ErrCode;
 }
 
 /**
@@ -104,7 +117,7 @@ S_USBD_BC12_PD_STATUS USBD_BC_Detect(TIMER_T *pu32TimerSrc)
 
 #define BC_DELAY(us) pfnBC_Delay(pu32TimerSrc, us)
 
-    void (*pfnBC_Delay)(TIMER_T * dummy, uint32_t us);
+    int32_t (*pfnBC_Delay)(TIMER_T * dummy, uint32_t us);
 
     if (pu32TimerSrc == NULL)
     {

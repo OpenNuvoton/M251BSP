@@ -75,7 +75,7 @@
       <OPTFL>
         <tvExp>1</tvExp>
         <tvExpOptDlg>0</tvExpOptDlg>
-        <IsCurrentTarget>0</IsCurrentTarget>
+        <IsCurrentTarget>1</IsCurrentTarget>
       </OPTFL>
       <CpuCode>6</CpuCode>
       <DebugOpt>
@@ -193,7 +193,7 @@
   </Target>
 
   <Target>
-    <TargetName>FMC_Boot0</TargetName>
+    <TargetName>FMC_MultiBoot_Boot0</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>
@@ -364,7 +364,7 @@
   </Target>
 
   <Target>
-    <TargetName>FMC_Boot1</TargetName>
+    <TargetName>FMC_MultiBoot_Boot1</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>
@@ -517,7 +517,7 @@
   </Target>
 
   <Target>
-    <TargetName>FMC_Boot2</TargetName>
+    <TargetName>FMC_MultiBoot_Boot2</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>
@@ -670,7 +670,7 @@
   </Target>
 
   <Target>
-    <TargetName>FMC_Boot3</TargetName>
+    <TargetName>FMC_MultiBoot_Boot3</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>
@@ -823,7 +823,7 @@
   </Target>
 
   <Target>
-    <TargetName>FMC_BootLD</TargetName>
+    <TargetName>FMC_MultiBoot_BootLD</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>
@@ -876,7 +876,7 @@
       <OPTFL>
         <tvExp>0</tvExp>
         <tvExpOptDlg>0</tvExpOptDlg>
-        <IsCurrentTarget>1</IsCurrentTarget>
+        <IsCurrentTarget>0</IsCurrentTarget>
       </OPTFL>
       <CpuCode>6</CpuCode>
       <DebugOpt>

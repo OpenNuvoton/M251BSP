@@ -37,6 +37,14 @@ void TK_Open(void)
     /* Set idle and polarity state as GND */
     TK->IDLSC = 0;
     TK->POLSEL = 0;
+
+    if ((SYS->PDID & 0x01925000) == 0x01925000)
+    {
+        //for M258G
+        TK->IDLSC1 = 0;
+        TK->POLSEL1 = 0;
+    }
+
     TK->POLC &= ~(TK_POLC_IDLS16_Msk | TK_POLC_POL16_Msk);
 }
 
@@ -163,7 +171,7 @@ void TK_SetTkPol(uint32_t u32Mask, uint32_t u32PolSel)
     for (i = 17 ; i < 26 ; i++)
     {
         if ((1ul << i) & u32Mask)
-            TK[1].POLSEL = (TK[1].POLSEL & ~(TK_POLSEL_POL0_Msk << ((i - 17) * 2))) | (u32PolSel << ((i - 17) * 2));
+            TK->POLSEL1 = (TK->POLSEL1 & ~(TK_POLSEL_POL0_Msk << ((i - 17) * 2))) | (u32PolSel << ((i - 17) * 2));
     }
 }
 
@@ -178,7 +186,11 @@ void TK_SetTkPol(uint32_t u32Mask, uint32_t u32PolSel)
 void TK_EnableTkPolarity(uint32_t u32Mask)
 {
     TK->POLC |= ((u32Mask & 0x1FFFF) << TK_POLC_POLEN0_Pos);
-    TK[1].POLC |= (u32Mask >> 17);
+
+    if ((SYS->PDID & 0x01925000) == 0x01925000)
+    {
+        TK->POLC1 |= (u32Mask >> 17);
+    }
 }
 
 /**
@@ -192,12 +204,16 @@ void TK_EnableTkPolarity(uint32_t u32Mask)
 void TK_DisableTkPolarity(uint32_t u32Mask)
 {
     TK->POLC &= ~((u32Mask & 0x1FFFF) << TK_POLC_POLEN0_Pos);
-    TK[1].POLC &= ~(u32Mask >> 17);
+
+    if ((SYS->PDID & 0x01925000) == 0x01925000)
+    {
+        TK->POLC1 &= ~(u32Mask >> 17);
+    }
 }
 
 /**
  * @brief Set complement capacitor bank data of specified touch key
- * @param[in] u32TKNum Touch key number. The valid value is 0~16.
+ * @param[in] u32TKNum Touch key number. The valid value is 0~25.
  * @param[in] u32CapData Complement capacitor bank data. The valid value is 0~0xFF.
  * @return None
  * @details This function is used to set complement capacitor bank data of specified touch key.
@@ -205,8 +221,16 @@ void TK_DisableTkPolarity(uint32_t u32Mask)
  */
 void TK_SetCompCapBankData(uint32_t u32TKNum, uint32_t u32CapData)
 {
-    *(__IO uint32_t *)(&(TK[u32TKNum / 17].CCBD0) + ((u32TKNum % 17) >> 2)) &= ~(TK_CCBD0_CCBD0_Msk << ((u32TKNum % 17) % 4 * 8));
-    *(__IO uint32_t *)(&(TK[u32TKNum / 17].CCBD0) + ((u32TKNum % 17) >> 2)) |= (u32CapData << ((u32TKNum % 17) % 4 * 8));
+    if (u32TKNum <= 16)
+    {
+        *(__IO uint32_t *)(&(TK->CCBD0) + ((u32TKNum % 17) >> 2)) &= ~(TK_CCBD0_CCBD0_Msk << ((u32TKNum % 17) % 4 * 8));
+        *(__IO uint32_t *)(&(TK->CCBD0) + ((u32TKNum % 17) >> 2)) |= (u32CapData << ((u32TKNum % 17) % 4 * 8));
+    }
+    else
+    {
+        *(__IO uint32_t *)(&(TK->CCBD5) + ((u32TKNum % 17) >> 2)) &= ~(TK_CCBD0_CCBD0_Msk << ((u32TKNum % 17) % 4 * 8));
+        *(__IO uint32_t *)(&(TK->CCBD5) + ((u32TKNum % 17) >> 2)) |= (u32CapData << ((u32TKNum % 17) % 4 * 8));
+    }
 }
 
 /**
@@ -224,7 +248,7 @@ void TK_SetRefKeyCapBankData(uint32_t u32CapData)
 
 /**
   * @brief      Set reference capacitor bank data of specified touch key
-  * @param[in]  u32TKNum: Touch key number. The valid value is 0~16.
+  * @param[in]  u32TKNum: Touch key number. The valid value is 0~25.
   * @param[in]  u32CapData: Complement capacitor bank data. The valid value is 0~0xFF.
   * @return     None
   * @details    This function is used to set complement capacitor bank data of reference touch key.
@@ -232,13 +256,21 @@ void TK_SetRefKeyCapBankData(uint32_t u32CapData)
 
 void TK_SetRefCapBankData(uint32_t u32TKNum, uint32_t u32CapData)
 {
-    *(__IO uint32_t *)(&(TK[u32TKNum / 17].TK_REFCBD0) + ((u32TKNum % 17) >> 2)) &= ~(TK_REFCBD0_CBD0_Msk << ((u32TKNum % 17) % 4 * 8));
-    *(__IO uint32_t *)(&(TK[u32TKNum / 17].TK_REFCBD0) + ((u32TKNum % 17) >> 2)) |= (u32CapData << ((u32TKNum % 17) % 4 * 8));
+    if (u32TKNum <= 16)
+    {
+        *(__IO uint32_t *)(&(TK->TK_REFCBD0) + ((u32TKNum % 17) >> 2)) &= ~(TK_REFCBD0_CBD0_Msk << ((u32TKNum % 17) % 4 * 8));
+        *(__IO uint32_t *)(&(TK->TK_REFCBD0) + ((u32TKNum % 17) >> 2)) |= (u32CapData << ((u32TKNum % 17) % 4 * 8));
+    }
+    else
+    {
+        *(__IO uint32_t *)(&(TK->TK_REFCBD5) + ((u32TKNum % 17) >> 2)) &= ~(TK_REFCBD0_CBD0_Msk << ((u32TKNum % 17) % 4 * 8));
+        *(__IO uint32_t *)(&(TK->TK_REFCBD5) + ((u32TKNum % 17) >> 2)) |= (u32CapData << ((u32TKNum % 17) % 4 * 8));
+    }
 }
 
 /**
  * @brief Set high and low threshold of specified touch key for threshold control interrupt
- * @param[in] u32TKNum Touch key number. The valid value is 0~16.
+ * @param[in] u32TKNum Touch key number. The valid value is 0~25.
  * @param[in] u32HighLevel High level for touch key threshold control. The valid value is 0~0xFF.
  * @return None
  * @details This function is used to set high and low threshold of specified touch key for threshold control interrupt.
@@ -246,8 +278,16 @@ void TK_SetRefCapBankData(uint32_t u32TKNum, uint32_t u32CapData)
  */
 void TK_SetScanThreshold(uint32_t u32TKNum, uint32_t u32HighLevel)
 {
-    *(__IO uint32_t *)(&(TK[u32TKNum / 17].THC01) + ((u32TKNum % 17) >> 1)) &= ~((TK_THC01_HTH0_Msk) << (((u32TKNum % 17) & 0x1) * 16));
-    *(__IO uint32_t *)(&(TK[u32TKNum / 17].THC01) + ((u32TKNum % 17) >> 1)) |= (u32HighLevel << (TK_THC01_HTH0_Pos + ((u32TKNum % 17) & 0x1) * 16));
+    if (u32TKNum <= 16)
+    {
+        *(__IO uint32_t *)(&(TK->THC01) + ((u32TKNum % 17) >> 1)) &= ~((TK_THC01_HTH0_Msk) << (((u32TKNum % 17) & 0x1) * 16));
+        *(__IO uint32_t *)(&(TK->THC01) + ((u32TKNum % 17) >> 1)) |= (u32HighLevel << (TK_THC01_HTH0_Pos + ((u32TKNum % 17) & 0x1) * 16));
+    }
+    else
+    {
+        *(__IO uint32_t *)(&(TK->THC1718) + ((u32TKNum % 17) >> 1)) &= ~((TK_THC01_HTH0_Msk) << (((u32TKNum % 17) & 0x1) * 16));
+        *(__IO uint32_t *)(&(TK->THC1718) + ((u32TKNum % 17) >> 1)) |= (u32HighLevel << (TK_THC01_HTH0_Pos + ((u32TKNum % 17) & 0x1) * 16));
+    }
 }
 
 /**
@@ -289,7 +329,11 @@ void TK_DisableInt(uint32_t u32Msk)
 void TK_DisableAllChannel(void)
 {
     TK->SCANC &= ~(0x1FFFF);
-    TK[1].SCANC &= ~(0x1F);
+
+    if ((SYS->PDID & 0x01925000) == 0x01925000)
+    {
+        TK->SCANC1 &= ~(0x1F);
+    }
 }
 
 
@@ -302,7 +346,11 @@ void TK_DisableAllChannel(void)
 void TK_ClearTKIF(void)
 {
     TK->STA |= 0x1FFFFC3UL;
-    TK[1].STA |= 0x1FUL;
+
+    if ((SYS->PDID & 0x01925000) == 0x01925000)
+    {
+        TK->STA1 |= 0x1FUL;
+    }
 }
 
 /**

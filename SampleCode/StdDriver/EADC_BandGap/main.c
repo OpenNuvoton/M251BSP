@@ -45,13 +45,21 @@ void SYS_Init(void)
     /* Enable EADC module clock */
     CLK_EnableModuleClock(EADC_MODULE);
 
-    /* EADC clock source is 48MHz, set divider to 8, EADC clock is 48/8MHz */
+    /* EADC clock source is PCLK1, set divider to 8, ADC clock is PCLK1/8 MHz */
+    /* Note: The EADC_CLK speed should meet datasheet spec (<16MHz) and rules in following table.   */
+    /* +--------------+------------------+                                                          */
+    /* | PCLK divider | EADC_CLK divider |                                                          */
+    /* +--------------+------------------+                                                          */
+    /* | 1            | 1, 2, 3, 4, ...  |                                                          */
+    /* +--------------+------------------+                                                          */
+    /* | 2, 4, 8, 16  | 2, 4, 6, 8, ...  |                                                          */
+    /* +--------------+------------------+                                                          */
     CLK_SetModuleClock(EADC_MODULE, 0, CLK_CLKDIV0_EADC(8));
 
     /*---------------------------------------------------------------------------------------------------------*/
     /* Init I/O Multi-function                                                                                 */
     /*---------------------------------------------------------------------------------------------------------*/
-
+    /* Set GPB multi-function pins for UART0 RXD and TXD */
     Uart0DefaultMPF();
 }
 

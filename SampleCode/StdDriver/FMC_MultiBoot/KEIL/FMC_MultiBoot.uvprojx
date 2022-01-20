@@ -437,7 +437,7 @@
       </Groups>
     </Target>
     <Target>
-      <TargetName>FMC_Boot0</TargetName>
+      <TargetName>FMC_MultiBoot_Boot0</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <pCCUsed>6120000::V6.12::.\ARMCLANG</pCCUsed>
@@ -479,7 +479,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\obj\</OutputDirectory>
-          <OutputName>FMC_Boot0</OutputName>
+          <OutputName>FMC_MultiBoot_Boot0</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>0</CreateHexFile>
@@ -867,7 +867,7 @@
       </Groups>
     </Target>
     <Target>
-      <TargetName>FMC_Boot1</TargetName>
+      <TargetName>FMC_MultiBoot_Boot1</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <pCCUsed>6070000::V6.7::.\ARMCLANG</pCCUsed>
@@ -909,7 +909,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\obj\</OutputDirectory>
-          <OutputName>FMC_Boot1</OutputName>
+          <OutputName>FMC_MultiBoot_Boot1</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>0</CreateHexFile>
@@ -1297,7 +1297,7 @@
       </Groups>
     </Target>
     <Target>
-      <TargetName>FMC_Boot2</TargetName>
+      <TargetName>FMC_MultiBoot_Boot2</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <pCCUsed>6070000::V6.7::.\ARMCLANG</pCCUsed>
@@ -1339,7 +1339,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\obj\</OutputDirectory>
-          <OutputName>FMC_Boot2</OutputName>
+          <OutputName>FMC_MultiBoot_Boot2</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>0</CreateHexFile>
@@ -1727,7 +1727,7 @@
       </Groups>
     </Target>
     <Target>
-      <TargetName>FMC_Boot3</TargetName>
+      <TargetName>FMC_MultiBoot_Boot3</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <pCCUsed>6070000::V6.7::.\ARMCLANG</pCCUsed>
@@ -1769,7 +1769,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\obj\</OutputDirectory>
-          <OutputName>FMC_Boot3</OutputName>
+          <OutputName>FMC_MultiBoot_Boot3</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>0</CreateHexFile>
@@ -2157,7 +2157,7 @@
       </Groups>
     </Target>
     <Target>
-      <TargetName>FMC_BootLD</TargetName>
+      <TargetName>FMC_MultiBoot_BootLD</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <pCCUsed>6120000::V6.12::.\ARMCLANG</pCCUsed>
@@ -2199,7 +2199,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\obj\</OutputDirectory>
-          <OutputName>FMC_BootLD</OutputName>
+          <OutputName>FMC_MultiBoot_BootLD</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>0</CreateHexFile>

@@ -3,7 +3,7 @@
  * @version  V0.10
  * @brief
  *           Demonstrate SPI data transfer with PDMA.
- *           QSPI0 will be configured as Master mode and SPI0 will be configured as Slave mode.
+ *           USPI0 will be configured as Master mode and SPI0 will be configured as Slave mode.
  *           Both TX PDMA function and RX PDMA function will be enabled.
  *
  * SPDX-License-Identifier: Apache-2.0
@@ -12,29 +12,41 @@
 #include <stdio.h>
 #include "NuMicro.h"
 
-#define SPI_MASTER_TX_DMA_CH 0
-#define SPI_MASTER_RX_DMA_CH 1
-#define SPI_SLAVE_TX_DMA_CH  2
-#define SPI_SLAVE_RX_DMA_CH  3
+//------------------------------------------------------------------------------
+#define USPI_MASTER_TX_DMA_CH                   (0)
+#define USPI_MASTER_RX_DMA_CH                   (1)
+#define SPI_SLAVE_TX_DMA_CH                     (2)
+#define SPI_SLAVE_RX_DMA_CH                     (3)
 
-#define TEST_COUNT 64
+#define TEST_COUNT                              (64)
 
+/*On M251 C version no USCI_CTL0(SS) pins, you can use this definition to open alternatives*/
+//#define NOT_SUPPORT_SS_PIN
+
+/*Use GPIO PA2 instead of USCI_CTL0(SS) pin*/
+#if defined (NOT_SUPPORT_SS_PIN)
+    #define  USPI_SS_PIN   PA2
+#endif //NOT_SUPPORT_SS_PIN
+
+//------------------------------------------------------------------------------
 /* Function prototype declaration */
 void SYS_Init(void);
 void SPI_Init(void);
 void SpiLoopTest_WithPDMA(void);
 
+//------------------------------------------------------------------------------
 /* Global variable declaration */
-uint32_t g_au32MasterToSlaveTestPattern[TEST_COUNT];
-uint32_t g_au32SlaveToMasterTestPattern[TEST_COUNT];
-uint32_t g_au32MasterRxBuffer[TEST_COUNT];
-uint32_t g_au32SlaveRxBuffer[TEST_COUNT];
+uint16_t g_au16MasterToSlaveTestPattern[TEST_COUNT] = {0};
+uint16_t g_au16SlaveToMasterTestPattern[TEST_COUNT] = {0};
+uint16_t g_au16MasterRxBuffer[TEST_COUNT] = {0};
+uint16_t g_au16SlaveRxBuffer[TEST_COUNT] = {0};
 
+//------------------------------------------------------------------------------
 void SYS_Init(void)
 {
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* Init System Clock                                                                                       */
-    /*---------------------------------------------------------------------------------------------------------*/
+    /*------------------------------------------------------------------------*/
+    /* Init System Clock                                                      */
+    /*------------------------------------------------------------------------*/
 
     /* Enable HIRC clock */
     CLK_EnableXtalRC(CLK_PWRCTL_HIRCEN_Msk);
@@ -48,16 +60,14 @@ void SYS_Init(void)
     /* Select UART module clock source as HIRC and UART module clock divider as 1 */
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HIRC, CLK_CLKDIV0_UART0(1));
 
-    /* Select PCLK as the clock source of QSPI0 and SPI0 */
-    CLK_SetModuleClock(QSPI0_MODULE, CLK_CLKSEL2_QSPI0SEL_PCLK0, MODULE_NoMsk);
+    /* Select PCLK as the clock source of SPI0 */
     CLK_SetModuleClock(SPI0_MODULE, CLK_CLKSEL2_SPI0SEL_PCLK1, MODULE_NoMsk);
-
 
     /* Enable UART peripheral clock */
     CLK_EnableModuleClock(UART0_MODULE);
 
-    /* Enable QSPI0 peripheral clock */
-    CLK_EnableModuleClock(QSPI0_MODULE);
+    /* Enable USPI0 peripheral clock */
+    CLK_EnableModuleClock(USCI0_MODULE);
 
     /* Enable SPI0 peripheral clock */
     CLK_EnableModuleClock(SPI0_MODULE);
@@ -76,16 +86,33 @@ void SYS_Init(void)
     /* Set UART0 Default MPF */
     Uart0DefaultMPF() ;
 
-    /* Configure QSPI0 related multi-function pins. GPA[3:0] : QSPI0_MOSI0, QSPI0_MISO0, QSPI0_CLK, QSPI0_SS. */
-    SYS->GPA_MFPL &= ~(SYS_GPA_MFPL_PA3MFP_Msk | SYS_GPA_MFPL_PA2MFP_Msk | SYS_GPA_MFPL_PA1MFP_Msk | SYS_GPA_MFPL_PA0MFP_Msk);
-    SYS->GPA_MFPL |= SYS_GPA_MFPL_PA0MFP_QSPI0_MOSI0 | SYS_GPA_MFPL_PA1MFP_QSPI0_MISO0 | SYS_GPA_MFPL_PA2MFP_QSPI0_CLK | SYS_GPA_MFPL_PA3MFP_QSPI0_SS;
+    /* Set USPI0 multi-function pins */
+    SYS->GPA_MFPH = SYS->GPA_MFPH & ~(SYS_GPA_MFPH_PA9MFP_Msk  |
+                                      SYS_GPA_MFPH_PA10MFP_Msk |
+                                      SYS_GPA_MFPH_PA11MFP_Msk);
+    SYS->GPA_MFPH |= (SYS_GPA_MFPH_PA11MFP_USCI0_CLK  |
+                      SYS_GPA_MFPH_PA10MFP_USCI0_DAT0 |
+                      SYS_GPA_MFPH_PA9MFP_USCI0_DAT1);
 
-    /* Enable QSPI0 clock pin (PA2) schmitt trigger */
-    PA->SMTEN |= GPIO_SMTEN_SMTEN2_Msk;
+#if !(defined(NOT_SUPPORT_SS_PIN))
+    SYS->GPC_MFPH = SYS->GPC_MFPH & ~SYS_GPC_MFPH_PC14MFP_Msk;
+    SYS->GPC_MFPH = SYS->GPC_MFPH | SYS_GPC_MFPH_PC14MFP_USCI0_CTL0;
+#else
+    /*M251 C is not supoort USCI_CTL0(SS)*/
+    /*Replace the USCI_CTL0(SS) pin with GPIO PA2 */
+    SYS->GPA_MFPL = SYS->GPA_MFPL & ~SYS_GPA_MFPL_PA2MFP_Msk;
+    GPIO_SetMode(PA, BIT2, GPIO_MODE_OUTPUT);
+#endif //NOT_SUPPORT_SS_PIN
 
     /* Setup SPI0 multi-function pins */
-    SYS->GPD_MFPL &= ~(SYS_GPD_MFPL_PD0MFP_Msk | SYS_GPD_MFPL_PD1MFP_Msk | SYS_GPD_MFPL_PD2MFP_Msk | SYS_GPD_MFPL_PD3MFP_Msk);
-    SYS->GPD_MFPL = SYS_GPD_MFPL_PD0MFP_SPI0_MOSI | SYS_GPD_MFPL_PD1MFP_SPI0_MISO | SYS_GPD_MFPL_PD2MFP_SPI0_CLK | SYS_GPD_MFPL_PD3MFP_SPI0_SS ;
+    SYS->GPD_MFPL &= ~(SYS_GPD_MFPL_PD0MFP_Msk |
+                       SYS_GPD_MFPL_PD1MFP_Msk |
+                       SYS_GPD_MFPL_PD2MFP_Msk |
+                       SYS_GPD_MFPL_PD3MFP_Msk);
+    SYS->GPD_MFPL = SYS_GPD_MFPL_PD0MFP_SPI0_MOSI |
+                    SYS_GPD_MFPL_PD1MFP_SPI0_MISO |
+                    SYS_GPD_MFPL_PD2MFP_SPI0_CLK  |
+                    SYS_GPD_MFPL_PD3MFP_SPI0_SS ;
 
     /* Enable SPI0 clock pin (PD2) schmitt trigger */
     PD->SMTEN |= GPIO_SMTEN_SMTEN2_Msk;
@@ -96,17 +123,17 @@ void SPI_Init(void)
     /*---------------------------------------------------------------------------------------------------------*/
     /* Init SPI                                                                                                */
     /*---------------------------------------------------------------------------------------------------------*/
-    /* Configure QSPI0 */
-    /* Configure QSPI0 as a master, SPI clock rate 2MHz,
-       clock idle low, 32-bit transaction, drive output on falling clock edge and latch input on rising edge. */
-    QSPI_Open(QSPI0, QSPI_MASTER, QSPI_MODE_0, 32, 2000000);
-    /* Enable the automatic hardware slave selection function. Select the QSPI0_SS pin and configure as low-active. */
-    QSPI_EnableAutoSS(QSPI0, QSPI_SS, QSPI_SS_ACTIVE_LOW);
+    /* Configure USPI0 */
+    /* Configure USCI_SPI0 as a master, USCI_SPI0 clock rate 2 MHz,
+        clock idle low, 16-bit transaction, drive output on falling clock edge and latch input on rising edge. */
+    USPI_Open(USPI0, USPI_MASTER, USPI_MODE_0, 16, 2000000);
+    /* Enable the automatic hardware slave selection function and configure USCI_SPI_SS pin as low-active. */
+    USPI_EnableAutoSS(USPI0, 0, USPI_SS_ACTIVE_LOW);
 
     /* Configure SPI0 */
-    /* Configure SPI0 as a slave, clock idle low, 32-bit transaction, drive output on falling clock edge and latch input on rising edge. */
+    /* Configure SPI0 as a slave, clock idle low, 16-bit transaction, drive output on falling clock edge and latch input on rising edge. */
     /* Configure SPI0 as a low level active device. SPI peripheral clock rate = f_PCLK0 */
-    SPI_Open(SPI0, SPI_SLAVE, SPI_MODE_0, 32, 0);
+    SPI_Open(SPI0, SPI_SLAVE, SPI_MODE_0, 16, 0);
 }
 
 void SpiLoopTest_WithPDMA(void)
@@ -115,100 +142,102 @@ void SpiLoopTest_WithPDMA(void)
     uint32_t u32RegValue, u32Abort;
     int32_t i32Err;
 
-    printf("\nQSPI0/1 Loop test with PDMA ");
+    printf("\nUSPI0/SPI0 Loop test with PDMA ");
 
     /* Source data initiation */
     for (u32DataCount = 0; u32DataCount < TEST_COUNT; u32DataCount++)
     {
-        g_au32MasterToSlaveTestPattern[u32DataCount] = 0x55000000 | (u32DataCount + 1);
-        g_au32SlaveToMasterTestPattern[u32DataCount] = 0xAA000000 | (u32DataCount + 1);
+        g_au16MasterToSlaveTestPattern[u32DataCount] = (0x5500 | (u32DataCount + 1));
+        g_au16SlaveToMasterTestPattern[u32DataCount] = (0xAA00 | (u32DataCount + 1));
     }
 
-
     /* Enable PDMA channels */
-    PDMA_Open(PDMA, (1 << SPI_MASTER_TX_DMA_CH) | (1 << SPI_MASTER_RX_DMA_CH) | (1 << SPI_SLAVE_RX_DMA_CH) | (1 << SPI_SLAVE_TX_DMA_CH));
+    PDMA_Open(PDMA, ((1 << USPI_MASTER_TX_DMA_CH) |
+                     (1 << USPI_MASTER_RX_DMA_CH) |
+                     (1 << SPI_SLAVE_RX_DMA_CH) |
+                     (1 << SPI_SLAVE_TX_DMA_CH)));
 
     /*=======================================================================
       SPI master PDMA TX channel configuration:
       -----------------------------------------------------------------------
-        Word length = 32 bits
+        Word length = 16 bits
         Transfer Count = TEST_COUNT
-        Source = g_au32MasterToSlaveTestPattern
+        Source = g_au16MasterToSlaveTestPattern
         Source Address = Increasing
-        Destination = QSPI0->TX
+        Destination = USPI0->TXDAT
         Destination Address = Fixed
         Burst Type = Single Transfer
     =========================================================================*/
-    /* Set transfer width (32 bits) and transfer count */
-    PDMA_SetTransferCnt(PDMA, SPI_MASTER_TX_DMA_CH, PDMA_WIDTH_32, TEST_COUNT);
+    /* Set transfer width (16 bits) and transfer count */
+    PDMA_SetTransferCnt(PDMA, USPI_MASTER_TX_DMA_CH, PDMA_WIDTH_16, TEST_COUNT);
     /* Set source/destination address and attributes */
-    PDMA_SetTransferAddr(PDMA, SPI_MASTER_TX_DMA_CH, (uint32_t)g_au32MasterToSlaveTestPattern, PDMA_SAR_INC, (uint32_t)&QSPI0->TX, PDMA_DAR_FIX);
+    PDMA_SetTransferAddr(PDMA, USPI_MASTER_TX_DMA_CH, (uint32_t)g_au16MasterToSlaveTestPattern, PDMA_SAR_INC, (uint32_t)&USPI0->TXDAT, PDMA_DAR_FIX);
     /* Set request source; set basic mode. */
-    PDMA_SetTransferMode(PDMA, SPI_MASTER_TX_DMA_CH, PDMA_QSPI0_TX, FALSE, 0);
+    PDMA_SetTransferMode(PDMA, USPI_MASTER_TX_DMA_CH, PDMA_USCI0_TX, FALSE, 0);
     /* Single request type. SPI only support PDMA single request type. */
-    PDMA_SetBurstType(PDMA, SPI_MASTER_TX_DMA_CH, PDMA_REQ_SINGLE, 0);
+    PDMA_SetBurstType(PDMA, USPI_MASTER_TX_DMA_CH, PDMA_REQ_SINGLE, 0);
     /* Disable table interrupt */
-    PDMA->DSCT[SPI_MASTER_TX_DMA_CH].CTL |= PDMA_DSCT_CTL_TBINTDIS_Msk;
+    PDMA->DSCT[USPI_MASTER_TX_DMA_CH].CTL |= PDMA_DSCT_CTL_TBINTDIS_Msk;
 
     /*=======================================================================
       SPI master PDMA RX channel configuration:
       -----------------------------------------------------------------------
-        Word length = 32 bits
+        Word length = 16 bits
         Transfer Count = TEST_COUNT
-        Source = QSPI0->RX
+        Source = USPI0->RXDAT
         Source Address = Fixed
-        Destination = g_au32MasterRxBuffer
+        Destination = g_au16MasterRxBuffer
         Destination Address = Increasing
         Burst Type = Single Transfer
     =========================================================================*/
-    /* Set transfer width (32 bits) and transfer count */
-    PDMA_SetTransferCnt(PDMA, SPI_MASTER_RX_DMA_CH, PDMA_WIDTH_32, TEST_COUNT);
+    /* Set transfer width (16 bits) and transfer count */
+    PDMA_SetTransferCnt(PDMA, USPI_MASTER_RX_DMA_CH, PDMA_WIDTH_16, TEST_COUNT);
     /* Set source/destination address and attributes */
-    PDMA_SetTransferAddr(PDMA, SPI_MASTER_RX_DMA_CH, (uint32_t)&QSPI0->RX, PDMA_SAR_FIX, (uint32_t)g_au32MasterRxBuffer, PDMA_DAR_INC);
+    PDMA_SetTransferAddr(PDMA, USPI_MASTER_RX_DMA_CH, (uint32_t)&USPI0->RXDAT, PDMA_SAR_FIX, (uint32_t)g_au16MasterRxBuffer, PDMA_DAR_INC);
     /* Set request source; set basic mode. */
-    PDMA_SetTransferMode(PDMA, SPI_MASTER_RX_DMA_CH, PDMA_QSPI0_RX, FALSE, 0);
+    PDMA_SetTransferMode(PDMA, USPI_MASTER_RX_DMA_CH, PDMA_USCI0_RX, FALSE, 0);
     /* Single request type. SPI only support PDMA single request type. */
-    PDMA_SetBurstType(PDMA, SPI_MASTER_RX_DMA_CH, PDMA_REQ_SINGLE, 0);
+    PDMA_SetBurstType(PDMA, USPI_MASTER_RX_DMA_CH, PDMA_REQ_SINGLE, 0);
     /* Disable table interrupt */
-    PDMA->DSCT[SPI_MASTER_RX_DMA_CH].CTL |= PDMA_DSCT_CTL_TBINTDIS_Msk;
+    PDMA->DSCT[USPI_MASTER_RX_DMA_CH].CTL |= PDMA_DSCT_CTL_TBINTDIS_Msk;
 
     /*=======================================================================
       SPI slave PDMA RX channel configuration:
       -----------------------------------------------------------------------
-        Word length = 32 bits
+        Word length = 16 bits
         Transfer Count = TEST_COUNT
-        Source = SPI2->RX
+        Source = SPI0->RX
         Source Address = Fixed
-        Destination = g_au32SlaveRxBuffer
+        Destination = g_au16SlaveRxBuffer
         Destination Address = Increasing
         Burst Type = Single Transfer
     =========================================================================*/
-    /* Set transfer width (32 bits) and transfer count */
-    PDMA_SetTransferCnt(PDMA, SPI_SLAVE_RX_DMA_CH, PDMA_WIDTH_32, TEST_COUNT);
+    /* Set transfer width (16 bits) and transfer count */
+    PDMA_SetTransferCnt(PDMA, SPI_SLAVE_RX_DMA_CH, PDMA_WIDTH_16, TEST_COUNT);
     /* Set source/destination address and attributes */
-    PDMA_SetTransferAddr(PDMA, SPI_SLAVE_RX_DMA_CH, (uint32_t)&SPI0->RX, PDMA_SAR_FIX, (uint32_t)g_au32SlaveRxBuffer, PDMA_DAR_INC);
+    PDMA_SetTransferAddr(PDMA, SPI_SLAVE_RX_DMA_CH, (uint32_t)&SPI0->RX, PDMA_SAR_FIX, (uint32_t)g_au16SlaveRxBuffer, PDMA_DAR_INC);
     /* Set request source; set basic mode. */
     PDMA_SetTransferMode(PDMA, SPI_SLAVE_RX_DMA_CH, PDMA_SPI0_RX, FALSE, 0);
     /* Single request type. SPI only support PDMA single request type. */
     PDMA_SetBurstType(PDMA, SPI_SLAVE_RX_DMA_CH, PDMA_REQ_SINGLE, 0);
     /* Disable table interrupt */
-    PDMA->DSCT[SPI_MASTER_RX_DMA_CH].CTL |= PDMA_DSCT_CTL_TBINTDIS_Msk;
+    PDMA->DSCT[USPI_MASTER_RX_DMA_CH].CTL |= PDMA_DSCT_CTL_TBINTDIS_Msk;
 
     /*=======================================================================
       SPI slave PDMA TX channel configuration:
       -----------------------------------------------------------------------
-        Word length = 32 bits
+        Word length = 16 bits
         Transfer Count = TEST_COUNT
-        Source = g_au32SlaveToMasterTestPattern
+        Source = g_au16SlaveToMasterTestPattern
         Source Address = Increasing
-        Destination = SPI2->TX
+        Destination = SPI0->TX
         Destination Address = Fixed
         Burst Type = Single Transfer
     =========================================================================*/
-    /* Set transfer width (32 bits) and transfer count */
-    PDMA_SetTransferCnt(PDMA, SPI_SLAVE_TX_DMA_CH, PDMA_WIDTH_32, TEST_COUNT);
+    /* Set transfer width (16 bits) and transfer count */
+    PDMA_SetTransferCnt(PDMA, SPI_SLAVE_TX_DMA_CH, PDMA_WIDTH_16, TEST_COUNT);
     /* Set source/destination address and attributes */
-    PDMA_SetTransferAddr(PDMA, SPI_SLAVE_TX_DMA_CH, (uint32_t)g_au32SlaveToMasterTestPattern, PDMA_SAR_INC, (uint32_t)&SPI0->TX, PDMA_DAR_FIX);
+    PDMA_SetTransferAddr(PDMA, SPI_SLAVE_TX_DMA_CH, (uint32_t)g_au16SlaveToMasterTestPattern, PDMA_SAR_INC, (uint32_t)&SPI0->TX, PDMA_DAR_FIX);
     /* Set request source; set basic mode. */
     PDMA_SetTransferMode(PDMA, SPI_SLAVE_TX_DMA_CH, PDMA_SPI0_TX, FALSE, 0);
     /* Single request type. SPI only support PDMA single request type. */
@@ -219,8 +248,8 @@ void SpiLoopTest_WithPDMA(void)
     /* Enable SPI slave DMA function */
     SPI_TRIGGER_TX_RX_PDMA(SPI0);
 
-    /* Enable QSPI master DMA function */
-    QSPI_TRIGGER_TX_RX_PDMA(QSPI0);
+    /* Enable USPI0 master DMA function */
+    USPI_TRIGGER_TX_RX_PDMA(USPI0);
 
     i32Err = 0;
 
@@ -239,26 +268,26 @@ void SpiLoopTest_WithPDMA(void)
             {
 
                 /* Check the PDMA transfer done flags */
-                if ((PDMA_GET_TD_STS(PDMA) & ((1 << SPI_MASTER_TX_DMA_CH) | (1 << SPI_MASTER_RX_DMA_CH) | (1 << SPI_SLAVE_TX_DMA_CH) | (1 << SPI_SLAVE_RX_DMA_CH))) ==
-                        ((1 << SPI_MASTER_TX_DMA_CH) | (1 << SPI_MASTER_RX_DMA_CH) | (1 << SPI_SLAVE_TX_DMA_CH) | (1 << SPI_SLAVE_RX_DMA_CH)))
+                if ((PDMA_GET_TD_STS(PDMA) & ((1 << USPI_MASTER_TX_DMA_CH) | (1 << USPI_MASTER_RX_DMA_CH) | (1 << SPI_SLAVE_TX_DMA_CH) | (1 << SPI_SLAVE_RX_DMA_CH))) ==
+                        ((1 << USPI_MASTER_TX_DMA_CH) | (1 << USPI_MASTER_RX_DMA_CH) | (1 << SPI_SLAVE_TX_DMA_CH) | (1 << SPI_SLAVE_RX_DMA_CH)))
                 {
 
                     /* Clear the PDMA transfer done flags */
-                    PDMA_CLR_TD_FLAG(PDMA, (1 << SPI_MASTER_TX_DMA_CH) | (1 << SPI_MASTER_RX_DMA_CH) | (1 << SPI_SLAVE_TX_DMA_CH) | (1 << SPI_SLAVE_RX_DMA_CH));
+                    PDMA_CLR_TD_FLAG(PDMA, (1 << USPI_MASTER_TX_DMA_CH) | (1 << USPI_MASTER_RX_DMA_CH) | (1 << SPI_SLAVE_TX_DMA_CH) | (1 << SPI_SLAVE_RX_DMA_CH));
 
-                    /* Disable QSPI master's PDMA transfer function */
-                    QSPI_DISABLE_TX_RX_PDMA(QSPI0);
+                    /* Disable USPI0 master's PDMA transfer function */
+                    USPI_DISABLE_TX_RX_PDMA(USPI0);
 
                     /* Check the transfer data */
                     for (u32DataCount = 0; u32DataCount < TEST_COUNT; u32DataCount++)
                     {
-                        if (g_au32MasterToSlaveTestPattern[u32DataCount] != g_au32SlaveRxBuffer[u32DataCount])
+                        if (g_au16MasterToSlaveTestPattern[u32DataCount] != g_au16SlaveRxBuffer[u32DataCount])
                         {
                             i32Err = 1;
                             break;
                         }
 
-                        if (g_au32SlaveToMasterTestPattern[u32DataCount] != g_au32MasterRxBuffer[u32DataCount])
+                        if (g_au16SlaveToMasterTestPattern[u32DataCount] != g_au16MasterRxBuffer[u32DataCount])
                         {
                             i32Err = 1;
                             break;
@@ -271,37 +300,37 @@ void SpiLoopTest_WithPDMA(void)
                     /* Source data initiation */
                     for (u32DataCount = 0; u32DataCount < TEST_COUNT; u32DataCount++)
                     {
-                        g_au32MasterToSlaveTestPattern[u32DataCount]++;
-                        g_au32SlaveToMasterTestPattern[u32DataCount]++;
+                        g_au16MasterToSlaveTestPattern[u32DataCount]++;
+                        g_au16SlaveToMasterTestPattern[u32DataCount]++;
                     }
 
                     /* Re-trigger */
                     /* Slave PDMA TX channel configuration */
-                    /* Set transfer width (32 bits) and transfer count */
-                    PDMA_SetTransferCnt(PDMA, SPI_SLAVE_TX_DMA_CH, PDMA_WIDTH_32, TEST_COUNT);
+                    /* Set transfer width (16 bits) and transfer count */
+                    PDMA_SetTransferCnt(PDMA, SPI_SLAVE_TX_DMA_CH, PDMA_WIDTH_16, TEST_COUNT);
                     /* Set request source; set basic mode. */
                     PDMA_SetTransferMode(PDMA, SPI_SLAVE_TX_DMA_CH, PDMA_SPI0_TX, FALSE, 0);
 
                     /* Slave PDMA RX channel configuration */
-                    /* Set transfer width (32 bits) and transfer count */
-                    PDMA_SetTransferCnt(PDMA, SPI_SLAVE_RX_DMA_CH, PDMA_WIDTH_32, TEST_COUNT);
+                    /* Set transfer width (16 bits) and transfer count */
+                    PDMA_SetTransferCnt(PDMA, SPI_SLAVE_RX_DMA_CH, PDMA_WIDTH_16, TEST_COUNT);
                     /* Set request source; set basic mode. */
                     PDMA_SetTransferMode(PDMA, SPI_SLAVE_RX_DMA_CH, PDMA_SPI0_RX, FALSE, 0);
 
                     /* Master PDMA TX channel configuration */
-                    /* Set transfer width (32 bits) and transfer count */
-                    PDMA_SetTransferCnt(PDMA, SPI_MASTER_TX_DMA_CH, PDMA_WIDTH_32, TEST_COUNT);
+                    /* Set transfer width (16 bits) and transfer count */
+                    PDMA_SetTransferCnt(PDMA, USPI_MASTER_TX_DMA_CH, PDMA_WIDTH_16, TEST_COUNT);
                     /* Set request source; set basic mode. */
-                    PDMA_SetTransferMode(PDMA, SPI_MASTER_TX_DMA_CH, PDMA_QSPI0_TX, FALSE, 0);
+                    PDMA_SetTransferMode(PDMA, USPI_MASTER_TX_DMA_CH, PDMA_USCI0_TX, FALSE, 0);
 
                     /* Master PDMA RX channel configuration */
-                    /* Set transfer width (32 bits) and transfer count */
-                    PDMA_SetTransferCnt(PDMA, SPI_MASTER_RX_DMA_CH, PDMA_WIDTH_32, TEST_COUNT);
+                    /* Set transfer width (16 bits) and transfer count */
+                    PDMA_SetTransferCnt(PDMA, USPI_MASTER_RX_DMA_CH, PDMA_WIDTH_16, TEST_COUNT);
                     /* Set request source; set basic mode. */
-                    PDMA_SetTransferMode(PDMA, SPI_MASTER_RX_DMA_CH, PDMA_QSPI0_RX, FALSE, 0);
+                    PDMA_SetTransferMode(PDMA, USPI_MASTER_RX_DMA_CH, PDMA_USCI0_RX, FALSE, 0);
 
                     /* Enable master's DMA transfer function */
-                    QSPI_TRIGGER_TX_RX_PDMA(QSPI0);
+                    USPI_TRIGGER_TX_RX_PDMA(USPI0);
                     break;
                 }
             }
@@ -363,12 +392,14 @@ int main(void)
     printf("|                  SPI + PDMA Sample Code                      |\n");
     printf("+--------------------------------------------------------------+\n");
     printf("\n");
-    printf("Configure QSPI0 as a master and SPI0 as a slave.\n");
-    printf("Bit length of a transaction: 32\n");
-    printf("The I/O connection for QSPI0/SPI2 loopback:\n");
-    printf("    QSPI0_SS  (PA3) <--> SPI0_SS(PD3)\n    QSPI0_CLK(PA2)  <--> SPI0_CLK(PD2)\n");
-    printf("    QSPI0_MISO(PA1) <--> SPI0_MISO(PD1)\n    QSPI0_MOSI(PA0) <--> SPI0_MOSI(PD0)\n\n");
-    printf("Please connect QSPI0 with SPI0, and press any key to start transmission ...");
+    printf("Configure USPI0 as a master and SPI0 as a slave.\n");
+    printf("Bit length of a transaction: 16\n");
+    printf("The I/O connection for USPI0/SPI0 loopback:\n");
+    printf("    USPI0_CTL0(PC14) <--> SPI0_SS(PD3)\n");
+    printf("    USPI0_CLK(PA11)  <--> SPI0_CLK(PD2)\n");
+    printf("    USPI0_DAT1(PA9)  <--> SPI0_MISO(PD1)\n");
+    printf("    USPI0_DAT0(PA10) <--> SPI0_MOSI(PD0)\n\n");
+    printf("Please connect USPI0 with SPI0, and press any key to start transmission ...");
     getchar();
     printf("\n");
 
@@ -376,8 +407,9 @@ int main(void)
 
     printf("\n\nExit SPI driver sample code.\n");
 
-    /* Close QSPI0 */
-    QSPI_Close(QSPI0);
+    /* Close USPI0 */
+    USPI_Close(USPI0);
+
     /* Close SPI0 */
     SPI_Close(SPI0);
 

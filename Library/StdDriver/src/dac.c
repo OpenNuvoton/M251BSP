@@ -72,7 +72,7 @@ void DAC_Close(DAC_T *dac, uint32_t u32Ch)
 uint32_t DAC_SetDelayTime(DAC_T *dac, uint32_t u32Delay)
 {
 
-    dac->TCTL = ((CLK_GetPCLK1Freq() * u32Delay / 1000000UL) & 0x3FFUL);
+    dac->TCTL = (((CLK_GetPCLK1Freq() / 1000000UL) * u32Delay) & 0x3FFUL);
 
     return ((dac->TCTL) * 1000000UL / CLK_GetPCLK1Freq());
 }

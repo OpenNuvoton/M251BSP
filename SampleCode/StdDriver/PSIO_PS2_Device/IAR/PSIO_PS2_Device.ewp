@@ -1627,7 +1627,7 @@
         </option>
         <option>
           <name>IlinkOutputFile</name>
-          <state>psio_ps2_device.out</state>
+          <state>PSIO_PS2_Device.out</state>
         </option>
         <option>
           <name>IlinkDebugInfoEnable</name>

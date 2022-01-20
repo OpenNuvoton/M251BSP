@@ -63,7 +63,15 @@ void RTC_Init(void)
         sWriteRTC.u32Minute     = 0;
         sWriteRTC.u32Second     = 0;
         sWriteRTC.u32TimeScale  = RTC_CLOCK_24;
-        RTC_Open(&sWriteRTC);
+
+        if (RTC_Open(&sWriteRTC) != 0)
+        {
+            printf("\n RTC initial fail!!");
+            printf("\n Please check h/w setting!!");
+
+            while (1);
+        }
+
         printf("# Set RTC current date/time: 2020/05/15 00:00:00.\n");
     }
 

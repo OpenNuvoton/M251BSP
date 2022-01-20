@@ -2,7 +2,7 @@
 
 <workspace>
   <project>
-    <path>$WS_DIR$\XOMCode.ewp</path>
+    <path>$WS_DIR$\XOMLib_Code.ewp</path>
   </project>
   <project>
     <path>$WS_DIR$\XOMLib.ewp</path>

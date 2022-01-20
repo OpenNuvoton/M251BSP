@@ -4,7 +4,7 @@
  * @brief    Show how to set pixel on and off on RHE6616TP01(8-COM, 40-SEG, 1/4 Bias) LCD.
  *
  * SPDX-License-Identifier: Apache-2.0
- * @copyright (C) 2020 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2022 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>
 #include <string.h>
@@ -297,7 +297,7 @@ int main(void)
     printf("LCD configurations:\n");
     printf(" * Clock source is LIRC\n");
     printf(" * 8 COM, 40 SEG and 1/4 Bias\n");
-    printf(" * Driving waveform is Type-%c\n", (g_LCDCfg.u32WaveformType == LCD_PCTL_TYPE_Msk) ? 'B' : 'A');
+    printf(" * Driving waveform is Type-%c\n", (g_LCDCfg.u32WaveformType == LCD_PSET_TYPE_Msk) ? 'B' : 'A');
     printf(" * Target frame rate is %uHz\n\n", g_LCDCfg.u32Framerate);
 
     /*
@@ -335,7 +335,7 @@ int main(void)
 
     /* LCD Initialize and calculate real frame rate */
     u32ActiveFPS = LCD_Open(&g_LCDCfg);
-    printf("Working frame rate is %uHz on Type-%c.\n\n", u32ActiveFPS, (g_LCDCfg.u32WaveformType == LCD_PCTL_TYPE_Msk) ? 'B' : 'A');
+    printf("Working frame rate is %uHz on Type-%c.\n\n", u32ActiveFPS, (g_LCDCfg.u32WaveformType == LCD_PSET_TYPE_Msk) ? 'B' : 'A');
 
     /* Enable LCD display */
     LCD_ENABLE_DISPLAY();

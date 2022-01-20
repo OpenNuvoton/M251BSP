@@ -888,6 +888,29 @@ typedef struct
     __IO uint32_t TK_REFCBD3;            /*!< [0x0074] Touch Key Reference Capacitor Bank Data Register 3               */
     __IO uint32_t TK_REFCBD4;            /*!< [0x0078] Touch Key Reference Capacitor Bank Data Register 4               */
     __I  uint32_t RESERVED;              /*!< [0x007c] Reserved                                                         */
+    __IO uint32_t SCANC1;                /*!< [0x0080] Touch Key Scan Control Register 1                                */
+    __IO uint32_t REFC1;                 /*!< [0x0084] Touch Key Reference Control Register 1                           */
+    __IO uint32_t CCBD5;                 /*!< [0x0088] Touch Key Complement Capacitor Bank Data Register 5              */
+    __IO uint32_t CCBD6;                 /*!< [0x008c] Touch Key Complement Capacitor Bank Data Register 6              */
+    __IO uint32_t CCBD7;                 /*!< [0x0090] Touch Key Complement Capacitor Bank Data Register 7              */
+    __I  uint32_t RESERVED1[2];          /*!< [0x0094]~[0x0098] Reserved                                                */
+    __IO uint32_t IDLSC1;                /*!< [0x009c] Touch Key Idle State Control Register 1                          */
+    __IO uint32_t POLSEL1;               /*!< [0x00A0] Touch Key Polarity Select Register 1                             */
+    __IO uint32_t POLC1;                 /*!< [0x00A4] Touch Key Polarity Control Register 1                            */
+    __IO  uint32_t STA1;                 /*!< [0x00A8] Touch Key Status Register 1                                      */
+    __I  uint32_t DAT5;                  /*!< [0x00Ac] Touch Key Data Register 5                                        */
+    __I  uint32_t DAT6;                  /*!< [0x00B0] Touch Key Data Register 6                                        */
+    __I  uint32_t DAT7;                  /*!< [0x00B4] Touch Key Data Register 7                                        */
+    __I  uint32_t RESERVE2[3];           /*!< [0x00B8]~[0x00C0] Reserved                                                */
+    __IO uint32_t THC1718;               /*!< [0x00C4] Touch Key TK17/TK18 Threshold Control Register                   */
+    __IO uint32_t THC1920;               /*!< [0x00C8] Touch Key TK19/TK20 Threshold Control Register                   */
+    __IO uint32_t THC2122;               /*!< [0x00Cc] Touch Key TK21/TK22 Threshold Control Register                   */
+    __IO uint32_t THC2324;               /*!< [0x00D0] Touch Key TK23/TK24 Threshold Control Register                   */
+    __IO uint32_t THC25;                 /*!< [0x00D4] Touch Key TK25 Threshold Control Register                        */
+    __I  uint32_t RESERVE3[4];           /*!< [0x00D8]~[0x00E4] Reserved                                                */
+    __IO uint32_t TK_REFCBD5;            /*!< [0x00E8] Touch Key Reference Capacitor Bank Data Register 5               */
+    __IO uint32_t TK_REFCBD6;            /*!< [0x00EC] Touch Key Reference Capacitor Bank Data Register 6               */
+    __IO uint32_t TK_REFCBD7;            /*!< [0x00F0] Touch Key Reference Capacitor Bank Data Register 7               */
 
 } TK_T;
 
@@ -959,6 +982,33 @@ typedef struct
 #define TK_SCANC_TK_EN_Pos               (31)                                              /*!< TK_T::SCANC: TK_EN Position            */
 #define TK_SCANC_TK_EN_Msk               (0x1ul << TK_SCANC_TK_EN_Pos)                     /*!< TK_T::SCANC: TK_EN Mask                */
 
+#define TK_SCANC1_TK17SEN_Pos            (0)                                               /*!< TK_T::SCANC1: TK17SEN Position         */
+#define TK_SCANC1_TK17SEN_Msk            (0x1ul << TK_SCANC1_TK17SEN_Pos)                  /*!< TK_T::SCANC1: TK17SEN Mask             */
+
+#define TK_SCANC1_TK18SEN_Pos            (1)                                               /*!< TK_T::SCANC1: TK18SEN Position         */
+#define TK_SCANC1_TK18SEN_Msk            (0x1ul << TK_SCANC1_TK18SEN_Pos)                  /*!< TK_T::SCANC1: TK18SEN Mask             */
+
+#define TK_SCANC1_TK19SEN_Pos            (2)                                               /*!< TK_T::SCANC: TK19SEN Position          */
+#define TK_SCANC1_TK19SEN_Msk            (0x1ul << TK_SCANC1_TK19SEN_Pos)                  /*!< TK_T::SCANC: TK19SEN Mask              */
+
+#define TK_SCANC1_TK20SEN_Pos            (3)                                               /*!< TK_T::SCANC: TK20SEN Position          */
+#define TK_SCANC1_TK20SEN_Msk            (0x1ul << TK_SCANC1_TK20SEN_Pos)                  /*!< TK_T::SCANC: TK20SEN Mask              */
+
+#define TK_SCANC1_TK21SEN_Pos            (4)                                               /*!< TK_T::SCANC: TK21SEN Position          */
+#define TK_SCANC1_TK21SEN_Msk            (0x1ul << TK_SCANC1_TK21SEN_Pos)                  /*!< TK_T::SCANC: TK21SEN Mask              */
+
+#define TK_SCANC1_TK22SEN_Pos            (5)                                               /*!< TK_T::SCANC: TK22SEN Position          */
+#define TK_SCANC1_TK22SEN_Msk            (0x1ul << TK_SCANC1_TK22SEN_Pos)                  /*!< TK_T::SCANC: TK22SEN Mask              */
+
+#define TK_SCANC1_TK23SEN_Pos            (6)                                               /*!< TK_T::SCANC: TK23SEN Position          */
+#define TK_SCANC1_TK23SEN_Msk            (0x1ul << TK_SCANC1_TK23SEN_Pos)                  /*!< TK_T::SCANC: TK23SEN Mask              */
+
+#define TK_SCANC1_TK24SEN_Pos            (7)                                               /*!< TK_T::SCANC: TK24SEN Position          */
+#define TK_SCANC1_TK24SEN_Msk            (0x1ul << TK_SCANC1_TK24SEN_Pos)                  /*!< TK_T::SCANC: TK24SEN Mask              */
+
+#define TK_SCANC1_TK25SEN_Pos            (8)                                               /*!< TK_T::SCANC: TK25SEN Position          */
+#define TK_SCANC1_TK25SEN_Msk            (0x1ul << TK_SCANC1_TK25SEN_Pos)                  /*!< TK_T::SCANC: TK25SEN Mask              */
+
 #define TK_REFC_TK0REN_Pos               (0)                                               /*!< TK_T::REFC: TK0REN Position            */
 #define TK_REFC_TK0REN_Msk               (0x1ul << TK_REFC_TK0REN_Pos)                     /*!< TK_T::REFC: TK0REN Mask                */
 
@@ -1019,6 +1069,33 @@ typedef struct
 #define TK_REFC_PULSET_Pos               (28)                                              /*!< TK_T::REFC: PULSET Position            */
 #define TK_REFC_PULSET_Msk               (0x7ul << TK_REFC_PULSET_Pos)                     /*!< TK_T::REFC: PULSET Mask                */
 
+#define TK_REFC1_TK17REN_Pos             (0)                                               /*!< TK_T::REFC1: TK17REN Position          */
+#define TK_REFC1_TK17REN_Msk             (0x1ul << TK_REFC1_TK17REN_Pos)                   /*!< TK_T::REFC1: TK17REN Mask              */
+
+#define TK_REFC1_TK18REN_Pos             (1)                                               /*!< TK_T::REFC1: TK18REN Position          */
+#define TK_REFC1_TK18REN_Msk             (0x1ul << TK_REFC1_TK18REN_Pos)                   /*!< TK_T::REFC1: TK18REN Mask              */
+
+#define TK_REFC1_TK19REN_Pos             (2)                                               /*!< TK_T::REFC1: TK19REN Position          */
+#define TK_REFC1_TK19REN_Msk             (0x1ul << TK_REFC1_TK19REN_Pos)                   /*!< TK_T::REFC1: TK19REN Mask              */
+
+#define TK_REFC1_TK20REN_Pos             (3)                                               /*!< TK_T::REFC1: TK20REN Position          */
+#define TK_REFC1_TK20REN_Msk             (0x1ul << TK_REFC1_TK20REN_Pos)                   /*!< TK_T::REFC1: TK20REN Mask              */
+
+#define TK_REFC1_TK21REN_Pos             (4)                                               /*!< TK_T::REFC1: TK21REN Position          */
+#define TK_REFC1_TK21REN_Msk             (0x1ul << TK_REFC1_TK21REN_Pos)                   /*!< TK_T::REFC1: TK21REN Mask              */
+
+#define TK_REFC1_TK22REN_Pos             (5)                                               /*!< TK_T::REFC1: TK22REN Position          */
+#define TK_REFC1_TK22REN_Msk             (0x1ul << TK_REFC1_TK22REN_Pos)                   /*!< TK_T::REFC1: TK22REN Mask              */
+
+#define TK_REFC1_TK23REN_Pos             (6)                                               /*!< TK_T::REFC1: TK23REN Position          */
+#define TK_REFC1_TK23REN_Msk             (0x1ul << TK_REFC1_TK23REN_Pos)                   /*!< TK_T::REFC1: TK23REN Mask              */
+
+#define TK_REFC1_TK24REN_Pos             (7)                                               /*!< TK_T::REFC1: TK24REN Position          */
+#define TK_REFC1_TK24REN_Msk             (0x1ul << TK_REFC1_TK24REN_Pos)                   /*!< TK_T::REFC1: TK24REN Mask              */
+
+#define TK_REFC1_TK25REN_Pos             (8)                                               /*!< TK_T::REFC1: TK25REN Position          */
+#define TK_REFC1_TK25REN_Msk             (0x1ul << TK_REFC1_TK25REN_Pos)                   /*!< TK_T::REFC1: TK25REN Mask              */
+
 #define TK_CCBD0_CCBD0_Pos               (0)                                               /*!< TK_T::CCBD0: CCBD0 Position            */
 #define TK_CCBD0_CCBD0_Msk               (0xfful << TK_CCBD0_CCBD0_Pos)                    /*!< TK_T::CCBD0: CCBD0 Mask                */
 
@@ -1073,6 +1150,33 @@ typedef struct
 #define TK_CCBD4_CCBD_ALL_Pos            (8)                                               /*!< TK_T::CCBD4: CCBD_ALL Position         */
 #define TK_CCBD4_CCBD_ALL_Msk            (0xfful << TK_CCBD4_CCBD_ALL_Pos)                 /*!< TK_T::CCBD4: CCBD_ALL Mask             */
 
+#define TK_CCBD5_CCBD17_Pos              (0)                                               /*!< TK_T::CCBD5: CCBD17 Position           */
+#define TK_CCBD5_CCBD17_Msk              (0xfful << TK_CCBD5_CCBD17_Pos)                   /*!< TK_T::CCBD5: CCBD17 Mask               */
+
+#define TK_CCBD5_CCBD18_Pos              (8)                                               /*!< TK_T::CCBD5: CCBD18 Position           */
+#define TK_CCBD5_CCBD18_Msk              (0xfful << TK_CCBD5_CCBD18_Pos)                   /*!< TK_T::CCBD5: CCBD18 Mask               */
+
+#define TK_CCBD5_CCBD19_Pos              (16)                                              /*!< TK_T::CCBD5: CCBD19 Position           */
+#define TK_CCBD5_CCBD19_Msk              (0xfful << TK_CCBD5_CCBD19_Pos)                   /*!< TK_T::CCBD5: CCBD19 Mask               */
+
+#define TK_CCBD5_CCBD20_Pos              (24)                                              /*!< TK_T::CCBD5: CCBD20 Position           */
+#define TK_CCBD5_CCBD20_Msk              (0xfful << TK_CCBD5_CCBD20_Pos)                   /*!< TK_T::CCBD5: CCBD20 Mask               */
+
+#define TK_CCBD6_CCBD21_Pos              (0)                                               /*!< TK_T::CCBD6: CCBD21 Position           */
+#define TK_CCBD6_CCBD21_Msk              (0xfful << TK_CCBD6_CCBD21_Pos)                   /*!< TK_T::CCBD6: CCBD21 Mask               */
+
+#define TK_CCBD6_CCBD22_Pos              (8)                                               /*!< TK_T::CCBD6: CCBD22 Position           */
+#define TK_CCBD6_CCBD22_Msk              (0xfful << TK_CCBD6_CCBD22_Pos)                   /*!< TK_T::CCBD6: CCBD22 Mask               */
+
+#define TK_CCBD6_CCBD23_Pos              (16)                                              /*!< TK_T::CCBD6: CCBD23 Position           */
+#define TK_CCBD6_CCBD23_Msk              (0xfful << TK_CCBD6_CCBD23_Pos)                   /*!< TK_T::CCBD6: CCBD23 Mask               */
+
+#define TK_CCBD6_CCBD24_Pos              (24)                                              /*!< TK_T::CCBD6: CCBD24 Position           */
+#define TK_CCBD6_CCBD24_Msk              (0xfful << TK_CCBD6_CCBD24_Pos)                   /*!< TK_T::CCBD6: CCBD24 Mask               */
+
+#define TK_CCBD7_CCBD25_Pos              (0)                                               /*!< TK_T::CCBD7: CCBD25 Position           */
+#define TK_CCBD7_CCBD25_Msk              (0xfful << TK_CCBD7_CCBD25_Pos)                   /*!< TK_T::CCBD7: CCBD25 Mask               */
+
 #define TK_IDLSC_IDLS0_Pos               (0)                                               /*!< TK_T::IDLSC: IDLS0 Position            */
 #define TK_IDLSC_IDLS0_Msk               (0x3ul << TK_IDLSC_IDLS0_Pos)                     /*!< TK_T::IDLSC: IDLS0 Mask                */
 
@@ -1120,6 +1224,36 @@ typedef struct
 
 #define TK_IDLSC_IDLS15_Pos              (30)                                              /*!< TK_T::IDLSC: IDLS15 Position           */
 #define TK_IDLSC_IDLS15_Msk              (0x3ul << TK_IDLSC_IDLS15_Pos)                    /*!< TK_T::IDLSC: IDLS15 Mask               */
+
+#define TK_POLC_IDLS16_Pos               (0)                                               /*!< TK_T::POLC: IDLS16 Position            */
+#define TK_POLC_IDLS16_Msk               (0x3ul << TK_POLC_IDLS16_Pos)                     /*!< TK_T::POLC: IDLS16 Mask                */
+
+#define TK_IDLSC1_IDLS17_Pos             (0)                                               /*!< TK_T::IDLSC1: IDLS17 Position          */
+#define TK_IDLSC1_IDLS17_Msk             (0x3ul << TK_IDLSC1_IDLS17_Pos)                   /*!< TK_T::IDLSC1: IDLS17 Mask              */
+
+#define TK_IDLSC1_IDLS18_Pos             (2)                                               /*!< TK_T::IDLSC1: IDLS18 Position          */
+#define TK_IDLSC1_IDLS18_Msk             (0x3ul << TK_IDLSC1_IDLS18_Pos)                   /*!< TK_T::IDLSC1: IDLS18 Mask              */
+
+#define TK_IDLSC1_IDLS19_Pos             (4)                                               /*!< TK_T::IDLSC1: IDLS19 Position          */
+#define TK_IDLSC1_IDLS19_Msk             (0x3ul << TK_IDLSC1_IDLS19_Pos)                   /*!< TK_T::IDLSC1: IDLS19 Mask              */
+
+#define TK_IDLSC1_IDLS20_Pos             (6)                                               /*!< TK_T::IDLSC1: IDLS20 Position          */
+#define TK_IDLSC1_IDLS20_Msk             (0x3ul << TK_IDLSC1_IDLS20_Pos)                   /*!< TK_T::IDLSC1: IDLS20 Mask              */
+
+#define TK_IDLSC1_IDLS21_Pos             (8)                                               /*!< TK_T::IDLSC1: IDLS21 Position          */
+#define TK_IDLSC1_IDLS21_Msk             (0x3ul << TK_IDLSC1_IDLS21_Pos)                   /*!< TK_T::IDLSC1: IDLS21 Mask              */
+
+#define TK_IDLSC1_IDLS22_Pos             (10)                                              /*!< TK_T::IDLSC1: IDLS22 Position          */
+#define TK_IDLSC1_IDLS22_Msk             (0x3ul << TK_IDLSC1_IDLS22_Pos)                   /*!< TK_T::IDLSC1: IDLS22 Mask              */
+
+#define TK_IDLSC1_IDLS23_Pos             (12)                                              /*!< TK_T::IDLSC1: IDLS23 Position          */
+#define TK_IDLSC1_IDLS23_Msk             (0x3ul << TK_IDLSC1_IDLS23_Pos)                   /*!< TK_T::IDLSC1: IDLS23 Mask              */
+
+#define TK_IDLSC1_IDLS24_Pos             (14)                                              /*!< TK_T::IDLSC1: IDLS24 Position          */
+#define TK_IDLSC1_IDLS24_Msk             (0x3ul << TK_IDLSC1_IDLS24_Pos)                   /*!< TK_T::IDLSC1: IDLS24 Mask              */
+
+#define TK_IDLSC1_IDLS25_Pos             (16)                                              /*!< TK_T::IDLSC1: IDLS25 Position          */
+#define TK_IDLSC1_IDLS25_Msk             (0x3ul << TK_IDLSC1_IDLS25_Pos)                   /*!< TK_T::IDLSC1: IDLS25 Mask              */
 
 #define TK_POLSEL_POL0_Pos               (0)                                               /*!< TK_T::POLSEL: POL0 Position            */
 #define TK_POLSEL_POL0_Msk               (0x3ul << TK_POLSEL_POL0_Pos)                     /*!< TK_T::POLSEL: POL0 Mask                */
@@ -1175,6 +1309,33 @@ typedef struct
 #define TK_POLC_POL16_Pos                (2)                                               /*!< TK_T::POLC: POL16 Position             */
 #define TK_POLC_POL16_Msk                (0x3ul << TK_POLC_POL16_Pos)                      /*!< TK_T::POLC: POL16 Mask                 */
 
+#define TK_POLSEL1_POL17_Pos             (0)                                               /*!< TK_T::POLSEL1: POL17 Position          */
+#define TK_POLSEL1_POL17_Msk             (0x3ul << TK_POLSEL1_POL17_Pos)                   /*!< TK_T::POLSEL1: POL17 Mask              */
+
+#define TK_POLSEL1_POL18_Pos             (2)                                               /*!< TK_T::POLSEL1: POL18 Position          */
+#define TK_POLSEL1_POL18_Msk             (0x3ul << TK_POLSEL1_POL18_Pos)                   /*!< TK_T::POLSEL1: POL18 Mask              */
+
+#define TK_POLSEL1_POL19_Pos             (4)                                               /*!< TK_T::POLSEL1: POL19 Position          */
+#define TK_POLSEL1_POL19_Msk             (0x3ul << TK_POLSEL1_POL19_Pos)                   /*!< TK_T::POLSEL1: POL19 Mask              */
+
+#define TK_POLSEL1_POL20_Pos             (6)                                               /*!< TK_T::POLSEL1: POL20 Position          */
+#define TK_POLSEL1_POL20_Msk             (0x3ul << TK_POLSEL1_POL20_Pos)                   /*!< TK_T::POLSEL1: POL20 Mask              */
+
+#define TK_POLSEL1_POL21_Pos             (8)                                               /*!< TK_T::POLSEL1: POL21 Position          */
+#define TK_POLSEL1_POL21_Msk             (0x3ul << TK_POLSEL1_POL21_Pos)                   /*!< TK_T::POLSEL1: POL21 Mask              */
+
+#define TK_POLSEL1_POL22_Pos             (10)                                              /*!< TK_T::POLSEL1: POL22 Position          */
+#define TK_POLSEL1_POL22_Msk             (0x3ul << TK_POLSEL1_POL22_Pos)                   /*!< TK_T::POLSEL1: POL22 Mask              */
+
+#define TK_POLSEL1_POL23_Pos             (12)                                              /*!< TK_T::POLSEL1: POL23 Position          */
+#define TK_POLSEL1_POL23_Msk             (0x3ul << TK_POLSEL1_POL23_Pos)                   /*!< TK_T::POLSEL1: POL23 Mask              */
+
+#define TK_POLSEL1_POL24_Pos             (14)                                              /*!< TK_T::POLSEL1: POL24 Position          */
+#define TK_POLSEL1_POL24_Msk             (0x3ul << TK_POLSEL1_POL24_Pos)                   /*!< TK_T::POLSEL1: POL24 Mask              */
+
+#define TK_POLSEL1_POL25_Pos             (16)                                              /*!< TK_T::POLSEL1: POL25 Position          */
+#define TK_POLSEL1_POL25_Msk             (0x3ul << TK_POLSEL1_POL25_Pos)                   /*!< TK_T::POLSEL1: POL25 Mask              */
+
 #define TK_POLC_POL_CAP_Pos              (4)                                               /*!< TK_T::POLC: POL_CAP Position           */
 #define TK_POLC_POL_CAP_Msk              (0x3ul << TK_POLC_POL_CAP_Pos)                    /*!< TK_T::POLC: POL_CAP Mask               */
 
@@ -1228,6 +1389,33 @@ typedef struct
 
 #define TK_POLC_POLEN16_Pos              (24)                                              /*!< TK_T::POLC: POLEN16 Position           */
 #define TK_POLC_POLEN16_Msk              (0x1ul << TK_POLC_POLEN16_Pos)                    /*!< TK_T::POLC: POLEN16 Mask               */
+
+#define TK_POLC1_POLEN17_Pos             (0)                                               /*!< TK_T::POLC1: POLEN17 Position          */
+#define TK_POLC1_POLEN17_Msk             (0x1ul << TK_POLC1_POLEN17_Pos)                   /*!< TK_T::POLC1: POLEN17 Mask              */
+
+#define TK_POLC1_POLEN18_Pos             (1)                                               /*!< TK_T::POLC1: POLEN18 Position          */
+#define TK_POLC1_POLEN18_Msk             (0x1ul << TK_POLC1_POLEN18_Pos)                   /*!< TK_T::POLC1: POLEN18 Mask              */
+
+#define TK_POLC1_POLEN19_Pos             (2)                                               /*!< TK_T::POLC1: POLEN19 Position          */
+#define TK_POLC1_POLEN19_Msk             (0x1ul << TK_POLC1_POLEN19_Pos)                   /*!< TK_T::POLC1: POLEN19 Mask              */
+
+#define TK_POLC1_POLEN20_Pos             (3)                                               /*!< TK_T::POLC1: POLEN20 Position          */
+#define TK_POLC1_POLEN20_Msk             (0x1ul << TK_POLC1_POLEN20_Pos)                   /*!< TK_T::POLC1: POLEN20 Mask              */
+
+#define TK_POLC1_POLEN21_Pos             (4)                                               /*!< TK_T::POLC1: POLEN21 Position          */
+#define TK_POLC1_POLEN21_Msk             (0x1ul << TK_POLC1_POLEN21_Pos)                   /*!< TK_T::POLC1: POLEN21 Mask              */
+
+#define TK_POLC1_POLEN22_Pos             (5)                                               /*!< TK_T::POLC1: POLEN22 Position          */
+#define TK_POLC1_POLEN22_Msk             (0x1ul << TK_POLC1_POLEN22_Pos)                   /*!< TK_T::POLC1: POLEN22 Mask              */
+
+#define TK_POLC1_POLEN23_Pos             (6)                                               /*!< TK_T::POLC1: POLEN23 Position          */
+#define TK_POLC1_POLEN23_Msk             (0x1ul << TK_POLC1_POLEN23_Pos)                   /*!< TK_T::POLC1: POLEN23 Mask              */
+
+#define TK_POLC1_POLEN24_Pos             (7)                                               /*!< TK_T::POLC1: POLEN24 Position          */
+#define TK_POLC1_POLEN24_Msk             (0x1ul << TK_POLC1_POLEN24_Pos)                   /*!< TK_T::POLC1: POLEN24 Mask              */
+
+#define TK_POLC1_POLEN25_Pos             (8)                                               /*!< TK_T::POLC1: POLEN25 Position          */
+#define TK_POLC1_POLEN25_Msk             (0x1ul << TK_POLC1_POLEN25_Pos)                   /*!< TK_T::POLC1: POLEN25 Mask              */
 
 #define TK_POLC_POL_INIT_Pos             (31)                                              /*!< TK_T::POLC: POL_INIT Position          */
 #define TK_POLC_POL_INIT_Msk             (0x1ul << TK_POLC_POL_INIT_Pos)                   /*!< TK_T::POLC: POL_INIT Mask              */
@@ -1376,6 +1564,33 @@ typedef struct
 #define TK_DAT4_TKDAT_ALL_Pos            (8)                                               /*!< TK_T::DAT4: TKDAT_ALL Position         */
 #define TK_DAT4_TKDAT_ALL_Msk            (0xfful << TK_DAT4_TKDAT_ALL_Pos)                 /*!< TK_T::DAT4: TKDAT_ALL Mask             */
 
+#define TK_DAT5_TKDAT17_Pos              (0)                                               /*!< TK_T::DAT5: TKDAT17 Position           */
+#define TK_DAT5_TKDAT17_Msk              (0xfful << TK_DAT5_TKDAT17_Pos)                   /*!< TK_T::DAT5: TKDAT17 Mask               */
+
+#define TK_DAT5_TKDAT18_Pos              (8)                                               /*!< TK_T::DAT5: TKDAT18 Position           */
+#define TK_DAT5_TKDAT18_Msk              (0xfful << TK_DAT5_TKDAT18_Pos)                   /*!< TK_T::DAT5: TKDAT18 Mask               */
+
+#define TK_DAT5_TKDAT19_Pos              (16)                                              /*!< TK_T::DAT5: TKDAT19 Position           */
+#define TK_DAT5_TKDAT19_Msk              (0xfful << TK_DAT5_TKDAT19_Pos)                   /*!< TK_T::DAT5: TKDAT19 Mask               */
+
+#define TK_DAT5_TKDAT20_Pos              (24)                                              /*!< TK_T::DAT5: TKDAT20 Position           */
+#define TK_DAT5_TKDAT20_Msk              (0xfful << TK_DAT5_TKDAT20_Pos)                   /*!< TK_T::DAT5: TKDAT20 Mask               */
+
+#define TK_DAT6_TKDAT21_Pos              (0)                                               /*!< TK_T::DAT6: TKDAT21 Position           */
+#define TK_DAT6_TKDAT21_Msk              (0xfful << TK_DAT6_TKDAT21_Pos)                   /*!< TK_T::DAT6: TKDAT21 Mask               */
+
+#define TK_DAT6_TKDAT22_Pos              (8)                                               /*!< TK_T::DAT6: TKDAT22 Position           */
+#define TK_DAT6_TKDAT22_Msk              (0xfful << TK_DAT6_TKDAT22_Pos)                   /*!< TK_T::DAT6: TKDAT22 Mask               */
+
+#define TK_DAT6_TKDAT23_Pos              (16)                                              /*!< TK_T::DAT6: TKDAT23 Position           */
+#define TK_DAT6_TKDAT23_Msk              (0xfful << TK_DAT6_TKDAT23_Pos)                   /*!< TK_T::DAT6: TKDAT23 Mask               */
+
+#define TK_DAT6_TKDAT24_Pos              (24)                                              /*!< TK_T::DAT6: TKDAT24 Position           */
+#define TK_DAT6_TKDAT24_Msk              (0xfful << TK_DAT6_TKDAT24_Pos)                   /*!< TK_T::DAT6: TKDAT24 Mask               */
+
+#define TK_DAT7_TKDAT25_Pos              (0)                                               /*!< TK_T::DAT7: TKDAT25 Position           */
+#define TK_DAT7_TKDAT25_Msk              (0xfful << TK_DAT7_TKDAT25_Pos)                   /*!< TK_T::DAT7: TKDAT25 Mask               */
+
 #define TK_INTEN_SCTHIE_Pos              (0)                                               /*!< TK_T::INTEN: SCTHIE Position           */
 #define TK_INTEN_SCTHIE_Msk              (0x1ul << TK_INTEN_SCTHIE_Pos)                    /*!< TK_T::INTEN: SCTHIE Mask               */
 
@@ -1436,6 +1651,33 @@ typedef struct
 #define TK_THC16_HTH_ALL_Pos             (24)                                              /*!< TK_T::THC16: HTH_ALL Position          */
 #define TK_THC16_HTH_ALL_Msk             (0xfful << TK_THC16_HTH_ALL_Pos)                  /*!< TK_T::THC16: HTH_ALL Mask              */
 
+#define TK_THC1718_HTH17_Pos             (8)                                               /*!< TK_T::THC1718: HTH17 Position          */
+#define TK_THC1718_HTH17_Msk             (0xfful << TK_THC1718_HTH17_Pos)                  /*!< TK_T::THC1718: HTH17 Mask              */
+
+#define TK_THC1718_HTH18_Pos             (24)                                              /*!< TK_T::THC1718: HTH18 Position          */
+#define TK_THC1718_HTH18_Msk             (0xfful << TK_THC1718_HTH18_Pos)                  /*!< TK_T::THC1718: HTH18 Mask              */
+
+#define TK_THC1920_HTH19_Pos             (8)                                               /*!< TK_T::THC1920: HTH19 Position          */
+#define TK_THC1920_HTH19_Msk             (0xfful << TK_THC1920_HTH19_Pos)                  /*!< TK_T::THC1920: HTH19 Mask              */
+
+#define TK_THC1920_HTH20_Pos             (24)                                              /*!< TK_T::THC1920: HTH20 Position          */
+#define TK_THC1920_HTH20_Msk             (0xfful << TK_THC1920_HTH20_Pos)                  /*!< TK_T::THC1920: HTH20 Mask              */
+
+#define TK_THC2122_HTH21_Pos             (8)                                               /*!< TK_T::THC2122: HTH21 Position          */
+#define TK_THC2122_HTH21_Msk             (0xfful << TK_THC2122_HTH21_Pos)                  /*!< TK_T::THC2122: HTH21 Mask              */
+
+#define TK_THC2122_HTH22_Pos             (24)                                              /*!< TK_T::THC2122: HTH22 Position          */
+#define TK_THC2122_HTH22_Msk             (0xfful << TK_THC2122_HTH22_Pos)                  /*!< TK_T::THC2122: HTH22 Mask              */
+
+#define TK_THC2324_HTH23_Pos             (8)                                               /*!< TK_T::THC2324: HTH23 Position          */
+#define TK_THC2324_HTH23_Msk             (0xfful << TK_THC2324_HTH23_Pos)                  /*!< TK_T::THC2324: HTH23 Mask              */
+
+#define TK_THC2324_HTH24_Pos             (24)                                              /*!< TK_T::THC2324: HTH24 Position          */
+#define TK_THC2324_HTH24_Msk             (0xfful << TK_THC2324_HTH24_Pos)                  /*!< TK_T::THC2324: HTH24 Mask              */
+
+#define TK_THC25_HTH25_Pos               (8)                                               /*!< TK_T::THC25: HTH25 Position            */
+#define TK_THC25_HTH25_Msk               (0xfful << TK_THC25_HTH25_Pos)                    /*!< TK_T::THC25: HTH25 Mask                */
+
 #define TK_REFCBD0_CBD0_Pos              (0)                                               /*!< TK_T::REFCBD0: CBD0 Position           */
 #define TK_REFCBD0_CBD0_Msk              (0xfful << TK_REFCBD0_CBD0_Pos)                   /*!< TK_T::REFCBD0: CBD0 Mask               */
 
@@ -1489,6 +1731,33 @@ typedef struct
 
 #define TK_REFCBD4_CBD_ALL_Pos           (8)                                               /*!< TK_T::REFCBD4: CBD ALL Position        */
 #define TK_REFCBD4_CBD_ALL_Msk           (0xfful << TK_REFCBD4_CBD_ALL_Pos)                /*!< TK_T::REFCBD4: CBD ALL Mask            */
+
+#define TK_REFCBD5_CBD17_Pos             (0)                                               /*!< TK_T::REFCBD5: CBD17 Position          */
+#define TK_REFCBD5_CBD17_Msk             (0xfful << TK_REFCBD5_CBD17_Pos)                  /*!< TK_T::REFCBD5: CBD17 Mask              */
+
+#define TK_REFCBD5_CBD18_Pos             (8)                                               /*!< TK_T::REFCBD5: CBD18 Position          */
+#define TK_REFCBD5_CBD18_Msk             (0xfful << TK_REFCBD5_CBD18_Pos)                  /*!< TK_T::REFCBD5: CBD18 Mask              */
+
+#define TK_REFCBD5_CBD19_Pos             (16)                                              /*!< TK_T::REFCBD5: CBD19 Position          */
+#define TK_REFCBD5_CBD19_Msk             (0xfful << TK_REFCBD5_CBD19_Pos)                  /*!< TK_T::REFCBD5: CBD19 Mask              */
+
+#define TK_REFCBD5_CBD20_Pos             (24)                                              /*!< TK_T::REFCBD5: CBD20 Position          */
+#define TK_REFCBD5_CBD20_Msk             (0xfful << TK_REFCBD5_CBD20_Pos)                  /*!< TK_T::REFCBD5: CBD10 Mask              */
+
+#define TK_REFCBD6_CBD21_Pos             (0)                                               /*!< TK_T::REFCBD6: CBD21 Position          */
+#define TK_REFCBD6_CBD21_Msk             (0xfful << TK_REFCBD6_CBD21_Pos)                  /*!< TK_T::REFCBD6: CBD21 Mask              */
+
+#define TK_REFCBD6_CBD22_Pos             (8)                                               /*!< TK_T::REFCBD6: CBD22 Position          */
+#define TK_REFCBD6_CBD22_Msk             (0xfful << TK_REFCBD6_CBD22_Pos)                  /*!< TK_T::REFCBD6: CBD22 Mask              */
+
+#define TK_REFCBD6_CBD23_Pos             (16)                                              /*!< TK_T::REFCBD6: CBD23 Position          */
+#define TK_REFCBD6_CBD23_Msk             (0xfful << TK_REFCBD6_CBD23_Pos)                  /*!< TK_T::REFCBD6: CBD23 Mask              */
+
+#define TK_REFCBD6_CBD24_Pos             (24)                                              /*!< TK_T::REFCBD6: CBD24 Position          */
+#define TK_REFCBD6_CBD24_Msk             (0xfful << TK_REFCBD6_CBD24_Pos)                  /*!< TK_T::REFCBD6: CBD24 Mask              */
+
+#define TK_REFCBD7_CBD25_Pos             (0)                                               /*!< TK_T::REFCBD7: CBD25 Position          */
+#define TK_REFCBD7_CBD25_Msk             (0xfful << TK_REFCBD7_CBD25_Pos)                  /*!< TK_T::REFCBD7: CBD25 Mask              */
 
 /**@}*/ /* TK_CONST */
 /**@}*/ /* end of TK register group */

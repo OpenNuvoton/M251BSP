@@ -72,11 +72,11 @@ void ACMP01_IRQHandler(void)
     /* Check Comparator 0 Output Status */
     if (ACMP_GET_OUTPUT(ACMP01, 1))
     {
-        printf("ACMP1_P voltage >  DAC voltage (%u)\n", u32Cnt);
+        printf("ACMP1_P voltage >  DAC voltage (%u) ACMP1_O(%d)\n", u32Cnt, PC0);
     }
     else
     {
-        printf("ACMP1_P voltage <= DAC voltage (%u)\n", u32Cnt);
+        printf("ACMP1_P voltage <= DAC voltage (%u) ACMP1_O(%d)\n", u32Cnt, PC0);
     }
 
     u32Cnt++;
@@ -150,14 +150,14 @@ void SYS_Init(void)
     PB->MODE &= ~(GPIO_MODE_MODE4_Msk);
     PC->MODE &= ~(GPIO_MODE_MODE0_Msk);
 
-
     /* Set PB4 multi-function pin for ACMP1 positive input pin and PC0 multi-function pin for ACMP1 output pin*/
     SYS->GPB_MFPL = SYS_GPB_MFPL_PB4MFP_ACMP1_P1;
     SYS->GPC_MFPL = SYS_GPC_MFPL_PC0MFP_ACMP1_O;
-
-    /* Set PB multi-function pins for UART0 RXD and TXD */
-    Uart0DefaultMPF();
-
+#if !(defined(DEBUG_ENABLE_SEMIHOST))
+    /* Set PA multi-function pins for UART0 RXD and TXD */
+    SYS->GPA_MFPL = (SYS->GPA_MFPL & ~SYS_GPA_MFPL_PA4MFP_Msk) | SYS_GPA_MFPL_PA4MFP_UART0_RXD;
+    SYS->GPA_MFPL = (SYS->GPA_MFPL & ~SYS_GPA_MFPL_PA5MFP_Msk) | SYS_GPA_MFPL_PA5MFP_UART0_TXD;
+#endif
     /* Disable digital input path of analog pin ACMP1_P1 to prevent leakage */
     GPIO_DISABLE_DIGITAL_PATH(PB, (1ul << 4));
 
@@ -184,8 +184,10 @@ int32_t main(void)
     initialise_monitor_handles();
 #endif
 
+#if !(defined(DEBUG_ENABLE_SEMIHOST))
     /* Configure UART0: 115200, 8-bit word, no parity bit, 1 stop bit. */
     UART_Open(UART0, 115200);
+#endif
 
     printf("\n\nCPU @ %dHz\n", SystemCoreClock);
     printf("\nThis sample code demonstrates ACMP1 function. Using ACMP1_P1 (PB4) as ACMP1\n");

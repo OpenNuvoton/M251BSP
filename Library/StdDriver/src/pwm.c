@@ -41,7 +41,8 @@ uint32_t PWM_ConfigCaptureChannel(PWM_T *pwm, uint32_t u32ChannelNum, uint32_t u
     uint8_t u8BreakLoop = 0UL;
 
     // M251/2_C clock source is not supported PLL
-    if ((SYS->PDID & 0xfff0) == 0x52E0 || (SYS->PDID & 0xfff0) == 0x52A0 || (SYS->PDID & 0xfff0) == 0x52B0 || (SYS->PDID & 0xfff0) == 0x51E0 || (SYS->PDID & 0xfff0) == 0x51A0 || (SYS->PDID & 0xfff0) == 0x51B0)
+    if ((SYS->PDID & 0xfff0) == 0x52E0 || (SYS->PDID & 0xfff0) == 0x52A0 || (SYS->PDID & 0xfff0) == 0x52B0 || (SYS->PDID & 0xfff0) == 0x51E0 || (SYS->PDID & 0xfff0) == 0x51A0
+            || (SYS->PDID & 0xfff0) == 0x51B0)
     {
         if (pwm == PWM0)
         {
@@ -143,7 +144,8 @@ uint32_t PWM_ConfigOutputChannel(PWM_T *pwm, uint32_t u32ChannelNum, uint32_t u3
     uint16_t u16Prescale = 1UL, u16CNR = 0xFFFFUL;
 
     // M251/2_C clock source is not supported PLL
-    if ((SYS->PDID & 0xfff0) == 0x52E0 || (SYS->PDID & 0xfff0) == 0x52A0 || (SYS->PDID & 0xfff0) == 0x52B0 || (SYS->PDID & 0xfff0) == 0x51E0 || (SYS->PDID & 0xfff0) == 0x51A0 || (SYS->PDID & 0xfff0) == 0x51B0)
+    if ((SYS->PDID & 0xfff0) == 0x52E0 || (SYS->PDID & 0xfff0) == 0x52A0 || (SYS->PDID & 0xfff0) == 0x52B0 || (SYS->PDID & 0xfff0) == 0x51E0 || (SYS->PDID & 0xfff0) == 0x51A0
+            || (SYS->PDID & 0xfff0) == 0x51B0)
     {
         if (pwm == PWM0)
         {

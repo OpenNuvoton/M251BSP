@@ -1,25 +1,22 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-
+<?xml version="1.0" encoding="UTF-8"?>
 <workspace>
-  <project>
-    <path>$WS_DIR$\fmc_ap_main.ewp</path>
-  </project>
-  <project>
-    <path>$WS_DIR$\fmc_ld_iap.ewp</path>
-  </project>
-  <batchBuild>
-    <batchDefinition>
-      <name>BuildAll</name>
-      <member>
-        <project>fmc_ld_iap</project>
-        <configuration>Release</configuration>
-      </member>
-      <member>
-        <project>fmc_ap_main</project>
-        <configuration>Release</configuration>
-      </member>
-    </batchDefinition>
-  </batchBuild>
+    <project>
+        <path>$WS_DIR$\FMC_IAP_APROM.ewp</path>
+    </project>
+    <project>
+        <path>$WS_DIR$\FMC_IAP_LDROM.ewp</path>
+    </project>
+    <batchBuild>
+        <batchDefinition>
+            <name>BuildAll</name>
+            <member>
+                <project>FMC_IAP_LDROM</project>
+                <configuration>Release</configuration>
+            </member>
+            <member>
+                <project>FMC_IAP_APROM</project>
+                <configuration>Release</configuration>
+            </member>
+        </batchDefinition>
+    </batchBuild>
 </workspace>
-
-

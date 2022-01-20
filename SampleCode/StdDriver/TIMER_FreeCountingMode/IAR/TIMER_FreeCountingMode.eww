@@ -2,7 +2,7 @@
 
 <workspace>
   <project>
-    <path>$WS_DIR$\Timer_FreeCountingMode.ewp</path>
+    <path>$WS_DIR$\TIMER_FreeCountingMode.ewp</path>
   </project>
   <batchBuild/>
 </workspace>

@@ -2,7 +2,7 @@
 
 <workspace>
   <project>
-    <path>$WS_DIR$\Timer_InterTimerTriggerMode.ewp</path>
+    <path>$WS_DIR$\TIMER_InterTimerTriggerMode.ewp</path>
   </project>
   <batchBuild/>
 </workspace>

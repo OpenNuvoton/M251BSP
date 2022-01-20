@@ -2,7 +2,7 @@
 
 <workspace>
   <project>
-    <path>$WS_DIR$\Timer_Delay.ewp</path>
+    <path>$WS_DIR$\TIMER_Delay.ewp</path>
   </project>
   <batchBuild/>
 </workspace>

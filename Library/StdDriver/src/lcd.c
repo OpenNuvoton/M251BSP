@@ -4,7 +4,7 @@
  * @brief    Liquid-Crystal Display(LCD) driver source file
  *
  * SPDX-License-Identifier: Apache-2.0
- * @copyright (C) 2020 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2022 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include "NuMicro.h"
 
@@ -94,7 +94,7 @@ uint32_t LCD_Open(S_LCD_CFG_T *pLCDCfg)
     LCD_SetAllPixels(0);
 
     /* Set com and bias */
-    LCD->PCTL = (LCD->PCTL & ~(LCD_PCTL_DUTY_Msk | LCD_PCTL_BIAS_Msk)) | (pLCDCfg->u32ComDuty | pLCDCfg->u32BiasLevel);
+    LCD->PSET = (LCD->PSET & ~(LCD_PSET_DUTY_Msk | LCD_PSET_BIAS_Msk)) | (pLCDCfg->u32ComDuty | pLCDCfg->u32BiasLevel);
 
     /* Set waveform type */
     LCD_WAVEFORM_TYPE(pLCDCfg->u32WaveformType);
@@ -122,9 +122,9 @@ uint32_t LCD_Open(S_LCD_CFG_T *pLCDCfg)
                     F_LCD = 32 * 4 = (32768 / F_Div)
                     F_Div = (32768 / F_LCD) = 256
     */
-    u32ComNum = ((pLCDCfg->u32ComDuty & LCD_PCTL_DUTY_Msk) >> LCD_PCTL_DUTY_Pos) + 1;
+    u32ComNum = ((pLCDCfg->u32ComDuty & LCD_PSET_DUTY_Msk) >> LCD_PSET_DUTY_Pos) + 1;
 
-    if ((pLCDCfg->u32WaveformType & LCD_PCTL_TYPE_Msk) == LCD_PCTL_TYPE_Msk)
+    if ((pLCDCfg->u32WaveformType & LCD_PSET_TYPE_Msk) == LCD_PSET_TYPE_Msk)
     {
         /* In type-B */
 
@@ -260,7 +260,7 @@ uint32_t LCD_EnableBlink(uint32_t u32ms)
 {
     uint32_t u32OneCountPeriod, u32TargetCounts;
 
-    if ((LCD->PCTL & LCD_PCTL_TYPE_Msk) == LCD_PCTL_TYPE_Msk)
+    if ((LCD->PSET & LCD_PSET_TYPE_Msk) == LCD_PSET_TYPE_Msk)
     {
         /* In type-B */
         u32OneCountPeriod = (1000 * 2) / g_LCDFrameRate; // ms

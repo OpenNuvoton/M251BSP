@@ -29,6 +29,18 @@ extern "C"
 */
 
 /*---------------------------------------------------------------------------------------------------------*/
+/*  Global variables                                                                                       */
+/*---------------------------------------------------------------------------------------------------------*/
+typedef enum
+{
+    eFMC_ERRCODE_SUCCESS       = 0,
+    eFMC_ERRCODE_CMD_TIMEOUT   = -1,
+    eFMC_ERRCODE_INVALID_PARAM = -2,
+    eFMC_ERRCODE_CMD_FAIL      = -3,
+} E_FMC_ERRCODE;
+extern int32_t  g_FMC_i32ErrCode; /*!< FMC global error code */
+
+/*---------------------------------------------------------------------------------------------------------*/
 /* Global constant definitions                                                                                     */
 /*---------------------------------------------------------------------------------------------------------*/
 #define ISBEN   0
@@ -79,6 +91,12 @@ extern "C"
 #define READ_ALLONE_YES         0xA11FFFFFUL    /*!< Check-all-one result is all one.     */
 #define READ_ALLONE_NOT         0xA1100000UL    /*!< Check-all-one result is not all one. */
 #define READ_ALLONE_CMD_FAIL    0xFFFFFFFFUL    /*!< Check-all-one command failed.        */
+
+#define FMC_TIMEOUT_READ        ((SystemCoreClock/10)*2) /*!< Read command time-out 200 ms         \hideinitializer */
+#define FMC_TIMEOUT_WRITE       ((SystemCoreClock/10)*2) /*!< Write command time-out 200 ms        \hideinitializer */
+#define FMC_TIMEOUT_ERASE       ((SystemCoreClock/10)*4) /*!< Erase command time-out 400 ms        \hideinitializer */
+#define FMC_TIMEOUT_CHKSUM      (SystemCoreClock*2)      /*!< Get checksum command time-out 2 s    \hideinitializer */
+#define FMC_TIMEOUT_CHKALLONE   (SystemCoreClock*2)      /*!< Check-all-one command time-out 2 s   \hideinitializer */
 
 /*@}*/ /* end of group FMC_EXPORTED_CONSTANTS */
 
@@ -335,21 +353,34 @@ static __INLINE uint32_t FMC_GetCheckSum(uint32_t u32Addr, int32_t i32Size);
  * @param[in]   u8Index  UID index. 0 = UID[31:0], 1 = UID[63:32], 2 = UID[95:64]
  *
  * @return      The 32-bit unique ID data of specified UID index.
+ *              0xFFFFFFFF: Check g_FMC_i32ErrCode to know if command timeout
  *
  * @details     To read out 96-bit Unique ID.
+ *
+ * @note
+ *              g_FMC_i32ErrCode will be set to eFMC_ERRCODE_CMD_TIMEOUT if command timeout.
  *
  */
 static __INLINE uint32_t FMC_ReadUID(uint8_t u8Index)
 {
+    int32_t  tout = FMC_TIMEOUT_READ;
+
+    g_FMC_i32ErrCode = eFMC_ERRCODE_SUCCESS;
     FMC->ISPCMD = FMC_ISPCMD_READ_UID;
     FMC->ISPADDR = ((uint32_t)u8Index << 2u);
     FMC->ISPDAT = 0u;
-    FMC->ISPTRG = 0x1u;
+    FMC->ISPTRG = FMC_ISPTRG_ISPGO_Msk;
 #if ISBEN
     __ISB();
 #endif
 
-    while (FMC->ISPTRG) {}
+    while ((tout-- > 0) && (FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk)) {}
+
+    if (tout <= 0)
+    {
+        g_FMC_i32ErrCode = eFMC_ERRCODE_CMD_TIMEOUT;
+        return 0xFFFFFFFF;
+    }
 
     return FMC->ISPDAT;
 }
@@ -360,12 +391,19 @@ static __INLINE uint32_t FMC_ReadUID(uint8_t u8Index)
   * @param    None
   *
   * @return   The company ID (32-bit)
+  *           0xFFFFFFFF: Check g_FMC_i32ErrCode to know if command timeout
   *
   * @details  The company ID of Nuvoton is fixed to be 0xDA
+  *
+  * @note
+  *           g_FMC_i32ErrCode will be set to eFMC_ERRCODE_CMD_TIMEOUT if command timeout.
   *
   */
 static __INLINE uint32_t FMC_ReadCID(void)
 {
+    int32_t  tout = FMC_TIMEOUT_READ;
+
+    g_FMC_i32ErrCode = eFMC_ERRCODE_SUCCESS;
     FMC->ISPCMD = FMC_ISPCMD_READ_CID;           /* Set ISP Command Code */
     FMC->ISPADDR = 0x0u;                         /* Must keep 0x0 when read CID */
     FMC->ISPTRG = FMC_ISPTRG_ISPGO_Msk;          /* Trigger to start ISP procedure */
@@ -373,7 +411,14 @@ static __INLINE uint32_t FMC_ReadCID(void)
     __ISB();
 #endif                                           /* To make sure ISP/CPU be Synchronized */
 
-    while (FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk) {} /* Waiting for ISP Done */
+    /* Waiting for ISP Done */
+    while ((tout-- > 0) && (FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk)) {}
+
+    if (tout <= 0)
+    {
+        g_FMC_i32ErrCode = eFMC_ERRCODE_CMD_TIMEOUT;
+        return 0xFFFFFFFF;
+    }
 
     return FMC->ISPDAT;
 }
@@ -386,10 +431,17 @@ static __INLINE uint32_t FMC_ReadCID(void)
   * @return   The product ID (32-bit)
   *
   * @details  This function is used to read product ID.
+  *           0xFFFFFFFF: Check g_FMC_i32ErrCode to know if command timeout
+  *
+  * @note
+  *           g_FMC_i32ErrCode will be set to eFMC_ERRCODE_CMD_TIMEOUT if command timeout.
   *
   */
 static __INLINE uint32_t FMC_ReadPID(void)
 {
+    int32_t  tout = FMC_TIMEOUT_READ;
+
+    g_FMC_i32ErrCode = eFMC_ERRCODE_SUCCESS;
     FMC->ISPCMD = FMC_ISPCMD_READ_PID;          /* Set ISP Command Code */
     FMC->ISPADDR = 0x04u;                       /* Must keep 0x4 when read PID */
     FMC->ISPTRG = FMC_ISPTRG_ISPGO_Msk;         /* Trigger to start ISP procedure */
@@ -397,7 +449,14 @@ static __INLINE uint32_t FMC_ReadPID(void)
     __ISB();
 #endif                                          /* To make sure ISP/CPU be Synchronized */
 
-    while (FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk) {} /* Waiting for ISP Done */
+    /* Waiting for ISP Done */
+    while ((tout-- > 0) && (FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk)) {}
+
+    if (tout <= 0)
+    {
+        g_FMC_i32ErrCode = eFMC_ERRCODE_CMD_TIMEOUT;
+        return 0xFFFFFFFF;
+    }
 
     return FMC->ISPDAT;
 }
@@ -408,12 +467,19 @@ static __INLINE uint32_t FMC_ReadPID(void)
   * @param[in]  u32Index    Index of the UCID to read. u32Index must be 0, 1, 2, or 3.
   *
   * @return     The UCID of specified index
+  *             0xFFFFFFFF: Check g_FMC_i32ErrCode to know if command timeout
   *
   * @details    This function is used to read unique chip ID (UCID).
+  *
+  * @note
+  *             g_FMC_i32ErrCode will be set to eFMC_ERRCODE_CMD_TIMEOUT if command timeout.
   *
   */
 static __INLINE uint32_t FMC_ReadUCID(uint32_t u32Index)
 {
+    int32_t  tout = FMC_TIMEOUT_READ;
+
+    g_FMC_i32ErrCode = eFMC_ERRCODE_SUCCESS;
     FMC->ISPCMD = FMC_ISPCMD_READ_UID;            /* Set ISP Command Code */
     FMC->ISPADDR = (0x04u * u32Index) + 0x10u;    /* The UCID is at offset 0x10 with word alignment. */
     FMC->ISPTRG = FMC_ISPTRG_ISPGO_Msk;           /* Trigger to start ISP procedure */
@@ -421,7 +487,14 @@ static __INLINE uint32_t FMC_ReadUCID(uint32_t u32Index)
     __ISB();
 #endif                                            /* To make sure ISP/CPU be Synchronized */
 
-    while (FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk) {} /* Waiting for ISP Done */
+    /* Waiting for ISP Done */
+    while ((tout-- > 0) && (FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk)) {}
+
+    if (tout <= 0)
+    {
+        g_FMC_i32ErrCode = eFMC_ERRCODE_CMD_TIMEOUT;
+        return 0xFFFFFFFF;
+    }
 
     return FMC->ISPDAT;
 }
@@ -432,12 +505,19 @@ static __INLINE uint32_t FMC_ReadUCID(uint32_t u32Index)
   * @param[in]  None
   *
   * @return     The bang-gap voltage code
+  *             0xFFFFFFFF: Check g_FMC_i32ErrCode to know if command timeout
   *
   * @details    This function is used to read bang-gap voltage code
+  *
+  * @note
+  *             g_FMC_i32ErrCode will be set to eFMC_ERRCODE_CMD_TIMEOUT if command timeout.
   *
   */
 static __INLINE uint32_t FMC_ReadVBGCode(void)
 {
+    int32_t  tout = FMC_TIMEOUT_READ;
+
+    g_FMC_i32ErrCode = eFMC_ERRCODE_SUCCESS;
     FMC->ISPCMD = FMC_ISPCMD_READ_UID;            /* Set ISP Command Code */
     FMC->ISPADDR = 0x70;                          /* The VBG is at offset 0x70 with word alignment. */
     FMC->ISPTRG = FMC_ISPTRG_ISPGO_Msk;           /* Trigger to start ISP procedure */
@@ -445,7 +525,14 @@ static __INLINE uint32_t FMC_ReadVBGCode(void)
     __ISB();
 #endif                                            /* To make sure ISP/CPU be Synchronized */
 
-    while (FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk) {} /* Waiting for ISP Done */
+    /* Waiting for ISP Done */
+    while ((tout-- > 0) && (FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk)) {}
+
+    if (tout <= 0)
+    {
+        g_FMC_i32ErrCode = eFMC_ERRCODE_CMD_TIMEOUT;
+        return 0xFFFFFFFF;
+    }
 
     return FMC->ISPDAT;
 }
@@ -456,12 +543,19 @@ static __INLINE uint32_t FMC_ReadVBGCode(void)
   * @param[in]  None
   *
   * @return     The temperature sensor ADC code
+  *             0xFFFFFFFF: Check g_FMC_i32ErrCode to know if command timeout
   *
   * @details    This function is used to read temperature sensor ADC code
+  *
+  * @note
+  *             g_FMC_i32ErrCode will be set to eFMC_ERRCODE_CMD_TIMEOUT if command timeout.
   *
   */
 static __INLINE uint32_t FMC_ReadVTEMPCode(void)
 {
+    int32_t  tout = FMC_TIMEOUT_READ;
+
+    g_FMC_i32ErrCode = eFMC_ERRCODE_SUCCESS;
     FMC->ISPCMD = FMC_ISPCMD_READ_UID;            /* Set ISP Command Code */
     FMC->ISPADDR = 0x74;                          /* The VTEMP code is at offset 0x74 with word alignment */
     FMC->ISPTRG = FMC_ISPTRG_ISPGO_Msk;           /* Trigger to start ISP procedure */
@@ -469,7 +563,14 @@ static __INLINE uint32_t FMC_ReadVTEMPCode(void)
     __ISB();
 #endif                                            /* To make sure ISP/CPU be Synchronized */
 
-    while (FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk) {} /* Waiting for ISP Done */
+    /* Waiting for ISP Done */
+    while ((tout-- > 0) && (FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk)) {}
+
+    if (tout <= 0)
+    {
+        g_FMC_i32ErrCode = eFMC_ERRCODE_CMD_TIMEOUT;
+        return 0xFFFFFFFF;
+    }
 
     return FMC->ISPDAT;
 }
@@ -480,12 +581,19 @@ static __INLINE uint32_t FMC_ReadVTEMPCode(void)
   * @param[in]  None
   *
   * @return     The calibration value for ADC offset
+  *             0xFFFFFFFF: Check g_FMC_i32ErrCode to know if command timeout
   *
   * @details    This function is used to read the calibration value for ADC offset
+  *
+  * @note
+  *             g_FMC_i32ErrCode will be set to eFMC_ERRCODE_CMD_TIMEOUT if command timeout.
   *
   */
 static __INLINE uint32_t FMC_ReadADCOffset(void)
 {
+    int32_t  tout = FMC_TIMEOUT_READ;
+
+    g_FMC_i32ErrCode = eFMC_ERRCODE_SUCCESS;
     FMC->ISPCMD = FMC_ISPCMD_READ_UID;            /* Set ISP Command Code */
     FMC->ISPADDR = 0x78;                          /* The calibration value for ADC offset is at offset 0x78 with word alignment */
     FMC->ISPTRG = FMC_ISPTRG_ISPGO_Msk;           /* Trigger to start ISP procedure */
@@ -493,7 +601,14 @@ static __INLINE uint32_t FMC_ReadADCOffset(void)
     __ISB();
 #endif                                            /* To make sure ISP/CPU be Synchronized */
 
-    while (FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk) {} /* Waiting for ISP Done */
+    /* Waiting for ISP Done */
+    while ((tout-- > 0) && (FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk)) {}
+
+    if (tout <= 0)
+    {
+        g_FMC_i32ErrCode = eFMC_ERRCODE_CMD_TIMEOUT;
+        return 0xFFFFFFFF;
+    }
 
     return FMC->ISPDAT;
 }
@@ -509,18 +624,28 @@ static __INLINE uint32_t FMC_ReadADCOffset(void)
  *
  * @note
  *              VECMAP only valid when new IAP function is enabled. (CBS = 10'b or 00'b)
+ *              g_FMC_i32ErrCode will be set to eFMC_ERRCODE_CMD_TIMEOUT if command timeout.
  *
  */
 static __INLINE void FMC_SetVectorPageAddr(uint32_t u32PageAddr)
 {
-    FMC->ISPCMD = FMC_ISPCMD_VECMAP;  /* Set ISP Command Code */
-    FMC->ISPADDR = u32PageAddr;       /* The address of specified page which will be map to address 0x0. It must be page alignment. */
-    FMC->ISPTRG = 0x1u;               /* Trigger to start ISP procedure */
+    int32_t  tout = FMC_TIMEOUT_WRITE;
+
+    g_FMC_i32ErrCode = eFMC_ERRCODE_SUCCESS;
+    FMC->ISPCMD = FMC_ISPCMD_VECMAP;             /* Set ISP Command Code */
+    FMC->ISPADDR = u32PageAddr;                  /* The address of specified page which will be map to address 0x0. It must be page alignment. */
+    FMC->ISPTRG = FMC_ISPTRG_ISPGO_Msk;          /* Trigger to start ISP procedure */
 #if ISBEN
     __ISB();
 #endif                                /* To make sure ISP/CPU be Synchronized */
 
-    while (FMC->ISPTRG) {}            /* Waiting for ISP Done */
+    /* Waiting for ISP Done */
+    while ((tout-- > 0) && (FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk)) {}
+
+    if (tout <= 0)
+    {
+        g_FMC_i32ErrCode = eFMC_ERRCODE_CMD_TIMEOUT;
+    }
 }
 
 /**
@@ -541,33 +666,65 @@ static __INLINE uint32_t FMC_GetVECMAP(void)
     return (FMC->ISPSTS & FMC_ISPSTS_VECMAP_Msk);
 }
 
+
 /**
- * @brief       Get Flash Checksum
- *
- * @param[in]   u32Addr    Specific flash start address
- * @param[in]   i32Size    Specific a size of Flash area
- *
- * @return      A checksum value of a flash block.
- *
- * @details     To get VECMAP value which is the page address for remapping to vector page (0x0).
- *
- */
+  * @brief      Run CRC32 checksum calculation and get result.
+  *
+  * @param[in]  u32Addr    Starting flash address. It must be a page aligned address.
+  * @param[in]  i32Size    Byte count of flash to be calculated. It must be multiple of 512 bytes.
+  *
+  * @retval     0xFFFFFFFF: Check g_FMC_i32ErrCode to know if command timeout or invalid parameter
+  * @retval     Others    : Checksum value of specify area
+  *
+  * @details    Run ISP checksum command to calculate specify area
+  *
+  * @note
+  *             g_FMC_i32ErrCode will be set to eFMC_ERRCODE_CMD_TIMEOUT if command timeout.
+  *             g_FMC_i32ErrCode will be set to eFMC_ERRCODE_INVALID_PARAM if not 512 aligned.
+  *
+  */
 static __INLINE uint32_t FMC_GetCheckSum(uint32_t u32Addr, int32_t i32Size)
 {
+    int32_t  tout;
+
+    g_FMC_i32ErrCode = eFMC_ERRCODE_SUCCESS;
+
+    if ((u32Addr % 512UL) || (i32Size % 512UL))
+    {
+        g_FMC_i32ErrCode = eFMC_ERRCODE_INVALID_PARAM;
+        return 0xFFFFFFFF;
+    }
+
     FMC->ISPCMD = FMC_ISPCMD_CAL_CHECKSUM;
     FMC->ISPADDR = u32Addr;
     FMC->ISPDAT = (uint32_t)i32Size;
-    FMC->ISPTRG = 0x1u;
+    FMC->ISPTRG = FMC_ISPTRG_ISPGO_Msk;
 #if ISBEN
     __ISB();
 #endif
 
-    while (FMC->ISPTRG) {}
+    tout = FMC_TIMEOUT_CHKSUM;
+
+    while ((tout-- > 0) && (FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk)) {}
+
+    if (tout <= 0)
+    {
+        g_FMC_i32ErrCode = eFMC_ERRCODE_CMD_TIMEOUT;
+        return 0xFFFFFFFF;
+    }
 
     FMC->ISPCMD = FMC_ISPCMD_CHECKSUM;
-    FMC->ISPTRG = 0x1u;
+    FMC->ISPTRG = FMC_ISPTRG_ISPGO_Msk;
 
-    while (FMC->ISPTRG) {}
+    tout = FMC_TIMEOUT_CHKSUM;
+
+    while ((tout-- > 0) && (FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk)) {}
+
+    if (tout <= 0)
+    {
+        g_FMC_i32ErrCode = eFMC_ERRCODE_CMD_TIMEOUT;
+        return 0xFFFFFFFF;
+    }
 
     return FMC->ISPDAT;
 }

@@ -1627,7 +1627,7 @@
         </option>
         <option>
           <name>IlinkOutputFile</name>
-          <state>SYS_TrimIRC.out</state>
+          <state>SYS_TrimHIRC.out</state>
         </option>
         <option>
           <name>IlinkDebugInfoEnable</name>

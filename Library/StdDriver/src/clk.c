@@ -17,6 +17,8 @@
   @{
 */
 
+int32_t g_CLK_i32ErrCode = 0;    /*!< CLK global error code */
+
 /** @addtogroup CLK_EXPORTED_FUNCTIONS CLK Exported Functions
   @{
 */
@@ -902,19 +904,29 @@ void CLK_DisableModuleClock(uint32_t u32ModuleIdx)
   *             - \ref CLK_STATUS_PLLSTB_Msk
   * @retval     0  clock is not stable
   * @retval     1  clock is stable
-  * @details    To wait for clock ready by specified clock source stable flag or timeout (~300ms)
+  * @details    To wait for clock ready by specified clock source stable flag or timeout (~1000ms)
+  * @note       This function sets g_CLK_i32ErrCode to CLK_TIMEOUT_ERR if clock source status is not stable
   */
 uint32_t CLK_WaitClockReady(uint32_t u32ClkMask)
 {
-    int32_t i32TimeOutCnt = 2160000;
+    uint32_t u32TimeOutCnt = SystemCoreClock;
+    uint32_t u32Ret = 1U;
+
+    g_CLK_i32ErrCode = 0;
 
     while ((CLK->STATUS & u32ClkMask) != u32ClkMask)
     {
-        if (i32TimeOutCnt-- <= 0)
-            return 0UL;
+        if (--u32TimeOutCnt == 0)
+        {
+            u32Ret = 0U;
+            break;
+        }
     }
 
-    return 1UL;
+    if (u32TimeOutCnt == 0)
+        g_CLK_i32ErrCode = CLK_TIMEOUT_ERR;
+
+    return u32Ret;
 }
 
 /**
@@ -938,9 +950,24 @@ void CLK_EnableSysTick(uint32_t u32ClkSrc, uint32_t u32Count)
 
     /* Set System Tick clock source */
     if (u32ClkSrc == CLK_CLKSEL0_STCLKSEL_HCLK)
+    {
+        /* Disable System Tick clock source from external reference clock */
+        CLK->AHBCLK &= ~CLK_AHBCLK_EXSTCKEN_Msk;
+
+        /* Select System Tick clock source from core */
         SysTick->CTRL |= SysTick_CTRL_CLKSOURCE_Msk;
+    }
     else
+    {
+        /* Enable System Tick clock source from external reference clock */
+        CLK->AHBCLK |= CLK_AHBCLK_EXSTCKEN_Msk;
+
+        /* Select System Tick external reference clock source */
         CLK->CLKSEL0 = (CLK->CLKSEL0 & ~CLK_CLKSEL0_STCLKSEL_Msk) | u32ClkSrc;
+
+        /* Select System Tick clock source from external reference clock */
+        SysTick->CTRL &= ~SysTick_CTRL_CLKSOURCE_Msk;
+    }
 
     /* Set System Tick reload value */
     SysTick->LOAD = u32Count;

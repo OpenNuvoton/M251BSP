@@ -74,6 +74,8 @@ void  WakeUpTimerFunction(uint32_t u32PDMode, uint32_t u32Interval)
 /*-----------------------------------------------------------------------------------------------------------*/
 void  WakeUpRTCTickFunction(uint32_t u32PDMode)
 {
+    uint32_t u32TimeOutCnt = SystemCoreClock; // 1 second timeout
+
     /* enable RTC peripheral clock */
     CLK->APBCLK0 |= CLK_APBCLK0_RTCCKEN_Msk;
 
@@ -87,7 +89,15 @@ void  WakeUpRTCTickFunction(uint32_t u32PDMode)
     {
         RTC->INIT = RTC_INIT_KEY;
 
-        while (RTC->INIT != RTC_INIT_ACTIVE_Msk);
+        while (RTC->INIT != RTC_INIT_ACTIVE_Msk)
+        {
+            if (--u32TimeOutCnt == 0)
+            {
+                printf("Initialize RTC module and start counting failed\n");
+
+                while (1);
+            }
+        }
     }
 
 
@@ -121,6 +131,7 @@ void  WakeUpRTCTickFunction(uint32_t u32PDMode)
 void  WakeUpRTCAlarmFunction(uint32_t u32PDMode)
 {
     S_RTC_TIME_DATA_T sWriteRTC;
+    uint32_t u32TimeOutCnt = SystemCoreClock; // 1 second timeout
 
     /* enable RTC peripheral clock */
     CLK->APBCLK0 |= CLK_APBCLK0_RTCCKEN_Msk;
@@ -135,7 +146,15 @@ void  WakeUpRTCAlarmFunction(uint32_t u32PDMode)
     {
         RTC->INIT = RTC_INIT_KEY;
 
-        while (RTC->INIT != RTC_INIT_ACTIVE_Msk);
+        while (RTC->INIT != RTC_INIT_ACTIVE_Msk)
+        {
+            if (--u32TimeOutCnt == 0)
+            {
+                printf("Initialize RTC module and start counting failed\n");
+
+                while (1);
+            }
+        }
     }
 
     /* Open RTC */
@@ -188,6 +207,8 @@ void  WakeUpRTCAlarmFunction(uint32_t u32PDMode)
 /*-----------------------------------------------------------------------------------------------------------*/
 void  WakeUpRTCTamperFunction(uint32_t u32PDMode)
 {
+    uint32_t u32TimeOutCnt = SystemCoreClock; // 1 second timeout
+
     /* enable RTC peripheral clock */
     CLK->APBCLK0 |= CLK_APBCLK0_RTCCKEN_Msk;
 
@@ -198,10 +219,16 @@ void  WakeUpRTCTamperFunction(uint32_t u32PDMode)
     {
         RTC->INIT = RTC_INIT_KEY;
 
-        while (RTC->INIT != RTC_INIT_ACTIVE_Msk);
+        while (RTC->INIT != RTC_INIT_ACTIVE_Msk)
+        {
+            if (--u32TimeOutCnt == 0)
+            {
+                printf("Initialize RTC module and start counting failed\n");
+
+                while (1);
+            }
+        }
     }
-
-
 
     RTC_StaticTamperEnable(RTC_TAMPER0_SELECT, RTC_TAMPER_LOW_LEVEL_DETECT, RTC_TAMPER_DEBOUNCE_DISABLE);
 
@@ -209,8 +236,6 @@ void  WakeUpRTCTamperFunction(uint32_t u32PDMode)
     RTC_CLEAR_TAMPER_INT_FLAG(RTC_INTSTS_TAMP0IF_Msk);
     /* Disable Spare Register */
     RTC->SPRCTL = (1 << 5);
-
-
 
     RTC_EnableInt(RTC_INTEN_TAMP0IEN_Msk);
 

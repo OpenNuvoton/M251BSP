@@ -324,7 +324,7 @@ typedef struct
   */
 #define RTC_WRITE_SPARE_REGISTER(u32RegNum, u32RegValue)    (RTC->SPR[(u32RegNum)] = (u32RegValue))
 
-void RTC_Open(S_RTC_TIME_DATA_T *psPt);
+int32_t RTC_Open(S_RTC_TIME_DATA_T *psPt);
 void RTC_Close(void);
 void RTC_32KCalibration(int32_t i32FrequencyX10000);
 void RTC_GetDateAndTime(S_RTC_TIME_DATA_T *psPt);

@@ -106,6 +106,8 @@ void UART0_Init(void)
 
 void TrimHIRC()
 {
+    uint32_t u32TimeOutCnt = SystemCoreClock;// 1 second timeout
+
     /*  Enable IRC Trim, set HIRC clock and enable interrupt */
     SYS->HIRCTRIMIEN |= (SYS_HIRCTRIMIEN_CLKEIEN_Msk | SYS_HIRCTRIMIEN_TFALIEN_Msk);
     SYS->HIRCTRIMCTL = (SYS->HIRCTRIMCTL & ~SYS_HIRCTRIMCTL_FREQSEL_Msk) | 0x1;
@@ -120,6 +122,18 @@ void TrimHIRC()
             printf("HIRC Frequency Lock\n");
             SYS->HIRCTRIMSTS = SYS_HIRCTRIMSTS_FREQLOCK_Msk;     /* Clear Trim Lock */
             break;
+        }
+        else
+        {
+            if (--u32TimeOutCnt == 0)
+            {
+                printf("HIRC Trim failed\n");
+                /* Disable IRC Trim */
+                SYS->HIRCTRIMCTL &= (~SYS_HIRCTRIMCTL_FREQSEL_Msk);
+                printf("Disable IRC Trim\n");
+
+                while (1);
+            }
         }
     }
 

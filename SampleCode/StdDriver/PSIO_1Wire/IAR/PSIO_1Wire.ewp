@@ -1628,7 +1628,7 @@
         </option>
         <option>
           <name>IlinkOutputFile</name>
-          <state>psio_1wire.out</state>
+          <state>PSIO_1Wire.out</state>
         </option>
         <option>
           <name>IlinkDebugInfoEnable</name>

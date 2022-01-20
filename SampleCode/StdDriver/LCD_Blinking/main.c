@@ -218,7 +218,7 @@ int main(void)
     printf("LCD configurations:\n");
     printf(" * Clock source is LIRC\n");
     printf(" * 8 COM, 40 SEG and 1/4 Bias\n");
-    printf(" * Driving waveform is Type-%c\n", (g_LCDCfg.u32WaveformType == LCD_PCTL_TYPE_Msk) ? 'B' : 'A');
+    printf(" * Driving waveform is Type-%c\n", (g_LCDCfg.u32WaveformType == LCD_PSET_TYPE_Msk) ? 'B' : 'A');
     printf(" * Target frame rate is %uHz, and blinking interval %ums\n", g_LCDCfg.u32Framerate, u32BlinkInterval);
     printf(" * Show text - ""%s"" on LCD\n\n", (char *)text);
 
@@ -254,7 +254,7 @@ int main(void)
 
     /* LCD Initialize and calculate real frame rate */
     u32ActiveFPS = LCD_Open(&g_LCDCfg);
-    printf("Working frame rate is %uHz on Type-%c.\n\n", u32ActiveFPS, (g_LCDCfg.u32WaveformType == LCD_PCTL_TYPE_Msk) ? 'B' : 'A');
+    printf("Working frame rate is %uHz on Type-%c.\n\n", u32ActiveFPS, (g_LCDCfg.u32WaveformType == LCD_PSET_TYPE_Msk) ? 'B' : 'A');
 
     /* Enable charge pump and output voltage level 9 for 4.8V */
     CLK_EnableModuleClock(LCDCP_MODULE);

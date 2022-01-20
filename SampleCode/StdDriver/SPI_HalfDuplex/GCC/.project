@@ -66,7 +66,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1565077959091</id>
+			<id>1642396905643</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -75,7 +75,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1565077959134</id>
+			<id>1642396905662</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -84,7 +84,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1565077959153</id>
+			<id>1642396905676</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -93,7 +93,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1565077959189</id>
+			<id>1642396905692</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -102,7 +102,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1565077959206</id>
+			<id>1642396905707</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -111,7 +111,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1565077959232</id>
+			<id>1642396905723</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -120,7 +120,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1565077959279</id>
+			<id>1642396905739</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -129,7 +129,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1565077959327</id>
+			<id>1642396905753</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -138,7 +138,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1565077959367</id>
+			<id>1642396905768</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -147,7 +147,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1565077959394</id>
+			<id>1642396905780</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -156,7 +156,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1565077959411</id>
+			<id>1642396905791</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -165,7 +165,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1565077959456</id>
+			<id>1642396905803</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -174,7 +174,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1565077959555</id>
+			<id>1642396905815</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -183,7 +183,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1565077959689</id>
+			<id>1642396905836</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -192,7 +192,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1565077959734</id>
+			<id>1642396905872</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -201,12 +201,21 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1565077959827</id>
+			<id>1642396905902</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
 				<arguments>1.0-name-matches-false-false-gpio.c</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1642396905919</id>
+			<name>Library/Library</name>
+			<type>5</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-usci_spi.c</arguments>
 			</matcher>
 		</filter>
 	</filteredResources>

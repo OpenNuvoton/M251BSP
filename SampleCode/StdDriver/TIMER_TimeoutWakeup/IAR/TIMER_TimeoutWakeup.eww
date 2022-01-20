@@ -2,7 +2,7 @@
 
 <workspace>
   <project>
-    <path>$WS_DIR$\Timer_TimeoutWakeup.ewp</path>
+    <path>$WS_DIR$\TIMER_TimeoutWakeup.ewp</path>
   </project>
   <batchBuild/>
 </workspace>

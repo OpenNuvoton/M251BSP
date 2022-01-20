@@ -551,6 +551,10 @@ extern "C"
 #define CLK_DISABLE_RTCWK(void)       (CLK->PMUCTL &= ~CLK_PMUCTL_RTCWKEN_Msk)     /*!< Disable RTC Wake-up at Standby or Deep Power-down mode \hideinitializer */
 #define CLK_ENABLE_RTCWK(void)        (CLK->PMUCTL |= CLK_PMUCTL_RTCWKEN_Msk)      /*!< Enable RTC Wake-up at Standby or Deep Power-down mode \hideinitializer */
 
+#define CLK_TIMEOUT_ERR            (-1)     /*!< Clock timeout error value \hideinitializer */
+
+extern int32_t g_CLK_i32ErrCode;
+
 /**
  * @brief       Set Wake-up Timer Time-out Interval
  *

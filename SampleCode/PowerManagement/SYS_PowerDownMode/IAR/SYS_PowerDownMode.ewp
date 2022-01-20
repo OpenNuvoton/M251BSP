@@ -1573,7 +1573,7 @@
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state>SYS_DPDMode_Wakeup.bin</state>
+          <state>SYS_PowerDownMode.bin</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>

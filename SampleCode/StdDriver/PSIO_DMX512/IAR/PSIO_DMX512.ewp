@@ -1627,7 +1627,7 @@
         </option>
         <option>
           <name>IlinkOutputFile</name>
-          <state>psio_dmx512.out</state>
+          <state>PSIO_DMX512.out</state>
         </option>
         <option>
           <name>IlinkDebugInfoEnable</name>

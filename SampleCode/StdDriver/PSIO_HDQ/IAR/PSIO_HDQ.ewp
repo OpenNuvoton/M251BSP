@@ -1627,7 +1627,7 @@
         </option>
         <option>
           <name>IlinkOutputFile</name>
-          <state>psio_hdq.out</state>
+          <state>PSIO_HDQ.out</state>
         </option>
         <option>
           <name>IlinkDebugInfoEnable</name>

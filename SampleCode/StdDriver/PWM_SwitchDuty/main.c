@@ -126,8 +126,7 @@ int32_t main(void)
     /* Init UART to 115200-8n1 for print message */
     UART_Init();
 
-    printf("\n\nCPU @ %dHz\n", SystemCoreClock);
-    printf("PWM0 clock is from %s\n", (CLK->CLKSEL2 & CLK_CLKSEL2_PWM0SEL_Msk) ? "CPU" : "PLL");
+    printf("\n\nCPU @ %dHz(PLL@ %dHz)\n", SystemCoreClock, PllClock);
     printf("+-----------------------------------------------------------------------------------+\n");
     printf("|                          PWM Driver Sample Code                                   |\n");
     printf("+-----------------------------------------------------------------------------------+\n");

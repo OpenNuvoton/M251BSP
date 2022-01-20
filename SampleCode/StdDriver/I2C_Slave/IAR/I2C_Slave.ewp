@@ -1628,7 +1628,7 @@
         </option>
         <option>
           <name>IlinkOutputFile</name>
-          <state>i2c_slave.out</state>
+          <state>I2C_Slave.out</state>
         </option>
         <option>
           <name>IlinkDebugInfoEnable</name>

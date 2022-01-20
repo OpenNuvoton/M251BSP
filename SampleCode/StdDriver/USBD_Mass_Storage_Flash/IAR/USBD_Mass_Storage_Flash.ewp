@@ -1574,7 +1574,7 @@
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state>USBD_MassStorage_DataFlash.srec</state>
+          <state>USBD_Mass_Storage_Flash.srec</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -1629,7 +1629,7 @@
         </option>
         <option>
           <name>IlinkOutputFile</name>
-          <state>USBD_MassStorage_DataFlash.out</state>
+          <state>USBD_Mass_Storage_Flash.out</state>
         </option>
         <option>
           <name>IlinkDebugInfoEnable</name>

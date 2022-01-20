@@ -1,7 +1,7 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
 	<name>SPI_PDMA_LoopTest</name>
-	<comment />
+	<comment></comment>
 	<projects>
 	</projects>
 	<buildSpec>
@@ -66,7 +66,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1518505700897</id>
+			<id>1642397848216</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -75,7 +75,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1518505700905</id>
+			<id>1642397848226</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -84,7 +84,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1518505700913</id>
+			<id>1642397848236</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -93,7 +93,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1518505700923</id>
+			<id>1642397848244</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -102,7 +102,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1518505700932</id>
+			<id>1642397848252</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -111,7 +111,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1518505700940</id>
+			<id>1642397848260</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -120,12 +120,12 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1518505700953</id>
+			<id>1642397848267</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
-				<arguments>1.0-name-matches-false-false-qspi.c</arguments>
+				<arguments>1.0-name-matches-false-false-usci_spi.c</arguments>
 			</matcher>
 		</filter>
 	</filteredResources>

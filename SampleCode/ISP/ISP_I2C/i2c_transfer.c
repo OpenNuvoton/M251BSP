@@ -21,7 +21,6 @@ volatile uint8_t g_u8SlvDataLen;
 __STATIC_INLINE void I2C_SlaveTRx(I2C_T *i2c, uint32_t u32Status);
 
 extern uint32_t Pclk0;
-extern uint32_t Pclk1;
 
 void I2C_Init(void)
 {

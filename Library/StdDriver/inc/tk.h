@@ -127,7 +127,7 @@ extern "C"
  * \hideinitializer
  */
 #define TK_ENABLE_SCAN_KEY(u32Mask) (TK->SCANC |= (u32Mask&0x1FFFF)); \
-    (TK[1].SCANC |= ((u32Mask)>>17))
+    (TK->SCANC1 |= ((u32Mask)>>17))
 
 /**
  * @brief Disable scan key(s)
@@ -137,7 +137,7 @@ extern "C"
  * \hideinitializer
  */
 #define TK_DISABLE_SCAN_KEY(u32Mask) (TK->SCANC &= ~(u32Mask&0x1FFFF)); \
-    (TK[1].SCANC &= ~((u32Mask)>>17))
+    (TK->SCANC1 &= ~((u32Mask)>>17))
 
 /**
  * @brief Enable reference key(s)
@@ -148,7 +148,7 @@ extern "C"
  * \hideinitializer
  */
 #define TK_ENABLE_REF_KEY(u32Mask) (TK->REFC |= (u32Mask&0x1FFFF)); \
-    (TK[1].REFC |= (u32Mask>>17))
+    (TK->REFC1 |= (u32Mask>>17))
 
 /**
  * @brief Disable reference key(s)
@@ -160,7 +160,7 @@ extern "C"
  * \hideinitializer
  */
 #define TK_DISABLE_REF_KEY(u32Mask) (TK->REFC &= ~(u32Mask&0x1FFFF)); \
-    (TK[1].REFC &= ~(u32Mask>>17))
+    (TK->REFC1 &= ~(u32Mask>>17))
 /**
  * @brief Initiate enabled key(s) scan immediately.
  * @param None
@@ -226,19 +226,26 @@ extern "C"
 
 /**
  * @brief Get touch key complement capacitor bank data.
- * @param[in] u32TKNum Touch key number. The valid value is 0~16.
+ * @param[in] u32TKNum Touch key number. The valid value is 0~25.
  * @return Complement capacitor bank data
  * \hideinitializer
  */
-#define TK_GET_COMP_CAP_BANK_DATA(u32TKNum) (((*(__IO uint32_t *) (&(TK[u32TKNum/17].CCBD0) + ((u32TKNum%17) >> 2))) >> ((u32TKNum%17) % 4 * 8) & TK_CCBD0_CCBD0_Msk))
+#define TK_GET_COMP_CAP_BANK_DATA(u32TKNum) ((u32TKNum<=16) ? (((*(__IO uint32_t *) (&(TK->CCBD0) + ((u32TKNum%17) >> 2))) >> ((u32TKNum%17) % 4 * 8) & TK_CCBD0_CCBD0_Msk)):(((*(__IO uint32_t *) (&(TK->CCBD5) + ((u32TKNum%17) >> 2))) >> ((u32TKNum%17) % 4 * 8) & TK_CCBD0_CCBD0_Msk)))
 
 /**
  * @brief Get touch key sensing result data.
- * @param[in] u32TKNum Touch key number. The valid value is 0~16.
+ * @param[in] u32TKNum Touch key number. The valid value is 0~25.
  * @return Sensing result data
  * \hideinitializer
  */
-#define TK_GET_SENSE_DATA(u32TKNum) ((u32TKNum==TK_SCANALL_NUM) ? ((TK->DAT4 >> TK_DAT4_TKDAT_ALL_Pos) & TK_DAT0_TKDAT0_Msk):(((*(__IO uint32_t *) (&(TK[u32TKNum/17].DAT0) + ((u32TKNum%17) >> 2))) >> ((u32TKNum%17) % 4 * 8) & TK_DAT0_TKDAT0_Msk)))
+#define TK_GET_SENSE_DATA(u32TKNum) ((u32TKNum<=16) ? (((*(__IO uint32_t *) (&(TK->DAT0) + ((u32TKNum%17) >> 2))) >> ((u32TKNum%17) % 4 * 8) & TK_DAT0_TKDAT0_Msk)):(((*(__IO uint32_t *) (&(TK->DAT5) + ((u32TKNum%17) >> 2))) >> ((u32TKNum%17) % 4 * 8) & TK_DAT0_TKDAT0_Msk)))
+
+/**
+ * @brief Get touch All key sensing result data.
+ * @return Sensing result data
+ * \hideinitializer
+ */
+#define TK_GET_SCANALL_SENSE_DATA() ((TK->DAT4 >> TK_DAT4_TKDAT_ALL_Pos) & TK_DAT0_TKDAT0_Msk)
 
 /**
  * @brief Get touch key busy status.
@@ -295,7 +302,7 @@ extern "C"
  * @retval 1 Touch key is scan completed or threshold control event occurs.
  * \hideinitializer
  */
-#define TK_GET_INT_STATUS1(u32Mask) ((TK[1].STA & (u32Mask)) ? 1: 0)
+#define TK_GET_INT_STATUS1(u32Mask) ((TK->STA1 & (u32Mask)) ? 1: 0)
 
 /**
  * @brief Clear touch key interrupt flag.
@@ -341,7 +348,7 @@ extern "C"
  * @return None
  * \hideinitializer
  */
-#define TK_CLR_INT_FLAG1(u32Mask) (TK[1].STA = (u32Mask))
+#define TK_CLR_INT_FLAG1(u32Mask) (TK->STA1 = (u32Mask))
 
 /*---------------------------------------------------------------------------------------------------------*/
 /* Define TK functions prototype                                                                          */

@@ -50,13 +50,21 @@ void SYS_Init(void)
     CLK_EnableModuleClock(EADC_MODULE);
 
     /* EADC clock source is PCLK1, set divider to 8, ADC clock is PCLK1/8 MHz */
+    /* Note: The EADC_CLK speed should meet datasheet spec (<16MHz) and rules in following table.   */
+    /* +--------------+------------------+                                                          */
+    /* | PCLK divider | EADC_CLK divider |                                                          */
+    /* +--------------+------------------+                                                          */
+    /* | 1            | 1, 2, 3, 4, ...  |                                                          */
+    /* +--------------+------------------+                                                          */
+    /* | 2, 4, 8, 16  | 2, 4, 6, 8, ...  |                                                          */
+    /* +--------------+------------------+                                                          */
     CLK_SetModuleClock(EADC_MODULE, 0, CLK_CLKDIV0_EADC(8));
 
     /* Enable Timer 0 module clock */
     CLK_EnableModuleClock(TMR0_MODULE);
 
     /* Select timer 0 module clock source as HIRC */
-    CLK_SetModuleClock(TMR0_MODULE, CLK_CLKSEL1_TMR0SEL_HIRC, 3);
+    CLK_SetModuleClock(TMR0_MODULE, CLK_CLKSEL1_TMR0SEL_HIRC, 0);
 
     /*---------------------------------------------------------------------------------------------------------*/
     /* Init I/O Multi-function                                                                                 */
@@ -94,11 +102,14 @@ void TIMER0_Init(void)
     /*---------------------------------------------------------------------------------------------------------*/
     /* Init TIMER0                                                                                             */
     /*---------------------------------------------------------------------------------------------------------*/
+    /* Set timer0 prescale value is 3 */
+    TIMER_SET_PRESCALE_VALUE(TIMER0, 3);
+
     /* Set timer0 periodic time-out period is 1s if timer clock is 12 MHz */
     TIMER_SET_CMP_VALUE(TIMER0, 12000000);
 
     /* Start timer counter in periodic mode and enable timer interrupt trigger EADC */
-    TIMER0->CTL = TIMER_PERIODIC_MODE;
+    TIMER0->CTL |= TIMER_PERIODIC_MODE;
     TIMER0->TRGCTL |= TIMER_TRGCTL_TRGEADC_Msk;
 }
 

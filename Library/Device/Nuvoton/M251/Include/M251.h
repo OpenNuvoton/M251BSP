@@ -187,6 +187,7 @@ typedef enum IRQn
 /*@}*/ /* end of group CMSIS_Device */
 
 
+#include <stdint.h>
 #include "core_cm23.h"                      /* Processor and core peripherals             */
 #include "system_M251.h"                    /* System Header                              */
 
@@ -422,9 +423,10 @@ extern void SystemInit(void);
   @{
  */
 
-typedef volatile unsigned char  vu8;
-typedef volatile unsigned long  vu32;
-typedef volatile unsigned short vu16;
+typedef volatile uint8_t  vu8;        ///< Define 8-bit unsigned volatile data type
+typedef volatile uint16_t vu16;       ///< Define 16-bit unsigned volatile data type
+typedef volatile uint32_t vu32;       ///< Define 32-bit unsigned volatile data type
+typedef volatile uint64_t vu64;       ///< Define 64-bit unsigned volatile data type
 
 /**
   * @brief Get a 8-bit unsigned value from specified address
