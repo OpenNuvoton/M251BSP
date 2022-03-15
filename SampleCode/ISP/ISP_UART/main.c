@@ -75,7 +75,7 @@ int main(void)
     GetDataFlashInfo(&g_dataFlashAddr, &g_dataFlashSize);
 
     SysTick->LOAD = 300000 * CyclesPerUs;
-    SysTick->VAL   = (0x00);
+    SysTick->VAL  = (0x00);
     SysTick->CTRL = SysTick->CTRL | SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_ENABLE_Msk;//using cpu clock
 
     while (1)

@@ -59,7 +59,6 @@ void LCD_IRQHandler(void)
 
 void Configure_LCD_Pins(void)
 {
-
     /* COM 0~3 */
     SYS->GPB_MFPL = (SYS->GPB_MFPL & ~(SYS_GPB_MFPL_PB5MFP_Msk | SYS_GPB_MFPL_PB4MFP_Msk | SYS_GPB_MFPL_PB3MFP_Msk | SYS_GPB_MFPL_PB2MFP_Msk)) |
                     (SYS_GPB_MFPL_PB5MFP_LCD_COM0 | SYS_GPB_MFPL_PB4MFP_LCD_COM1 | SYS_GPB_MFPL_PB3MFP_LCD_COM2 | SYS_GPB_MFPL_PB2MFP_LCD_COM3);
@@ -142,15 +141,6 @@ void SYS_Init(void)
 
     /* Set SysTick source to HCLK/2*/
     CLK_SetSysTickClockSrc(CLK_CLKSEL0_STCLKSEL_HCLK_DIV2);
-
-    /* Enable MIRC clock */
-    CLK_EnableXtalRC(CLK_PWRCTL_HIRCEN_Msk);
-
-    /* Waiting for MIRC clock ready */
-    CLK_WaitClockReady(CLK_STATUS_HIRCSTB_Msk);
-
-    /* Set LCD Charge Pump clock source is MIRC */
-    CLK_SetModuleClock(LCDCP_MODULE, CLK_CLKSEL2_LCDCPSEL_MIRC, 0);
 
 
 #if !defined(DEBUG_ENABLE_SEMIHOST) && !defined(OS_USE_SEMIHOSTING)
@@ -268,7 +258,7 @@ int main(void)
     printf("Working blink interval is %ums.\n\n", u32BlinkInterval);
 
     /* Set specified text on LCD */
-    LCDLIB_Printf(0, text);
+    LCDLIB_Printf(ZONE_MAIN_DIGIT, text);
 
     /* Enable LCD display */
     LCD_ENABLE_DISPLAY();

@@ -27,9 +27,10 @@ extern "C"
 */
 
 #define OPT_NEIGHBOR                                       /*!< Using for neighboring keys as shielding */
+#define TKLIB_TOL_NUM_BUF           (26)                   /* Support TK0 ~ TK25 */
 #define TKLIB_TOL_NUM_KEY           (17)                   /*!< TK0 ~ TK16 */
 
-#define TK_ADDR_PARAM_DFLASH        (0x0000F800)
+#define TK_ADDR_PARAM_DFLASH        (0x001F800)
 #define TK_BLOCK_OFFSET             (128)
 #define TK_MAX_STOR_ADDR            TK_ADDR_PARAM_DFLASH
 
@@ -63,6 +64,8 @@ extern "C"
 
 #define E_RESET_BASELINE            (0)
 #define E_TRACE_BASELINE            (1)
+
+extern uint8_t u8MaxScKeyNum;
 
 /*@}*/ /* end of group TKLIB_EXPORTED_CONSTANTS */
 

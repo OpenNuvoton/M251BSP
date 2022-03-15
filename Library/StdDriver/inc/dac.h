@@ -232,6 +232,22 @@ extern "C"
   */
 #define DAC_CLR_DMAUDR_FLAG(dac) ((dac)->STATUS = DAC_STATUS_DMAUDR_Msk)
 
+/**
+  * @brief Enable DAC group mode
+  * @param[in] dac Base address of DAC module.
+  * @return None
+  * \hideinitializer
+  */
+#define DAC_ENABLE_GROUP_MODE(dac) (DAC0->CTL |= DAC_CTL_GRPEN_Msk)
+
+/**
+  * @brief Disable DAC group mode
+  * @param[in] dac Base address of DAC module.
+  * @return None
+  * \hideinitializer
+  */
+#define DAC_DISABLE_GROUP_MODE(dac) (DAC0->CTL &= ~DAC_CTL_GRPEN_Msk)
+
 void DAC_Open(DAC_T *dac, uint32_t u32Ch, uint32_t u32TrgSrc);
 void DAC_Close(DAC_T *dac, uint32_t u32Ch);
 uint32_t DAC_SetDelayTime(DAC_T *dac, uint32_t u32Delay);

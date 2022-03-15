@@ -74,7 +74,7 @@ This BSP folder
 ## .\Tool\
 
 - TK<br>
-	Touch key calibration tool.
+	Touch key tool.
 
 
 # License

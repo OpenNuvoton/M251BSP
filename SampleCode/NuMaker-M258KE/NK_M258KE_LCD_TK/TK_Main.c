@@ -1,7 +1,9 @@
 /**************************************************************************//**
  * @file     TK_Main.c
  * @version  V1.00
- * @brief    Main file
+ * @brief    Demonstrate how to calibrate TK14 in the NuMaker-M258KE board.
+ *           After the calibration completes, LCD displays M258KE temperature,
+ *           firmware version, and TK14 press information.
  *
  * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2020 Nuvoton Technology Corp. All rights reserved.

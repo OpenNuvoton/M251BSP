@@ -40,9 +40,8 @@ void UART_Init(void);
 
 void Configure_LCD_Pins(void)
 {
-
     /* COM 0~3 */
-    SYS->GPB_MFPL = (SYS->GPC_MFPL & ~(SYS_GPB_MFPL_PB5MFP_Msk | SYS_GPB_MFPL_PB4MFP_Msk | SYS_GPB_MFPL_PB3MFP_Msk | SYS_GPB_MFPL_PB2MFP_Msk)) |
+    SYS->GPB_MFPL = (SYS->GPB_MFPL & ~(SYS_GPB_MFPL_PB5MFP_Msk | SYS_GPB_MFPL_PB4MFP_Msk | SYS_GPB_MFPL_PB3MFP_Msk | SYS_GPB_MFPL_PB2MFP_Msk)) |
                     (SYS_GPB_MFPL_PB5MFP_LCD_COM0 | SYS_GPB_MFPL_PB4MFP_LCD_COM1 | SYS_GPB_MFPL_PB3MFP_LCD_COM2 | SYS_GPB_MFPL_PB2MFP_LCD_COM3);
     /* SEG 4~5 */
     SYS->GPD_MFPH = (SYS->GPD_MFPH & ~(SYS_GPD_MFPH_PD10MFP_Msk | SYS_GPD_MFPH_PD11MFP_Msk)) |
@@ -123,6 +122,7 @@ void SYS_Init(void)
 
     /* Set SysTick source to HCLK/2*/
     CLK_SetSysTickClockSrc(CLK_CLKSEL0_STCLKSEL_HCLK_DIV2);
+
 
 #if !defined(DEBUG_ENABLE_SEMIHOST) && !defined(OS_USE_SEMIHOSTING)
     /* Configure UART module clock */
@@ -252,6 +252,6 @@ int main(void)
         text[idx] = 0x00;   // C string ended with 0x00
         printf("\n");
 
-        LCDLIB_Printf(0, text);
+        LCDLIB_Printf(ZONE_MAIN_DIGIT, text);
     }
 }

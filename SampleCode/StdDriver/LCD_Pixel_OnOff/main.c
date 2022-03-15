@@ -143,7 +143,7 @@ uint32_t sysGetNum(void)
 void Configure_LCD_Pins(void)
 {
     /* COM 0~3 */
-    SYS->GPB_MFPL = (SYS->GPC_MFPL & ~(SYS_GPB_MFPL_PB5MFP_Msk | SYS_GPB_MFPL_PB4MFP_Msk | SYS_GPB_MFPL_PB3MFP_Msk | SYS_GPB_MFPL_PB2MFP_Msk)) |
+    SYS->GPB_MFPL = (SYS->GPB_MFPL & ~(SYS_GPB_MFPL_PB5MFP_Msk | SYS_GPB_MFPL_PB4MFP_Msk | SYS_GPB_MFPL_PB3MFP_Msk | SYS_GPB_MFPL_PB2MFP_Msk)) |
                     (SYS_GPB_MFPL_PB5MFP_LCD_COM0 | SYS_GPB_MFPL_PB4MFP_LCD_COM1 | SYS_GPB_MFPL_PB3MFP_LCD_COM2 | SYS_GPB_MFPL_PB2MFP_LCD_COM3);
     /* SEG 4~5 */
     SYS->GPD_MFPH = (SYS->GPD_MFPH & ~(SYS_GPD_MFPH_PD10MFP_Msk | SYS_GPD_MFPH_PD11MFP_Msk)) |
@@ -225,17 +225,9 @@ void SYS_Init(void)
     /* Set SysTick source to HCLK/2*/
     CLK_SetSysTickClockSrc(CLK_CLKSEL0_STCLKSEL_HCLK_DIV2);
 
-    /* Enable MIRC clock */
-    CLK_EnableXtalRC(CLK_PWRCTL_HIRCEN_Msk);
 
-    /* Waiting for MIRC clock ready */
-    CLK_WaitClockReady(CLK_STATUS_HIRCSTB_Msk);
-
-    /* Set LCD Charge Pump clock source is MIRC */
-    CLK_SetModuleClock(LCDCP_MODULE, CLK_CLKSEL2_LCDCPSEL_MIRC, 0);
-
-    /* Configure UART module clock */
 #if !defined(DEBUG_ENABLE_SEMIHOST) && !defined(OS_USE_SEMIHOSTING)
+    /* Configure UART module clock */
     CLK_EnableModuleClock(UART0_MODULE);
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HIRC, CLK_CLKDIV0_UART0(1));
 #endif

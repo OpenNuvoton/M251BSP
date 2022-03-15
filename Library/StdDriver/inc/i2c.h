@@ -98,7 +98,7 @@ extern int32_t g_I2C_i32ErrCode;
  *
  *    @details      When a new status is presented of I2C bus, the SI flag will be set in I2C_CTL register.
  */
-#define I2C_WAIT_READY(i2c)     while(!((i2c)->CTL0 & I2C_CTL0_SI_Msk))
+#define I2C_WAIT_READY(i2c)     while(!((i2c)->CTL0 & I2C_CTL0_SI_Msk)) {}
 
 /**
  *    @brief        The macro is used to Read I2C Bus Data Register

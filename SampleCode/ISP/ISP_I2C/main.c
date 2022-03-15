@@ -54,9 +54,12 @@ void SYS_Init(void)
     /* I2C clock pin enable schmitt trigger */
     PC->SMTEN |= GPIO_SMTEN_SMTEN8_Msk;
     PE->SMTEN |= GPIO_SMTEN_SMTEN13_Msk;
-
 }
 
+/*
+ *  Please check default I2C0 multi-function pins in SYS_Init() are available in target chip
+ *  Default I2C0 multi-function pins: PC.8 (SDA) and PE.13 (SCL)
+ */
 int main(void)
 {
     uint32_t cmd_buff[16];
@@ -71,7 +74,7 @@ int main(void)
     I2C_Init();
 
     SysTick->LOAD = 300000 * CyclesPerUs;
-    SysTick->VAL   = (0x00);
+    SysTick->VAL  = (0x00);
     SysTick->CTRL = SysTick->CTRL | SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_ENABLE_Msk;
 
     while (1)

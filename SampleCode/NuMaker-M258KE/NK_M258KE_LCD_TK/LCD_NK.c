@@ -4,7 +4,7 @@
  * @brief    LCD Initial & Frame config.
  *
  * SPDX-License-Identifier: Apache-2.0
- * @copyright (C) 2020 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2022 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include "NuMicro.h"
 #include "NU_M258KE.h"
@@ -111,27 +111,27 @@ void LCD_frame1(void)
 
 
     /* Show logo and battery level */
-    LCDLIB_SetSymbol(SYMBOL_NVT, 0);
-    LCDLIB_SetSymbol(SYMBOL_NUMICRO, 1);
+    LCDLIB_SetSymbol(SYMBOL_NVT_14, 0);
+    LCDLIB_SetSymbol(SYMBOL_NUMICRO_15, 1);
     LCDLIB_PrintNumber(ZONE_NUMICRO_DIGIT, 258);
-    LCDLIB_SetSymbol(SYMBOL_BAT_FRAME, 1);
-    LCDLIB_SetSymbol(SYMBOL_BAT_1, 1);
-    LCDLIB_SetSymbol(SYMBOL_BAT_2, 0);
-    LCDLIB_SetSymbol(SYMBOL_BAT_3, 0);
+    LCDLIB_SetSymbol(SYMBOL_BAT_FRAME_18, 1);
+    LCDLIB_SetSymbol(SYMBOL_BAT_1_18, 1);
+    LCDLIB_SetSymbol(SYMBOL_BAT_2_18, 0);
+    LCDLIB_SetSymbol(SYMBOL_BAT_3_18, 0);
 
     /*Show Char */
-    LCDLIB_Printf(0, "*M258*");
+    LCDLIB_Printf(ZONE_MAIN_DIGIT, "*M258*");
 
     /* Show counter */
     LCDLIB_PrintNumber(ZONE_PPM_DIGIT, 888);
 
     /* Show temperature */
     LCDLIB_PrintNumber(ZONE_TEMP_DIGIT, 555);
-    LCDLIB_SetSymbol(SYMBOL_TEMP_C, 0);
+    LCDLIB_SetSymbol(SYMBOL_TEMP_C_35, 0);
 
     /* Show bsp version */
     LCDLIB_PrintNumber(ZONE_VER_DIGIT, 0);
-    LCDLIB_SetSymbol(SYMBOL_VERSION, 1);
+    LCDLIB_SetSymbol(SYMBOL_VERSION_37, 1);
 
 }
 
@@ -140,26 +140,26 @@ void LCD_frame2(void)
     unsigned long temp;
 
     /* Show logo and battery level */
-    LCDLIB_SetSymbol(SYMBOL_NVT, 1);
-    LCDLIB_SetSymbol(SYMBOL_NUMICRO, 1);
+    LCDLIB_SetSymbol(SYMBOL_NVT_14, 1);
+    LCDLIB_SetSymbol(SYMBOL_NUMICRO_15, 1);
     LCDLIB_PrintNumber(ZONE_NUMICRO_DIGIT, 258);
-    LCDLIB_SetSymbol(SYMBOL_BAT_FRAME, 1);
-    LCDLIB_SetSymbol(SYMBOL_BAT_1, 1);
-    LCDLIB_SetSymbol(SYMBOL_BAT_2, 1);
-    LCDLIB_SetSymbol(SYMBOL_BAT_3, 1);
+    LCDLIB_SetSymbol(SYMBOL_BAT_FRAME_18, 1);
+    LCDLIB_SetSymbol(SYMBOL_BAT_1_18, 1);
+    LCDLIB_SetSymbol(SYMBOL_BAT_2_18, 1);
+    LCDLIB_SetSymbol(SYMBOL_BAT_3_18, 1);
 
     /* Show Char */
-    LCDLIB_Printf(0, "PD STAT");
+    LCDLIB_Printf(ZONE_MAIN_DIGIT, "PD STAT");
 
     temp = internal_Temperature();
     LCDLIB_PrintNumber(ZONE_TEMP_DIGIT, temp);
-    LCDLIB_SetSymbol(SYMBOL_TEMP_C, 1);
+    LCDLIB_SetSymbol(SYMBOL_TEMP_C_35, 1);
 
     /* Show counter */
     LCDLIB_PrintNumber(ZONE_PPM_DIGIT, tkct);
 
     /* Show bsp version */
     LCDLIB_PrintNumber(ZONE_VER_DIGIT, (TKLIB_MAJOR_VERSION * 100000) + (TKLIB_MINOR_VERSION * 1000) + TOUCHKEY_VERSION);
-    LCDLIB_SetSymbol(SYMBOL_VERSION, 1);
+    LCDLIB_SetSymbol(SYMBOL_VERSION_37, 1);
 
 }
