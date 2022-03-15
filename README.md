@@ -55,6 +55,9 @@ This BSP folder
 - NuMaker-M258KE<br>
 	Sample codes for NuMaker-M258KE board.
 
+- NuMaker-M258KG<br>
+	Sample codes for NuMaker-M258KG board.
+
 - PowerManagement<br>
 	Power management sample code.
 
