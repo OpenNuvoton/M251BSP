@@ -14,16 +14,16 @@
 #define CLK_SOURCE  CLK_HIRC
 #define PLL_CLOCK   FREQ_48MHZ
 
-#define ENABLE_PDMA_INTERRUPT 1
+#define ENABLE_PDMA_INTERRUPT
 #define PDMA_TEST_LENGTH 100
-#define PDMA_TIME 0x5555    //PDMA Timeout count
+#define PDMA_TIME 0x5555          //PDMA Timeout count
 /*---------------------------------------------------------------------------------------------------------*/
 /* Global variables                                                                                        */
 /*---------------------------------------------------------------------------------------------------------*/
 static uint8_t g_au8TxBuffer[PDMA_TEST_LENGTH];
 static uint8_t g_au8RxBuffer[PDMA_TEST_LENGTH];
 
-volatile uint32_t u32IsTestOver = 0;
+volatile uint32_t g_u32IsTestOver = 0;
 
 /*---------------------------------------------------------------------------------------------------------*/
 /* Define functions prototype                                                                              */
@@ -66,7 +66,6 @@ void SYS_Init(void)
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HIRC, CLK_CLKDIV0_UART0(1));
     /* Select UART1 clock source is HIRC */
     CLK_SetModuleClock(UART1_MODULE, CLK_CLKSEL1_UART1SEL_HIRC, CLK_CLKDIV0_UART1(1));
-
 
 #else
 
@@ -157,15 +156,17 @@ void PDMA_Init(void)
     //Select Single Request
     PDMA_SetBurstType(PDMA, 0, PDMA_REQ_SINGLE, 0);
     PDMA_SetBurstType(PDMA, 1, PDMA_REQ_SINGLE, 0);
-    //Set timeout
-    //PDMA_SetTimeOut(PDMA,0, 0, 0x5555);
-    //PDMA_SetTimeOut(PDMA,1, 0, 0x5555);
 
 #ifdef ENABLE_PDMA_INTERRUPT
-    PDMA_EnableInt(PDMA, 0, 0);
-    PDMA_EnableInt(PDMA, 1, 0);
+    //Set timeout
+    PDMA_SetTimeOut(PDMA, 0, 1, PDMA_TIME);
+    PDMA_SetTimeOut(PDMA, 1, 1, PDMA_TIME);
+
+    PDMA_EnableInt(PDMA, 0, PDMA_INT_TRANS_DONE);
+    PDMA_EnableInt(PDMA, 1, PDMA_INT_TRANS_DONE);
+    PDMA_EnableInt(PDMA, 1, PDMA_INT_TIMEOUT);
     NVIC_EnableIRQ(PDMA_IRQn);
-    u32IsTestOver = 0;
+    g_u32IsTestOver = 0;
 #endif
 }
 
@@ -215,24 +216,26 @@ void PDMA_IRQHandler(void)
     if (u32Status & PDMA_INTSTS_ABTIF_Msk)   /* abort */
     {
         printf("target abort interrupt !!\n");
-
-        if (PDMA_GET_ABORT_STS(PDMA) & PDMA_ABTSTS_ABTIF2_Msk)
-            u32IsTestOver = 2;
-
+        g_u32IsTestOver = 0x2;
         PDMA_CLR_ABORT_FLAG(PDMA, PDMA_GET_ABORT_STS(PDMA));
     }
-    else if (u32Status & PDMA_INTSTS_TDIF_Msk)     /* done */
+    else if (u32Status & PDMA_INTSTS_TDIF_Msk)  /* done */
     {
-        if ((PDMA_GET_TD_STS(PDMA) & (1 << 0)) && (PDMA_GET_TD_STS(PDMA) & (1 << 1)))
+        if ((PDMA_GET_TD_STS(PDMA) & (1 << 0)))
         {
-            u32IsTestOver = 1;
-            PDMA_CLR_TD_FLAG(PDMA, PDMA_GET_TD_STS(PDMA));
+            PDMA_CLR_TD_FLAG(PDMA, PDMA_TDSTS_TDIF0_Msk);
+        }
+
+        if ((PDMA_GET_TD_STS(PDMA) & (1 << 1)))
+        {
+            g_u32IsTestOver = 0x1;
+            PDMA_CLR_TD_FLAG(PDMA, PDMA_TDSTS_TDIF1_Msk);
         }
     }
     else if (u32Status & (PDMA_INTSTS_REQTOF0_Msk | PDMA_INTSTS_REQTOF1_Msk))    /* channel 0-1 timeout */
     {
         printf("timeout interrupt !!\n");
-        u32IsTestOver = 3;
+        g_u32IsTestOver = 0x3;
         /* Disable timeout  */
         PDMA_SetTimeOut(PDMA, 0, 0, 0);
         /* Clear timeout flag */
@@ -291,22 +294,23 @@ void UART_PDMATest(void)
 
         NVIC_EnableIRQ(UART1_IRQn);
 
-#ifdef ENABLE_PDMA_INTERRUPT
+#ifdef  ENABLE_PDMA_INTERRUPT
 
-        while (u32IsTestOver == 0);
+        while (g_u32IsTestOver == 0);
 
-        if (u32IsTestOver == 1)
+        if (g_u32IsTestOver == 1)
             printf("test done...\n");
-        else if (u32IsTestOver == 2)
+        else if (g_u32IsTestOver == 2)
             printf("target abort...\n");
-        else if (u32IsTestOver == 3)
+        else if (g_u32IsTestOver == 3)
             printf("timeout...\n");
 
+        g_u32IsTestOver = 0;
 #else
 
-        while ((!(PDMA_GET_TD_STS() & (1 << 0))) || (!(PDMA_GET_TD_STS() & (1 << 1))));
+        while ((!(PDMA_GET_TD_STS(PDMA) & (1 << 0))) || (!(PDMA_GET_TD_STS(PDMA) & (1 << 1))));
 
-        PDMA_CLR_TD_FLAG(PDMA_TDSTS_TDIF0_Msk | PDMA_TDSTS_TDIF1_Msk);
+        PDMA_CLR_TD_FLAG(PDMA, PDMA_TDSTS_TDIF0_Msk | PDMA_TDSTS_TDIF1_Msk);
 #endif
 
         // Disable UART PDMA Tx and Rx

@@ -300,17 +300,17 @@ extern "C"
 #define UART_GET_RX_FULL(uart)    ((uart)->FIFOSTS & UART_FIFOSTS_RXFULL_Msk)
 
 /**
- *    @brief        Rx Idel Status register value
+ *    @brief        Rx Idle Status register value
  *
  *    @param[in]    uart    The pointer of the specified UART module
  *
  *    @retval       0 Rx is busy.
- *    @retval       1 Rx is Idel(Default)
+ *    @retval       1 Rx is Idle(Default)
  *
- *    @details      This macro get Rx Idel Status register value.
+ *    @details      This macro get Rx Idle Status register value.
  *    \hideinitializer
  */
-#define UART_RX_IDEL(uart) (((uart)->FIFOSTS & UART_FIFOSTS_RXIDLE_Msk )>> UART_FIFOSTS_RXIDLE_Pos)
+#define UART_RX_IDLE(uart) (((uart)->FIFOSTS & UART_FIFOSTS_RXIDLE_Msk )>> UART_FIFOSTS_RXIDLE_Pos)
 
 
 /**

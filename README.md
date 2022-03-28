@@ -52,6 +52,9 @@ This BSP folder
 - ISP<br>
 	Sample codes for In-System-Programming.
 
+- Level1_Training<br>
+	Level 1 training sample code.
+
 - NuMaker-M258KE<br>
 	Sample codes for NuMaker-M258KE board.
 
