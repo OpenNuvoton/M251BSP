@@ -164,8 +164,8 @@ typedef struct
      * |        |          |3 = (None).
      * |        |          |Note: Whenever the LCD controller is disabled, all VLCD sources are automatically cut off.
      * |[2]     |RESMODE   |Resistive Network Driving Mode
-     * |        |          |0 = Low-drive mode.
-     * |        |          |1 = High-drive mode.
+     * |        |          |0 = High-Driving Disabled.
+     * |        |          |1 = High-Driving Enabled.
      * |[3]     |BUFEN     |Voltage Buffer Enable Bit
      * |        |          |0 = Voltage Buffer Disabled.
      * |        |          |1 = Voltage Buffer Enabled.

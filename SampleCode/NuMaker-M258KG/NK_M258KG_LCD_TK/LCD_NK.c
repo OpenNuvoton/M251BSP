@@ -19,13 +19,35 @@ static S_LCD_CFG_T g_LCDCfg =
     64,                         /*!< Operation frame rate */
     LCD_WAVEFORM_TYPE_A_NORMAL, /*!< Waveform type */
     LCD_DISABLE_ALL_INT,        /*!< Interrupt source */
-    LCD_LOW_DRIVING_AND_BUF_ON, /*!< Driving mode */
+    LCD_HIGH_DRIVING_OFF_AND_BUF_ON, /*!< Driving mode */
     LCD_VOLTAGE_SOURCE_CP,      /*!< Voltage source */
 };
 
-void LCD_IO_Init(void)
+void LCD_Init(void)
 {
-
+    /*
+        Summary of LCD pin usage:
+            COM 0~3   : PB.5, PB.4, PB.3, PB.2
+            COM 4~5   : PD.11, PD.10
+            COM 6~7   : PE.13, PC.8
+            SEG 0~1   : PB.0, PB.1
+            SEG 2~3   : PC.9, PC.10
+            SEG 4~13  : PB.6, PB.7, PB.8, PB.9, PB.10, PB.11, PB.12, PB.13, PB.14, PB.15
+            SEG 14    : PC.14
+            SEG 15~16 : PE.6, PE.7
+            SEG 17~20 : PE.11, PE.10, PE.9, PE.8
+            SEG 21~25 : PD.13, PD.0, PD.1, PD.2, PD.3
+            SEG 26~30 : PC.0, PC.1, PC.2, PC.3, PC.4
+            SEG 31    : PC.5
+            SEG 32~33 : PD.8, PD.9
+            SEG 34    : PE.14
+            SEG 35    : PF.15
+            SEG 36~37 : PA.6, PA.7
+            SEG 38~39 : PC.6, PC.7
+    */
+    
+    /* Configure LCD multi-function pins */
+    
     /* COM 0~3 */
     SYS->GPB_MFPL = (SYS->GPB_MFPL & ~(SYS_GPB_MFPL_PB5MFP_Msk | SYS_GPB_MFPL_PB4MFP_Msk | SYS_GPB_MFPL_PB3MFP_Msk | SYS_GPB_MFPL_PB2MFP_Msk)) |
                     (SYS_GPB_MFPL_PB5MFP_LCD_COM0 | SYS_GPB_MFPL_PB4MFP_LCD_COM1 | SYS_GPB_MFPL_PB3MFP_LCD_COM2 | SYS_GPB_MFPL_PB2MFP_LCD_COM3);
@@ -82,25 +104,29 @@ void LCD_IO_Init(void)
     SYS->GPC_MFPL = (SYS->GPC_MFPL & ~(SYS_GPC_MFPL_PC6MFP_Msk | SYS_GPC_MFPL_PC7MFP_Msk)) |
                     (SYS_GPC_MFPL_PC6MFP_LCD_SEG38 | SYS_GPC_MFPL_PC7MFP_LCD_SEG39);
 
+    /* Reset LCD module */
+    SYS_ResetModule(LCD_RST);
 
+    /* Output Setting Select */
+    LCD_OUTPUT_SET(LCD_OUTPUT_SEL8_TO_COM4 | LCD_OUTPUT_SEL9_TO_COM5 | LCD_OUTPUT_SEL10_TO_SEG20 | LCD_OUTPUT_SEL11_TO_SEG19 |
+                   LCD_OUTPUT_SEL12_TO_SEG18 | LCD_OUTPUT_SEL13_TO_SEG17 | LCD_OUTPUT_SEL14_TO_COM6 | LCD_OUTPUT_SEL15_TO_COM7 |
+                   LCD_OUTPUT_SEL24_TO_SEG31 | LCD_OUTPUT_SEL25_TO_SEG30 | LCD_OUTPUT_SEL26_TO_SEG29 | LCD_OUTPUT_SEL27_TO_SEG28 |
+                   LCD_OUTPUT_SEL28_TO_SEG27 | LCD_OUTPUT_SEL29_TO_SEG26 | LCD_OUTPUT_SEL41_TO_SEG14 | LCD_OUTPUT_SEL42_TO_SEG13 |
+                   LCD_OUTPUT_SEL47_TO_SEG8 | LCD_OUTPUT_SEL48_TO_SEG7 | LCD_OUTPUT_SEL49_TO_SEG6);
+
+    /* LCD Initialize and calculate real frame rate */
+    LCD_Open(&g_LCDCfg);
+
+    /* Select output voltage level 9 for 4.8V */
+    LCD_SET_CP_VOLTAGE(LCD_CP_VOLTAGE_LV_9);
 }
 
 //----------------------------------------------------------------------------------------------//
 void LCD_Init_Setting(void)
 {
 
-    /* As defaut all multi function define as GPIO */
-    LCD_IO_Init();
-
-    /* PD.11 PD.10 PE.13 PC.8 Output Select COM4 COM5 COM6 COM7 */
-    LCD_OUTPUT_SET(BIT0 | BIT1 | BIT6 | BIT7);
-
-    /* LCD Initialize and calculate real frame rate */
-    LCD_Open(&g_LCDCfg);
-
-    /* Charge pump output voltage level 9 for 4.8V */
-    CLK_EnableModuleClock(LCDCP_MODULE);
-    LCD_SET_CP_VOLTAGE(LCD_CP_VOLTAGE_LV_9);
+    /* Init LCD multi-function pins and settings */
+    LCD_Init();
 
     /* Enable LCD display */
     LCD_ENABLE_DISPLAY();
