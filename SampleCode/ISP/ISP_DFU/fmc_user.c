@@ -18,21 +18,20 @@ int FMC_Proc(unsigned int u32Cmd, unsigned int addr_start, unsigned int addr_end
     {
         FMC->ISPADDR = u32Addr;
 
-        if ((u32Addr & (FMC_FLASH_PAGE_SIZE - 1)) == 0 && u32Cmd == FMC_ISPCMD_PROGRAM)
-        {
-            FMC->ISPCMD = FMC_ISPCMD_PAGE_ERASE;
-            FMC->ISPTRG = 0x1;
-
-            while (FMC->ISPTRG & 0x1) ;
-        }
-
-        FMC->ISPCMD = u32Cmd;
-
         if (u32Cmd == FMC_ISPCMD_PROGRAM)
         {
+            if ((u32Addr & (FMC_FLASH_PAGE_SIZE - 1)) == 0)
+            {
+                FMC->ISPCMD = FMC_ISPCMD_PAGE_ERASE;
+                FMC->ISPTRG = 0x1;
+
+                while (FMC->ISPTRG & 0x1) ;
+            }
+
             FMC->ISPDAT = *data;
         }
 
+        FMC->ISPCMD = u32Cmd;
         FMC->ISPTRG = 0x1;
         //        __ISB();
 
@@ -52,7 +51,6 @@ int FMC_Proc(unsigned int u32Cmd, unsigned int addr_start, unsigned int addr_end
         {
             *data = FMC->ISPDAT;
         }
-
     }
 
     return 0;

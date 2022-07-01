@@ -653,7 +653,7 @@ __STATIC_INLINE void CLK_SysTickLongDelay(uint32_t u32USec)
 
 void CLK_DisableCKO(void);
 void CLK_EnableCKO(uint32_t u32ClkSrc, uint32_t u32ClkDiv, uint32_t u32ClkDivBy1En);
-void CLK_PowerDown(void);
+uint32_t CLK_PowerDown(void);
 void CLK_Idle(void);
 uint32_t CLK_GetHXTFreq(void);
 uint32_t CLK_GetLXTFreq(void);
@@ -673,6 +673,7 @@ void CLK_DisableXtalRC(uint32_t u32ClkMask);
 void CLK_EnableModuleClock(uint32_t u32ModuleIdx);
 void CLK_DisableModuleClock(uint32_t u32ModuleIdx);
 uint32_t CLK_WaitClockReady(uint32_t u32ClkMask);
+uint32_t CLK_WaitClockDisable(uint32_t u32ClkMask);
 void CLK_EnableSysTick(uint32_t u32ClkSrc, uint32_t u32Count);
 void CLK_DisableSysTick(void);
 void CLK_SetPowerDownMode(uint32_t u32PDMode);

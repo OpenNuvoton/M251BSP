@@ -11,6 +11,9 @@
 #include "NuMicro.h"
 
 #if defined (__ICCARM__)
+    #if (__VER__ >= 9000000)
+        #include <LowLevelIOInterface.h>
+    #endif
     #pragma diag_suppress=Pm150
 #endif
 
@@ -523,12 +526,43 @@ void _ttywrch(int ch)
  *
  *
  */
+#if(__VER__ >= 9000000)
+size_t __write(int handle, const unsigned char * buffer, size_t size)
+{
+    size_t nChars = 0;
+
+    if (buffer == 0)
+    {
+        /*
+        * This means that we should flush internal buffers.  Since we
+        * don't we just return.  (Remember, "handle" == -1 means that all
+        * handles should be flushed.)
+        */
+        return 0;
+    }
+
+    /* This template only writes to "standard out" and "standard err",
+    * for all other file handles it returns failure. */
+    if (handle != _LLIO_STDOUT && handle != _LLIO_STDERR)
+    {
+        return _LLIO_ERROR;
+    }
+
+    for (/* Empty */; size != 0; --size)
+    {
+        SendChar(*buffer++);
+        ++nChars;
+    }
+
+    return nChars;
+    }
+#else
 int fputc(int ch, FILE *stream)
 {
     SendChar(ch);
     return ch;
 }
-
+#endif
 
 #if defined ( __GNUC__ ) && !defined (__ARMCC_VERSION)
 
@@ -579,11 +613,47 @@ int _read(int fd, char *ptr, int len)
  * @details    For get message from debug port or semihosting.
  *
  */
+#if(__VER__ >= 9000000)
+size_t __read(int handle, unsigned char * buffer, size_t size)
+{
+    /* Remove the #if #endif pair to enable the implementation */
+    int nChars = 0;
+
+    /* This template only reads from "standard in", for all other file
+     * handles it returns failure. */
+    if (handle != _LLIO_STDIN)
+    {
+        return _LLIO_ERROR;
+    }
+
+    for (/* Empty */; size > 0; --size)
+    {
+        int c = GetChar();
+        
+        if (c < 0)
+            break;
+
+#if (STDIN_ECHO != 0)
+        SendChar(c);
+#endif
+
+        *buffer++ = c;
+        ++nChars;
+    }
+
+    return nChars;
+}
+
+long __lseek(int handle, long offset, int whence)
+{
+    return -1;
+}
+#else
 int fgetc(FILE *stream)
 {
     return ((int)GetChar());
 }
-
+#endif
 
 /**
  * @brief      Check error indicator

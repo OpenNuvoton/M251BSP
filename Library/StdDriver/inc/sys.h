@@ -237,7 +237,7 @@ Example: If user want to set PD.3 as UART0_TXD and PD.2 as UART0_RXD in initial 
 
 /* PA.8 MFP */
 #define SYS_GPA_MFPH_PA8MFP_GPIO         (0x00UL<<SYS_GPA_MFPH_PA8MFP_Pos) /*!< GPA_MFPH PA8 setting for GPIO        */
-#define SYS_GPA_MFPH_PA8MFP_DAC0_OUT     (0x01UL<<SYS_GPA_MFPH_PA8MFP_Pos) /*!< GPB_MFPH PA8 setting for DAC0_OUT    */
+#define SYS_GPA_MFPH_PA8MFP_DAC0_OUT     (0x01UL<<SYS_GPA_MFPH_PA8MFP_Pos) /*!< GPA_MFPH PA8 setting for DAC0_OUT    */
 #define SYS_GPA_MFPH_PA8MFP_EBI_ALE      (0x02UL<<SYS_GPA_MFPH_PA8MFP_Pos) /*!< GPA_MFPH PA8 setting for EBI_ALE     */
 #define SYS_GPA_MFPH_PA8MFP_USCI0_CTL1   (0x06UL<<SYS_GPA_MFPH_PA8MFP_Pos) /*!< GPA_MFPH PA8 setting for USCI0_CTL1  */
 #define SYS_GPA_MFPH_PA8MFP_UART1_RXD    (0x07UL<<SYS_GPA_MFPH_PA8MFP_Pos) /*!< GPA_MFPH PA8 setting for UART1_RXD   */
@@ -247,7 +247,7 @@ Example: If user want to set PD.3 as UART0_TXD and PD.2 as UART0_RXD in initial 
 
 /* PA.9 MFP */
 #define SYS_GPA_MFPH_PA9MFP_GPIO         (0x00UL<<SYS_GPA_MFPH_PA9MFP_Pos) /*!< GPA_MFPH PA9 setting for GPIO        */
-#define SYS_GPA_MFPH_PA9MFP_DAC1_OUT     (0x01UL<<SYS_GPA_MFPH_PA9MFP_Pos) /*!< GPB_MFPH PA9 setting for DAC1_OUT    */
+#define SYS_GPA_MFPH_PA9MFP_DAC1_OUT     (0x01UL<<SYS_GPA_MFPH_PA9MFP_Pos) /*!< GPA_MFPH PA9 setting for DAC1_OUT    */
 #define SYS_GPA_MFPH_PA9MFP_EBI_MCLK     (0x02UL<<SYS_GPA_MFPH_PA9MFP_Pos) /*!< GPA_MFPH PA9 setting for EBI_MCLK    */
 #define SYS_GPA_MFPH_PA9MFP_USCI0_DAT1   (0x06UL<<SYS_GPA_MFPH_PA9MFP_Pos) /*!< GPA_MFPH PA9 setting for USCI0_DAT1  */
 #define SYS_GPA_MFPH_PA9MFP_UART1_TXD    (0x07UL<<SYS_GPA_MFPH_PA9MFP_Pos) /*!< GPA_MFPH PA9 setting for UART1_TXD   */

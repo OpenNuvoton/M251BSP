@@ -29,7 +29,7 @@ void UART0_IRQHandler(void)
     /*----- Determine interrupt source -----*/
     uint32_t u32IntSrc = UART0->INTSTS;
 
-    if (u32IntSrc & 0x11)   //RDA FIFO interrupt & RDA timeout interrupt
+    if (u32IntSrc & (UART_INTSTS_RDAIF_Msk | UART_INTSTS_RXTOIF_Msk))   //RDA FIFO interrupt & RDA timeout interrupt
     {
         while (((UART0->FIFOSTS & UART_FIFOSTS_RXEMPTY_Msk) == 0) && (bufhead < MAX_PKT_SIZE))      //RX fifo not empty
         {
@@ -42,7 +42,7 @@ void UART0_IRQHandler(void)
         bUartDataReady = TRUE;
         bufhead = 0;
     }
-    else if (u32IntSrc & 0x10)
+    else if (u32IntSrc & UART_INTSTS_RXTOIF_Msk)
     {
         bufhead = 0;
     }

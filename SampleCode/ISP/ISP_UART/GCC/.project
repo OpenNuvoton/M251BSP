@@ -42,7 +42,7 @@
 		<link>
 			<name>User/LDROM.ld</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/LDROM.ld</locationURI>
+			<locationURI>PARENT-4-PROJECT_LOC/Library/Device/Nuvoton/M251/Source/GCC/LDROM.ld</locationURI>
 		</link>
 		<link>
 			<name>User/fmc_user.c</name>

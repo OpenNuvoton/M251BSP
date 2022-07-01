@@ -72,13 +72,20 @@ void CLK_EnableCKO(uint32_t u32ClkSrc, uint32_t u32ClkDiv, uint32_t u32ClkDivBy1
 /**
   * @brief      Enter to Power-down mode
   * @param      None
-  * @return     None
+  * @retval     0 power down is prohibited
+  * @retval     1 power down is allowed
   * @details    This function is used to let system enter to Power-down mode. \n
   *             The register write-protection function should be disabled before using this function.
   */
-void CLK_PowerDown(void)
+uint32_t CLK_PowerDown(void)
 {
     uint32_t u32HIRCTRIMCTL, u32MIRCTRIMCTL;
+
+    /* Check stable status for LIRC disable*/
+    if ((!(CLK->PWRCTL & CLK_PWRCTL_LIRCEN_Msk)) && ((CLK->STATUS & CLK_STATUS_LIRCSTB_Msk)))
+    {
+        return 0UL;
+    }
 
     /* Set the processor uses deep sleep as its low power mode */
     SCB->SCR |= SCB_SCR_SLEEPDEEP_Msk;
@@ -100,6 +107,8 @@ void CLK_PowerDown(void)
     /* Restore HIRC/MIRC control register */
     SYS->HIRCTRIMCTL = u32HIRCTRIMCTL;
     SYS->MIRCTRIMCTL = u32MIRCTRIMCTL;
+    
+    return 1UL;
 }
 
 /**
@@ -910,23 +919,51 @@ void CLK_DisableModuleClock(uint32_t u32ModuleIdx)
 uint32_t CLK_WaitClockReady(uint32_t u32ClkMask)
 {
     uint32_t u32TimeOutCnt = SystemCoreClock;
-    uint32_t u32Ret = 1U;
 
     g_CLK_i32ErrCode = 0;
 
-    while ((CLK->STATUS & u32ClkMask) != u32ClkMask)
+    while (!(CLK->STATUS & u32ClkMask))
     {
         if (--u32TimeOutCnt == 0)
         {
-            u32Ret = 0U;
-            break;
+            g_CLK_i32ErrCode = CLK_TIMEOUT_ERR;            
+            return 0UL;
         }
     }
 
-    if (u32TimeOutCnt == 0)
-        g_CLK_i32ErrCode = CLK_TIMEOUT_ERR;
+    return 1UL;
+}
 
-    return u32Ret;
+/**
+  * @brief      This function check selected clock source status
+  * @param[in]  u32ClkMask is selected clock source. Including :
+  *             - \ref CLK_STATUS_HXTSTB_Msk
+  *             - \ref CLK_STATUS_LXTSTB_Msk
+  *             - \ref CLK_STATUS_HIRCSTB_Msk
+  *             - \ref CLK_STATUS_LIRCSTB_Msk
+  *             - \ref CLK_STATUS_MIRCSTB_Msk
+  *             - \ref CLK_STATUS_PLLSTB_Msk
+  * @retval     0  clock is stable
+  * @retval     1  clock is disable
+  * @details    To wait for clock disable by specified clock source stable flag or timeout (~1000ms)
+  * @note       This function sets g_CLK_i32ErrCode to CLK_TIMEOUT_ERR if clock source status is not disable
+  */
+uint32_t CLK_WaitClockDisable(uint32_t u32ClkMask)
+{
+    uint32_t u32TimeOutCnt = SystemCoreClock;
+
+    g_CLK_i32ErrCode = 0;
+
+    while (CLK->STATUS & u32ClkMask)
+    {
+        if (--u32TimeOutCnt == 0)
+        {
+            g_CLK_i32ErrCode = CLK_TIMEOUT_ERR;
+            return 0UL;            
+        }
+    }
+
+    return 1UL;
 }
 
 /**

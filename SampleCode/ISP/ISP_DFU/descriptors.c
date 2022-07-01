@@ -15,12 +15,12 @@
 /*!<USB Device Descriptor */
 const uint8_t gu8DeviceDescriptor[] =
 {
-    18,   /* bLength */
+    18,     /* bLength */
     0x01,   /* bDescriptorType */
     0x00,   /* bcdUSB, version 1.10 */
     0x02,
     0x00,   /* bDeviceClass : See interface */
-    0x00,   /* bDeviceSubClass : See interface*/
+    0x00,   /* bDeviceSubClass : See interface */
     0x00,   /* bDeviceProtocol : See interface */
     EP0_MAX_PKT_SIZE, /* bMaxPacketSize0 0x40 = 64 */
     /* idVendor */
@@ -32,9 +32,9 @@ const uint8_t gu8DeviceDescriptor[] =
                         0x00,   /* bcdDevice*/
                         0x01,
                         0x01,   /* iManufacturer : index of string Manufacturer  */
-                        0x02,   /* iProduct      : index of string descriptor of product*/
-                        0x03,   /* iSerialNumber : index of string serial number*/
-                        0x01    /*bNumConfigurations */
+                        0x02,   /* iProduct      : index of string descriptor of product */
+                        0x03,   /* iSerialNumber : index of string serial number */
+                        0x01    /* bNumConfigurations */
 };
 #define u8_usbConfigDescriptorDFU_LENGTH      (18 + (9 * 1))
 /*!<USB Configure Descriptor */
@@ -56,21 +56,21 @@ const uint8_t gu8ConfigDescriptor[] =
     0x04,   /* bDescriptorType: */
     0x00,   /* bInterfaceNumber: Number of Interface */
     0x00,   /* bAlternateSetting: Alternate setting */
-    0x00,   /* bNumEndpoints*/
+    0x00,   /* bNumEndpoints */
     0xFE,   /* bInterfaceClass: DFU */
     0x01,   /* bInterfaceSubClass */
     0x02,   /* nInterfaceProtocol, switched to 0x02 while in dfu_mode */
     0x00,   /* iInterface: */
 
-    /******************** DFU Functional Descriptor********************/
-    0x09,   /*blength = 7 Bytes*/
-    0x21,   /* DFU Functional Descriptor*/
-    0x0B,   /*bmAttributes, bitCanDnload | bitCanUpload */
-    0xFF,   /*DetachTimeOut= 255 ms*/
+    /******************** DFU Functional Descriptor ********************/
+    0x09,   /* blength = 7 Bytes */
+    0x21,   /* DFU Functional Descriptor */
+    0x0B,   /* bmAttributes, bitCanDnload | bitCanUpload */
+    0xFF,   /* DetachTimeOut= 255 ms */
     0x00,
     (TRANSFER_SIZE & 0x00FF),
-    (TRANSFER_SIZE & 0xFF00) >> 8, /* TransferSize = 1024 Byte*/
-                             0x10,                          /* bcdDFUVersion = 1.1 */
+    (TRANSFER_SIZE & 0xFF00) >> 8, /* TransferSize = 1024 Byte */
+                             0x10, /* bcdDFUVersion = 1.1 */
                              0x01
 };
 
