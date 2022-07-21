@@ -45,9 +45,9 @@ void LCD_Init(void)
             SEG 36~37 : PA.6, PA.7
             SEG 38~39 : PC.6, PC.7
     */
-    
+
     /* Configure LCD multi-function pins */
-    
+
     /* COM 0~3 */
     SYS->GPB_MFPL = (SYS->GPB_MFPL & ~(SYS_GPB_MFPL_PB5MFP_Msk | SYS_GPB_MFPL_PB4MFP_Msk | SYS_GPB_MFPL_PB3MFP_Msk | SYS_GPB_MFPL_PB2MFP_Msk)) |
                     (SYS_GPB_MFPL_PB5MFP_LCD_COM0 | SYS_GPB_MFPL_PB4MFP_LCD_COM1 | SYS_GPB_MFPL_PB3MFP_LCD_COM2 | SYS_GPB_MFPL_PB2MFP_LCD_COM3);

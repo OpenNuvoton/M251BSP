@@ -69,14 +69,28 @@ void SYS_Init(void)
     /* Set UART0 Default MPF */
     //    Uart0DefaultMPF() ;
 
-    /* Set PB multi-function pins for DAC voltage output */
-    SYS->GPB_MFPH = (SYS->GPB_MFPH & ~SYS_GPB_MFPH_PB12MFP_Msk) | SYS_GPB_MFPH_PB12MFP_DAC0_OUT;
-
-    /* Set PB.12 to input mode */
-    PB->MODE &= ~(GPIO_MODE_MODE12_Msk) ;
-
-    /* Disable digital input path of analog pin DAC0_OUT to prevent leakage */
-    GPIO_DISABLE_DIGITAL_PATH(PB, (1ul << 12));
+    if ((SYS->PDID & 0x01920000) == 0x01920000)
+    {
+        /* Enable GPA peripheral clock */
+        CLK_EnableModuleClock(GPA_MODULE);
+        /* Set PA multi-function pin for DAC voltage output */
+        SYS->GPA_MFPH = (SYS->GPA_MFPH & ~SYS_GPA_MFPH_PA8MFP_Msk) | SYS_GPA_MFPH_PA8MFP_DAC0_OUT;
+        /* Set PA.8 to input mode */
+        PA->MODE &= ~(GPIO_MODE_MODE8_Msk) ;
+        /* Disable digital input path of analog pin DAC0_OUT to prevent leakage */
+        GPIO_DISABLE_DIGITAL_PATH(PA, (1ul << 8));
+    }
+    else
+    {
+        /* Enable GPB peripheral clock */
+        CLK_EnableModuleClock(GPB_MODULE);
+        /* Set PB multi-function pin for DAC voltage output */
+        SYS->GPB_MFPH = (SYS->GPB_MFPH & ~SYS_GPB_MFPH_PB12MFP_Msk) | SYS_GPB_MFPH_PB12MFP_DAC0_OUT;
+        /* Set PB.12 to input mode */
+        PB->MODE &= ~(GPIO_MODE_MODE12_Msk) ;
+        /* Disable digital input path of analog pin DAC0_OUT to prevent leakage */
+        GPIO_DISABLE_DIGITAL_PATH(PB, (1ul << 12));
+    }
 
     /* Lock protected registers */
     SYS_LockReg();

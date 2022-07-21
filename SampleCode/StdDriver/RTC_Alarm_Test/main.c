@@ -15,6 +15,9 @@
 #define CLK_SOURCE  CLK_HIRC
 #define PLL_CLOCK   FREQ_48MHZ
 
+#define T_AlarmTime 10 //10Sec For Alarm Time
+#define T_60SEC     60 //60Sec
+
 /*---------------------------------------------------------------------------------------------------------*/
 /*                                  Global variables                                                       */
 /*---------------------------------------------------------------------------------------------------------*/
@@ -168,7 +171,7 @@ void UART0_Init(void)
 
 int32_t main(void)
 {
-    S_RTC_TIME_DATA_T sInitTime;
+    S_RTC_TIME_DATA_T sInitTime, *sInitTime_ptr;
     S_RTC_TIME_DATA_T sCurTime;
 
     SYS_Init();
@@ -189,7 +192,10 @@ int32_t main(void)
     sInitTime.u32DayOfWeek  = RTC_TUESDAY;
     sInitTime.u32TimeScale  = RTC_CLOCK_24;
 
-    if (RTC_Open(&sInitTime) != 0)
+    /* check rtc reset status */
+    sInitTime_ptr = (RTC->INIT & RTC_INIT_ACTIVE_Msk) ? NULL : &sInitTime;
+
+    if (RTC_Open(sInitTime_ptr) != 0)
     {
         printf("\n RTC initial fail!!");
         printf("\n Please check h/w setting!!");
@@ -208,7 +214,13 @@ int32_t main(void)
            sCurTime.u32Day, sCurTime.u32Hour, sCurTime.u32Minute, sCurTime.u32Second);
 
     /* The alarm time setting */
-    sCurTime.u32Second = sCurTime.u32Second + 10;
+    sCurTime.u32Second = sCurTime.u32Second + T_AlarmTime;
+
+    if (sCurTime.u32Second >= T_60SEC)
+    {
+        sCurTime.u32Minute = sCurTime.u32Minute + (sCurTime.u32Second / T_60SEC);
+        sCurTime.u32Second = sCurTime.u32Second % T_60SEC;
+    }
 
     /* Set the alarm time */
     RTC_SetAlarmDateAndTime(&sCurTime);

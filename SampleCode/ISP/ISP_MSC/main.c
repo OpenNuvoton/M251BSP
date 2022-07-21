@@ -53,7 +53,7 @@ void SYS_Init(void)
 int32_t main(void)
 {
     uint32_t u32TrimInit;
-    
+
     /* The code should boot from LDROM: check the boot setting */
     SYS_UnlockReg();
 
@@ -130,7 +130,7 @@ int32_t main(void)
 
         MSC_ProcessCmd();
     }
-    
+
     /* Boot from APROM */
     FMC->ISPCTL &= ~FMC_ISPCTL_BS_Msk;
     NVIC_SystemReset();

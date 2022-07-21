@@ -608,7 +608,7 @@ void LCD_DisableBlink(void);
 void LCD_EnableInt(uint32_t u32IntSrc);
 void LCD_DisableInt(uint32_t u32IntSrc);
 void LCD_SetSavingMode(uint32_t u32PowerSavingMode, uint32_t u32PowerSavingLevel);
-    
+
 /*@}*/ /* end of group LCD_EXPORTED_FUNCTIONS */
 
 /*@}*/ /* end of group LCD_Driver */

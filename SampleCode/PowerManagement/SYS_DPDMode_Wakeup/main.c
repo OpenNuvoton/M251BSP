@@ -30,12 +30,18 @@ void WakeUpPinFunction(uint32_t u32PDMode, uint32_t u32EdgeType)
     /* Configure GPIO as Input mode */
     GPIO_SetMode(PC, BIT0, GPIO_MODE_INPUT);
 
-    // Set Wake-up pin trigger type at Deep Power down mode
+    /* Set Wake-up pin trigger type at Deep Power down mode */
     CLK_EnableDPDWKPin(CLK_DPDWKPIN_0, u32EdgeType);
 
     printf("Enter to DPD Power-Down mode......\n");
 
     while (!IsDebugFifoEmpty()) {}; /* waits for TX empty */
+
+    /* Disable LIRC clock for lower power consumption */
+    CLK_DisableXtalRC(CLK_PWRCTL_LIRCEN_Msk);
+
+    /* Wait for LIRC clock disable */
+    CLK_WaitClockDisable(CLK_STATUS_LIRCSTB_Msk);
 
     /* Enter to Power-down mode */
     CLK_PowerDown();
@@ -107,9 +113,11 @@ void  WakeUpRTCTickFunction(uint32_t u32PDMode)
     /* Enable RTC Tick interrupt */
     RTC_EnableInt(RTC_INTEN_TICKIEN_Msk);
 
-
     /* Select Power-down mode */
     CLK_SetPowerDownMode(u32PDMode);
+
+    /* Enable Wake-up Timer */
+    CLK_ENABLE_RTCWK();
 
     RTC_SetTickPeriod(RTC_TICK_1_SEC);
 
@@ -191,6 +199,9 @@ void  WakeUpRTCAlarmFunction(uint32_t u32PDMode)
     /* Select Power-down mode */
     CLK_SetPowerDownMode(u32PDMode);
 
+    /* Enable Wake-up Timer */
+    CLK_ENABLE_RTCWK();
+
     printf("Enter to DPD Power-Down mode......\n");
 
     while (!IsDebugFifoEmpty()) {}; /* waits for TX empty */
@@ -242,6 +253,9 @@ void  WakeUpRTCTamperFunction(uint32_t u32PDMode)
     /* Select Power-down mode */
     CLK_SetPowerDownMode(u32PDMode);
 
+    /* Enable Wake-up Timer */
+    CLK_ENABLE_RTCWK();
+
     printf("Enter to DPD Power-Down mode......\n");
 
     while (!IsDebugFifoEmpty()) {}; /* waits for TX empty */
@@ -258,21 +272,80 @@ void  WakeUpRTCTamperFunction(uint32_t u32PDMode)
 /*-----------------------------------------------------------------------------------------------------------*/
 void CheckPowerSource(void)
 {
-    uint32_t u32RegRstsrc;
-    u32RegRstsrc = CLK_GetPMUWKSrc();
+    const uint32_t u32RegRstsrc = CLK_GetPMUWKSrc();
 
     printf("Power manager Power Manager Status 0x%x\n", u32RegRstsrc);
 
-    if ((u32RegRstsrc & CLK_PMUSTS_RTCWK_Msk) != 0)
+    if (u32RegRstsrc & CLK_PMUSTS_LVRWK_Msk)
+        printf("Wake-up source is LVR.\n");
+
+    if (u32RegRstsrc & CLK_PMUSTS_PINWK4_Msk)
+        printf("Wake-up source is Wake-up Pin(GPF.6).\n");
+
+    if (u32RegRstsrc & CLK_PMUSTS_PINWK3_Msk)
+        printf("Wake-up source is Wake-up Pin(GPB.12).\n");
+
+    if (u32RegRstsrc & CLK_PMUSTS_PINWK2_Msk)
+        printf("Wake-up source is Wake-up Pin(GPB.2).\n");
+
+    if (u32RegRstsrc & CLK_PMUSTS_PINWK1_Msk)
+        printf("Wake-up source is Wake-up Pin(GPB.0).\n");
+
+    if (u32RegRstsrc & CLK_PMUSTS_RTCWK_Msk)
         printf("Wake-up source is RTC.\n");
 
-    if ((u32RegRstsrc & CLK_PMUSTS_TMRWK_Msk) != 0)
+    if (u32RegRstsrc & CLK_PMUSTS_TMRWK_Msk)
         printf("Wake-up source is Wake-up Timer.\n");
 
-    if ((u32RegRstsrc & CLK_PMUSTS_PINWK0_Msk) != 0)
+    if (u32RegRstsrc & CLK_PMUSTS_PINWK0_Msk)
         printf("Wake-up source is Wake-up Pin(GPC.0).\n");
 }
 
+/*-----------------------------------------------------------------------------------------------------------*/
+/*  Function for Check System Reset Status                                                                   */
+/*-----------------------------------------------------------------------------------------------------------*/
+void CheckResetStatus(void)
+{
+    static uint32_t u32ResetCounter = 1UL;
+
+    const uint32_t u32RestStatus = SYS_GetResetSrc();
+
+    /* Reset status register included PMURF,PINRF and PORF after reset */
+    printf("Reset Status 0x%x,included...\n", u32RestStatus);
+
+    if (u32RestStatus & SYS_RSTSTS_VBATLVRF_Msk)
+        printf("[%d] VBAT LVR Reset Flag\n", u32ResetCounter++);
+
+    if (u32RestStatus & SYS_RSTSTS_CPULKRF_Msk)
+        printf("[%d] CPU Lockup Reset Flag\n", u32ResetCounter++);
+
+    if (u32RestStatus & SYS_RSTSTS_CPURF_Msk)
+        printf("[%d] CPU Reset Flag\n", u32ResetCounter++);
+
+    if (u32RestStatus & SYS_RSTSTS_PMURF_Msk)
+        printf("[%d] PMU Reset Flag\n", u32ResetCounter++);
+
+    if (u32RestStatus & SYS_RSTSTS_SYSRF_Msk)
+        printf("[%d] System Reset Flag\n", u32ResetCounter++);
+
+    if (u32RestStatus & SYS_RSTSTS_BODRF_Msk)
+        printf("[%d] BOD Reset Flag\n", u32ResetCounter++);
+
+    if (u32RestStatus & SYS_RSTSTS_LVRF_Msk)
+        printf("[%d] LVR Reset Flag\n", u32ResetCounter++);
+
+    if (u32RestStatus & SYS_RSTSTS_WDTRF_Msk)
+        printf("[%d] WDT Reset Flag\n", u32ResetCounter++);
+
+    if (u32RestStatus & SYS_RSTSTS_PINRF_Msk)
+        printf("[%d] nRESET Pin Reset Flag\n", u32ResetCounter++);
+
+    if (u32RestStatus & SYS_RSTSTS_PORF_Msk)
+        printf("[%d] POR Reset Flag\n", u32ResetCounter++);
+
+    /* Clear all reset flag */
+    SYS->RSTSTS = SYS->RSTSTS;
+}
 /*---------------------------------------------------------------------------------------------------------*/
 /*                           Enable the external 32768Hz XTAL Clock                                        */
 /*---------------------------------------------------------------------------------------------------------*/
@@ -408,6 +481,9 @@ int32_t main(void)
     /* Get power manager wake up source */
     CheckPowerSource();
 
+    /* Get Reset Status */
+    CheckResetStatus();
+
     printf("+----------------------------------------------------------------+\n");
     printf("|    DPD Power-down Mode and Wake-up Sample Code.                |\n");
     printf("|    Please Select Wake up source.                               |\n");
@@ -432,15 +508,15 @@ int32_t main(void)
             break;
 
         case '3':
-            WakeUpRTCTickFunction(CLK_PMUCTL_PDMSEL_DPD | CLK_PMUCTL_RTCWKEN_Msk);
+            WakeUpRTCTickFunction(CLK_PMUCTL_PDMSEL_DPD);
             break;
 
         case '4':
-            WakeUpRTCAlarmFunction(CLK_PMUCTL_PDMSEL_DPD | CLK_PMUCTL_RTCWKEN_Msk);
+            WakeUpRTCAlarmFunction(CLK_PMUCTL_PDMSEL_DPD);
             break;
 
         case '5':
-            WakeUpRTCTamperFunction(CLK_PMUCTL_PDMSEL_DPD | CLK_PMUCTL_RTCWKEN_Msk);
+            WakeUpRTCTamperFunction(CLK_PMUCTL_PDMSEL_DPD);
             break;
 
         default:

@@ -97,7 +97,7 @@ void CheckPowerSource(void)
     S_RTC_TIME_DATA_T sReadRTC;
 
     /* Get Power Manager Status */
-    uint32_t u32Status = CLK_GetPMUWKSrc();
+    const uint32_t u32Status = CLK_GetPMUWKSrc();
 
     /* Clear wake-up status flag */
     CLK->PMUSTS = CLK_PMUSTS_CLRWK_Msk;
@@ -118,6 +118,49 @@ void CheckPowerSource(void)
         printf("# Get RTC current date/time: %u/%02u/%02u %02u:%02u:%02u.\n",
                sReadRTC.u32Year, sReadRTC.u32Month, sReadRTC.u32Day, sReadRTC.u32Hour, sReadRTC.u32Minute, sReadRTC.u32Second);
     }
+}
+
+void CheckResetStatus(void)
+{
+    static uint32_t u32ResetCounter = 1UL;
+
+    const uint32_t u32RestStatus = SYS_GetResetSrc();
+
+    /* Reset status register included PMURF,PINRF and PORF after reset */
+    printf("Reset Status 0x%x,included...\n", u32RestStatus);
+
+    if (u32RestStatus & SYS_RSTSTS_VBATLVRF_Msk)
+        printf("[%d] VBAT LVR Reset Flag\n", u32ResetCounter++);
+
+    if (u32RestStatus & SYS_RSTSTS_CPULKRF_Msk)
+        printf("[%d] CPU Lockup Reset Flag\n", u32ResetCounter++);
+
+    if (u32RestStatus & SYS_RSTSTS_CPURF_Msk)
+        printf("[%d] CPU Reset Flag\n", u32ResetCounter++);
+
+    if (u32RestStatus & SYS_RSTSTS_PMURF_Msk)
+        printf("[%d] PMU Reset Flag\n", u32ResetCounter++);
+
+    if (u32RestStatus & SYS_RSTSTS_SYSRF_Msk)
+        printf("[%d] System Reset Flag\n", u32ResetCounter++);
+
+    if (u32RestStatus & SYS_RSTSTS_BODRF_Msk)
+        printf("[%d] BOD Reset Flag\n", u32ResetCounter++);
+
+    if (u32RestStatus & SYS_RSTSTS_LVRF_Msk)
+        printf("[%d] LVR Reset Flag\n", u32ResetCounter++);
+
+    if (u32RestStatus & SYS_RSTSTS_WDTRF_Msk)
+        printf("[%d] WDT Reset Flag\n", u32ResetCounter++);
+
+    if (u32RestStatus & SYS_RSTSTS_PINRF_Msk)
+        printf("[%d] nRESET Pin Reset Flag\n", u32ResetCounter++);
+
+    if (u32RestStatus & SYS_RSTSTS_PORF_Msk)
+        printf("[%d] POR Reset Flag\n", u32ResetCounter++);
+
+    /* Clear all reset flag */
+    SYS->RSTSTS = SYS->RSTSTS;
 }
 
 void SYS_Init(void)
@@ -207,6 +250,9 @@ int32_t main(void)
 
     /* Get power manager wake up source */
     CheckPowerSource();
+
+    /* Get Reset Status */
+    CheckResetStatus();
 
     /* RTC wake-up source setting */
     RTC_Init();

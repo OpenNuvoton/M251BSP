@@ -361,12 +361,12 @@ void LCD_DisableInt(uint32_t u32IntSrc)
   */
 void LCD_SetSavingMode(uint32_t u32PowerSavingMode, uint32_t u32PowerSavingLevel)
 {
-    uint32_t i,u32FreqLCD,u32FLCDDiv,u32LCDClock,u32PreiodLCD;
+    uint32_t i, u32FreqLCD, u32FLCDDiv, u32LCDClock, u32PreiodLCD;
     uint32_t u32MinPSVTTime = 50UL;
     uint32_t u32PSVTBoundary[4] = {1UL, 1UL, 1UL, 1UL};
-    
+
     u32FLCDDiv = (LCD->PSET & LCD_PSET_FREQDIV_Msk) >> LCD_PSET_FREQDIV_Pos;
-    
+
     /* Get LCD clock source */
     if (((CLK->CLKSEL2) & CLK_CLKSEL2_LCDSEL_Msk) == 0)
     {
@@ -401,11 +401,11 @@ void LCD_SetSavingMode(uint32_t u32PowerSavingMode, uint32_t u32PowerSavingLevel
             /* Get maximun PSVT value */
             u32PSVTBoundary[3] = u32PreiodLCD / u32MinPSVTTime;
         }
-        
+
         u32PSVTBoundary[2] = u32PSVTBoundary[3] * 3UL >> 2;
         u32PSVTBoundary[1] = u32PSVTBoundary[3] * 2UL >> 2;
         u32PSVTBoundary[0] = u32PSVTBoundary[3] * 1UL >> 2;
-        
+
         /* Minimun requirements */
         for (i = 0UL; i < 4UL; i++)
         {
@@ -414,11 +414,11 @@ void LCD_SetSavingMode(uint32_t u32PowerSavingMode, uint32_t u32PowerSavingLevel
                 u32PSVTBoundary[i] = 1UL;
             }
         }
-    
+
         if (u32PowerSavingMode == LCD_PWR_SAVING_RES_MODE)
         {
             /* LCD saving mode is resistive mode */
-            switch(u32PowerSavingLevel) 
+            switch (u32PowerSavingLevel)
             {
                 case LCD_PWR_SAVING_LEVEL0:
                     LCD_DRIVING_MODE(LCD_HIGH_DRIVING_ON_AND_BUF_OFF_AND_PWR_SAVING);
@@ -426,22 +426,26 @@ void LCD_SetSavingMode(uint32_t u32PowerSavingMode, uint32_t u32PowerSavingLevel
                     LCD_PWR_SAVING_T1_PERIOD(u32PSVTBoundary[0]);
                     LCD_PWR_SAVING_T2_PERIOD(u32PSVTBoundary[0]);
                     break;
+
                 case LCD_PWR_SAVING_LEVEL1:
                     LCD_DRIVING_MODE(LCD_HIGH_DRIVING_ON_AND_BUF_OFF_AND_PWR_SAVING);
                     LCD_PWR_SAVING_MODE(LCD_PWR_SAVING_NORMAL_MODE);
                     LCD_PWR_SAVING_T1_PERIOD(u32PSVTBoundary[3]);
                     LCD_PWR_SAVING_T2_PERIOD(u32PSVTBoundary[3]);
                     break;
+
                 case LCD_PWR_SAVING_LEVEL2:
                     LCD_DRIVING_MODE(LCD_HIGH_DRIVING_ON_AND_BUF_OFF_AND_PWR_SAVING);
                     LCD_PWR_SAVING_MODE(LCD_PWR_SAVING_REVERSE_MODE);
                     LCD_PWR_SAVING_T1_PERIOD(u32PSVTBoundary[0]);
                     LCD_PWR_SAVING_T2_PERIOD(u32PSVTBoundary[0]);
                     break;
+
                 case LCD_PWR_SAVING_LEVEL3:
                     LCD_DRIVING_MODE(LCD_HIGH_DRIVING_ON_AND_BUF_OFF);
                     LCD_PWR_SAVING_MODE(LCD_PWR_SAVING_NORMAL_MODE);
                     break;
+
                 default:
                     break;
             }
@@ -449,7 +453,7 @@ void LCD_SetSavingMode(uint32_t u32PowerSavingMode, uint32_t u32PowerSavingLevel
         else
         {
             /* LCD saving mode is buffer mode */
-            switch(u32PowerSavingLevel)
+            switch (u32PowerSavingLevel)
             {
                 case LCD_PWR_SAVING_LEVEL0:
                     LCD_DRIVING_MODE(LCD_HIGH_DRIVING_OFF_AND_BUF_ON_AND_PWR_SAVING);
@@ -457,28 +461,32 @@ void LCD_SetSavingMode(uint32_t u32PowerSavingMode, uint32_t u32PowerSavingLevel
                     LCD_PWR_SAVING_T1_PERIOD(u32PSVTBoundary[3]);
                     LCD_PWR_SAVING_T2_PERIOD(u32PSVTBoundary[3]);
                     break;
+
                 case LCD_PWR_SAVING_LEVEL1:
                     LCD_DRIVING_MODE(LCD_HIGH_DRIVING_OFF_AND_BUF_ON_AND_PWR_SAVING);
                     LCD_PWR_SAVING_MODE(LCD_PWR_SAVING_REVERSE_MODE);
                     LCD_PWR_SAVING_T1_PERIOD(u32PSVTBoundary[2]);
                     LCD_PWR_SAVING_T2_PERIOD(u32PSVTBoundary[2]);
                     break;
+
                 case LCD_PWR_SAVING_LEVEL2:
                     LCD_DRIVING_MODE(LCD_HIGH_DRIVING_OFF_AND_BUF_ON_AND_PWR_SAVING);
                     LCD_PWR_SAVING_MODE(LCD_PWR_SAVING_REVERSE_MODE);
                     LCD_PWR_SAVING_T1_PERIOD(u32PSVTBoundary[1]);
                     LCD_PWR_SAVING_T2_PERIOD(u32PSVTBoundary[1]);
                     break;
+
                 case LCD_PWR_SAVING_LEVEL3:
                     LCD_DRIVING_MODE(LCD_HIGH_DRIVING_OFF_AND_BUF_ON_AND_PWR_SAVING);
                     LCD_PWR_SAVING_MODE(LCD_PWR_SAVING_REVERSE_MODE);
                     LCD_PWR_SAVING_T1_PERIOD(u32PSVTBoundary[0]);
                     LCD_PWR_SAVING_T2_PERIOD(u32PSVTBoundary[0]);
                     break;
+
                 default:
                     break;
             }
-        }        
+        }
     }
 }
 

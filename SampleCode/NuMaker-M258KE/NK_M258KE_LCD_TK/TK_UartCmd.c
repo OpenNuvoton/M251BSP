@@ -16,6 +16,7 @@
 
 extern volatile int8_t i8SliderPercentage;
 extern volatile int8_t i8WheelPercentage;
+extern S_TKDEBOUNCE asPressedTouchKeys[];
 
 
 /* CMD Type 1 */
@@ -63,6 +64,7 @@ extern volatile int8_t i8WheelPercentage;
 #define E_CMD_TYPE2_GET_DEBOUNCE_PARAMETER    ('j')
 #define E_CMD_TYPE2_SET_SCAN_KEY              ('k')
 #define E_CMD_TYPE2_EXPORT_CALIBRATION        ('n')
+#define E_CMD_TYPE2_GET_RUNTIME_TK_PRESSED    ('q')
 
 #ifdef MASS_FINETUNE
     #define E_CMD_TYPE2_GET_UID               ('l')
@@ -173,6 +175,7 @@ int8_t TK_CmdType1(uint8_t *pu8RXBuf)
     int8_t i8Ret = 0;
     uint8_t u8Chan;
     uint32_t u32Data;
+    uint32_t u32PDID;
     S_TKFEAT *psTkFeat;
     S_KEYINFO *pKeyInfo;
     S_TKINFO *psTkInfo;
@@ -361,6 +364,7 @@ int8_t TK_CmdType2(uint8_t *pu8RXBuf)
 {
     int8_t i8Ret = 0;
     uint8_t chan;
+    uint8_t u8Group;
     uint32_t u32KeyStoreAddr;
     S_TKINFO *psTkInfo;
     S_TKFEAT *psTkFeat;
@@ -547,6 +551,24 @@ int8_t TK_CmdType2(uint8_t *pu8RXBuf)
             break;
 
 #endif
+
+        case E_CMD_TYPE2_GET_RUNTIME_TK_PRESSED:
+            u8Group = pu8RXBuf[1] * 2;
+            gu8TXBuf[0] = asPressedTouchKeys[u8Group].u8TKChanNum;
+
+            if (asPressedTouchKeys[u8Group].i8Count >= 2)
+                gu8TXBuf[1] = 2;
+            else
+                gu8TXBuf[1] = asPressedTouchKeys[u8Group].i8Count;
+
+            gu8TXBuf[2] = asPressedTouchKeys[u8Group + 1].u8TKChanNum;
+
+            if (asPressedTouchKeys[u8Group + 1].i8Count >= 2)
+                gu8TXBuf[3] = 2;
+            else
+                gu8TXBuf[3] = asPressedTouchKeys[u8Group + 1].i8Count;
+
+            break;
 
         case E_CMD_TYPE2_FIRMWARE_VERSION:
             if (pu8RXBuf[1] == 0)

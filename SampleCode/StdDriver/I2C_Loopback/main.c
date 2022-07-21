@@ -1,13 +1,12 @@
-
-/****************************************************************************//**
+/**************************************************************************//**
  * @file     main.c
- * @version  V0.10
+ * @version  V1.00
  * @brief
  *           Demonstrate how to set I2C Master mode and Slave mode.
  *           And show how a master access a slave on a chip.
  *
  * SPDX-License-Identifier: Apache-2.0
- * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2022 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 #include <stdio.h>
 #include "NuMicro.h"
@@ -15,20 +14,20 @@
 /*---------------------------------------------------------------------------------------------------------*/
 /* Global variables                                                                                        */
 /*---------------------------------------------------------------------------------------------------------*/
-uint32_t g_u32Slave_buff_addr;
-uint8_t g_au8SlvData[256];
-uint8_t g_au8SlvRxData[3];
-uint8_t g_u8DeviceAddr;
-uint8_t g_au8MstTxData[3];
-uint8_t g_u8MstRxData;
-uint8_t g_u8MstDataLen;
-uint8_t g_u8SlvDataLen;
-volatile uint8_t g_u8MstEndFlag = 0;
+static volatile uint32_t s_u32Slave_buff_addr;
+static volatile uint8_t  s_au8SlvData[256];
+static volatile uint8_t  s_au8SlvRxData[3];
+static volatile uint8_t  s_u8DeviceAddr;
+static volatile uint8_t  s_au8MstTxData[3];
+static volatile uint8_t  s_u8MstRxData;
+static volatile uint8_t  s_u8MstDataLen;
+static volatile uint8_t  s_u8SlvDataLen;
+static volatile uint8_t  s_u8MstEndFlag = 0;
 
 typedef void (*I2C_FUNC)(uint32_t u32Status);
 
-volatile static I2C_FUNC s_pfnI2C0Handler = NULL;
-volatile static I2C_FUNC s_pfnI2C1Handler = NULL;
+static volatile I2C_FUNC s_pfnI2C0Handler = NULL;
+static volatile I2C_FUNC s_pfnI2C1Handler = NULL;
 
 /*---------------------------------------------------------------------------------------------------------*/
 /*  I2C0 IRQ Handler                                                                                       */
@@ -79,12 +78,12 @@ void I2C_MasterRx(uint32_t u32Status)
 {
     if (u32Status == 0x08)                      /* START has been transmitted and prepare SLA+W */
     {
-        I2C_SET_DATA(I2C0, (g_u8DeviceAddr << 1));    /* Write SLA+W to Register I2CDAT */
+        I2C_SET_DATA(I2C0, (s_u8DeviceAddr << 1)); /* Write SLA+W to Register I2CDAT */
         I2C_SET_CONTROL_REG(I2C0, I2C_CTL_SI);
     }
     else if (u32Status == 0x18)                 /* SLA+W has been transmitted and ACK has been received */
     {
-        I2C_SET_DATA(I2C0, g_au8MstTxData[g_u8MstDataLen++]);
+        I2C_SET_DATA(I2C0, s_au8MstTxData[s_u8MstDataLen++]);
         I2C_SET_CONTROL_REG(I2C0, I2C_CTL_SI);
     }
     else if (u32Status == 0x20)                 /* SLA+W has been transmitted and NACK has been received */
@@ -94,9 +93,9 @@ void I2C_MasterRx(uint32_t u32Status)
     }
     else if (u32Status == 0x28)                 /* DATA has been transmitted and ACK has been received */
     {
-        if (g_u8MstDataLen != 2)
+        if (s_u8MstDataLen != 2)
         {
-            I2C_SET_DATA(I2C0, g_au8MstTxData[g_u8MstDataLen++]);
+            I2C_SET_DATA(I2C0, s_au8MstTxData[s_u8MstDataLen++]);
             I2C_SET_CONTROL_REG(I2C0, I2C_CTL_SI);
         }
         else
@@ -106,7 +105,7 @@ void I2C_MasterRx(uint32_t u32Status)
     }
     else if (u32Status == 0x10)                 /* Repeat START has been transmitted and prepare SLA+R */
     {
-        I2C_SET_DATA(I2C0, ((g_u8DeviceAddr << 1) | 0x01));   /* Write SLA+R to Register I2CDAT */
+        I2C_SET_DATA(I2C0, ((s_u8DeviceAddr << 1) | 0x01));   /* Write SLA+R to Register I2CDAT */
         I2C_SET_CONTROL_REG(I2C0, I2C_CTL_SI);
     }
     else if (u32Status == 0x40)                 /* SLA+R has been transmitted and ACK has been received */
@@ -115,9 +114,9 @@ void I2C_MasterRx(uint32_t u32Status)
     }
     else if (u32Status == 0x58)                 /* DATA has been received and NACK has been returned */
     {
-        g_u8MstRxData = (unsigned char) I2C_GET_DATA(I2C0);
+        s_u8MstRxData = I2C_GET_DATA(I2C0);
         I2C_SET_CONTROL_REG(I2C0, I2C_CTL_STO_SI);
-        g_u8MstEndFlag = 1;
+        s_u8MstEndFlag = 1;
     }
     else
     {
@@ -132,12 +131,12 @@ void I2C_MasterTx(uint32_t u32Status)
 {
     if (u32Status == 0x08)                      /* START has been transmitted */
     {
-        I2C_SET_DATA(I2C0, g_u8DeviceAddr << 1);    /* Write SLA+W to Register I2CDAT */
+        I2C_SET_DATA(I2C0, s_u8DeviceAddr << 1);  /* Write SLA+W to Register I2CDAT */
         I2C_SET_CONTROL_REG(I2C0, I2C_CTL_SI);
     }
     else if (u32Status == 0x18)                 /* SLA+W has been transmitted and ACK has been received */
     {
-        I2C_SET_DATA(I2C0, g_au8MstTxData[g_u8MstDataLen++]);
+        I2C_SET_DATA(I2C0, s_au8MstTxData[s_u8MstDataLen++]);
         I2C_SET_CONTROL_REG(I2C0, I2C_CTL_SI);
     }
     else if (u32Status == 0x20)                 /* SLA+W has been transmitted and NACK has been received */
@@ -147,15 +146,15 @@ void I2C_MasterTx(uint32_t u32Status)
     }
     else if (u32Status == 0x28)                 /* DATA has been transmitted and ACK has been received */
     {
-        if (g_u8MstDataLen != 3)
+        if (s_u8MstDataLen != 3)
         {
-            I2C_SET_DATA(I2C0, g_au8MstTxData[g_u8MstDataLen++]);
+            I2C_SET_DATA(I2C0, s_au8MstTxData[s_u8MstDataLen++]);
             I2C_SET_CONTROL_REG(I2C0, I2C_CTL_SI);
         }
         else
         {
             I2C_SET_CONTROL_REG(I2C0, I2C_CTL_STO_SI);
-            g_u8MstEndFlag = 1;
+            s_u8MstEndFlag = 1;
         }
     }
     else
@@ -172,32 +171,36 @@ void I2C_SlaveTRx(uint32_t u32Status)
 {
     if (u32Status == 0x60)                      /* Own SLA+W has been receive; ACK has been return */
     {
-        g_u8SlvDataLen = 0;
+        s_u8SlvDataLen = 0;
         I2C_SET_CONTROL_REG(I2C1, I2C_CTL_SI_AA);
     }
     else if (u32Status == 0x80)                 /* Previously address with own SLA address
                                                    Data has been received; ACK has been returned*/
     {
-        g_au8SlvRxData[g_u8SlvDataLen] = I2C_GET_DATA(I2C1);
-        g_u8SlvDataLen++;
+        uint8_t u8Data = (uint8_t) I2C_GET_DATA(I2C1);
+        s_au8SlvRxData[s_u8SlvDataLen] = u8Data;
+        s_u8SlvDataLen++;
 
-        if (g_u8SlvDataLen == 2)
+        if (s_u8SlvDataLen == 2)
         {
-            g_u32Slave_buff_addr = (g_au8SlvRxData[0] << 8) + g_au8SlvRxData[1];
+            uint32_t u32Data = (uint32_t)(s_au8SlvRxData[0] << 8);
+            u32Data += s_au8SlvRxData[1];
+            s_u32Slave_buff_addr = u32Data;
         }
 
-        if (g_u8SlvDataLen == 3)
+        if (s_u8SlvDataLen == 3)
         {
-            g_au8SlvData[g_u32Slave_buff_addr] = g_au8SlvRxData[2];
-            g_u8SlvDataLen = 0;
+            uint8_t u8Data = s_au8SlvRxData[2];
+            s_au8SlvData[s_u32Slave_buff_addr] = u8Data;
+            s_u8SlvDataLen = 0;
         }
 
         I2C_SET_CONTROL_REG(I2C1, I2C_CTL_SI_AA);
     }
     else if (u32Status == 0xA8)                 /* Own SLA+R has been receive; ACK has been return */
     {
-        I2C_SET_DATA(I2C1, g_au8SlvData[g_u32Slave_buff_addr]);
-        g_u32Slave_buff_addr++;
+        I2C_SET_DATA(I2C1, s_au8SlvData[s_u32Slave_buff_addr]);
+        s_u32Slave_buff_addr++;
         I2C_SET_CONTROL_REG(I2C1, I2C_CTL_SI_AA);
     }
     else if (u32Status == 0xC0)                 /* Data byte or last data in I2CDAT has been transmitted
@@ -208,13 +211,13 @@ void I2C_SlaveTRx(uint32_t u32Status)
     else if (u32Status == 0x88)                 /* Previously addressed with own SLA address; NOT ACK has
                                                    been returned */
     {
-        g_u8SlvDataLen = 0;
+        s_u8SlvDataLen = 0;
         I2C_SET_CONTROL_REG(I2C1, I2C_CTL_SI_AA);
     }
     else if (u32Status == 0xA0)                 /* A STOP or repeated START has been received while still
                                                    addressed as Slave/Receiver*/
     {
-        g_u8SlvDataLen = 0;
+        s_u8SlvDataLen = 0;
         I2C_SET_CONTROL_REG(I2C1, I2C_CTL_SI_AA);
     }
     else
@@ -239,10 +242,10 @@ void SYS_Init(void)
     /* Switch HCLK clock source to Internal RC and HCLK source divide 1 */
     CLK_SetHCLK(CLK_CLKSEL0_HCLKSEL_HIRC, CLK_CLKDIV0_HCLK(1));
 
-    /* Enable UART clock */
+    /* Enable UART0 module clock */
     CLK_EnableModuleClock(UART0_MODULE);
 
-    /* Enable I2C0 clock */
+    /* Enable I2C0, I2C1 module clock */
     CLK_EnableModuleClock(I2C0_MODULE);
     CLK_EnableModuleClock(I2C1_MODULE);
 
@@ -254,7 +257,6 @@ void SYS_Init(void)
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HIRC, CLK_CLKDIV0_UART0(1));
 
     /* Update System Core Clock */
-    /* User can use SystemCoreClockUpdate() to calculate SystemCoreClock and cyclesPerUs automatically. */
     SystemCoreClockUpdate();
 
     /*---------------------------------------------------------------------------------------------------------*/
@@ -337,69 +339,22 @@ void I2C1_Close(void)
     CLK_DisableModuleClock(I2C1_MODULE);
 }
 
-int32_t I2C0_Read_Write_SLAVE(uint8_t slvaddr)
-{
-    uint32_t i;
-
-    g_u8DeviceAddr = slvaddr;
-
-    for (i = 0; i < 0x100; i++)
-    {
-        g_au8MstTxData[0] = (uint8_t)((i & 0xFF00) >> 8);
-        g_au8MstTxData[1] = (uint8_t)(i & 0x00FF);
-        g_au8MstTxData[2] = (uint8_t)(g_au8MstTxData[1] + 3);
-
-        g_u8MstDataLen = 0;
-        g_u8MstEndFlag = 0;
-
-        /* I2C function to write data to slave */
-        s_pfnI2C0Handler = (I2C_FUNC)I2C_MasterTx;
-
-        /* I2C as master sends START signal */
-        I2C_SET_CONTROL_REG(I2C0, I2C_CTL_STA);
-
-        /* Wait I2C Tx Finish */
-        while (g_u8MstEndFlag == 0);
-
-        g_u8MstEndFlag = 0;
-
-        /* I2C function to read data from slave */
-        s_pfnI2C0Handler = (I2C_FUNC)I2C_MasterRx;
-
-        g_u8MstDataLen = 0;
-        g_u8DeviceAddr = slvaddr;
-
-        I2C_SET_CONTROL_REG(I2C0, I2C_CTL_STA);
-
-        /* Wait I2C Rx Finish */
-        while (g_u8MstEndFlag == 0);
-
-        /* Compare data */
-        if (g_u8MstRxData != g_au8MstTxData[2])
-        {
-            printf("I2C Byte Write/Read Failed, Data 0x%x\n", g_u8MstRxData);
-            return -1;
-        }
-    }
-
-    printf("Master Access Slave (0x%X) Test OK\n", slvaddr);
-    return 0;
-}
-
 int32_t I2C0_Read_Write_Slave(uint8_t slvaddr)
 {
     uint32_t i;
 
-    g_u8DeviceAddr = slvaddr;
+    s_u8DeviceAddr = slvaddr;
 
     for (i = 0; i < 0x100; i++)
     {
-        g_au8MstTxData[0] = (uint8_t)((i & 0xFF00) >> 8);
-        g_au8MstTxData[1] = (uint8_t)(i & 0x00FF);
-        g_au8MstTxData[2] = (uint8_t)(g_au8MstTxData[1] + 3);
+        uint8_t u8MstTxData;
+        s_au8MstTxData[0] = (uint8_t)((i & 0xFF00) >> 8);
+        s_au8MstTxData[1] = (uint8_t)(i & 0x00FF);
+        s_au8MstTxData[2] = (uint8_t)(s_au8MstTxData[1] + 3);
+        u8MstTxData = s_au8MstTxData[2];
 
-        g_u8MstDataLen = 0;
-        g_u8MstEndFlag = 0;
+        s_u8MstDataLen = 0;
+        s_u8MstEndFlag = 0;
 
         /* I2C0 function to write data to slave */
         s_pfnI2C0Handler = (I2C_FUNC)I2C_MasterTx;
@@ -408,25 +363,25 @@ int32_t I2C0_Read_Write_Slave(uint8_t slvaddr)
         I2C_SET_CONTROL_REG(I2C0, I2C_CTL_STA);
 
         /* Wait I2C0 Tx Finish */
-        while (g_u8MstEndFlag == 0);
+        while (s_u8MstEndFlag == 0);
 
-        g_u8MstEndFlag = 0;
+        s_u8MstEndFlag = 0;
 
         /* I2C0 function to read data from slave */
         s_pfnI2C0Handler = (I2C_FUNC)I2C_MasterRx;
 
-        g_u8MstDataLen = 0;
-        g_u8DeviceAddr = slvaddr;
+        s_u8MstDataLen = 0;
+        s_u8DeviceAddr = slvaddr;
 
         I2C_SET_CONTROL_REG(I2C0, I2C_CTL_STA);
 
         /* Wait I2C0 Rx Finish */
-        while (g_u8MstEndFlag == 0);
+        while (s_u8MstEndFlag == 0);
 
         /* Compare data */
-        if (g_u8MstRxData != g_au8MstTxData[2])
+        if (s_u8MstRxData != u8MstTxData)
         {
-            printf("I2C0 Byte Write/Read Failed, Data 0x%x\n", g_u8MstRxData);
+            printf("I2C0 Byte Write/Read Failed, Data 0x%x\n", s_u8MstRxData);
             return -1;
         }
     }
@@ -480,7 +435,7 @@ int32_t main(void)
 
     for (i = 0; i < 0x100; i++)
     {
-        g_au8SlvData[i] = 0;
+        s_au8SlvData[i] = 0;
     }
 
     /* I2C1 function to Slave receive/transmit data */
@@ -517,6 +472,6 @@ int32_t main(void)
     while (1);
 
 }
-/*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/
+/*** (C) COPYRIGHT 2022 Nuvoton Technology Corp. ***/
 
 

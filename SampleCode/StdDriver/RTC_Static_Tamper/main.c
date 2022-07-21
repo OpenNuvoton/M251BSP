@@ -185,7 +185,7 @@ void UART0_Init(void)
 /*---------------------------------------------------------------------------------------------------------*/
 int32_t main(void)
 {
-    S_RTC_TIME_DATA_T sInitTime;
+    S_RTC_TIME_DATA_T sInitTime, *sInitTime_ptr;
 
     SYS_Init();
 
@@ -211,7 +211,10 @@ int32_t main(void)
     sInitTime.u32DayOfWeek  = RTC_TUESDAY;
     sInitTime.u32TimeScale  = RTC_CLOCK_24;
 
-    if (RTC_Open(&sInitTime) != 0)
+    /* check rtc reset status */
+    sInitTime_ptr = (RTC->INIT & RTC_INIT_ACTIVE_Msk) ? NULL : &sInitTime;
+
+    if (RTC_Open(sInitTime_ptr) != 0)
     {
         printf("\n RTC initial fail!!");
         printf("\n Please check h/w setting!!");

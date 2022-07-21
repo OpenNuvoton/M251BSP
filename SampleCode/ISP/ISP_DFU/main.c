@@ -52,7 +52,7 @@ void SYS_Init(void)
 int32_t main(void)
 {
     uint32_t u32TrimInit;
-    
+
     /* Unlock write-protected registers to operate SYS_Init and FMC ISP function */
     SYS_UnlockReg();
 
@@ -97,10 +97,10 @@ int32_t main(void)
                 and keeps HIRC in right frequency while receiving unstable USB signal
                 */
                 SYS->HIRCTRIMCTL = (0x1 << SYS_HIRCTRIMCTL_REFCKSEL_Pos)
-                                 | (0x1 << SYS_HIRCTRIMCTL_FREQSEL_Pos)
-                                 | (0x0 << SYS_HIRCTRIMCTL_LOOPSEL_Pos)
-                                 | (0x1 << SYS_HIRCTRIMCTL_BOUNDEN_Pos)
-                                 | (10  << SYS_HIRCTRIMCTL_BOUNDARY_Pos);
+                                   | (0x1 << SYS_HIRCTRIMCTL_FREQSEL_Pos)
+                                   | (0x0 << SYS_HIRCTRIMCTL_LOOPSEL_Pos)
+                                   | (0x1 << SYS_HIRCTRIMCTL_BOUNDEN_Pos)
+                                   | (10  << SYS_HIRCTRIMCTL_BOUNDARY_Pos);
             }
         }
 

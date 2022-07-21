@@ -91,23 +91,41 @@ void SYS_Init(void)
     /* Enable GPB peripheral clock */
     CLK_EnableModuleClock(GPB_MODULE);
 
-    /* Set PB.12 and PB.13 to input mode */
-    GPIO_SetMode(PB, BIT12, GPIO_MODE_INPUT);
-    GPIO_SetMode(PB, BIT13, GPIO_MODE_INPUT);
 
     /* Set UART0 Default MPF */
     //    Uart0DefaultMPF() ;
 
-    /* Set PB multi-function pin for DAC0 voltage output */
-    SYS->GPB_MFPH = (SYS->GPB_MFPH & ~SYS_GPB_MFPH_PB12MFP_Msk) | SYS_GPB_MFPH_PB12MFP_DAC0_OUT;
-    /* Set PB multi-function pin for DAC1 voltage output */
-    SYS->GPB_MFPH = (SYS->GPB_MFPH & ~SYS_GPB_MFPH_PB13MFP_Msk) | SYS_GPB_MFPH_PB13MFP_DAC1_OUT;
+    if ((SYS->PDID & 0x01920000) == 0x01920000)
+    {
+        /* Set PA.8 and PA.9 to input mode */
+        GPIO_SetMode(PA, BIT8, GPIO_MODE_INPUT);
+        GPIO_SetMode(PA, BIT9, GPIO_MODE_INPUT);
+        /* Set PA multi-function pin for DAC0 voltage output */
+        SYS->GPA_MFPH = (SYS->GPA_MFPH & ~SYS_GPA_MFPH_PA8MFP_Msk) | SYS_GPA_MFPH_PA8MFP_DAC0_OUT;
+        /* Set PA multi-function pin for DAC1 voltage output */
+        SYS->GPA_MFPH = (SYS->GPA_MFPH & ~SYS_GPA_MFPH_PA9MFP_Msk) | SYS_GPA_MFPH_PA9MFP_DAC1_OUT;
 
-    /* Disable digital input path of analog pin DAC0_OUT to prevent leakage */
-    GPIO_DISABLE_DIGITAL_PATH(PB, (1ul << 12));
+        /* Disable digital input path of analog pin DAC0_OUT to prevent leakage */
+        GPIO_DISABLE_DIGITAL_PATH(PA, (1ul << 8));
+        /* Disable digital input path of analog pin DAC1_OUT to prevent leakage */
+        GPIO_DISABLE_DIGITAL_PATH(PA, (1ul << 9));
+    }
+    else
+    {
+        /* Set PB.12 and PB.13 to input mode */
+        GPIO_SetMode(PB, BIT12, GPIO_MODE_INPUT);
+        GPIO_SetMode(PB, BIT13, GPIO_MODE_INPUT);
 
-    /* Disable digital input path of analog pin DAC1_OUT to prevent leakage */
-    GPIO_DISABLE_DIGITAL_PATH(PB, (1ul << 13));
+        /* Set PB multi-function pin for DAC0 voltage output */
+        SYS->GPB_MFPH = (SYS->GPB_MFPH & ~SYS_GPB_MFPH_PB12MFP_Msk) | SYS_GPB_MFPH_PB12MFP_DAC0_OUT;
+        /* Set PB multi-function pin for DAC1 voltage output */
+        SYS->GPB_MFPH = (SYS->GPB_MFPH & ~SYS_GPB_MFPH_PB13MFP_Msk) | SYS_GPB_MFPH_PB13MFP_DAC1_OUT;
+
+        /* Disable digital input path of analog pin DAC0_OUT to prevent leakage */
+        GPIO_DISABLE_DIGITAL_PATH(PB, (1ul << 12));
+        /* Disable digital input path of analog pin DAC1_OUT to prevent leakage */
+        GPIO_DISABLE_DIGITAL_PATH(PB, (1ul << 13));
+    }
 
     /* Lock protected registers */
     SYS_LockReg();

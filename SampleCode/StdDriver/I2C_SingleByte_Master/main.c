@@ -1,13 +1,12 @@
-
-/****************************************************************************//**
+/**************************************************************************//**
  * @file     main.c
  * @version  V0.10
  * @brief    Show how to use I2C Signle byte API Read and Write data to Slave
  *           Needs to work with I2C_Slave sample code.
  *
  * SPDX-License-Identifier: Apache-2.0
- * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
-*****************************************************************************/
+ * @copyright (C) 2022 Nuvoton Technology Corp. All rights reserved.
+ *****************************************************************************/
 #include <stdio.h>
 #include "NuMicro.h"
 
@@ -31,10 +30,10 @@ void SYS_Init(void)
     /* Switch HCLK clock source to Internal RC and HCLK source divide 1 */
     CLK_SetHCLK(CLK_CLKSEL0_HCLKSEL_HIRC, CLK_CLKDIV0_HCLK(1));
 
-    /* Enable UART clock */
+    /* Enable UART0 module clock */
     CLK_EnableModuleClock(UART0_MODULE);
 
-    /* Enable I2C0 clock */
+    /* Enable I2C0 module clock */
     CLK_EnableModuleClock(I2C0_MODULE);
 
     /* Enable GPIO clock */
@@ -44,7 +43,6 @@ void SYS_Init(void)
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HIRC, CLK_CLKDIV0_UART0(1));
 
     /* Update System Core Clock */
-    /* User can use SystemCoreClockUpdate() to calculate SystemCoreClock and cyclesPerUs automatically. */
     SystemCoreClockUpdate();
 
     /*---------------------------------------------------------------------------------------------------------*/
@@ -59,7 +57,6 @@ void SYS_Init(void)
     /* I2C pins enable schmitt trigger */
     PB->SMTEN |= GPIO_SMTEN_SMTEN4_Msk | GPIO_SMTEN_SMTEN5_Msk;
 }
-
 
 void I2C0_Init(void)
 {
@@ -82,9 +79,6 @@ void I2C0_Close(void)
 
 }
 
-/*---------------------------------------------------------------------------------------------------------*/
-/*  Main Function                                                                                          */
-/*---------------------------------------------------------------------------------------------------------*/
 int32_t main(void)
 {
     uint32_t i;
@@ -92,8 +86,10 @@ int32_t main(void)
 
     /* Unlock protected registers */
     SYS_UnlockReg();
+
     /* Init System, IP clock and multi-function I/O. */
     SYS_Init();
+
     /* Lock protected registers */
     SYS_LockReg();
 
@@ -109,7 +105,7 @@ int32_t main(void)
     printf("| Needs to work with I2C_Slave sample code               |\n");
     printf("|                                                        |\n");
     printf("| I2C Master (I2C0) <---> I2C Slave(I2C0)                |\n");
-    printf("| !! This sample code requires two borads to test !!     |\n");
+    printf("| !! This sample code requires two boards to test !!     |\n");
     printf("+--------------------------------------------------------+\n");
 
     printf("\n");
@@ -117,7 +113,7 @@ int32_t main(void)
     /* Init I2C0 */
     I2C0_Init();
 
-    /* Slave Address */
+    /* Slave address */
     g_u8DeviceAddr = 0x15;
 
     u8Err = 0;
@@ -150,6 +146,6 @@ int32_t main(void)
 
     while (1);
 }
-/*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/
+/*** (C) COPYRIGHT 2022 Nuvoton Technology Corp. ***/
 
 

@@ -1,7 +1,7 @@
 /**************************************************************************//**
  * @file     main.c
  * @version  V0.10
- * @brief    Demonstrate how to calculate battery voltage( AVdd ) by using band-gap.
+ * @brief    Demonstrate how to calculate battery voltage (AVdd) by using band-gap.
  *
  * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2020 Nuvoton Technology Corp. All rights reserved.
@@ -86,7 +86,7 @@ void EADC_FunctionTest(void)
 
     printf("\n");
     printf("+----------------------------------------------------------------------+\n");
-    printf("|   ADC for calculate battery voltage( AVdd ) by using band-gap test   |\n");
+    printf("|   ADC for calculate battery voltage (AVdd) by using band-gap test    |\n");
     printf("+----------------------------------------------------------------------+\n\n");
 
 

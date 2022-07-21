@@ -527,7 +527,7 @@ void _ttywrch(int ch)
  *
  */
 #if(__VER__ >= 9000000)
-size_t __write(int handle, const unsigned char * buffer, size_t size)
+size_t __write(int handle, const unsigned char *buffer, size_t size)
 {
     size_t nChars = 0;
 
@@ -555,7 +555,7 @@ size_t __write(int handle, const unsigned char * buffer, size_t size)
     }
 
     return nChars;
-    }
+}
 #else
 int fputc(int ch, FILE *stream)
 {
@@ -614,7 +614,7 @@ int _read(int fd, char *ptr, int len)
  *
  */
 #if(__VER__ >= 9000000)
-size_t __read(int handle, unsigned char * buffer, size_t size)
+size_t __read(int handle, unsigned char *buffer, size_t size)
 {
     /* Remove the #if #endif pair to enable the implementation */
     int nChars = 0;
@@ -629,7 +629,7 @@ size_t __read(int handle, unsigned char * buffer, size_t size)
     for (/* Empty */; size > 0; --size)
     {
         int c = GetChar();
-        
+
         if (c < 0)
             break;
 

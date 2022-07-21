@@ -44,6 +44,9 @@ This BSP folder
 - CortexM23<br>
 	Cortex®-M23 sample code.
 
+- FreeRTOS<br>
+	Simple FreeRTOS™ demo code.
+	
 - Hard\_Fault\_Sample<br>
 	Show hard fault information when hard fault happened.<p>
 	The hard fault handler shows some information including program counter, which is the address where the processor is executed when the hard fault occurs. The listing file (or map file) can show what function and instruction that is.<p>
@@ -54,6 +57,9 @@ This BSP folder
 
 - Level1_Training<br>
 	Level 1 training sample code.
+
+- NuMaker-M256SD<br>
+	Sample codes for NuMaker-M256SD board.
 
 - NuMaker-M258KE<br>
 	Sample codes for NuMaker-M258KE board.
@@ -76,6 +82,11 @@ This BSP folder
 - XOM<br>
 	Demonstrate how to create XOM library and use it.
 
+
+## .\ThirdParty\
+
+- FreeRTOS<br>
+	FreeRTOS porting for M251/M252/M254/M256/M258 series MCU.
 
 ## .\Tool\
 

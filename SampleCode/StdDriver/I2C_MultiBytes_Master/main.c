@@ -1,12 +1,12 @@
 
 /****************************************************************************//**
  * @file     main.c
- * @version  V0.10
+ * @version  V1.00
  * @brief    Show how to set I2C use Multi bytes API Read and Write data to Slave.
  *           Needs to work with I2C_Slave sample code.
  *
  * SPDX-License-Identifier: Apache-2.0
- * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2022 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 #include <stdio.h>
 #include "NuMicro.h"
@@ -35,10 +35,10 @@ void SYS_Init(void)
     /* Switch HCLK clock source to Internal RC and HCLK source divide 1 */
     CLK_SetHCLK(CLK_CLKSEL0_HCLKSEL_HIRC, CLK_CLKDIV0_HCLK(1));
 
-    /* Enable UART clock */
+    /* Enable UART0 module clock */
     CLK_EnableModuleClock(UART0_MODULE);
 
-    /* Enable I2C0 clock */
+    /* Enable I2C0 module clock */
     CLK_EnableModuleClock(I2C0_MODULE);
 
     /* Enable GPIO clock */
@@ -48,7 +48,6 @@ void SYS_Init(void)
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HIRC, CLK_CLKDIV0_UART0(1));
 
     /* Update System Core Clock */
-    /* User can use SystemCoreClockUpdate() to calculate SystemCoreClock and CyclesPerUs automatically. */
     SystemCoreClockUpdate();
 
     /*---------------------------------------------------------------------------------------------------------*/
@@ -85,9 +84,6 @@ void I2C0_Close(void)
 
 }
 
-/*---------------------------------------------------------------------------------------------------------*/
-/*  Main Function                                                                                          */
-/*---------------------------------------------------------------------------------------------------------*/
 int32_t main(void)
 {
     uint32_t i;
@@ -95,8 +91,10 @@ int32_t main(void)
 
     /* Unlock protected registers */
     SYS_UnlockReg();
+
     /* Init System, IP clock and multi-function I/O. */
     SYS_Init();
+
     /* Lock protected registers */
     SYS_LockReg();
 
@@ -132,7 +130,13 @@ int32_t main(void)
     for (i = 0; i < 256; i += 32)
     {
         /* Write 32 bytes data to Slave */
-        while (I2C_WriteMultiBytesTwoRegs(I2C0, g_u8DeviceAddr, i, &txbuf[i], 32) < 32);
+        if (I2C_WriteMultiBytesTwoRegs(I2C0, g_u8DeviceAddr, i, &txbuf[i], 32) < 32)
+        {
+            printf("I2C_WriteMultiBytesTwoRegs failed.....\n");
+
+            while (1);
+
+        }
     }
 
     printf("Multi bytes Write access Pass.....\n");
@@ -140,7 +144,12 @@ int32_t main(void)
     printf("\n");
 
     /* Use Multi Bytes Read from Slave (Two Registers) */
-    while (I2C_ReadMultiBytesTwoRegs(I2C0, g_u8DeviceAddr, 0x0000, rDataBuf, 256) < 256);
+    if (I2C_ReadMultiBytesTwoRegs(I2C0, g_u8DeviceAddr, 0x0000, rDataBuf, 256) < 256)
+    {
+        printf("I2C_ReadMultiBytesTwoRegs failed.....\n");
+
+        while (1);
+    }
 
     /* Compare TX data and RX data */
     for (i = 0; i < 256; i++)
@@ -154,6 +163,6 @@ int32_t main(void)
     while (1);
 
 }
-/*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/
+/*** (C) COPYRIGHT 2022 Nuvoton Technology Corp. ***/
 
 

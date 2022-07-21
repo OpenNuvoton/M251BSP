@@ -15,7 +15,6 @@
 #define CLK_SOURCE  CLK_HIRC
 #define PLL_CLOCK   FREQ_48MHZ
 
-
 /*---------------------------------------------------------------------------------------------------------*/
 /* Global variables                                                                                        */
 /*---------------------------------------------------------------------------------------------------------*/
@@ -146,21 +145,57 @@ void SYS_Init(void)
     /* User can use SystemCoreClockUpdate() to calculate SystemCoreClock and CyclesPerUs automatically. */
     SystemCoreClockUpdate();
 
-    /* Set PB.4 and PC.0 to input mode */
-    PB->MODE &= ~(GPIO_MODE_MODE4_Msk);
-    PC->MODE &= ~(GPIO_MODE_MODE0_Msk);
+    /* Note:ACMP  negative input source is not support DAC (Part no. M258KG6AE,M254KG6AE,M258QG6AE,M256QG6AE,M258SG6AE M254SG6AE) */
+    if ((SYS->PDID & 0x01920000) == 0x01920000)
+    {
+        /* Set PA.8 to input mode */
+        PA->MODE &= ~(GPIO_MODE_MODE8_Msk) ;
+        /* Set PB.4 and PB.5 and PC.0  to input mode */
+        PB->MODE &= ~(GPIO_MODE_MODE4_Msk | GPIO_MODE_MODE5_Msk);
+        PC->MODE &= ~(GPIO_MODE_MODE0_Msk);
 
-    /* Set PB4 multi-function pin for ACMP1 positive input pin and PC0 multi-function pin for ACMP1 output pin*/
-    SYS->GPB_MFPL = SYS_GPB_MFPL_PB4MFP_ACMP1_P1;
-    SYS->GPC_MFPL = SYS_GPC_MFPL_PC0MFP_ACMP1_O;
+        /* Set PB4 multi-function pin for ACMP1 positive input pin and PB5 multi-function pin for ACMP1 negative input pin*/
+        SYS->GPB_MFPL = (SYS->GPB_MFPL & ~(SYS_GPB_MFPL_PB4MFP_Msk | SYS_GPB_MFPL_PB5MFP_Msk)) | (SYS_GPB_MFPL_PB4MFP_ACMP1_P1 | SYS_GPB_MFPL_PB5MFP_ACMP1_N);
+        /* Set PC0 multi-function pin for ACMP1 output pin*/
+        SYS->GPC_MFPL = (SYS->GPC_MFPL & ~SYS_GPC_MFPL_PC0MFP_Msk) | SYS_GPC_MFPL_PC0MFP_ACMP1_O;
+        /* Set PA multi-function pin for DAC voltage output */
+        SYS->GPA_MFPH = (SYS->GPA_MFPH & ~SYS_GPA_MFPH_PA8MFP_Msk) | SYS_GPA_MFPH_PA8MFP_DAC0_OUT;
+
+    }
+    else
+    {
+        /* Set PB.4 and PC.0 to input mode */
+        PB->MODE &= ~(GPIO_MODE_MODE4_Msk);
+        PC->MODE &= ~(GPIO_MODE_MODE0_Msk);
+
+        /* Set PB4 multi-function pin for ACMP1 positive input pin and PC0 multi-function pin for ACMP1 output pin*/
+        SYS->GPB_MFPL = (SYS->GPB_MFPL & ~SYS_GPB_MFPL_PB4MFP_Msk) | SYS_GPB_MFPL_PB4MFP_ACMP1_P1;
+        SYS->GPC_MFPL = (SYS->GPC_MFPL & ~SYS_GPC_MFPL_PC0MFP_Msk) | SYS_GPC_MFPL_PC0MFP_ACMP1_O;
+    }
+
+
+
 #if !(defined(DEBUG_ENABLE_SEMIHOST))
     /* Set PA multi-function pins for UART0 RXD and TXD */
     SYS->GPA_MFPL = (SYS->GPA_MFPL & ~SYS_GPA_MFPL_PA4MFP_Msk) | SYS_GPA_MFPL_PA4MFP_UART0_RXD;
     SYS->GPA_MFPL = (SYS->GPA_MFPL & ~SYS_GPA_MFPL_PA5MFP_Msk) | SYS_GPA_MFPL_PA5MFP_UART0_TXD;
 #endif
-    /* Disable digital input path of analog pin ACMP1_P1 to prevent leakage */
-    GPIO_DISABLE_DIGITAL_PATH(PB, (1ul << 4));
 
+    /* Note:ACMP  negative input source is not support DAC (Part no. M258KG6AE,M254KG6AE,M258QG6AE,M256QG6AE,M258SG6AE M254SG6AE) */
+    if ((SYS->PDID & 0x01920000) == 0x01920000)
+    {
+        /* Disable digital input path of analog pin DAC0_OUT to prevent leakage */
+        GPIO_DISABLE_DIGITAL_PATH(PA, (1ul << 8));
+        /* Disable digital input path of analog pin ACMP1_P1 to prevent leakage */
+        GPIO_DISABLE_DIGITAL_PATH(PB, (1ul << 4));
+        /* Disable digital input path of analog pin ACMP1_N to prevent leakage */
+        GPIO_DISABLE_DIGITAL_PATH(PB, (1ul << 5));
+    }
+    else
+    {
+        /* Disable digital input path of analog pin ACMP1_P1 to prevent leakage */
+        GPIO_DISABLE_DIGITAL_PATH(PB, (1ul << 4));
+    }
 
 }
 
@@ -190,9 +225,22 @@ int32_t main(void)
 #endif
 
     printf("\n\nCPU @ %dHz\n", SystemCoreClock);
-    printf("\nThis sample code demonstrates ACMP1 function. Using ACMP1_P1 (PB4) as ACMP1\n");
-    printf("positive input and using DAC output as the negative input.\n");
-    printf("Please connect the ACMP1_P1(PB4) to 1.5v .\n");
+
+    /* Note:ACMP negative input source is not support DAC (Part no. M258KG6AE,M254KG6AE,M258QG6AE,M256QG6AE,M258SG6AE M254SG6AE) */
+    if ((SYS->PDID & 0x01920000) == 0x01920000)
+    {
+        printf("\nThis sample code demonstrates ACMP1 function. Using ACMP1_P1 (PB4) as ACMP1\n");
+        printf("positive input and using DAC output as the negative input.\n");
+        printf("Note: ACMP negative input source does not support DAC, so user must connect DAC output (PA8) to ACMP1_N (PB5)\n");
+        printf("Please connect the ACMP1_P1(PB4) to 1.5v .\n");
+    }
+    else
+    {
+        printf("\nThis sample code demonstrates ACMP1 function. Using ACMP1_P1 (PB4) as ACMP1\n");
+        printf("positive input and using DAC output as the negative input.\n");
+        printf("Please connect the ACMP1_P1(PB4) to 1.5v .\n");
+    }
+
     printf("The compare result reflects on ACMP1_O (PC0).\n");
     printf("Press any key to start ...\n");
     getchar();
@@ -202,7 +250,6 @@ int32_t main(void)
 
     /* The DAC conversion settling time is 1ms */
     DAC_SetDelayTime(DAC0, 100);
-
 
     /* Set DAC 12-bit holding data */
     DAC_WRITE_DATA(DAC0, 0, 0x0);
@@ -218,8 +265,18 @@ int32_t main(void)
     /* Start A/D conversion */
     DAC_START_CONV(DAC0);
 
-    /* Configure ACMP1. Enable ACMP1 and select DAC voltage as the source of ACMP negative input. */
-    ACMP_Open(ACMP01, 1, ACMP_CTL_NEGSEL_DAC, ACMP_CTL_HYSTERESIS_DISABLE);
+    /* Note:ACMP  negative input source is not support DAC (Part no. M258KG6AE,M254KG6AE,M258QG6AE,M256QG6AE,M258SG6AE M254SG6AE) */
+    if ((SYS->PDID & 0x01920000) == 0x01920000)
+    {
+        /* Configure ACMP1. Enable ACMP1 and selecting the voltage of ACMP negative input pin as the source of ACMP negative input.*/
+        ACMP_Open(ACMP01, 1, ACMP_CTL_NEGSEL_PIN, ACMP_CTL_HYSTERESIS_DISABLE);
+    }
+    else
+    {
+        /* Configure ACMP1. Enable ACMP1 and select DAC voltage as the source of ACMP negative input. */
+        ACMP_Open(ACMP01, 1, ACMP_CTL_NEGSEL_DAC, ACMP_CTL_HYSTERESIS_DISABLE);
+    }
+
     /* Select P1 as ACMP positive input channel */
     ACMP_SELECT_P(ACMP01, 1, ACMP_CTL_POSSEL_P1);
 

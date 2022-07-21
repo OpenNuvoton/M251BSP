@@ -107,7 +107,7 @@ uint32_t CLK_PowerDown(void)
     /* Restore HIRC/MIRC control register */
     SYS->HIRCTRIMCTL = u32HIRCTRIMCTL;
     SYS->MIRCTRIMCTL = u32MIRCTRIMCTL;
-    
+
     return 1UL;
 }
 
@@ -926,7 +926,7 @@ uint32_t CLK_WaitClockReady(uint32_t u32ClkMask)
     {
         if (--u32TimeOutCnt == 0)
         {
-            g_CLK_i32ErrCode = CLK_TIMEOUT_ERR;            
+            g_CLK_i32ErrCode = CLK_TIMEOUT_ERR;
             return 0UL;
         }
     }
@@ -959,7 +959,7 @@ uint32_t CLK_WaitClockDisable(uint32_t u32ClkMask)
         if (--u32TimeOutCnt == 0)
         {
             g_CLK_i32ErrCode = CLK_TIMEOUT_ERR;
-            return 0UL;            
+            return 0UL;
         }
     }
 

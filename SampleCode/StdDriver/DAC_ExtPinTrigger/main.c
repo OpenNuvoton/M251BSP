@@ -69,15 +69,24 @@ void SYS_Init(void)
 
     /* Set UART0 Default MPF */
     //    Uart0DefaultMPF() ;
-
-    /* Set PB multi-function pin for DAC voltage output */
-    SYS->GPB_MFPH = (SYS->GPB_MFPH & ~SYS_GPB_MFPH_PB12MFP_Msk) | SYS_GPB_MFPH_PB12MFP_DAC0_OUT;
-
-    /* Set PB.12 to input mode */
-    PB->MODE &= ~(GPIO_MODE_MODE12_Msk) ;
-
-    /* Disable digital input path of analog pin DAC0_OUT to prevent leakage */
-    GPIO_DISABLE_DIGITAL_PATH(PB, (1ul << 12));
+    if ((SYS->PDID & 0x01920000) == 0x01920000)
+    {
+        /* Set PA multi-function pin for DAC voltage output */
+        SYS->GPA_MFPH = (SYS->GPA_MFPH & ~SYS_GPA_MFPH_PA8MFP_Msk) | SYS_GPA_MFPH_PA8MFP_DAC0_OUT;
+        /* Set PA.8 to input mode */
+        PA->MODE &= ~(GPIO_MODE_MODE8_Msk) ;
+        /* Disable digital input path of analog pin DAC0_OUT to prevent leakage */
+        GPIO_DISABLE_DIGITAL_PATH(PA, (1ul << 8));
+    }
+    else
+    {
+        /* Set PB multi-function pin for DAC voltage output */
+        SYS->GPB_MFPH = (SYS->GPB_MFPH & ~SYS_GPB_MFPH_PB12MFP_Msk) | SYS_GPB_MFPH_PB12MFP_DAC0_OUT;
+        /* Set PB.12 to input mode */
+        PB->MODE &= ~(GPIO_MODE_MODE12_Msk) ;
+        /* Disable digital input path of analog pin DAC0_OUT to prevent leakage */
+        GPIO_DISABLE_DIGITAL_PATH(PB, (1ul << 12));
+    }
 
     /* Set PA multi-function pin for DAC conversion trigger */
     SYS->GPA_MFPL = (SYS->GPA_MFPL & ~SYS_GPA_MFPL_PA0MFP_Msk) | SYS_GPA_MFPL_PA0MFP_DAC0_ST;

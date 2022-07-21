@@ -128,6 +128,12 @@ typedef struct
     uint8_t right;                                          /*!< Right Key */
 } S_NEIGHBOR;
 
+typedef struct
+{
+    uint8_t u8TKChanNum;
+    int8_t  i8Count;
+} S_TKDEBOUNCE;
+
 /*@}*/ /* end of group TKLIB_EXPORTED_STRUCTS */
 
 

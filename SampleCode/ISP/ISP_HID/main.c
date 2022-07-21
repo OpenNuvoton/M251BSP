@@ -63,7 +63,7 @@ void USBD_IRQHandler(void);
 int32_t main(void)
 {
     uint32_t u32TrimInit;
-    
+
     /* Unlock write-protected registers to operate SYS_Init and FMC ISP function */
     SYS_UnlockReg();
 
@@ -90,7 +90,7 @@ int32_t main(void)
 
         /* Clear SOF */
         USBD_CLR_INT_FLAG(USBD_INTSTS_SOFIF_Msk);
-        
+
         /* Using polling mode and Removed Interrupt Table to reduce code size for M251 */
         while (DetectPin == 0)
         {

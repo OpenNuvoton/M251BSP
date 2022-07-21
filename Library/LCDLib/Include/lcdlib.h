@@ -15,7 +15,12 @@ extern "C"
 #endif
 
 #include "NuMicro.h"
+
+#ifdef M256D
+#include "lcdzone_M256D.h"
+#else
 #include "lcdzone.h"
+#endif
 
 /** @addtogroup Library Library
   @{

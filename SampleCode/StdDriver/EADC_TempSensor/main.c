@@ -92,8 +92,8 @@ void EADC_FunctionTest(void)
     /* Set input mode as single-end and enable the A/D converter */
     EADC_Open(EADC, 0);
 
-    /* Set sample module 17 external sampling time to 0x1F */
-    EADC_SetExtendSampleTime(EADC, 17, 0x1F);
+    /* Set sample module 17 external sampling time to 120 (Temperature sensor sampling time is greater than 20 us)*/
+    EADC_SetExtendSampleTime(EADC, 17, 120);
 
     /* Clear the A/D ADINT0 interrupt flag for safe */
     EADC_CLR_INT_FLAG(EADC, EADC_STATUS2_ADIF0_Msk);
