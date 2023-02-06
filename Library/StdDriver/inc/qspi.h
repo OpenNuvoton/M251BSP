@@ -63,7 +63,7 @@ extern "C"
 #define QSPI_QSPIEN_STS_MASK              (0x40UL)                           /*!< QSPIEN status mask \hideinitializer */
 #define QSPI_SSLINE_STS_MASK              (0x80UL)                           /*!< QSPIx_SS line status mask \hideinitializer */
 
-/*@}*/ /* end of group QSPI_EXPORTED_CONSTANTS */
+/** @} end of group QSPI_EXPORTED_CONSTANTS */
 
 
 /** @addtogroup QSPI_EXPORTED_FUNCTIONS QSPI Exported Functions
@@ -329,7 +329,6 @@ extern "C"
 /**
   * @brief  Disable QSPI Dual IO function.
   * @param[in]  qspi is the base address of QSPI module.
-  * @return none
   * \hideinitializer
   */
 #define QSPI_DISABLE_DUAL_MODE(qspi) ( (qspi)->CTL &= ~QSPI_CTL_DUALIOEN_Msk )
@@ -337,7 +336,6 @@ extern "C"
 /**
   * @brief  Enable Dual IO function and set QSPI Dual IO direction to input.
   * @param[in]  qspi is the base address of QSPI module.
-  * @return none
   * \hideinitializer
   */
 #define QSPI_ENABLE_DUAL_INPUT_MODE(qspi) ( (qspi)->CTL = ((qspi)->CTL & ~QSPI_CTL_DATDIR_Msk) | QSPI_CTL_DUALIOEN_Msk )
@@ -345,7 +343,6 @@ extern "C"
 /**
   * @brief  Enable Dual IO function and set QSPI Dual IO direction to output.
   * @param[in]  qspi is the base address of QSPI module.
-  * @return none
   * \hideinitializer
   */
 #define QSPI_ENABLE_DUAL_OUTPUT_MODE(qspi) ( (qspi)->CTL |= QSPI_CTL_DATDIR_Msk | QSPI_CTL_DUALIOEN_Msk )
@@ -353,7 +350,6 @@ extern "C"
 /**
   * @brief  Disable QSPI Dual IO function.
   * @param[in]  qspi is the base address of QSPI module.
-  * @return none
   * \hideinitializer
   */
 #define QSPI_DISABLE_QUAD_MODE(qspi) ( (qspi)->CTL &= ~QSPI_CTL_QUADIOEN_Msk )
@@ -361,7 +357,6 @@ extern "C"
 /**
   * @brief  Set QSPI Quad IO direction to input.
   * @param[in]  qspi is the base address of QSPI module.
-  * @return none
   * \hideinitializer
   */
 #define QSPI_ENABLE_QUAD_INPUT_MODE(qspi) ( (qspi)->CTL = ((qspi)->CTL & ~QSPI_CTL_DATDIR_Msk) | QSPI_CTL_QUADIOEN_Msk )
@@ -369,7 +364,6 @@ extern "C"
 /**
   * @brief  Set QSPI Quad IO direction to output.
   * @param[in]  qspi is the base address of QSPI module.
-  * @return none
   * \hideinitializer
   */
 #define QSPI_ENABLE_QUAD_OUTPUT_MODE(qspi) ( (qspi)->CTL |= QSPI_CTL_DATDIR_Msk | QSPI_CTL_QUADIOEN_Msk )
@@ -394,11 +388,11 @@ void QSPI_ClearIntFlag(QSPI_T *qspi, uint32_t u32Mask);
 uint32_t QSPI_GetStatus(QSPI_T *qspi, uint32_t u32Mask);
 
 
-/*@}*/ /* end of group QSPI_EXPORTED_FUNCTIONS */
+/** @} end of group QSPI_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group QSPI_Driver */
+/** @} end of group QSPI_Driver */
 
-/*@}*/ /* end of group Standard_Driver */
+/** @} end of group Standard_Driver */
 
 #ifdef __cplusplus
 }

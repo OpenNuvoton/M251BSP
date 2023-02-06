@@ -109,7 +109,7 @@ extern "C"
 #define PSIO_IN_STATUS          0x00000005UL            /*!<PSIO Input to Status            \hideinitializer */
 #define PSIO_IN_STATUS_UPDATE   0x00000006UL            /*!<PSIO Input to Status and Update \hideinitializer */
 
-/*@}*/ /* end of group PSIO_EXPORTED_CONSTANTS */
+/** @} end of group PSIO_EXPORTED_CONSTANTS */
 
 /** @addtogroup PSIO_EXPORTED_STRUCTS PSIO Exported Structs
   @{
@@ -144,7 +144,7 @@ unsigned CKPT0ACT:
     unsigned CKPT6ACT: 4;   ///< Select action at check point6. Reference to \ref S_PSIO_CP_CONFIG::CKPT0ACT
     unsigned CKPT7ACT: 4;   ///< Select action at check point7. Reference to \ref S_PSIO_CP_CONFIG::CKPT0ACT
 } S_PSIO_CP_CONFIG;
-/*@}*/ /* end of group PSIO_EXPORTED_STRUCTS */
+/** @} end of group PSIO_EXPORTED_STRUCTS */
 
 /** @addtogroup PSIO_EXPORTED_FUNCTIONS PSIO Exported Functions
   @{
@@ -164,7 +164,6 @@ unsigned CKPT0ACT:
  *                - \ref PSIO_INTEN_SC2IE_Msk
  *                - \ref PSIO_INTEN_SC3IE_Msk
  *
- * @return      None
  *
  * @details     This macro enable specified PSIO interrupt.
  * \hideinitializer
@@ -185,7 +184,6 @@ unsigned CKPT0ACT:
  *                - \ref PSIO_INTEN_SC2IE_Msk
  *                - \ref PSIO_INTEN_SC3IE_Msk
  *
- * @return      None
  *
  * @details     This macro disable specified PSIO interrupt.
  * \hideinitializer
@@ -228,7 +226,6 @@ unsigned CKPT0ACT:
  *                - \ref PSIO_INTSTS_SC2IF_Msk
  *                - \ref PSIO_INTSTS_SC3IF_Msk
  *
- * @return      None
  *
  * @details     This macro Clear specified interrupt flag or interrupt indicator status.
  * \hideinitializer
@@ -303,7 +300,6 @@ unsigned CKPT0ACT:
  *                - \ref PSIO_TRANSTS_INOVER7_Msk
  *                - \ref PSIO_TRANSTS_OUTUF7_Msk
  *
- * @return      None
  *
  * @details     This macro clear specified transfer status.
  * \hideinitializer
@@ -354,7 +350,6 @@ unsigned CKPT0ACT:
  *                - \ref PSIO_ISSTS_INSTSOV6_Msk
  *                - \ref PSIO_ISSTS_INSTSOV7_Msk
  *
- * @return      None
  *
  * @details     This macro clear input status state.
  * \hideinitializer
@@ -380,7 +375,6 @@ unsigned CKPT0ACT:
  *                - \ref PSIO_PDMACTL_IPIN6EN_Msk
  *                - \ref PSIO_PDMACTL_IPIN7EN_Msk
  *
- * @return      None
  *
  * @details     This macro set PSIO input with PDMA.
  * \hideinitializer
@@ -402,7 +396,6 @@ unsigned CKPT0ACT:
  *                - \ref PSIO_PDMACTL_IPIN6EN_Msk
  *                - \ref PSIO_PDMACTL_IPIN7EN_Msk
  *
- * @return      None
  *
  * @details     This macro clear PSIO input with PDMA.
  * \hideinitializer
@@ -428,7 +421,6 @@ unsigned CKPT0ACT:
  *                - \ref PSIO_PDMACTL_OPIN6EN_Msk
  *                - \ref PSIO_PDMACTL_OPIN7EN_Msk
  *
- * @return      None
  *
  * @details     This macro set PSIO output with PDMA.
  * \hideinitializer
@@ -450,7 +442,6 @@ unsigned CKPT0ACT:
  *                - \ref PSIO_PDMACTL_OPIN6EN_Msk
  *                - \ref PSIO_PDMACTL_OPIN7EN_Msk
  *
- * @return      None
  *
  * @details     This macro clear PSIO output with PDMA.
  * \hideinitializer
@@ -472,7 +463,6 @@ unsigned CKPT0ACT:
  *                - \ref PSIO_RISING_TRIGGER
  *                - \ref PSIO_BOTH_EDGE_TRIGGER
  *
- * @return      None
  *
  * @details     This macro set slot controller trigger source.
  * \hideinitializer
@@ -489,7 +479,6 @@ unsigned CKPT0ACT:
  *                - \ref PSIO_SC2
  *                - \ref PSIO_SC3
  *
- * @return      None
  *
  * @details     This macro start PSIO slot controller.
  * \hideinitializer
@@ -506,7 +495,6 @@ unsigned CKPT0ACT:
  *                - \ref PSIO_SC2
  *                - \ref PSIO_SC3
  *
- * @return      None
  *
  * @details     This macro stop PSIO slot controller.
  * \hideinitializer
@@ -559,7 +547,6 @@ unsigned CKPT0ACT:
 *                - \ref PSIO_SC2
 *                - \ref PSIO_SC3
 *
-* @return      None
 *
 * @details     This macro clear PSIO idle flag.
 * \hideinitializer
@@ -586,7 +573,6 @@ unsigned CKPT0ACT:
 *                - \ref PSIO_SLOT7
 * @param[in]   u32Cnt  The slot tick count. Valid values are 0x0~0xF
 *
-* @return      None
 *
 * @details     This macro set PSIO slot tick count.
 * \hideinitializer
@@ -605,7 +591,6 @@ unsigned CKPT0ACT:
  *                - \ref PSIO_SC3
  * @param[in]   u32Cnt  The slot tick count. Valid values are 0x0~0xF
  *
- * @return      None
  *
  * @details     This macro set PSIO all slot tick count.
  * \hideinitializer
@@ -630,7 +615,6 @@ unsigned CKPT0ACT:
  *                - \ref PSIO_PIN6
  *                - \ref PSIO_PIN7
  *
- * @return      None
  *
  * @details     This function is used to Enable this Pin.
  * \hideinitializer
@@ -652,7 +636,6 @@ unsigned CKPT0ACT:
  *                - \ref PSIO_PIN6
  *                - \ref PSIO_PIN7
  *
- * @return      None
  *
  * @details     This function is used to disable this Pin.
  * \hideinitializer
@@ -676,7 +659,6 @@ unsigned CKPT0ACT:
  * @param[in]   u32InWidth  The input data width. Valid values are 0~32
  * @param[in]   u32OutWidth The output data width. Valid values are 0~32
  *
- * @return      None
  *
  * @details     This macro set in/out data width.
  * \hideinitializer
@@ -702,7 +684,6 @@ unsigned CKPT0ACT:
  *                - \ref PSIO_LSB
  *                - \ref PSIO_MSB
  *
- * @return      None
  *
  * @details     This macro set data order.
  * \hideinitializer
@@ -729,7 +710,6 @@ unsigned CKPT0ACT:
  *                - \ref PSIO_DEPTH3
  *                - \ref PSIO_DEPTH4
  *
- * @return      None
  *
  * @details     This macro set output data order.
  * \hideinitializer
@@ -756,7 +736,6 @@ unsigned CKPT0ACT:
  *                - \ref PSIO_DEPTH3
  *                - \ref PSIO_DEPTH4
  *
- * @return      None
  *
  * @details     This macro set input data order.
  * \hideinitializer
@@ -821,7 +800,6 @@ unsigned CKPT0ACT:
 *                - \ref PSIO_PIN7
 * @param[in]   u32Data  The output data
 *
-* @return      None
 *
 * @details     This macro set specified pin output data.
 * \hideinitializer
@@ -860,7 +838,6 @@ unsigned CKPT0ACT:
 *                - \ref PSIO_SLOT6
 *                - \ref PSIO_SLOT7
 *
-* @return      None
 *
 * @details     This macro used to link check point and slot.
 * \hideinitializer
@@ -892,7 +869,6 @@ unsigned CKPT0ACT:
  *                - \ref PSIO_CP6
  *                - \ref PSIO_CP7
  *
- * @return      None
  *
  * @details     This macro used to clear the link of check point and slot.
  * \hideinitializer
@@ -931,7 +907,6 @@ unsigned CKPT0ACT:
  *                - \ref PSIO_IN_STATUS
  *                - \ref PSIO_IN_STATUS_UPDATE
  *
- * @return      None
  *
  * @details     This macro used to set specified pin action of check point.
  * \hideinitializer
@@ -961,7 +936,6 @@ unsigned CKPT0ACT:
  *                - \ref PSIO_SLOT6
  *                - \ref PSIO_SLOT7
  *
- * @return      None
  *
  * @details     This function is used to set the selected slot controller, interrupt type and slot.
  * \hideinitializer
@@ -990,7 +964,6 @@ __STATIC_INLINE void PSIO_SET_INTCTL(PSIO_T *psio, uint32_t u32SC, uint32_t u32I
  *                - \ref PSIO_INT0
  *                - \ref PSIO_INT1
  *
- * @return      None
  *
  * @details     This function is used to clear the selected slot controller, interrupt type and slot.
  * \hideinitializer
@@ -1038,7 +1011,6 @@ __STATIC_INLINE void PSIO_CLEAR_INTCTL(PSIO_T *psio, uint32_t u32Int)
  *                - \ref PSIO_REPEAT_ENABLE
  *                - \ref PSIO_REPEAT_DISABLE
  *
- * @return      None
  *
  * @details     This function is used to set the slot controller loop and repeat configuration.
  * \hideinitializer
@@ -1093,7 +1065,6 @@ __STATIC_INLINE void PSIO_SET_SCCTL(PSIO_T *psio, uint32_t u32SC, uint32_t u32In
  *                - \ref PSIO_LAST_OUTPUT
  *                - \ref PSIO_Toggle
  *
- * @return      None
  *
  * @details     This function is used to set the general control.
  * \hideinitializer
@@ -1141,7 +1112,6 @@ __STATIC_INLINE void PSIO_SET_GENCTL(PSIO_T *psio, uint32_t u32Pin, uint32_t u32
  *                - \ref PSIO_CP5
  *                - \ref PSIO_CP6
  *                - \ref PSIO_CP7
- * @return      None
  *
  * @details     This function is used to set the pin mode switch.
  * \hideinitializer
@@ -1175,7 +1145,6 @@ __STATIC_INLINE void PSIO_SWITCH_MODE(PSIO_T *psio, uint32_t u32Pin, uint32_t u3
 *                - \ref PSIO_PIN7
 * @param[in]   sConfig   The selected check point configurations.
 *
-* @return      None
 *
 * @details     This macro used to link check point and slot, and set pin action of check point.
 * \hideinitializer
@@ -1186,11 +1155,11 @@ __STATIC_INLINE void PSIO_SET_CP_CONFIG(PSIO_T *psio, uint32_t u32Pin, const S_P
     psio->GNCT[u32Pin].CPCTL1 = *((uint32_t *)sConfig + 1);
 }
 
-/*@}*/ /* end of group PSIO_EXPORTED_FUNCTIONS */
+/** @} end of group PSIO_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group PSIO_Driver */
+/** @} end of group PSIO_Driver */
 
-/*@}*/ /* end of group Standard_Driver */
+/** @} end of group Standard_Driver */
 
 #ifdef __cplusplus
 }

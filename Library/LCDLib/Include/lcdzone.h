@@ -25,6 +25,7 @@ extern "C"
 /** @addtogroup LCDLIB_EXPORTED_CONSTANTS LCD Zone Exported Constants
   @{
 */
+
 /*---------------------------------------------------------------------------------------------------------*/
 /*  Digit Zone Constant Definitions                                                                        */
 /*---------------------------------------------------------------------------------------------------------*/
@@ -124,7 +125,7 @@ extern "C"
 #define SYMBOL_P_68                                         ((33)<<4 | (4)<<0)
 
 
-/*@}*/ /* end of group LCDLIB_EXPORTED_CONSTANTS */
+/** @} end of group LCDLIB_EXPORTED_CONSTANTS */
 
 
 
@@ -140,7 +141,7 @@ typedef struct
 
 } LCD_ZONE_INFO_T;
 
-/*@}*/ /* end of group LCDLIB_EXPORTED_STRUCTS */
+/** @} end of group LCDLIB_EXPORTED_STRUCTS */
 
 
 
@@ -168,7 +169,7 @@ typedef struct
 
 
 
-/*@}*/ /* end of group LCDLIB_EXPORTED_CONSTANTS */
+/** @} end of group LCDLIB_EXPORTED_CONSTANTS */
 
 
 /** @addtogroup LCDLIB_EXPORTED_STRUCTS LCD Zone Exported Structs
@@ -523,11 +524,9 @@ static const LCD_ZONE_INFO_T g_LCDZoneInfo[] =
 
 };
 
-/*@}*/ /* end of group LCDLIB_EXPORTED_STRUCTS */
-
-/*@}*/ /* end of group LCDLIB */
-
-/*@}*/ /* end of group Library */
+/** @} end of group LCDLIB_EXPORTED_STRUCTS */
+/** @} end of group LCDLIB */
+/** @} end of group Library */
 
 #ifdef __cplusplus
 }

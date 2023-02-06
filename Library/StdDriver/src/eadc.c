@@ -27,7 +27,6 @@ int32_t g_EADC_i32ErrCode = 0;       /*!< EADC global error code */
   * @param[in] eadc The pointer of the specified EADC module.
   * @param[in] u32InputMode Decides the input mode. M251 don't support this feature.
   *                       - \ref NULL      :Always NULL.
-  * @return None
   * @details This function is used to set analog input mode and enable A/D Converter.
   *         Before starting A/D conversion function, ADCEN bit (EADC_CTL[0]) should be set to 1.
   * @note   This function sets g_EADC_i32ErrCode to EADC_TIMEOUT_ERR if PWRCTL_READY(EADC_PWRCTL[0]) is not set to 1
@@ -55,7 +54,6 @@ void EADC_Open(EADC_T *eadc, uint32_t u32InputMode)
 /**
   * @brief Disable EADC_module.
   * @param[in] eadc The pointer of the specified EADC module.
-  * @return None
   * @details Clear ADCEN bit (EADC_CTL[0]) to disable A/D converter analog circuit power consumption.
   */
 void EADC_Close(EADC_T *eadc)
@@ -94,7 +92,6 @@ void EADC_Close(EADC_T *eadc)
   *                            - \ref EADC_BPWM0TG_TRIGGER               : BPWM0TG trigger
   *                            - \ref EADC_BPWM1TG_TRIGGER               : BPWM1TG trigger
   * @param[in] u32Channel Specifies the sample module channel, valid value are from 0 to 15.
-  * @return None
   * @details Each of EADC control logic modules 0~15 which is configurable for EADC converter channel EADC_CH0~15 and trigger source.
   *          Sample module 16~18 is fixed for EADC channel 16, 17, 18 input sources as band-gap voltage, temperature sensor, and battery power (VBAT).
   */
@@ -118,7 +115,6 @@ void EADC_ConfigSampleModule(EADC_T *eadc, \
   *                                 - \ref EADC_SCTL_TRGDLYDIV_DIVIDER_2    : Trigger delay clock frequency is EADC_CLK/2
   *                                 - \ref EADC_SCTL_TRGDLYDIV_DIVIDER_4    : Trigger delay clock frequency is EADC_CLK/4
   *                                 - \ref EADC_SCTL_TRGDLYDIV_DIVIDER_16   : Trigger delay clock frequency is EADC_CLK/16
-  * @return None
   * @details User can configure the trigger delay time by setting TRGDLYCNT (EADC_SCTLn[15:8], n=0~15) and TRGDLYDIV (EADC_SCTLn[7:6], n=0~15).
   *         Trigger delay time = (u32TriggerDelayTime) x Trigger delay clock period.
   */
@@ -137,7 +133,6 @@ void EADC_SetTriggerDelayTime(EADC_T *eadc, \
   * @param[in] eadc The pointer of the specified EADC module.
   * @param[in] u32ModuleNum Decides the sample module number, valid values are from 0 to 18.
   * @param[in] u32ExtendSampleTime Decides the extend sampling time, the range is from 0~255 EADC clock. Valid value are from 0 to 255.
-  * @return None
   * @details When A/D converting at high conversion rate, the sampling time of analog input voltage may not enough
   *         if the analog channel has heavy loading to cause fully charge time is longer.
   *         User can extend A/D sampling time after trigger source is coming to get enough sampling time.
@@ -156,8 +151,8 @@ void EADC_SetExtendSampleTime(EADC_T *eadc, uint32_t u32ModuleNum, uint32_t u32E
     }
 }
 
-/*@}*/ /* end of group EADC_EXPORTED_FUNCTIONS */
+/** @} end of group EADC_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group EADC_Driver */
+/** @} end of group EADC_Driver */
 
-/*@}*/ /* end of group Standard_Driver */
+/** @} end of group Standard_Driver */

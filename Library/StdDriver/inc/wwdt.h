@@ -52,7 +52,7 @@ extern "C"
 /*---------------------------------------------------------------------------------------------------------*/
 #define WWDT_RELOAD_WORD        (0x00005AA5)                /*!< Fill this value to WWDT_RLDCNT register to reload WWDT counter */
 
-/*@}*/ /* end of group WWDT_EXPORTED_CONSTANTS */
+/** @} end of group WWDT_EXPORTED_CONSTANTS */
 
 
 /** @addtogroup WWDT_EXPORTED_FUNCTIONS WWDT Exported Functions
@@ -62,9 +62,7 @@ extern "C"
 /**
   * @brief      Clear WWDT Reset System Flag
   *
-  * @param      None
   *
-  * @return     None
   *
   * @details    This macro is used to clear WWDT time-out reset system flag.
   *
@@ -75,9 +73,7 @@ extern "C"
 /**
   * @brief      Clear WWDT Compared Match Interrupt Flag
   *
-  * @param      None
   *
-  * @return     None
   *
   * @details    This macro is used to clear WWDT compared match interrupt flag.
   *
@@ -88,7 +84,6 @@ extern "C"
 /**
   * @brief      Get WWDT Reset System Flag
   *
-  * @param      None
   *
   * @retval     0   WWDT time-out reset system did not occur
   * @retval     1   WWDT time-out reset system occurred
@@ -102,7 +97,6 @@ extern "C"
 /**
   * @brief      Get WWDT Compared Match Interrupt Flag
   *
-  * @param      None
   *
   * @retval     0   WWDT compare match interrupt did not occur
   * @retval     1   WWDT compare match interrupt occurred
@@ -116,7 +110,6 @@ extern "C"
 /**
   * @brief      Get WWDT Counter
   *
-  * @param      None
   *
   * @return     WWDT Counter Value
   *
@@ -129,9 +122,7 @@ extern "C"
 /**
   * @brief      Reload WWDT Counter
   *
-  * @param      None
   *
-  * @return     None
   *
   * @details    This macro is used to reload the WWDT counter value to 0x3F.
   * @note       User can only write WWDT_RLDCNT register to reload WWDT counter value when current WWDT counter value \n
@@ -144,11 +135,11 @@ extern "C"
 
 void WWDT_Open(uint32_t u32PreScale, uint32_t u32CmpValue, uint32_t u32EnableInt);
 
-/*@}*/ /* end of group WWDT_EXPORTED_FUNCTIONS */
+/** @} end of group WWDT_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group WWDT_Driver */
+/** @} end of group WWDT_Driver */
 
-/*@}*/ /* end of group Standard_Driver */
+/** @} end of group Standard_Driver */
 
 #ifdef __cplusplus
 }

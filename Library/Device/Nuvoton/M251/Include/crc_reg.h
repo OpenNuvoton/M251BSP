@@ -15,14 +15,15 @@
 #endif
 
 /**
-   @addtogroup REGISTER Control Register
-   @{
+    @addtogroup REGISTER Control Register
+    @{
 */
 
 /**
     @addtogroup CRC Cyclic Redundancy Check Controller (CRC)
     Memory Mapped Structure for CRC Controller
-@{ */
+    @{
+*/
 
 typedef struct
 {
@@ -139,9 +140,9 @@ typedef struct
 #define CRC_CHECKSUM_CHECKSUM_Pos        (0)                                               /*!< CRC_T::CHECKSUM: CHECKSUM Position     */
 #define CRC_CHECKSUM_CHECKSUM_Msk        (0xfffffffful << CRC_CHECKSUM_CHECKSUM_Pos)       /*!< CRC_T::CHECKSUM: CHECKSUM Mask         */
 
-/**@}*/ /* CRC_CONST */
-/**@}*/ /* end of CRC register group */
-/**@}*/ /* end of REGISTER group */
+/** @} CRC_CONST */
+/** @} end of CRC register group */
+/** @} end of REGISTER group */
 
 #if defined ( __CC_ARM   )
     #pragma no_anon_unions

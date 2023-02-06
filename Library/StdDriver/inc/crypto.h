@@ -52,7 +52,7 @@ extern "C"
 #define CRYPTO_DMA_LAST         0x7UL   /*!< Do last encrypt/decrypt in DMA cascade          \hideinitializer */
 
 
-/*@}*/ /* end of group CRYPTO_EXPORTED_CONSTANTS */
+/** @} end of group CRYPTO_EXPORTED_CONSTANTS */
 
 
 /** @addtogroup CRYPTO_EXPORTED_MACROS CRYPTO Exported Macros
@@ -66,7 +66,6 @@ extern "C"
 /**
   * @brief This macro enables AES interrupt.
   * @param crpt     Specified cripto module
-  * @return None
   * \hideinitializer
   */
 #define AES_ENABLE_INT(crpt)        ((crpt)->INTEN |= (CRPT_INTEN_AESIEN_Msk|CRPT_INTEN_AESEIEN_Msk))
@@ -74,7 +73,6 @@ extern "C"
 /**
   * @brief This macro disables AES interrupt.
   * @param crpt     Specified cripto module
-  * @return None
   * \hideinitializer
   */
 #define AES_DISABLE_INT(crpt)       ((crpt)->INTEN &= ~(CRPT_INTEN_AESIEN_Msk|CRPT_INTEN_AESEIEN_Msk))
@@ -90,7 +88,6 @@ extern "C"
 /**
   * @brief This macro clears AES interrupt flag.
   * @param crpt     Specified cripto module
-  * @return None
   * \hideinitializer
   */
 #define AES_CLR_INT_FLAG(crpt)      ((crpt)->INTSTS = (CRPT_INTSTS_AESIF_Msk|CRPT_INTSTS_AESEIF_Msk))
@@ -98,7 +95,6 @@ extern "C"
 /**
   * @brief This macro enables AES key protection.
   * @param crpt     Specified cripto module
-  * @return None
   * \hideinitializer
   */
 #define AES_ENABLE_KEY_PROTECT(crpt)  ((crpt)->AES_CTL |= CRPT_AES_CTL_KEYPRT_Msk)
@@ -106,13 +102,12 @@ extern "C"
 /**
   * @brief This macro disables AES key protection.
   * @param crpt     Specified cripto module
-  * @return None
   * \hideinitializer
   */
 #define AES_DISABLE_KEY_PROTECT(crpt) ((crpt)->AES_CTL = ((crpt)->AES_CTL & ~CRPT_AES_CTL_KEYPRT_Msk) | (0x16UL<<CRPT_AES_CTL_KEYUNPRT_Pos)); \
     ((crpt)->AES_CTL &= ~CRPT_AES_CTL_KEYPRT_Msk)
 
-/*@}*/ /* end of group CRYPTO_EXPORTED_MACROS */
+/** @} end of group CRYPTO_EXPORTED_MACROS */
 
 
 /** @addtogroup CRYPTO_EXPORTED_FUNCTIONS CRYPTO Exported Functions
@@ -130,11 +125,11 @@ void AES_SetInitVect(CRPT_T *crpt, uint32_t u32Channel, uint32_t au32IV[]);
 void AES_SetDMATransfer(CRPT_T *crpt, uint32_t u32Channel, uint32_t u32SrcAddr, uint32_t u32DstAddr, uint32_t u32TransCnt);
 
 
-/*@}*/ /* end of group CRYPTO_EXPORTED_FUNCTIONS */
+/** @} end of group CRYPTO_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group CRYPTO_Driver */
+/** @} end of group CRYPTO_Driver */
 
-/*@}*/ /* end of group Standard_Driver */
+/** @} end of group Standard_Driver */
 
 #ifdef __cplusplus
 }

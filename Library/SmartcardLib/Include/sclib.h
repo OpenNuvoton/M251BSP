@@ -81,7 +81,7 @@ extern "C"
 #define SCLIB_ERR_DEACTIVE                      0x0000F001      ///< Smartcard is deactivate \hideinitializer
 #define SCLIB_ERR_CARDBUSY                      0x0000F002      ///< Smartcard is busy, previous transmission is not complete yet \hideinitializer
 
-/*@}*/ /* end of group SCLIB_EXPORTED_CONSTANTS */
+/** @} end of group SCLIB_EXPORTED_CONSTANTS */
 
 /** @addtogroup SCLIB_EXPORTED_STRUCTS Smartcard Library Exported Structs
   @{
@@ -115,7 +115,7 @@ typedef struct
     uint8_t NAD;       ///< NAD value
 } SCLIB_CARD_ATTRIB_T;
 
-/*@}*/ /* end of group SCLIB_EXPORTED_STRUCTS */
+/** @} end of group SCLIB_EXPORTED_STRUCTS */
 
 /** @addtogroup SCLIB_EXPORTED_FUNCTIONS Smartcard Library Exported Functions
   @{
@@ -181,7 +181,6 @@ int32_t SCLIB_WarmReset(uint32_t num);
 /**
   * @brief Deactivate a smartcard
   * @param[in] num Smartcard interface number. From 0 ~ ( \ref SC_INTERFACE_NUM - 1)
-  * @return None
   */
 void SCLIB_Deactivate(uint32_t num);
 
@@ -240,7 +239,6 @@ int32_t SCLIB_SetIFSD(uint32_t num, uint8_t size);
   * @brief  A callback called by library while smartcard request for a time extension
   * @param[in]  u32Protocol What protocol the card is using while it requested for a time extension.
   *                     Could be ether \ref SCLIB_PROTOCOL_T0 or \ref SCLIB_PROTOCOL_T1
-  * @return None
   * @note   This function is defined with __weak attribute and does nothing in library.
   *         Application can provide its own time extension function. For example, and CCID reader
   *         can use this function to report this status to PC. See CCID rev 1.1 Table 6.2-3
@@ -331,12 +329,8 @@ int32_t SCLIB_SetSpecificAtrBR(uint32_t num, uint32_t br);
 }
 #endif
 
+/** @} end of group SCLIB_EXPORTED_FUNCTIONS */
+/** @} end of group SCLIB */
+/** @} end of group Library */
+
 #endif //__SCLIB_H__
-
-/*@}*/ /* end of group SCLIB_EXPORTED_FUNCTIONS */
-
-/*@}*/ /* end of group SCLIB */
-
-/*@}*/ /* end of group Library */
-
-/*** (C) COPYRIGHT 2017 Nuvoton Technology Corp. ***/

@@ -69,7 +69,6 @@ uint32_t TIMER_Open(TIMER_T *timer, uint32_t u32Mode, uint32_t u32Freq)
   *
   * @param[in]  timer   The pointer of the specified Timer module. It could be TIMER0, TIMER1, TIMER2, TIMER3.
   *
-  * @return     None
   *
   * @details    This API stops timer counting and disable all timer interrupt function.
   */
@@ -187,7 +186,6 @@ int32_t TIMER_Delay(TIMER_T *timer, uint32_t u32Usec)
   *                         - \ref TIMER_CAPTURE_EVENT_GET_LOW_PERIOD
   *                         - \ref TIMER_CAPTURE_EVENT_GET_HIGH_PERIOD
   *
-  * @return     None
   *
   * @details    This API is used to enable timer capture function with specify capture trigger edge \n
   *             to get current counter value or reset counter value to 0.
@@ -214,7 +212,6 @@ void TIMER_EnableCapture(TIMER_T *timer, uint32_t u32CapMode, uint32_t u32Edge)
   *                         - \ref TIMER_CAPTURE_FROM_LIRC
   *                         - \ref TIMER_CAPTURE_FROM_MIRC
   *
-  * @return     None
   *
   * @details    This API is used to select timer capture source from Tx_EXT or internal singal.
   */
@@ -239,7 +236,6 @@ void TIMER_CaptureSelect(TIMER_T *timer, uint32_t u32Src)
   *
   * @param[in]  timer   The pointer of the specified Timer module. It could be TIMER0, TIMER1, TIMER2, TIMER3.
   *
-  * @return     None
   *
   * @details    This API is used to disable the timer capture function.
   */
@@ -256,7 +252,6 @@ void TIMER_DisableCapture(TIMER_T *timer)
   *                        - \ref TIMER_TRGSEL_TIMEOUT_EVENT
   *                        - \ref TIMER_TRGSEL_CAPTURE_EVENT
   *
-  * @return     None
   *
   * @details    This function is used to set timer trigger source
   */
@@ -276,7 +271,6 @@ void TIMER_SetTriggerSource(TIMER_T *timer, uint32_t u32Src)
   *                        - \ref TIMER_TRGCTL_TRGPDMA_Msk, or
   *                        - \ref TIMER_TRGCTL_TRGTK_Msk
   *
-  * @return     None
   *
   * @details    This function is used to set timer trigger target
   */
@@ -293,7 +287,6 @@ void TIMER_SetTriggerTarget(TIMER_T *timer, uint32_t u32Mask)
   *                         - \ref TIMER_COUNTER_EVENT_FALLING, or
   *                         - \ref TIMER_COUNTER_EVENT_RISING
   *
-  * @return     None
   *
   * @details    This function is used to enable the timer counter function with specify detection edge.
   * @note       Timer compare value should be configured separately by using \ref TIMER_SET_CMP_VALUE macro or program registers directly.
@@ -310,7 +303,6 @@ void TIMER_EnableEventCounter(TIMER_T *timer, uint32_t u32Edge)
   *
   * @param[in]  timer   The pointer of the specified Timer module. It could be TIMER0, TIMER1, TIMER2, TIMER3.
   *
-  * @return     None
   *
   * @details    This API is used to disable the timer event counter function.
   */
@@ -327,7 +319,6 @@ void TIMER_DisableEventCounter(TIMER_T *timer)
   * @param[in]  u32Timeout      This parameter has no effect in this BSP
   * @param[in]  u32EnableInt    Enable interrupt assertion after capture complete or not. Valid values are TRUE and FALSE
   *
-  * @return     None
   *
   * @details    This function is used to enable the Timer frequency counter function for
   *             calculate input event frequency. After enable this function, a pair of timers,
@@ -368,7 +359,6 @@ void TIMER_EnableFreqCounter(TIMER_T *timer,
   *
   * @param[in]  timer   The pointer of the specified Timer module. It could be TIMER0, TIMER1, TIMER2, TIMER3.
   *
-  * @return     None
   *
   * @brief      This function is used to disable the Timer frequency counter function.
   */
@@ -443,10 +433,10 @@ int32_t TIMER_ResetCounter(TIMER_T *timer)
     return u32Delay > 0 ? 0 : TIMER_TIMEOUT_ERR;
 }
 
-/*@}*/ /* end of group TIMER_EXPORTED_FUNCTIONS */
+/** @} end of group TIMER_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group TIMER_Driver */
+/** @} end of group TIMER_Driver */
 
-/*@}*/ /* end of group Standard_Driver */
+/** @} end of group Standard_Driver */
 
 /*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/

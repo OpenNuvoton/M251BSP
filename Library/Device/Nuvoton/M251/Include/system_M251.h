@@ -41,44 +41,32 @@ extern uint32_t PllClock;           /*!< PLL Output Clock Frequency           */
 
 
 /**
- * Initialize the system
+ * @brief    System Initialization
  *
- * @param  none
- * @return none
- *
- * @brief  Setup the micro controller system.
- *         Initialize the System and update the SystemCoreClock variable.
+ * @details  The necessary initialization of system. Global variables are forbidden here.
  */
 extern void SystemInit(void);
 
 /**
- * Update SystemCoreClock variable
+ * @brief    Update the Variable SystemCoreClock
  *
- * @param  none
- * @return none
- *
- * @brief  Updates the SystemCoreClock with current core Clock
- *         retrieved from cpu registers.
+ * @details  This function is used to update the variable SystemCoreClock
+ *           and must be called whenever the core clock is changed.
  */
 extern void SystemCoreClockUpdate(void);
 
 /**
- * Set UART0 default multi function pin
+ * @brief    Set UART0 Default MPF
  *
- * @param  none
- * @return none
- *
- * @brief  The initialization of uart0 default multiple-function pin.
+ * @details  The initialization of uart0 default multi function pin.
  */
 extern void Uart0DefaultMPF(void);
 
 /**
- * Check if debug message finished
+ * @brief  Check if debug message finished
  *
- * @param    None
- *
- * @retval   1: Message is finished
- * @retval   0: Message is transmitting.
+ * @return   1 Message is finished.
+ *           0 Message is transmitting.
  *
  * @details  Check if message finished (FIFO empty of debug port)
  */

@@ -67,7 +67,7 @@ extern "C"
 
 extern uint8_t u8MaxScKeyNum;
 
-/*@}*/ /* end of group TKLIB_EXPORTED_CONSTANTS */
+/** @} end of group TKLIB_EXPORTED_CONSTANTS */
 
 
 /** @addtogroup TKLIB_EXPORTED_STRUCTS Touch Key Library Exported Structs
@@ -134,7 +134,7 @@ typedef struct
     int8_t  i8Count;
 } S_TKDEBOUNCE;
 
-/*@}*/ /* end of group TKLIB_EXPORTED_STRUCTS */
+/** @} end of group TKLIB_EXPORTED_STRUCTS */
 
 
 /** @addtogroup TKLIB_EXPORTED_FUNCTIONS Touch Key Library Exported Functions
@@ -164,13 +164,9 @@ S_NEIGHBOR *TK_GetNeighborInfoPtr(void);                            /*!< Get Tou
 int TK_Calibration_Untouch(void);                                   /*!< Calibration Touch Key Without Finger Touching    */
 int TK_Calibration_Touch(uint8_t u8chan, uint8_t u8n, uint8_t u8m); /*!< Calibration Touch Key With Finger Touching       */
 
-
-
-/*@}*/ /* end of group TKLIB_EXPORTED_FUNCTIONS */
-
-/*@}*/ /* end of group TKLIB */
-
-/*@}*/ /* end of group Library */
+/** @} end of group TKLIB_EXPORTED_FUNCTIONS */
+/** @} end of group TKLIB */
+/** @} end of group Library */
 
 #ifdef __cplusplus
 }

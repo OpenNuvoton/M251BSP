@@ -42,7 +42,7 @@ extern "C"
 #define SCUART_TIMEOUT_ERR    (-1L)                             /*!< SCUART operation abort due to timeout error \hideinitializer */
 
 
-/*@}*/ /* end of group SCUART_EXPORTED_CONSTANTS */
+/** @} end of group SCUART_EXPORTED_CONSTANTS */
 
 extern int32_t g_SCUART_i32ErrCode;
 
@@ -55,7 +55,6 @@ extern int32_t g_SCUART_i32ErrCode;
   * @brief Write Data to Tx data register
   * @param[in] psSC The base address of smartcard module.
   * @param[in] u8Data Data byte to transmit
-  * @return None
   * \hideinitializer
   */
 #define SCUART_WRITE(psSC, u8Data) ((psSC)->DAT = (u8Data))
@@ -83,7 +82,6 @@ extern int32_t g_SCUART_i32ErrCode;
 /**
   * @brief Wait specified smartcard port transmission complete
   * @param[in] psSC The base address of smartcard module
-  * @return None
   * @note This Macro blocks until transmit complete.
   * \hideinitializer
   */
@@ -181,7 +179,6 @@ extern int32_t g_SCUART_i32ErrCode;
   *             - \ref SC_INTEN_TERRIEN_Msk
   *             - \ref SC_INTEN_TBEIEN_Msk
   *             - \ref SC_INTEN_RDAIEN_Msk
-  * @return    None
   * \hideinitializer
   */
 #define SCUART_ENABLE_INT(psSC, u32Mask) ((psSC)->INTEN |= (u32Mask))
@@ -194,7 +191,6 @@ extern int32_t g_SCUART_i32ErrCode;
   *             - \ref SC_INTEN_TERRIEN_Msk
   *             - \ref SC_INTEN_TBEIEN_Msk
   *             - \ref SC_INTEN_RDAIEN_Msk
-  * @return    None
   * \hideinitializer
   */
 #define SCUART_DISABLE_INT(psSC, u32Mask) ((psSC)->INTEN &= ~(u32Mask))
@@ -221,7 +217,6 @@ extern int32_t g_SCUART_i32ErrCode;
   *             - \ref SC_INTSTS_RXTOIF_Msk
   *             - \ref SC_INTSTS_TERRIF_Msk
   *             - \ref SC_INTSTS_TBEIF_Msk
-  * @return None
   * \hideinitializer
   */
 #define SCUART_CLR_INT_FLAG(psSC, u32Type) ((psSC)->INTSTS = (u32Type))
@@ -244,7 +239,6 @@ extern int32_t g_SCUART_i32ErrCode;
   *             - \ref SC_STATUS_PEF_Msk
   *             - \ref SC_STATUS_FEF_Msk
   *             - \ref SC_STATUS_BEF_Msk
-  * @return None
   * \hideinitializer
   */
 #define SCUART_CLR_ERR_FLAG(psSC, u32Mask) ((psSC)->STATUS = (u32Mask))
@@ -256,11 +250,11 @@ uint32_t SCUART_SetLineConfig(SC_T *psSC, uint32_t u32Baudrate, uint32_t u32Data
 void SCUART_SetTimeoutCnt(SC_T *psSC, uint32_t u32TOC);
 uint32_t SCUART_Write(SC_T *psSC, uint8_t pu8TxBuf[], uint32_t u32WriteBytes);
 
-/*@}*/ /* end of group SCUART_EXPORTED_FUNCTIONS */
+/** @} end of group SCUART_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group SCUART_Driver */
+/** @} end of group SCUART_Driver */
 
-/*@}*/ /* end of group Standard_Driver */
+/** @} end of group Standard_Driver */
 
 #ifdef __cplusplus
 }

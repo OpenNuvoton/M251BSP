@@ -50,7 +50,7 @@ extern "C"
 #define CRC_CPU_WDATA_16    (1UL << CRC_CTL_DATLEN_Pos) /*!<CRC CPU Write Data length is 16-bit \hideinitializer */
 #define CRC_CPU_WDATA_32    (2UL << CRC_CTL_DATLEN_Pos) /*!<CRC CPU Write Data length is 32-bit \hideinitializer */
 
-/*@}*/ /* end of group CRC_EXPORTED_CONSTANTS */
+/** @} end of group CRC_EXPORTED_CONSTANTS */
 
 
 /** @addtogroup CRC_EXPORTED_FUNCTIONS CRC Exported Functions
@@ -65,7 +65,6 @@ extern "C"
   *                            - \ref CRC_CPU_WDATA_16
   *                            - \ref CRC_CPU_WDATA_32
   *
-  * @return     None
   *
   * @details    This macro is used to set CPU Write Data Length.
   */
@@ -76,7 +75,6 @@ extern "C"
   *
   * @param[in]  u32Seed     Seed value
   *
-  * @return     None
   *
   * @details    This macro is used to set CRC seed value.
   *
@@ -88,7 +86,6 @@ extern "C"
 /**
  * @brief       Get CRC Seed Value
  *
- * @param      None
  *
  * @return      CRC seed value
  *
@@ -101,7 +98,6 @@ extern "C"
  *
  * @param[in]   u32Data     Write data
  *
- * @return      None
  *
  * @details    User can write data directly to CRC Write Data Register(CRC_DAT) by this macro to perform CRC operation.
  */
@@ -110,11 +106,11 @@ extern "C"
 void CRC_Open(uint32_t u32Mode, uint32_t u32Attribute, uint32_t u32Seed, uint32_t u32DataLen);
 uint32_t CRC_GetChecksum(void);
 
-/*@}*/ /* end of group CRC_EXPORTED_FUNCTIONS */
+/** @} end of group CRC_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group CRC_Driver */
+/** @} end of group CRC_Driver */
 
-/*@}*/ /* end of group Standard_Driver */
+/** @} end of group Standard_Driver */
 
 #ifdef __cplusplus
 }

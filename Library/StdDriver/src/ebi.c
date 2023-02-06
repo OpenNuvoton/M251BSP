@@ -47,7 +47,6 @@
   *                                     - \ref EBI_CS_ACTIVE_HIGH
   *                                     - \ref EBI_CS_ACTIVE_LOW
   *
-  * @return     None
   *
   * @details    This function is used to open specify EBI bank with different bus width, timing setting and \n
   *             active level of CS pin to access EBI device.
@@ -141,7 +140,6 @@ void EBI_Open(uint32_t u32Bank, uint32_t u32DataWidth, uint32_t u32TimingClass, 
   *                             - \ref EBI_BANK1
   *                             - \ref EBI_BANK2
   *
-  * @return     None
   *
   * @details    This function is used to close specify EBI function.
   */
@@ -171,7 +169,6 @@ void EBI_Close(uint32_t u32Bank)
   *                                     - \ref EBI_MCLKDIV_64
   *                                     - \ref EBI_MCLKDIV_128
   *
-  * @return     None
   *
   * @details    This function is used to configure specify EBI bus timing for access EBI device.
   */
@@ -186,10 +183,10 @@ void EBI_SetBusTiming(uint32_t u32Bank, uint32_t u32TimingConfig, uint32_t u32Mc
     *pu32EBITCTL = u32TimingConfig;
 }
 
-/*@}*/ /* end of group EBI_EXPORTED_FUNCTIONS */
+/** @} end of group EBI_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group EBI_Driver */
+/** @} end of group EBI_Driver */
 
-/*@}*/ /* end of group Standard_Driver */
+/** @} end of group Standard_Driver */
 
 /*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/

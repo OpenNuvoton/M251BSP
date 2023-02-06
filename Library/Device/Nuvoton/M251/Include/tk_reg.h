@@ -15,14 +15,15 @@
 #endif
 
 /**
-   @addtogroup REGISTER Control Register
-  @{
+    @addtogroup REGISTER Control Register
+    @{
 */
 
 /**
-    @addtogroup TK Touch key
+    @addtogroup TK Touch Key (TK)
     Memory Mapped Structure for TK Controller
-@{ */
+    @{
+*/
 
 typedef struct
 {
@@ -1759,9 +1760,9 @@ typedef struct
 #define TK_REFCBD7_CBD25_Pos             (0)                                               /*!< TK_T::REFCBD7: CBD25 Position          */
 #define TK_REFCBD7_CBD25_Msk             (0xfful << TK_REFCBD7_CBD25_Pos)                  /*!< TK_T::REFCBD7: CBD25 Mask              */
 
-/**@}*/ /* TK_CONST */
-/**@}*/ /* end of TK register group */
-/**@}*/ /* end of REGISTER group */
+/** @} TK_CONST */
+/** @} end of TK register group */
+/** @} end of REGISTER group */
 
 #if defined ( __CC_ARM   )
     #pragma no_anon_unions

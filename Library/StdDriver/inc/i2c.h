@@ -63,7 +63,7 @@ extern "C"
 #define I2C_TIMEOUT_ERR (I2C_ERR_TIMEOUT)/*!< I2C operation abort due to timeout error (backward compatibility)           \hideinitializer */
 #define I2C_ERR_FAIL    (-2L)            /*!< I2C operation failed                                                        \hideinitializer */
 
-/*@}*/ /* end of group I2C_EXPORTED_CONSTANTS */
+/** @} end of group I2C_EXPORTED_CONSTANTS */
 
 extern int32_t g_I2C_i32ErrCode;
 
@@ -76,7 +76,6 @@ extern int32_t g_I2C_i32ErrCode;
  *    @param[in]    i2c        Specify I2C port
  *    @param[in]    u8Ctrl     A byte writes to I2C control register
  *
- *    @return       None
  *
  *    @details      Set I2C_CTL register to control I2C bus conditions of START, STOP, SI, ACK.
  *    \hideinitializer
@@ -88,7 +87,6 @@ extern int32_t g_I2C_i32ErrCode;
  *
  *    @param[in]    i2c        Specify I2C port
  *
- *    @return       None
  *
  *    @details      Set the I2C bus START condition in I2C_CTL register.
  *    \hideinitializer
@@ -100,7 +98,6 @@ extern int32_t g_I2C_i32ErrCode;
  *
  *    @param[in]    i2c        Specify I2C port
  *
- *    @return       None
  *
  *    @details      When a new status is presented of I2C bus, the SI flag will be set in I2C_CTL register.
  *    \hideinitializer
@@ -125,7 +122,6 @@ extern int32_t g_I2C_i32ErrCode;
  *    @param[in]    i2c         Specify I2C port
  *    @param[in]    u8Data      A byte that writes to data register
  *
- *    @return       None
  *
  *    @details      When write a data to I2C_DAT register, the I2C controller will shift it to I2C bus.
  *    \hideinitializer
@@ -175,7 +171,6 @@ extern int32_t g_I2C_i32ErrCode;
  *
  *    @param[in]    i2c     Specify I2C port
  *
- *    @return       None
  *
  *    @details      If wake-up flag is set, use this macro to clear it.
  *    \hideinitializer
@@ -213,7 +208,6 @@ extern int32_t g_I2C_i32ErrCode;
  * @param[in]  i2c              Specify I2C port
  * @param[in]  u32PktSize       Transmit / Receive bytes
  *
- * @return     None
  *
  * @details    The transmission or receive byte number in one transaction when PECEN is set. The maximum is 255 bytes.
  * \hideinitializer
@@ -225,7 +219,6 @@ extern int32_t g_I2C_i32ErrCode;
  *
  * @param[in]  i2c              Specify I2C port
  *
- * @return     None
  *
  * @details    Device Mode(BMHEN=0): If ALERTEN(I2C_BUSCTL[4]) is set, the Alert pin will pull lo, and reply ACK when get ARP from host
  *             Host   Mode(BMHEN=1): If ALERTEN(I2C_BUSCTL[4]) is set, the Alert pin is supported to receive alert state(Lo trigger)
@@ -238,7 +231,6 @@ extern int32_t g_I2C_i32ErrCode;
  *
  * @param[in]  i2c              Specify I2C port
  *
- * @return     None
  *
  * @details    Device Mode(BMHEN=0): If ALERTEN(I2C_BUSCTL[4]) is clear, the Alert pin will pull hi, and reply NACK when get ARP from host
  *             Host   Mode(BMHEN=1): If ALERTEN(I2C_BUSCTL[4]) is clear, the Alert pin is not supported to receive alert state(Lo trigger)
@@ -251,7 +243,6 @@ extern int32_t g_I2C_i32ErrCode;
  *
  * @param[in]  i2c              Specify I2C port
  *
- * @return     None
  *
  * @details    This function to set SUSCON(I2C_BUSCTL[6]) pin is output mode.
  *
@@ -264,7 +255,6 @@ extern int32_t g_I2C_i32ErrCode;
  *
  * @param[in]  i2c              Specify I2C port
  *
- * @return     None
  *
  * @details    This function to set SUSCON(I2C_BUSCTL[6]) pin is input mode.
  *
@@ -277,7 +267,6 @@ extern int32_t g_I2C_i32ErrCode;
  *
  * @param[in]  i2c              Specify I2C port
  *
- * @return     None
  *
  * @details    This function to set SUSCON(I2C_BUSCTL[6]) pin is output hi state.
  * \hideinitializer
@@ -290,7 +279,6 @@ extern int32_t g_I2C_i32ErrCode;
  *
  * @param[in]  i2c              Specify I2C port
  *
- * @return     None
  *
  * @details    This function to set SUSCON(I2C_BUSCTL[6]) pin is output lo state.
  * \hideinitializer
@@ -302,7 +290,6 @@ extern int32_t g_I2C_i32ErrCode;
  *
  * @param[in]  i2c              Specify I2C port
  *
- * @return     None
  *
  * @details    The 9th bit can response the ACK or NACK according the received data by user. When the byte is received, SCLK line stretching to low between the 8th and 9th SCLK pulse.
  * \hideinitializer
@@ -314,7 +301,6 @@ extern int32_t g_I2C_i32ErrCode;
  *
  * @param[in]  i2c              Specify I2C port
  *
- * @return     None
  *
  * @details    Disable acknowledge response control by user.
  * \hideinitializer
@@ -326,7 +312,6 @@ extern int32_t g_I2C_i32ErrCode;
  *
  * @param[in]  i2c              Specify I2C port
  *
- * @return     None
  *
  * @details    This function is used to enable SMBUS acknowledge manual interrupt on the 9th clock cycle when SMBUS=1 and ACKMEN=1
  * \hideinitializer
@@ -338,7 +323,6 @@ extern int32_t g_I2C_i32ErrCode;
  *
  * @param[in]  i2c              Specify I2C port
  *
- * @return     None
  *
  * @details    This function is used to disable SMBUS acknowledge manual interrupt on the 9th clock cycle when SMBUS=1 and ACKMEN=1
  * \hideinitializer
@@ -350,7 +334,6 @@ extern int32_t g_I2C_i32ErrCode;
  *
  * @param[in]  i2c              Specify I2C port
  *
- * @return     None
  *
  * @details    This function is used to enable the condition of REAEAT START can clear the PEC calculation.
  * \hideinitializer
@@ -362,7 +345,6 @@ extern int32_t g_I2C_i32ErrCode;
  *
  * @param[in]  i2c              Specify I2C port
  *
- * @return     None
  *
  * @details    This function is used to disable the condition of Repeat START can clear the PEC calculation.
  * \hideinitializer
@@ -444,7 +426,6 @@ __STATIC_INLINE void I2C_STOP(I2C_T *i2c);
  *
  *    @param[in]    i2c        Specify I2C port
  *
- *    @return       None
  *
  *    @details      Set the I2C bus STOP condition in I2C_CTL register.
  */
@@ -502,11 +483,11 @@ void I2C_SMBusIdleTimeout(I2C_T *i2c, uint32_t us, uint32_t u32Hclk);
 void I2C_SMBusTimeout(I2C_T *i2c, uint32_t ms, uint32_t u32Pclk);
 void I2C_SMBusClockLoTimeout(I2C_T *i2c, uint32_t ms, uint32_t u32Pclk);
 
-/*@}*/ /* end of group I2C_EXPORTED_FUNCTIONS */
+/** @} end of group I2C_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group I2C_Driver */
+/** @} end of group I2C_Driver */
 
-/*@}*/ /* end of group Standard_Driver */
+/** @} end of group Standard_Driver */
 
 #ifdef __cplusplus
 }

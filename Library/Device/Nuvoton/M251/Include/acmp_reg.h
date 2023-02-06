@@ -15,14 +15,15 @@
 #endif
 
 /**
-   @addtogroup REGISTER Control Register
-   @{
+    @addtogroup REGISTER Control Register
+    @{
 */
 
 /**
     @addtogroup ACMP Analog Comparator Controller (ACMP)
     Memory Mapped Structure for ACMP Controller
-@{ */
+    @{
+*/
 
 typedef struct
 {
@@ -224,9 +225,9 @@ typedef struct
 #define ACMP_VREF_CRVSSEL_Msk            (0x1ul << ACMP_VREF_CRVSSEL_Pos)                  /*!< ACMP_T::VREF: CRVSSEL Mask            */
 
 
-/**@}*/ /* ACMP_CONST */
-/**@}*/ /* end of ACMP register group */
-/**@}*/ /* end of REGISTER group */
+/** @} ACMP_CONST */
+/** @} end of ACMP register group */
+/** @} end of REGISTER group */
 
 #if defined ( __CC_ARM   )
     #pragma no_anon_unions

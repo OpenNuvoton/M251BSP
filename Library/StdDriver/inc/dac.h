@@ -50,7 +50,7 @@ extern "C"
 #define DAC_TRIGGER_MODE_ENABLE    (1UL<<DAC_CTL_TRGEN_Pos)   /*!< Trigger mode enable \hideinitializer */
 
 
-/*@}*/ /* end of group DAC_EXPORTED_CONSTANTS */
+/** @} end of group DAC_EXPORTED_CONSTANTS */
 
 
 /** @addtogroup DAC_EXPORTED_FUNCTIONS DAC Exported Functions
@@ -60,7 +60,6 @@ extern "C"
 /**
   * @brief Start the D/A conversion.
   * @param[in] dac The pointer of the specified DAC module.
-  * @return None
   * @details User writes SWTRG bit (DAC_SWTRG[0]) to generate one shot pulse and it is cleared to 0 by hardware automatically.
   * \hideinitializer
   */
@@ -69,7 +68,6 @@ extern "C"
 /**
   * @brief Enable DAC data left-aligned.
   * @param[in] dac The pointer of the specified DAC module.
-  * @return None
   * @details User has to load data into DAC_DAT[15:4] bits. DAC_DAT[31:16] and DAC_DAT[3:0] are ignored in DAC conversion.
   * \hideinitializer
   */
@@ -78,27 +76,23 @@ extern "C"
 /**
   * @brief Enable DAC data right-aligned.
   * @param[in] dac The pointer of the specified DAC module.
-  * @return None
   * @details User has to load data into DAC_DAT[11:0] bits, DAC_DAT[31:12] are ignored in DAC conversion.
   * \hideinitializer
   */
 #define DAC_ENABLE_RIGHT_ALIGN(dac) ((dac)->CTL &= ~DAC_CTL_LALIGN_Msk)
 
 /**
-  * @brief Enable output voltage buffer.
+  * @brief Enable bypass voltage output buffer mode.
   * @param[in] dac The pointer of the specified DAC module.
-  * @return None
-  * @details The DAC integrates a voltage output buffer that can be used to reduce output impedance and
-  *         drive external loads directly without having to add an external operational amplifier.
+  * @details This will make DAC output bypass the voltage output buffer.
   * \hideinitializer
   */
 #define DAC_ENABLE_BYPASS_BUFFER(dac) ((dac)->CTL |= DAC_CTL_BYPASS_Msk)
 
 /**
-  * @brief Disable output voltage buffer.
+  * @brief Disable bypass voltage output buffer mode.
   * @param[in] dac The pointer of the specified DAC module.
-  * @return None
-  * @details This macro is used to disable output voltage buffer.
+  * @details This will make DAC output through the voltage output buffer.
   * \hideinitializer
   */
 #define DAC_DISABLE_BYPASS_BUFFER(dac) ((dac)->CTL &= ~DAC_CTL_BYPASS_Msk)
@@ -107,7 +101,6 @@ extern "C"
   * @brief Enable the interrupt.
   * @param[in] dac The pointer of the specified DAC module.
   * @param[in] u32Ch Not used in M251 DAC.
-  * @return None
   * @details This macro is used to enable DAC interrupt.
   * \hideinitializer
   */
@@ -117,7 +110,6 @@ extern "C"
   * @brief Disable the interrupt.
   * @param[in] dac The pointer of the specified DAC module.
   * @param[in] u32Ch Not used in M251 DAC.
-  * @return None
   * @details This macro is used to disable DAC interrupt.
   * \hideinitializer
   */
@@ -126,7 +118,6 @@ extern "C"
 /**
   * @brief Enable DMA under-run interrupt.
   * @param[in] dac The pointer of the specified DAC module.
-  * @return None
   * @details This macro is used to enable DMA under-run interrupt.
   * \hideinitializer
   */
@@ -135,7 +126,6 @@ extern "C"
 /**
   * @brief Disable DMA under-run interrupt.
   * @param[in] dac The pointer of the specified DAC module.
-  * @return None
   * @details This macro is used to disable DMA under-run interrupt.
   * \hideinitializer
   */
@@ -144,7 +134,6 @@ extern "C"
 /**
   * @brief Enable PDMA mode.
   * @param[in] dac The pointer of the specified DAC module.
-  * @return None
   * @details DAC DMA request is generated when a hardware trigger event occurs while DMAEN (DAC_CTL[2]) is set.
   * \hideinitializer
   */
@@ -153,7 +142,6 @@ extern "C"
 /**
   * @brief Disable PDMA mode.
   * @param[in] dac The pointer of the specified DAC module.
-  * @return None
   * @details This macro is used to disable DMA mode.
   * \hideinitializer
   */
@@ -164,7 +152,6 @@ extern "C"
   * @param[in] dac The pointer of the specified DAC module.
   * @param[in] u32Ch Not used in M251 DAC.
   * @param[in] u32Data Decides the data for conversion, valid range are between 0~0xFFF.
-  * @return None
   * @details 12 bit left alignment: user has to load data into DAC_DAT[15:4] bits.
   *         12 bit right alignment: user has to load data into DAC_DAT[11:0] bits.
   * \hideinitializer
@@ -217,7 +204,6 @@ extern "C"
   * @brief This macro clear the interrupt status bit.
   * @param[in] dac The pointer of the specified DAC module.
   * @param[in] u32Ch Not used in M251 DAC.
-  * @return None
   * @details User writes FINISH bit (DAC_STATUS[0]) to clear DAC conversion complete finish flag.
   * \hideinitializer
   */
@@ -226,7 +212,6 @@ extern "C"
 /**
   * @brief This macro clear the  DMA under-run flag.
   * @param[in] dac The pointer of the specified DAC module.
-  * @return None
   * @details User writes DMAUDR bit (DAC_STATUS[1]) to clear DMA under-run flag.
   * \hideinitializer
   */
@@ -235,7 +220,6 @@ extern "C"
 /**
   * @brief Enable DAC group mode
   * @param[in] dac Base address of DAC module.
-  * @return None
   * \hideinitializer
   */
 #define DAC_ENABLE_GROUP_MODE(dac) (DAC0->CTL |= DAC_CTL_GRPEN_Msk)
@@ -243,7 +227,6 @@ extern "C"
 /**
   * @brief Disable DAC group mode
   * @param[in] dac Base address of DAC module.
-  * @return None
   * \hideinitializer
   */
 #define DAC_DISABLE_GROUP_MODE(dac) (DAC0->CTL &= ~DAC_CTL_GRPEN_Msk)
@@ -252,11 +235,11 @@ void DAC_Open(DAC_T *dac, uint32_t u32Ch, uint32_t u32TrgSrc);
 void DAC_Close(DAC_T *dac, uint32_t u32Ch);
 uint32_t DAC_SetDelayTime(DAC_T *dac, uint32_t u32Delay);
 
-/*@}*/ /* end of group DAC_EXPORTED_FUNCTIONS */
+/** @} end of group DAC_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group DAC_Driver */
+/** @} end of group DAC_Driver */
 
-/*@}*/ /* end of group Standard_Driver */
+/** @} end of group Standard_Driver */
 
 #ifdef __cplusplus
 }

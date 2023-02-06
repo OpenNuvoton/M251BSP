@@ -15,14 +15,15 @@
 #endif
 
 /**
-   @addtogroup REGISTER Control Register
-   @{
+    @addtogroup REGISTER Control Register
+    @{
 */
 
 /**
     @addtogroup OPA OP Amplifier (OPA)
     Memory Mapped Structure for OPA Controller
-@{ */
+    @{
+*/
 
 typedef struct
 {
@@ -125,11 +126,9 @@ typedef struct
 #define OPA_CALST_CALPS0_Pos             (2)                                               /*!< OPA_T::CALST: CALPS0 Position          */
 #define OPA_CALST_CALPS0_Msk             (0x1ul << OPA_CALST_CALPS0_Pos)                   /*!< OPA_T::CALST: CALPS0 Mask              */
 
-
-
-/**@}*/ /* OPA_CONST */
-/**@}*/ /* end of OPA register group */
-/**@}*/ /* end of REGISTER group */
+/** @} OPA_CONST */
+/** @} end of OPA register group */
+/** @} end of REGISTER group */
 
 #if defined ( __CC_ARM   )
     #pragma no_anon_unions

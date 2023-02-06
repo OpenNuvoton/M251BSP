@@ -140,7 +140,7 @@ extern "C"
 #define PWM_CLKSRC_TIMER2                        (3UL)    /*!< PWM Clock source selects to TIMER2 overflow */
 #define PWM_CLKSRC_TIMER3                        (4UL)    /*!< PWM Clock source selects to TIMER3 overflow */
 
-/*@}*/ /* end of group PWM_EXPORTED_CONSTANTS */
+/** @} end of group PWM_EXPORTED_CONSTANTS */
 
 
 /** @addtogroup PWM_EXPORTED_FUNCTIONS PWM Exported Functions
@@ -150,7 +150,6 @@ extern "C"
 /**
  * @brief This macro enable complementary mode
  * @param[in] pwm The pointer of the specified PWM module
- * @return None
  * @details This macro is used to enable complementary mode of PWM module.
  * \hideinitializer
  */
@@ -159,7 +158,6 @@ extern "C"
 /**
  * @brief This macro disable complementary mode, and enable independent mode.
  * @param[in] pwm The pointer of the specified PWM module
- * @return None
  * @details This macro is used to disable complementary mode of PWM module.
  * \hideinitializer
  */
@@ -175,7 +173,6 @@ extern "C"
  *              - \ref PWM_SSCTL_SSRC_PWM1
  *              - \ref PWM_SSCTL_SSRC_BPWM0
  *              - \ref PWM_SSCTL_SSRC_BPWM1
- * @return None
  * @details This macro is used to enable timer synchronous start counting function of specified channel(s).
  * @note Every two channels share the same setting.
  * \hideinitializer
@@ -195,7 +192,6 @@ extern "C"
  * @param[in] pwm The pointer of the specified PWM module
  * @param[in] u32ChannelMask Combination of enabled channels. Each bit corresponds to a channel
  *                           Bit 0 represents channel 0, bit 1 represents channel 1...
- * @return None
  * @details This macro is used to disable timer synchronous start counting function of specified channel(s).
  * @note Every two channels share the same setting.
  * \hideinitializer
@@ -212,7 +208,6 @@ extern "C"
 /**
  * @brief This macro enable PWM counter synchronous start counting function.
  * @param[in] pwm The pointer of the specified PWM module
- * @return None
  * @details This macro is used to make selected PWM0 and PWM1 channel(s) start counting at the same time.
  *          To configure synchronous start counting channel(s) by PWM_ENABLE_TIMER_SYNC() and PWM_DISABLE_TIMER_SYNC().
  * \hideinitializer
@@ -224,7 +219,6 @@ extern "C"
  * @param[in] pwm The pointer of the specified PWM module
  * @param[in] u32ChannelMask Combination of enabled channels. Each bit corresponds to a channel
  *                           Bit 0 represents channel 0, bit 1 represents channel 1...
- * @return None
  * @details This macro is used to enable output inverter of specified channel(s).
  * \hideinitializer
  */
@@ -234,7 +228,6 @@ extern "C"
  * @brief This macro get captured rising data
  * @param[in] pwm The pointer of the specified PWM module
  * @param[in] u32ChannelNum PWM channel number. Valid values are between 0~5
- * @return None
  * @details This macro is used to get captured rising data of specified channel.
  * \hideinitializer
  */
@@ -244,7 +237,6 @@ extern "C"
  * @brief This macro get captured falling data
  * @param[in] pwm The pointer of the specified PWM module
  * @param[in] u32ChannelNum PWM channel number. Valid values are between 0~5
- * @return None
  * @details This macro is used to get captured falling data of specified channel.
  * \hideinitializer
  */
@@ -256,7 +248,6 @@ extern "C"
  * @param[in] u32ChannelMask Combination of enabled channels. Each bit corresponds to a channel
  *                           Bit 0 represents channel 0, bit 1 represents channel 1...
  * @param[in] u32LevelMask Output logic to high or low
- * @return None
  * @details This macro is used to mask output logic to high or low of specified channel(s).
  * @note If u32ChannelMask parameter is 0, then mask function will be disabled.
  * \hideinitializer
@@ -272,7 +263,6 @@ extern "C"
  * @param[in] pwm The pointer of the specified PWM module
  * @param[in] u32ChannelNum PWM channel number. Valid values are between 0~5
  * @param[in] u32Prescaler Clock prescaler of specified channel. Valid values are between 1 ~ 0xFFF
- * @return None
  * @details This macro is used to set the prescaler of specified channel.
  * @note Every even channel N, and channel (N + 1) share a prescaler. So if channel 0 prescaler changed,
  *       channel 1 will also be affected. The clock of PWM counter is divided by (u32Prescaler + 1).
@@ -297,7 +287,6 @@ extern "C"
  * @param[in] pwm The pointer of the specified PWM module
  * @param[in] u32ChannelNum PWM channel number. Valid values are between 0~5
  * @param[in] u32CMR Comparator of specified channel. Valid values are between 0~0xFFFF
- * @return None
  * @details This macro is used to set the comparator of specified channel.
  * @note This new setting will take effect on next PWM period.
  * \hideinitializer
@@ -319,7 +308,6 @@ extern "C"
  * @param[in] pwm The pointer of the specified PWM module
  * @param[in] u32ChannelNum PWM channel number. Valid values are between 0, 2, 4. Every two channels share the same setting.
  * @param[in] u32CNR Period of specified channel. Valid values are between 0~0xFFFF
- * @return None
  * @details This macro is used to set the period of specified channel.
  * @note This new setting will take effect on next PWM period.
  * @note PWM counter will stop if period length set to 0.
@@ -345,7 +333,6 @@ extern "C"
  *              - \ref PWM_UP_COUNTER
  *              - \ref PWM_DOWN_COUNTER
  *              - \ref PWM_UP_DOWN_COUNTER
- * @return None
  * @details This macro is used to set the PWM aligned type of specified channel(s).
  * \hideinitializer
  */
@@ -362,7 +349,6 @@ extern "C"
  * @brief Clear counter of specified channel(s)
  * @param[in] pwm The pointer of the specified PWM module
  * @param[in] u32ChannelMask Combination of enabled channels. Every two channels share the same setting.
- * @return None
  * @details This macro is used to clear counter of specified channel(s).
  * \hideinitializer
  */
@@ -400,7 +386,6 @@ extern "C"
  *              - \ref PWM_OUTPUT_LOW
  *              - \ref PWM_OUTPUT_HIGH
  *              - \ref PWM_OUTPUT_TOGGLE
- * @return None
  * @details This macro is used to Set output level at zero, compare up, period(center) and compare down of specified channel(s).
  * \hideinitializer
  */
@@ -425,7 +410,6 @@ extern "C"
  * @param[in] u32BrakeType Type of brake trigger. It supports PWM_FB_EDGE and PWM_FB_LEVEL.
  *              - \ref PWM_FB_EDGE
  *              - \ref PWM_FB_LEVEL
- * @return None
  * @details This macro is used to trigger brake event from specified channel(s) by using sw trigger.
  * \hideinitializer
  */
@@ -436,7 +420,6 @@ extern "C"
  * @param[in] pwm The pointer of the specified PWM module
  * @param[in] u32ChannelNum PWM channel number. Valid values are between 0~5
  * @param[in] u32AfterPrescaler Dead zone clock source is from prescaler output. Valid values are TRUE (after prescaler) or FALSE (before prescaler).
- * @return None
  * @details This macro is used to set Dead zone clock source. Every two channels share the same setting.
  * @note The write-protection function should be disabled before using this function.
  * \hideinitializer
@@ -497,11 +480,11 @@ void PWM_ClearWrapAroundFlag(PWM_T *pwm, uint32_t u32ChannelNum);
 void PWM_EnablePDMA(PWM_T *pwm, uint32_t u32ChannelNum, uint32_t u32RisingFirst, uint32_t u32Mode);
 void PWM_DisablePDMA(PWM_T *pwm, uint32_t u32ChannelNum);
 
-/*@}*/ /* end of group PWM_EXPORTED_FUNCTIONS */
+/** @} end of group PWM_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group PWM_Driver */
+/** @} end of group PWM_Driver */
 
-/*@}*/ /* end of group Standard_Driver*/
+/** @} end of group Standard_Driver*/
 
 #ifdef __cplusplus
 }

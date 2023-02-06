@@ -114,7 +114,7 @@ extern "C"
 #define SPII2S_LEFT_ZC_INT_MASK             (0x40UL)                          /*!< Left channel zero cross interrupt mask \hideinitializer */
 #define SPII2S_SLV_CLKERR_INT_MASK          (0x80UL)                          /*!< Slave mode bit clock loss interrupt mask \hideinitializer */
 
-/*@}*/ /* end of group SPI_EXPORTED_CONSTANTS */
+/** @} end of group SPI_EXPORTED_CONSTANTS */
 
 
 /** @addtogroup SPI_EXPORTED_FUNCTIONS SPI Exported Functions
@@ -356,7 +356,6 @@ __STATIC_INLINE void SPII2S_SET_MONO_RX_CHANNEL(SPI_T *i2s, uint32_t u32Ch);
   * @param[in] u32ChMask The mask for left or right channel. Valid values are:
   *                    - \ref SPII2S_RIGHT
   *                    - \ref SPII2S_LEFT
-  * @return None
   * @details This function will set RZCEN or LZCEN bit of SPI_I2SCTL register to enable zero cross detection function.
   */
 __STATIC_INLINE void SPII2S_ENABLE_TX_ZCD(SPI_T *i2s, uint32_t u32ChMask)
@@ -377,7 +376,6 @@ __STATIC_INLINE void SPII2S_ENABLE_TX_ZCD(SPI_T *i2s, uint32_t u32ChMask)
   * @param[in] u32ChMask The mask for left or right channel. Valid values are:
   *                    - \ref SPII2S_RIGHT
   *                    - \ref SPII2S_LEFT
-  * @return None
   * @details This function will clear RZCEN or LZCEN bit of SPI_I2SCTL register to disable zero cross detection function.
   */
 __STATIC_INLINE void SPII2S_DISABLE_TX_ZCD(SPI_T *i2s, uint32_t u32ChMask)
@@ -395,7 +393,6 @@ __STATIC_INLINE void SPII2S_DISABLE_TX_ZCD(SPI_T *i2s, uint32_t u32ChMask)
 /**
   * @brief  Enable I2S TX DMA function.
   * @param[in] i2s The pointer of the specified I2S module.
-  * @return None
   * @details This macro will set TXPDMAEN bit of SPI_PDMACTL register to transmit data with PDMA.
   * \hideinitializer
   */
@@ -404,7 +401,6 @@ __STATIC_INLINE void SPII2S_DISABLE_TX_ZCD(SPI_T *i2s, uint32_t u32ChMask)
 /**
   * @brief  Disable I2S TX DMA function.
   * @param[in] i2s The pointer of the specified I2S module.
-  * @return None
   * @details This macro will clear TXPDMAEN bit of SPI_PDMACTL register to disable TX DMA function.
   * \hideinitializer
   */
@@ -413,7 +409,6 @@ __STATIC_INLINE void SPII2S_DISABLE_TX_ZCD(SPI_T *i2s, uint32_t u32ChMask)
 /**
   * @brief  Enable I2S RX DMA function.
   * @param[in] i2s The pointer of the specified I2S module.
-  * @return None
   * @details This macro will set RXPDMAEN bit of SPI_PDMACTL register to receive data with PDMA.
   * \hideinitializer
   */
@@ -422,7 +417,6 @@ __STATIC_INLINE void SPII2S_DISABLE_TX_ZCD(SPI_T *i2s, uint32_t u32ChMask)
 /**
   * @brief  Disable I2S RX DMA function.
   * @param[in] i2s The pointer of the specified I2S module.
-  * @return None
   * @details This macro will clear RXPDMAEN bit of SPI_PDMACTL register to disable RX DMA function.
   * \hideinitializer
   */
@@ -431,7 +425,6 @@ __STATIC_INLINE void SPII2S_DISABLE_TX_ZCD(SPI_T *i2s, uint32_t u32ChMask)
 /**
   * @brief  Enable I2S TX function.
   * @param[in] i2s The pointer of the specified I2S module.
-  * @return None
   * @details This macro will set TXEN bit of SPI_I2SCTL register to enable I2S TX function.
   * \hideinitializer
   */
@@ -440,7 +433,6 @@ __STATIC_INLINE void SPII2S_DISABLE_TX_ZCD(SPI_T *i2s, uint32_t u32ChMask)
 /**
   * @brief  Disable I2S TX function.
   * @param[in] i2s The pointer of the specified I2S module.
-  * @return None
   * @details This macro will clear TXEN bit of SPI_I2SCTL register to disable I2S TX function.
   * \hideinitializer
   */
@@ -449,7 +441,6 @@ __STATIC_INLINE void SPII2S_DISABLE_TX_ZCD(SPI_T *i2s, uint32_t u32ChMask)
 /**
   * @brief  Enable I2S RX function.
   * @param[in] i2s The pointer of the specified I2S module.
-  * @return None
   * @details This macro will set RXEN bit of SPI_I2SCTL register to enable I2S RX function.
   * \hideinitializer
   */
@@ -458,7 +449,6 @@ __STATIC_INLINE void SPII2S_DISABLE_TX_ZCD(SPI_T *i2s, uint32_t u32ChMask)
 /**
   * @brief  Disable I2S RX function.
   * @param[in] i2s The pointer of the specified I2S module.
-  * @return None
   * @details This macro will clear RXEN bit of SPI_I2SCTL register to disable I2S RX function.
   * \hideinitializer
   */
@@ -467,7 +457,6 @@ __STATIC_INLINE void SPII2S_DISABLE_TX_ZCD(SPI_T *i2s, uint32_t u32ChMask)
 /**
   * @brief  Enable TX Mute function.
   * @param[in] i2s The pointer of the specified I2S module.
-  * @return None
   * @details This macro will set MUTE bit of SPI_I2SCTL register to enable I2S TX mute function.
   * \hideinitializer
   */
@@ -476,7 +465,6 @@ __STATIC_INLINE void SPII2S_DISABLE_TX_ZCD(SPI_T *i2s, uint32_t u32ChMask)
 /**
   * @brief  Disable TX Mute function.
   * @param[in] i2s The pointer of the specified I2S module.
-  * @return None
   * @details This macro will clear MUTE bit of SPI_I2SCTL register to disable I2S TX mute function.
   * \hideinitializer
   */
@@ -485,7 +473,6 @@ __STATIC_INLINE void SPII2S_DISABLE_TX_ZCD(SPI_T *i2s, uint32_t u32ChMask)
 /**
   * @brief  Clear TX FIFO.
   * @param[in] i2s The pointer of the specified I2S module.
-  * @return None
   * @details This macro will clear TX FIFO. The internal TX FIFO pointer will be reset to FIFO start point.
   * \hideinitializer
   */
@@ -494,7 +481,6 @@ __STATIC_INLINE void SPII2S_DISABLE_TX_ZCD(SPI_T *i2s, uint32_t u32ChMask)
 /**
   * @brief  Clear RX FIFO.
   * @param[in] i2s The pointer of the specified I2S module.
-  * @return None
   * @details This macro will clear RX FIFO. The internal RX FIFO pointer will be reset to FIFO start point.
   * \hideinitializer
   */
@@ -506,7 +492,6 @@ __STATIC_INLINE void SPII2S_DISABLE_TX_ZCD(SPI_T *i2s, uint32_t u32ChMask)
   * @param[in] u32Ch left or right channel. Valid values are:
   *                - \ref SPII2S_MONO_LEFT
   *                - \ref SPII2S_MONO_RIGHT
-  * @return None
   * @details This function selects the recording source channel of monaural mode.
   * \hideinitializer
   */
@@ -521,7 +506,6 @@ __STATIC_INLINE void SPII2S_SET_MONO_RX_CHANNEL(SPI_T *i2s, uint32_t u32Ch)
   * @brief  Write data to I2S TX FIFO.
   * @param[in] i2s The pointer of the specified I2S module.
   * @param[in] u32Data The value written to TX FIFO.
-  * @return None
   * @details This macro will write a value to TX FIFO.
   * \hideinitializer
   */
@@ -550,7 +534,6 @@ __STATIC_INLINE void SPII2S_SET_MONO_RX_CHANNEL(SPI_T *i2s, uint32_t u32Ch)
   * @brief  Clear the interrupt flag.
   * @param[in] i2s The pointer of the specified I2S module.
   * @param[in] u32Mask The mask value for all interrupt flags.
-  * @return None
   * @details This macro will clear the interrupt flags specified by the u32mask parameter.
   * @note Except TX and RX FIFO threshold interrupt flags, the other interrupt flags can be cleared by writing 1 to itself.
   * \hideinitializer
@@ -603,11 +586,11 @@ void SPII2S_DisableMCLK(SPI_T *i2s);
 void SPII2S_SetFIFO(SPI_T *i2s, uint32_t u32TxThreshold, uint32_t u32RxThreshold);
 
 
-/*@}*/ /* end of group SPI_EXPORTED_FUNCTIONS */
+/** @} end of group SPI_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group SPI_Driver */
+/** @} end of group SPI_Driver */
 
-/*@}*/ /* end of group Standard_Driver */
+/** @} end of group Standard_Driver */
 
 #ifdef __cplusplus
 }

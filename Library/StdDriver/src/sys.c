@@ -33,7 +33,6 @@
   *             - \ref SYS_RSTSTS_WDTRF_Msk
   *             - \ref SYS_RSTSTS_PINRF_Msk
   *             - \ref SYS_RSTSTS_PORF_Msk
-  * @return     None
   * @details    This function clear the selected system reset source.
   */
 void SYS_ClearResetSrc(uint32_t u32Src)
@@ -43,7 +42,6 @@ void SYS_ClearResetSrc(uint32_t u32Src)
 
 /**
   * @brief      Get Brown-out detector output status
-  * @param      None
   * @retval     0 System voltage is higher than BOD_VL setting or BOD_EN is 0.
   * @retval     1 System voltage is lower than BOD_VL setting.
   * @details    This function get Brown-out detector output status.
@@ -55,7 +53,6 @@ uint32_t SYS_GetBODStatus(void)
 
 /**
   * @brief      Get reset status register value
-  * @param      None
   * @return     Reset source
   * @details    This function get the system reset status register value.
   */
@@ -66,7 +63,6 @@ uint32_t SYS_GetResetSrc(void)
 
 /**
   * @brief      Check if register is locked nor not
-  * @param      None
   * @retval     0 Write-protection function is disabled.
   *             1 Write-protection function is enabled.
   * @details    This function check register write-protection bit setting.
@@ -78,7 +74,6 @@ uint32_t SYS_IsRegLocked(void)
 
 /**
   * @brief      Get product ID
-  * @param      None
   * @return     Product ID
   * @details    This function get product ID.
   */
@@ -89,8 +84,6 @@ uint32_t  SYS_ReadPDID(void)
 
 /**
   * @brief      Reset chip with chip reset
-  * @param      None
-  * @return     None
   * @details    This function reset chip with chip reset.
   *             The register write-protection function should be disabled before using this function.
   */
@@ -101,8 +94,6 @@ void SYS_ResetChip(void)
 
 /**
   * @brief      Reset chip with CPU reset
-  * @param      None
-  * @return     None
   * @details    This function reset CPU with CPU reset.
   *             The register write-protection function should be disabled before using this function.
   */
@@ -148,7 +139,6 @@ void SYS_ResetCPU(void)
   *             - \ref BPWM1_RST
   *             - \ref OPA_RST
   *             - \ref PSIO_RST
-  * @return     None
   * @details    This function reset selected module.
   */
 void SYS_ResetModule(uint32_t u32ModuleIndex)
@@ -174,7 +164,6 @@ void SYS_ResetModule(uint32_t u32ModuleIndex)
   *             - \ref SYS_BODCTL_BODVL_2_4V
   *             - \ref SYS_BODCTL_BODVL_2_0V
   *             - \ref SYS_BODCTL_BODVL_1_8V
-  * @return     None
   * @details    This function configure Brown-out detector reset or interrupt mode, enable Brown-out function and set Brown-out voltage level.
   *             The register write-protection function should be disabled before using this function.
   */
@@ -192,8 +181,6 @@ void SYS_EnableBOD(int32_t i32Mode, uint32_t u32BODLevel)
 
 /**
   * @brief      Disable Brown-out detector function
-  * @param      None
-  * @return     None
   * @details    This function disable Brown-out detector function.
   *             The register write-protection function should be disabled before using this function.
   */
@@ -207,7 +194,6 @@ void SYS_DisableBOD(void)
   * @param[in]  u32PowerLevel is power level setting. Including :
   *             - \ref SYS_PLCTL_PLSEL_PL0
   *             - \ref SYS_PLCTL_PLSEL_PL3
-  * @return     None
   * @details    This function select power level.
   *             The register write-protection function should be disabled before using this function.
   */
@@ -219,8 +205,8 @@ void SYS_SetPowerLevel(uint32_t u32PowerLevel)
     while (SYS->PLSTS & SYS_PLSTS_PLCBUSY_Msk);
 }
 
-/*@}*/ /* end of group SYS_EXPORTED_FUNCTIONS */
+/** @} end of group SYS_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group SYS_Driver */
+/** @} end of group SYS_Driver */
 
-/*@}*/ /* end of group Standard_Driver */
+/** @} end of group Standard_Driver */

@@ -25,8 +25,6 @@ int32_t g_CLK_i32ErrCode = 0;    /*!< CLK global error code */
 
 /**
   * @brief      Disable frequency output function
-  * @param      None
-  * @return     None
   * @details    This function disable frequency output function.
   */
 void CLK_DisableCKO(void)
@@ -49,7 +47,6 @@ void CLK_DisableCKO(void)
   *             - \ref CLK_CLKSEL1_CLKOSEL_SOF
   * @param[in]  u32ClkDiv is divider output frequency selection.
   * @param[in]  u32ClkDivBy1En is frequency divided by one enable.
-  * @return     None
   *
   * @details    Output selected clock to CKO. The output clock frequency is divided by u32ClkDiv.
   *             The formula is:
@@ -71,7 +68,6 @@ void CLK_EnableCKO(uint32_t u32ClkSrc, uint32_t u32ClkDiv, uint32_t u32ClkDivBy1
 
 /**
   * @brief      Enter to Power-down mode
-  * @param      None
   * @retval     0 power down is prohibited
   * @retval     1 power down is allowed
   * @details    This function is used to let system enter to Power-down mode. \n
@@ -113,8 +109,6 @@ uint32_t CLK_PowerDown(void)
 
 /**
   * @brief      Enter to Idle mode
-  * @param      None
-  * @return     None
   * @details    This function let system enter to Idle mode. \n
   *             The register write-protection function should be disabled before using this function.
   */
@@ -132,7 +126,6 @@ void CLK_Idle(void)
 
 /**
   * @brief      Get external high speed crystal clock frequency
-  * @param      None
   * @return     External high speed crystal frequency
   * @details    This function get external high speed crystal frequency. The frequency unit is Hz.
   */
@@ -146,7 +139,6 @@ uint32_t CLK_GetHXTFreq(void)
 
 /**
   * @brief      Get external low speed crystal clock frequency
-  * @param      None
   * @return     External low speed crystal clock frequency
   * @details    This function get external low frequency crystal frequency. The frequency unit is Hz.
   */
@@ -160,7 +152,6 @@ uint32_t CLK_GetLXTFreq(void)
 
 /**
   * @brief      Get PCLK0 frequency
-  * @param      None
   * @return     PCLK0 frequency
   * @details    This function get PCLK0 frequency. The frequency unit is Hz.
   */
@@ -195,7 +186,6 @@ uint32_t CLK_GetPCLK0Freq(void)
 
 /**
   * @brief      Get PCLK1 frequency
-  * @param      None
   * @return     PCLK1 frequency
   * @details    This function get PCLK1 frequency. The frequency unit is Hz.
   */
@@ -230,7 +220,6 @@ uint32_t CLK_GetPCLK1Freq(void)
 
 /**
   * @brief      Get HCLK frequency
-  * @param      None
   * @return     HCLK frequency
   * @details    This function get HCLK frequency. The frequency unit is Hz.
   */
@@ -242,7 +231,6 @@ uint32_t CLK_GetHCLKFreq(void)
 
 /**
   * @brief      Get CPU frequency
-  * @param      None
   * @return     CPU frequency
   * @details    This function get CPU frequency. The frequency unit is Hz.
   */
@@ -255,7 +243,6 @@ uint32_t CLK_GetCPUFreq(void)
 /**
  * @brief    Get PLL Clock Output Frequency
  *
- * @param    None
  *
  * @return   PLL clock output frequency
  *
@@ -308,8 +295,6 @@ uint32_t CLK_GetPLLClockFreq(void)
 
 /**
   * @brief      Disable PLL
-  * @param      None
-  * @return     None
   * @details    This function set PLL in Power-down mode. \n
   *             The register write-protection function should be disabled before using this function.
   */
@@ -513,7 +498,6 @@ lexit:
   *             - \ref CLK_CLKSEL0_HCLKSEL_HIRC
   * @param[in]  u32ClkDiv is HCLK clock divider. Including :
   *             - \ref CLK_CLKDIV0_HCLK(x)
-  * @return     None
   * @details    This function set HCLK clock source and HCLK clock divider.
   *             The register write-protection function should be disabled before using this function.
   * @note       Must be care of flash access cycle control when using this function
@@ -597,7 +581,6 @@ uint32_t CLK_SetCoreClock(uint32_t u32Hclk)
   * @param[in]  u32ModuleIdx is module index.
   * @param[in]  u32ClkSrc is module clock source.
   * @param[in]  u32ClkDiv is module clock divider.
-  * @return     None
   * @details    Valid parameter combinations listed in following table:
   *
   * |Module index        |Clock source                          |Divider                  |
@@ -734,7 +717,6 @@ void CLK_SetModuleClock(uint32_t u32ModuleIdx, uint32_t u32ClkSrc, uint32_t u32C
   *             - \ref CLK_CLKSEL0_STCLKSEL_HXT_DIV2
   *             - \ref CLK_CLKSEL0_STCLKSEL_HCLK_DIV2
   *             - \ref CLK_CLKSEL0_STCLKSEL_HIRC_DIV2
-  * @return     None
   * @details    This function set SysTick clock source. \n
   *             The register write-protection function should be disabled before using this function.
   */
@@ -751,7 +733,6 @@ void CLK_SetSysTickClockSrc(uint32_t u32ClkSrc)
   *             - \ref CLK_PWRCTL_HIRCEN_Msk
   *             - \ref CLK_PWRCTL_LIRCEN_Msk
   *             - \ref CLK_PWRCTL_MIRCEN_Msk
-  * @return     None
   * @details    This function enable clock source. \n
   *             The register write-protection function should be disabled before using this function.
   *             Notice that HXT and LXT are using common pin,
@@ -773,7 +754,6 @@ void CLK_EnableXtalRC(uint32_t u32ClkMask)
   *             - \ref CLK_PWRCTL_HIRCEN_Msk
   *             - \ref CLK_PWRCTL_LIRCEN_Msk
   *             - \ref CLK_PWRCTL_MIRCEN_Msk
-  * @return     None
   * @details    This function disable clock source. \n
   *             The register write-protection function should be disabled before using this function.
   */
@@ -832,7 +812,6 @@ void CLK_DisableXtalRC(uint32_t u32ClkMask)
   *             - \ref BPWM1_MODULE
   *             - \ref OPA_MODULE
   *             - \ref PSIO_MODULE
-  * @return     None
   * @details    This function enable module clock.
   */
 void CLK_EnableModuleClock(uint32_t u32ModuleIdx)
@@ -892,7 +871,6 @@ void CLK_EnableModuleClock(uint32_t u32ModuleIdx)
   *             - \ref BPWM1_MODULE
   *             - \ref OPA_MODULE
   *             - \ref PSIO_MODULE
-  * @return     None
   * @details    This function disable module clock.
   */
 void CLK_DisableModuleClock(uint32_t u32ModuleIdx)
@@ -976,7 +954,6 @@ uint32_t CLK_WaitClockDisable(uint32_t u32ClkMask)
   *             - \ref CLK_CLKSEL0_STCLKSEL_HIRC_DIV2
   *             - \ref CLK_CLKSEL0_STCLKSEL_HCLK
   * @param[in]  u32Count is System Tick reload value. It could be 0~0xFFFFFF.
-  * @return     None
   * @details    This function set System Tick clock source, reload value, enable System Tick counter and interrupt. \n
   *             The register write-protection function should be disabled before using this function.
   */
@@ -1018,8 +995,6 @@ void CLK_EnableSysTick(uint32_t u32ClkSrc, uint32_t u32Count)
 
 /**
   * @brief      Disable System Tick counter
-  * @param      None
-  * @return     None
   * @details    This function disable System Tick counter.
   */
 void CLK_DisableSysTick(void)
@@ -1035,7 +1010,6 @@ void CLK_DisableSysTick(void)
   *             - \ref CLK_PMUCTL_PDMSEL_PD
   *             - \ref CLK_PMUCTL_PDMSEL_FWPD
   *             - \ref CLK_PMUCTL_PDMSEL_DPD
-  * @return     None
   * @details    This function is used to set power-down mode.
   */
 
@@ -1058,7 +1032,6 @@ void CLK_SetPowerDownMode(uint32_t u32PDMode)
  *              - \ref CLK_DPDWKPIN_RISING
  *              - \ref CLK_DPDWKPIN_FALLING
  *              - \ref CLK_DPDWKPIN_BOTHEDGE
- * @return      None
  *
  * @details     This function is used to enable Wake-up pin trigger type.
  */
@@ -1096,7 +1069,6 @@ void CLK_EnableDPDWKPin(uint32_t u32Pin, uint32_t u32TriggerType)
  *              - \ref CLK_DPDWKPIN0_RISING
  *              - \ref CLK_DPDWKPIN0_FALLING
  *              - \ref CLK_DPDWKPIN0_BOTHEDGE
- * @return      None
  *
  * @details     This function is used to enable Wake-up pin0 (GPC.0) trigger type.
  */
@@ -1113,7 +1085,6 @@ void CLK_EnableDPDWKPin0(uint32_t u32TriggerType)
  *              - \ref CLK_DPDWKPIN1_RISING
  *              - \ref CLK_DPDWKPIN1_FALLING
  *              - \ref CLK_DPDWKPIN1_BOTHEDGE
- * @return      None
  *
  * @details     This function is used to enable Wake-up pin1 (GPB.0) trigger type.
  */
@@ -1130,7 +1101,6 @@ void CLK_EnableDPDWKPin1(uint32_t u32TriggerType)
  *              - \ref CLK_DPDWKPIN2_RISING
  *              - \ref CLK_DPDWKPIN2_FALLING
  *              - \ref CLK_DPDWKPIN2_BOTHEDGE
- * @return      None
  *
  * @details     This function is used to enable Wake-up pin2 (GPB.2) trigger type.
  */
@@ -1147,7 +1117,6 @@ void CLK_EnableDPDWKPin2(uint32_t u32TriggerType)
  *              - \ref CLK_DPDWKPIN3_RISING
  *              - \ref CLK_DPDWKPIN3_FALLING
  *              - \ref CLK_DPDWKPIN3_BOTHEDGE
- * @return      None
  *
  * @details     This function is used to enable Wake-up pin3 (GPB.12) trigger type.
  */
@@ -1164,7 +1133,6 @@ void CLK_EnableDPDWKPin3(uint32_t u32TriggerType)
  *              - \ref CLK_DPDWKPIN4_RISING
  *              - \ref CLK_DPDWKPIN4_FALLING
  *              - \ref CLK_DPDWKPIN4_BOTHEDGE
- * @return      None
  *
  * @details     This function is used to enable Wake-up pin4 (GPF.6) trigger type.
  */
@@ -1177,7 +1145,6 @@ void CLK_EnableDPDWKPin4(uint32_t u32TriggerType)
 /**
  * @brief      Get power manager wake up source
  *
- * @param[in]   None
  * @return      Wake up source
  *
  * @details     This function get power manager wake up source.
@@ -1285,8 +1252,8 @@ uint32_t CLK_GetModuleClockDivider(uint32_t u32ModuleIdx)
     return u32TmpVal;
 }
 
-/*@}*/ /* end of group CLK_EXPORTED_FUNCTIONS */
+/** @} end of group CLK_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group CLK_Driver */
+/** @} end of group CLK_Driver */
 
-/*@}*/ /* end of group Standard_Driver */
+/** @} end of group Standard_Driver */

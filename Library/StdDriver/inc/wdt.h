@@ -53,7 +53,7 @@ extern "C"
 /*---------------------------------------------------------------------------------------------------------*/
 #define WDT_FREE_RESET_COUNTER_KEY (0x00005AA5)                 /*!< Fill this value to WDT_RSTCNT register to free reset WDT counter */
 
-/*@}*/ /* end of group WDT_EXPORTED_CONSTANTS */
+/** @} end of group WDT_EXPORTED_CONSTANTS */
 
 
 /** @addtogroup WDT_EXPORTED_FUNCTIONS WDT Exported Functions
@@ -63,9 +63,7 @@ extern "C"
 /**
   * @brief      Clear WDT Reset System Flag
   *
-  * @param      None
   *
-  * @return     None
   *
   * @details    This macro clears WDT time-out reset system flag.
   *
@@ -76,9 +74,7 @@ extern "C"
 /**
   * @brief      Clear WDT Time-out Interrupt Flag
   *
-  * @param      None
   *
-  * @return     None
   *
   * @details    This macro clears WDT time-out interrupt flag.
   *
@@ -89,9 +85,7 @@ extern "C"
 /**
   * @brief      Clear WDT Wake-up Flag
   *
-  * @param      None
   *
-  * @return     None
   *
   * @details    This macro clears WDT time-out wake-up system flag.
   *
@@ -102,7 +96,6 @@ extern "C"
 /**
   * @brief      Get WDT Time-out Reset Flag
   *
-  * @param      None
   *
   * @retval     0   WDT time-out reset system did not occur
   * @retval     1   WDT time-out reset system occurred
@@ -116,7 +109,6 @@ extern "C"
 /**
   * @brief      Get WDT Time-out Interrupt Flag
   *
-  * @param      None
   *
   * @retval     0   WDT time-out interrupt did not occur
   * @retval     1   WDT time-out interrupt occurred
@@ -130,7 +122,6 @@ extern "C"
 /**
   * @brief      Get WDT Time-out Wake-up Flag
   *
-  * @param      None
   *
   * @retval     0   WDT time-out interrupt does not cause CPU wake-up
   * @retval     1   WDT time-out interrupt event cause CPU wake-up
@@ -144,9 +135,7 @@ extern "C"
 /**
   * @brief      Reset WDT Counter
   *
-  * @param      None
   *
-  * @return     None
   *
   * @details    This macro is used to reset the internal 18-bit WDT up counter value.
   * @note       If WDT is activated and time-out reset system function is enabled also, user should \n
@@ -164,9 +153,7 @@ __STATIC_INLINE void WDT_DisableInt(void);
 /**
   * @brief      Stop WDT Counting
   *
-  * @param      None
   *
-  * @return     None
   *
   * @details    This function will stop WDT counting and disable WDT module.
   */
@@ -179,9 +166,7 @@ __STATIC_INLINE void WDT_Close(void)
 /**
   * @brief      Enable WDT Time-out Interrupt
   *
-  * @param      None
   *
-  * @return     None
   *
   * @details    This function will enable the WDT time-out interrupt function.
   */
@@ -194,9 +179,7 @@ __STATIC_INLINE void WDT_EnableInt(void)
 /**
   * @brief      Disable WDT Time-out Interrupt
   *
-  * @param      None
   *
-  * @return     None
   *
   * @details    This function will disable the WDT time-out interrupt function.
   */
@@ -209,11 +192,11 @@ __STATIC_INLINE void WDT_DisableInt(void)
 
 void WDT_Open(uint32_t u32TimeoutInterval, uint32_t u32ResetDelay, uint32_t u32EnableReset, uint32_t u32EnableWakeup);
 
-/*@}*/ /* end of group WDT_EXPORTED_FUNCTIONS */
+/** @} end of group WDT_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group WDT_Driver */
+/** @} end of group WDT_Driver */
 
-/*@}*/ /* end of group Standard_Driver */
+/** @} end of group Standard_Driver */
 
 #ifdef __cplusplus
 }

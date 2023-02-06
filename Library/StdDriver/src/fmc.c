@@ -30,7 +30,6 @@ int32_t  g_FMC_i32ErrCode = eFMC_ERRCODE_SUCCESS; /*!< FMC global error code */
   *                1: Boot from LDROM
   *                0: Boot from APROM
   *
-  * @return    None
   *
   * @details   This function is used to switch APROM boot or LDROM boot. User need to call
   *            FMC_SetBootSource to select boot source first, then use CPU reset or
@@ -46,9 +45,7 @@ void FMC_SetBootSource(int32_t i32BootSrc)
 /**
   * @brief    Disable ISP Functions
   *
-  * @param    None
   *
-  * @return   None
   *
   * @details  This function will clear ISPEN bit of ISPCON to disable ISP function
   *
@@ -62,7 +59,6 @@ void FMC_Close(void)
 /**
   * @brief    Get the current boot source
   *
-  * @param    None
   *
   * @retval   0 This chip is currently booting from APROM
   * @retval   1 This chip is currently booting from LDROM
@@ -79,9 +75,7 @@ int32_t FMC_GetBootSource(void)
 /**
   * @brief    Enable FMC ISP function
   *
-  * @param    None
   *
-  * @return   None
   *
   * @details  ISPEN bit of ISPCON must be set before we can use ISP commands.
   *           Therefore, To use all FMC function APIs, user needs to call FMC_Open() first to enable ISP functions.
@@ -560,7 +554,6 @@ uint32_t FMC_Read(uint32_t u32Addr)
  * @param[in]  u32Addr  Flash address include APROM, LDROM, Data Flash, and CONFIG
  * @param[in]  u32Data  32-bit Data to program
  *
- * @return     None
  *
  * @details    To program word data into Flash include APROM, LDROM, Data Flash, and CONFIG.
  *             The corresponding functions in CONFIG are listed in FMC section of Technical Reference Manual.
@@ -720,8 +713,8 @@ uint32_t FMC_Write128(uint32_t u32Addr, uint32_t pu32Buf[])
     return 0;
 }
 
-/*@}*/ /* end of group FMC_EXPORTED_FUNCTIONS */
+/** @} end of group FMC_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group FMC_Driver */
+/** @} end of group FMC_Driver */
 
-/*@}*/ /* end of group Standard_Driver */
+/** @} end of group Standard_Driver */

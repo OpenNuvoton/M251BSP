@@ -117,7 +117,7 @@ extern "C"
 #define RTC_TAMPER_DEBOUNCE_DISABLE  0ul    /*!< Disable RTC tamper pin de-bounce function \hideinitializer */
 
 
-/*@}*/ /* end of group RTC_EXPORTED_CONSTANTS */
+/** @} end of group RTC_EXPORTED_CONSTANTS */
 
 
 /** @addtogroup RTC_EXPORTED_STRUCTS RTC Exported Structs
@@ -139,7 +139,7 @@ typedef struct
     uint32_t u32AmPm;           /*!< Only Time Scale select 12-hr used */
 } S_RTC_TIME_DATA_T;
 
-/*@}*/ /* end of group RTC_EXPORTED_STRUCTS */
+/** @} end of group RTC_EXPORTED_STRUCTS */
 
 
 /** @addtogroup RTC_EXPORTED_FUNCTIONS RTC Exported Functions
@@ -149,7 +149,6 @@ typedef struct
 /**
   * @brief      Indicate is Leap Year or not
   *
-  * @param      None
   *
   * @retval     0   This year is not a leap year
   * @retval     1   This year is a leap year
@@ -162,9 +161,7 @@ typedef struct
 /**
   * @brief      Clear RTC Alarm Interrupt Flag
   *
-  * @param      None
   *
-  * @return     None
   *
   * @details    This macro is used to clear RTC alarm interrupt flag.
   * \hideinitializer
@@ -174,9 +171,7 @@ typedef struct
 /**
   * @brief      Clear RTC Tick Interrupt Flag
   *
-  * @param      None
   *
-  * @return     None
   *
   * @details    This macro is used to clear RTC tick interrupt flag.
   * \hideinitializer
@@ -189,7 +184,6 @@ typedef struct
   * @param      u32TamperFlag   Tamper interrupt flag. It consists of:    \n
   *                             - \ref RTC_INTSTS_TAMP0IF_Msk
   *
-  * @return     None
   *
   * @details    This macro is used to clear RTC snooper pin interrupt flag.
   * \hideinitializer
@@ -199,7 +193,6 @@ typedef struct
 /**
   * @brief      Get RTC Alarm Interrupt Flag
   *
-  * @param      None
   *
   * @retval     0   RTC alarm interrupt did not occur
   * @retval     1   RTC alarm interrupt occurred
@@ -212,7 +205,6 @@ typedef struct
 /**
   * @brief      Get RTC Time Tick Interrupt Flag
   *
-  * @param      None
   *
   * @retval     0   RTC time tick interrupt did not occur
   * @retval     1   RTC time tick interrupt occurred
@@ -225,7 +217,6 @@ typedef struct
 /**
   * @brief      Get RTC Tamper Interrupt Flag
   *
-  * @param      None
   *
   * @retval     0   RTC snooper pin interrupt did not occur
   * @retval     1   RTC snooper pin interrupt occurred
@@ -238,7 +229,6 @@ typedef struct
 /**
   * @brief      Get RTC TAMPER Interrupt Status
   *
-  * @param      None
   *
   * @retval     RTC_INTSTS_TAMP0IF_Msk    Tamper 0 interrupt flag is generated
   *
@@ -250,9 +240,7 @@ typedef struct
 /**
  * @brief      Enable RTC Tick Wake-up Function
  *
- * @param      None
  *
- * @return     None
  *
  * @details    This macro is used to enable RTC tick interrupt wake-up function.
  * \hideinitializer
@@ -262,9 +250,7 @@ typedef struct
 /**
   * @brief      Disable RTC Tick Wake-up Function
   *
-  * @param      None
   *
-  * @return     None
   *
   * @details    This macro is used to disable RTC tick interrupt wake-up function.
   * \hideinitializer
@@ -274,9 +260,7 @@ typedef struct
 /**
  * @brief      Enable RTC Alarm Wake-up Function
  *
- * @param      None
  *
- * @return     None
  *
  * @details    This macro is used to enable RTC Alarm interrupt wake-up function.
  * \hideinitializer
@@ -286,9 +270,7 @@ typedef struct
 /**
   * @brief      Disable RTC Alarm Wake-up Function
   *
-  * @param      None
   *
-  * @return     None
   *
   * @details    This macro is used to disable RTC Alarm interrupt wake-up function.
   * \hideinitializer
@@ -315,7 +297,6 @@ typedef struct
   * @param[in]  u32RegNum    The spare register number, 0~4.
   * @param[in]  u32RegValue  The spare register value.
   *
-  * @return     None
   *
   * @details    Write specify data to spare register.
   * @note       This macro is effect only when SPRRWEN(SPRCTL[2] RTC Spare Function control register) bit is set. \n
@@ -347,11 +328,11 @@ void RTC_StaticTamperEnable(uint32_t u32TamperSelect, uint32_t u32DetecLevel, ui
 void RTC_StaticTamperDisable(uint32_t u32TamperSelect);
 
 
-/*@}*/ /* end of group RTC_EXPORTED_FUNCTIONS */
+/** @} end of group RTC_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group RTC_Driver */
+/** @} end of group RTC_Driver */
 
-/*@}*/ /* end of group Standard_Driver */
+/** @} end of group Standard_Driver */
 
 #ifdef __cplusplus
 }

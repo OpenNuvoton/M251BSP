@@ -568,7 +568,6 @@ extern int32_t g_CLK_i32ErrCode;
  *                             - \ref CLK_PMUCTL_WKTMRIS_16384
  *                             - \ref CLK_PMUCTL_WKTMRIS_32768
  *
- * @return      None
  *
  * @details     This function set Wake-up Timer Time-out Interval.
  *
@@ -588,7 +587,6 @@ __STATIC_INLINE void CLK_SysTickLongDelay(uint32_t u32USec);
   * @brief      This function execute delay function.
   * @param[in]  u32USec  Delay time. The Max value is 2^24 / CPU Clock(MHz). Ex:
   *                             50MHz => 335544us, 48MHz => 349525us, 28MHz => 699050us ...
-  * @return     None
   * @details    Use the SysTick to generate the delay time and the UNIT is in us.
   *             The SysTick clock source is from HCLK, i.e the same as system core clock.
   *             User can use SystemCoreClockUpdate() to calculate CyclesPerUs automatically before using this function.
@@ -611,7 +609,6 @@ __STATIC_INLINE void CLK_SysTickDelay(uint32_t u32USec)
 /**
   * @brief      This function execute long delay function.
   * @param[in]  u32USec  Delay time.
-  * @return     None
   * @details    Use the SysTick to generate the long delay time and the UNIT is in us.
   *             The SysTick clock source is from HCLK, i.e the same as system core clock.
   *             User can use SystemCoreClockUpdate() to calculate CyclesPerUs automatically before using this function.
@@ -687,11 +684,11 @@ uint32_t CLK_GetPMUWKSrc(void);
 uint32_t CLK_GetModuleClockSource(uint32_t u32ModuleIdx);
 uint32_t CLK_GetModuleClockDivider(uint32_t u32ModuleIdx);
 
-/*@}*/ /* end of group CLK_EXPORTED_FUNCTIONS */
+/** @} end of group CLK_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group CLK_Driver */
+/** @} end of group CLK_Driver */
 
-/*@}*/ /* end of group Standard_Driver */
+/** @} end of group Standard_Driver */
 
 #ifdef __cplusplus
 }

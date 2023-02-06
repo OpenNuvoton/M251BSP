@@ -15,14 +15,15 @@
 #endif
 
 /**
-   @addtogroup REGISTER Control Register
-   @{
+    @addtogroup REGISTER Control Register
+    @{
 */
 
 /**
     @addtogroup SC Smart Card Host Interface Controller (SC)
     Memory Mapped Structure for SC Controller
-@{ */
+    @{
+*/
 
 typedef struct
 {
@@ -964,9 +965,9 @@ typedef struct
 #define SC_ACTCTL_T1EXT_Pos              (0)                                               /*!< SC_T::ACTCTL: T1EXT Position           */
 #define SC_ACTCTL_T1EXT_Msk              (0x1ful << SC_ACTCTL_T1EXT_Pos)                   /*!< SC_T::ACTCTL: T1EXT Mask               */
 
-/**@}*/ /* SC_CONST */
-/**@}*/ /* end of SC register group */
-/**@}*/ /* end of REGISTER group */
+/** @} SC_CONST */
+/** @} end of SC register group */
+/** @} end of REGISTER group */
 
 #if defined ( __CC_ARM   )
     #pragma no_anon_unions

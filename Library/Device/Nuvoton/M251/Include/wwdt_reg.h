@@ -15,14 +15,15 @@
 #endif
 
 /**
-   @addtogroup REGISTER Control Register
-   @{
+    @addtogroup REGISTER Control Register
+    @{
 */
 
 /**
     @addtogroup WWDT Window Watchdog Timer (WWDT)
     Memory Mapped Structure for WWDT Controller
-@{ */
+    @{
+*/
 
 typedef struct
 {
@@ -137,9 +138,9 @@ typedef struct
 #define WWDT_CNT_CNTDAT_Pos              (0)                                               /*!< WWDT_T::CNT: CNTDAT Position           */
 #define WWDT_CNT_CNTDAT_Msk              (0x3ful << WWDT_CNT_CNTDAT_Pos)                   /*!< WWDT_T::CNT: CNTDAT Mask               */
 
-/**@}*/ /* WWDT_CONST */
-/**@}*/ /* end of WWDT register group */
-/**@}*/ /* end of REGISTER group */
+/** @} WWDT_CONST */
+/** @} end of WWDT register group */
+/** @} end of REGISTER group */
 
 #if defined ( __CC_ARM   )
     #pragma no_anon_unions

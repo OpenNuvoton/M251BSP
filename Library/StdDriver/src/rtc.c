@@ -98,9 +98,7 @@ int32_t RTC_Open(S_RTC_TIME_DATA_T *psPt)
 /**
   * @brief      Disable RTC Clock
   *
-  * @param      None
   *
-  * @return     None
   *
   * @details    This API will disable RTC peripheral clock and stops RTC counting.
   */
@@ -114,7 +112,6 @@ void RTC_Close(void)
   *
  *  @param[in]    i32FrequencyX10000    Specify the RTC clock X 10000, ex: 327736512 means 32773.6512.
   *
-  * @return     None
   *
   */
 void RTC_32KCalibration(int32_t i32FrequencyX10000)
@@ -175,7 +172,6 @@ void RTC_32KCalibration(int32_t i32FrequencyX10000)
   *                     u32TimeScale: [RTC_CLOCK_12 / RTC_CLOCK_24]                           \n
   *                     u8AmPm: [RTC_AM / RTC_PM]                                             \n
   *
-  * @return     None
   *
   * @details    This API is used to get the current RTC date and time value.
   */
@@ -270,7 +266,6 @@ void RTC_GetDateAndTime(S_RTC_TIME_DATA_T *psPt)
   *                     u32TimeScale: [RTC_CLOCK_12 / RTC_CLOCK_24]                         \n
   *                     u8AmPm: [RTC_AM / RTC_PM]                                           \n
   *
-  * @return     None
   *
   * @details    This API is used to get the RTC alarm date and time setting.
   */
@@ -368,7 +363,6 @@ void RTC_GetAlarmDateAndTime(S_RTC_TIME_DATA_T *psPt)
   *                     u32TimeScale: [RTC_CLOCK_12 / RTC_CLOCK_24]                                 \n
   *                     u8AmPm: [RTC_AM / RTC_PM]                                                   \n
   *
-  * @return     None
   *
   * @details    This API is used to update current date and time to RTC.
   */
@@ -448,7 +442,6 @@ void RTC_SetDateAndTime(S_RTC_TIME_DATA_T *psPt)
   *                     u32TimeScale: [RTC_CLOCK_12 / RTC_CLOCK_24]                                 \n
   *                     u8AmPm: [RTC_AM / RTC_PM]                                                   \n
   *
-  * @return     None
   *
   * @details    This API is used to update alarm date and time setting to RTC.
   */
@@ -516,7 +509,6 @@ void RTC_SetAlarmDateAndTime(S_RTC_TIME_DATA_T *psPt)
   *                                                   RTC_WEDNESDAY / RTC_THURSDAY / RTC_FRIDAY /
   *                                                   RTC_SATURDAY]
   *
-  * @return     None
   *
   * @details    This API is used to update current date to RTC.
   */
@@ -547,7 +539,6 @@ void RTC_SetDate(uint32_t u32Year, uint32_t u32Month, uint32_t u32Day, uint32_t 
   * @param[in]  u32TimeMode     The 24-Hour / 12-Hour Time Scale Selection. [RTC_CLOCK_12 / RTC_CLOCK_24]
   * @param[in]  u32AmPm         12-hour time scale with AM and PM indication. Only Time Scale select 12-hour used. [RTC_AM / RTC_PM]
   *
-  * @return     None
   *
   * @details    This API is used to update current time to RTC.
   */
@@ -591,7 +582,6 @@ void RTC_SetTime(uint32_t u32Hour, uint32_t u32Minute, uint32_t u32Second, uint3
   * @param[in]  u32Month        The month calendar digit of RTC alarm setting.
   * @param[in]  u32Day          The day calendar digit of RTC alarm setting.
   *
-  * @return     None
   *
   * @details    This API is used to update alarm date setting to RTC.
   */
@@ -620,7 +610,6 @@ void RTC_SetAlarmDate(uint32_t u32Year, uint32_t u32Month, uint32_t u32Day)
   * @param[in]  u32TimeMode     The 24-Hour / 12-Hour Time Scale Selection. [RTC_CLOCK_12 / RTC_CLOCK_24]
   * @param[in]  u32AmPm         12-hour time scale with AM and PM indication. Only Time Scale select 12-hour used. [RTC_AM / RTC_PM]
   *
-  * @return     None
   *
   * @details    This API is used to update alarm time setting to RTC.
   */
@@ -668,7 +657,6 @@ void RTC_SetAlarmTime(uint32_t u32Hour, uint32_t u32Minute, uint32_t u32Second, 
   * @param[in]  u8IsTenDMsk     1: enable 10-Day digit alarm mask; 0: disabled.
   * @param[in]  u8IsDMsk        1: enable 1-Day digit alarm mask; 0: disabled.
   *
-  * @return     None
   *
   * @details    This API is used to enable or disable RTC alarm date mask function.
   */
@@ -693,7 +681,6 @@ void RTC_SetAlarmDateMask(uint8_t u8IsTenYMsk, uint8_t u8IsYMsk, uint8_t u8IsTen
   * @param[in]  u8IsTenSMsk     1: enable 10-Sec digit alarm mask; 0: disabled.
   * @param[in]  u8IsSMsk        1: enable 1-Sec digit alarm mask; 0: disabled.
   *
-  * @return     None
   *
   * @details    This API is used to enable or disable RTC alarm time mask function.
   */
@@ -711,7 +698,6 @@ void RTC_SetAlarmTimeMask(uint8_t u8IsTenHMsk, uint8_t u8IsHMsk, uint8_t u8IsTen
 /**
   * @brief      Get Day of the Week
   *
-  * @param      None
   *
   * @retval     0   Sunday
   * @retval     1   Monday
@@ -742,7 +728,6 @@ uint32_t RTC_GetDayOfWeek(void)
   *                                     - \ref RTC_TICK_1_64_SEC  : Time tick is 1/64 second
   *                                     - \ref RTC_TICK_1_128_SEC : Time tick is 1/128 second
   *
-  * @return     None
   *
   * @details    This API is used to set RTC tick period time for each tick interrupt.
   */
@@ -760,7 +745,6 @@ void RTC_SetTickPeriod(uint32_t u32TickSelection)
   *                                     - \ref RTC_INTEN_TICKIEN_Msk  : Tick interrupt
   *                                     - \ref RTC_INTEN_TAMP0IEN_Msk : Tamper 0 Pin Event Detection interrupt
   *
-  * @return     None
   *
   * @details    This API is used to enable the specify RTC interrupt function.
   */
@@ -777,7 +761,6 @@ void RTC_EnableInt(uint32_t u32IntFlagMask)
   *                                     - \ref RTC_INTEN_TICKIEN_Msk  : Tick interrupt
   *                                     - \ref RTC_INTEN_TAMP0IEN_Msk : Tamper 0 Pin Event Detection interrupt
   *
-  * @return     None
   *
   * @details    This API is used to disable the specify RTC interrupt function.
   */
@@ -791,9 +774,7 @@ void RTC_DisableInt(uint32_t u32IntFlagMask)
 /**
   * @brief      Enable Spare Registers Access
   *
-  * @param      None
   *
-  * @return     None
   *
   * @details    This API is used to enable the spare registers 0~4 can be accessed.
   */
@@ -806,9 +787,7 @@ void RTC_EnableSpareAccess(void)
 /**
   * @brief      Disable Spare Register
   *
-  * @param      None
   *
-  * @return     None
   *
   * @details    This API is used to disable the spare register 0~4 cannot be accessed.
   */
@@ -833,7 +812,6 @@ void RTC_DisableSpareRegister(void)
   *                                 - \ref RTC_TAMPER_DEBOUNCE_ENABLE
   *                                 - \ref RTC_TAMPER_DEBOUNCE_DISABLE
   *
-  * @return     None
   *
   * @details    This API is used to enable the tamper pin detect function with specify trigger condition.
   */
@@ -867,7 +845,6 @@ void RTC_StaticTamperEnable(uint32_t u32TamperSelect, uint32_t u32DetecLevel, ui
   * @param[in]  u32TamperSelect     Tamper pin select. Possible options are
   *                                 - \ref RTC_TAMPER0_SELECT
   *
-  * @return     None
   *
   * @details    This API is used to disable the static tamper pin detect.
   */
@@ -893,10 +870,10 @@ void RTC_StaticTamperDisable(uint32_t u32TamperSelect)
 }
 
 
-/*@}*/ /* end of group RTC_EXPORTED_FUNCTIONS */
+/** @} end of group RTC_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group RTC_Driver */
+/** @} end of group RTC_Driver */
 
-/*@}*/ /* end of group Standard_Driver */
+/** @} end of group Standard_Driver */
 
 /*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/

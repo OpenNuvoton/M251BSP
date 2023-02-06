@@ -15,14 +15,15 @@
 #endif
 
 /**
-   @addtogroup REGISTER Control Register
-   @{
+    @addtogroup REGISTER Control Register
+    @{
 */
 
 /**
     @addtogroup SYS System Manger Controller (SYS)
     Memory Mapped Structure for SYS Controller
-@{ */
+    @{
+*/
 
 typedef struct
 {
@@ -2462,9 +2463,9 @@ typedef struct
 #define SYS_PLSTS_CURPL_Pos              (8)                                               /*!< SYS_T::PLSTS: CURPL Position           */
 #define SYS_PLSTS_CURPL_Msk              (0x3ul << SYS_PLSTS_CURPL_Pos)                    /*!< SYS_T::PLSTS: CURPL Mask               */
 
-/**@}*/ /* SYS_CONST */
-/**@}*/ /* end of SYS register group */
-/**@}*/ /* end of REGISTER group */
+/** @} SYS_CONST */
+/** @} end of SYS register group */
+/** @} end of REGISTER group */
 
 #if defined ( __CC_ARM   )
     #pragma no_anon_unions

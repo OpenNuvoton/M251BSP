@@ -46,11 +46,10 @@ void LCDLIB_PutChar(uint32_t u32Zone, uint32_t u32Index, uint8_t u8Ch);
 void LCDLIB_PrintNumber(uint32_t u32Zone, uint32_t InputNum);
 void LCDLIB_SetSymbol(uint32_t u32Symbol, uint32_t u32OnOff);
 
-/*@}*/ /* end of group LCDLIB_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group LCDLIB */
-
-/*@}*/ /* end of group Library */
+/** @} end of group LCDLIB_EXPORTED_FUNCTIONS */
+/** @} end of group LCDLIB */
+/** @} end of group Library */
 
 #ifdef __cplusplus
 }

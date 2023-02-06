@@ -45,7 +45,7 @@ extern "C"
 #define SC_TMR_MODE_8                   (8ul << SC_TMRCTL0_OPMODE_Pos)     /*!<Timer Operation Mode 8, up count                                                        \hideinitializer */
 #define SC_TMR_MODE_F                   (0xF << SC_TMRCTL0_OPMODE_Pos)     /*!<Timer Operation Mode 15, down count, reload after detect start bit                      \hideinitializer */
 
-/*@}*/ /* end of group SC_EXPORTED_CONSTANTS */
+/** @} end of group SC_EXPORTED_CONSTANTS */
 
 
 /** @addtogroup SC_EXPORTED_FUNCTIONS SC Exported Functions
@@ -69,7 +69,6 @@ extern "C"
   *                         - \ref SC_INTEN_TBEIEN_Msk
   *                         - \ref SC_INTEN_RDAIEN_Msk
   *
-  * @return     None
   *
   * @details    The macro is used to enable Auto-convention error interrupt, Receiver buffer time-out interrupt, Initial end interrupt,
   *             Card detect interrupt, Block guard time interrupt, Timer2 interrupt, Timer1 interrupt, Timer0 interrupt,
@@ -95,7 +94,6 @@ extern "C"
   *                         - \ref SC_INTEN_TBEIEN_Msk
   *                         - \ref SC_INTEN_RDAIEN_Msk
   *
-  * @return     None
   *
   * @details    The macro is used to disable Auto-convention error interrupt, Receiver buffer time-out interrupt, Initial end interrupt,
   *             Card detect interrupt, Block guard time interrupt, Timer2 interrupt, Timer1 interrupt, Timer0 interrupt,
@@ -121,7 +119,6 @@ extern "C"
   *                         - \ref SC_INTSTS_TBEIF_Msk
   *                         - \ref SC_INTSTS_RDAIF_Msk
   *
-  * @return     None
   *
   * @details    The macro is used to check Auto-convention error interrupt, Receiver buffer time-out interrupt, Initial end interrupt,
   *             Card detect interrupt, Block guard time interrupt, Timer2 interrupt, Timer1 interrupt, Timer0 interrupt,
@@ -147,7 +144,6 @@ extern "C"
   *                         - \ref SC_INTSTS_TBEIF_Msk
   *                         - \ref SC_INTSTS_RDAIF_Msk
   *
-  * @return     None
   *
   * @details    The macro is used to check Auto-convention error interrupt, Receiver buffer time-out interrupt, Initial end interrupt,
   *             Card detect interrupt, Block guard time interrupt, Timer2 interrupt, Timer1 interrupt, Timer0 interrupt,
@@ -162,7 +158,6 @@ extern "C"
   * @param[in]  psSC    The pointer of smartcard module.
   * @param[in]  u32Mask ETU divider value
   *
-  * @return     None
   *
   * @details    The macro is used to give ETU divider. Its value must be given more than 4.
   * \hideinitializer
@@ -177,7 +172,6 @@ extern "C"
   *                             - \ref SC_PIN_STATE_HIGH
   *                             - \ref SC_PIN_STATE_LOW
   *
-  * @return     None
   *
   * @details    User can set PWREN (SC_PINCTL[0]) and PWRINV (SC_PINCTL[11]) to decide SC_PWR pin is in high or low level.
   * \hideinitializer
@@ -200,7 +194,6 @@ extern "C"
   *                             - \ref SC_CLK_ON
   *                             - \ref SC_CLK_OFF
   *
-  * @return     None
   *
   * @details    User can set CLKKEEP (SC_PINCTL[6]) to decide SC_CLK pin always keeps free running or not.
   * \hideinitializer
@@ -222,7 +215,6 @@ extern "C"
   *                             - \ref SC_PIN_STATE_HIGH
   *                             - \ref SC_PIN_STATE_LOW
   *
-  * @return     None
   *
   * @details    User can set SCDATA (SC_PINCTL[9]) to decide SC_DATA pin to high or low.
   * \hideinitializer
@@ -244,7 +236,6 @@ extern "C"
   *                             - \ref SC_PIN_STATE_HIGH
   *                             - \ref SC_PIN_STATE_LOW
   *
-  * @return     None
   *
   * @details    User can set SCRST (SC_PINCTL[1]) to decide SC_RST pin to high or low.
   * \hideinitializer
@@ -276,7 +267,6 @@ extern "C"
   * @param[in]  psSC    The pointer of smartcard module.
   * @param[in]  u8Data  Data to write to transmit FIFO.
   *
-  * @return     None
   *
   * @details    By writing data to DAT register, the SC will send out an 8-bit data.
   * \hideinitializer
@@ -289,7 +279,6 @@ extern "C"
   * @param[in]  psSC    The pointer of smartcard module.
   * @param[in]  u32Len  Stop bit length, ether 1 or 2.
   *
-  * @return     None
   *
   * @details    Stop bit length must be 1 for T = 1 protocol and 2 for T = 0 protocol.
   * \hideinitializer
@@ -311,7 +300,6 @@ __STATIC_INLINE void SC_SetRxRetry(SC_T *psSC, uint32_t u32Count);
   * @param[in]  psSC        The pointer of smartcard module.
   * @param[in]  u32Count    The number of Tx error retry count, between 0~8 and 0 means disable Tx error retry function.
   *
-  * @return     None
   *
   * @details    This function is used to enable/disable transmitter retry function when parity error has occurred, and set error retry count.
   * @note       Set error retry count to 0 will disable Tx error retry function.
@@ -337,7 +325,6 @@ __STATIC_INLINE void SC_SetTxRetry(SC_T *psSC, uint32_t u32Count)
   * @param[in]  psSC        The pointer of smartcard module.
   * @param[in]  u32Count    The number of Rx error retry count, between 0~8 and 0 means disable Rx error retry function.
   *
-  * @return     None
   *
   * @details    This function is used to enable/disable receiver retry function when parity error has occurred, and set error retry count.
   * @note       Set error retry count to 0 will disable Rx error retry function.
@@ -369,11 +356,11 @@ void SC_StopAllTimer(SC_T *psSC);
 void SC_StartTimer(SC_T *psSC, uint32_t u32TimerNum, uint32_t u32Mode, uint32_t u32ETUCount);
 void SC_StopTimer(SC_T *psSC, uint32_t u32TimerNum);
 uint32_t SC_GetInterfaceClock(SC_T *psSC);
-/*@}*/ /* end of group SC_EXPORTED_FUNCTIONS */
+/** @} end of group SC_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group SC_Driver */
+/** @} end of group SC_Driver */
 
-/*@}*/ /* end of group Standard_Driver */
+/** @} end of group Standard_Driver */
 
 #ifdef __cplusplus
 }

@@ -15,14 +15,15 @@
 #endif
 
 /**
-   @addtogroup REGISTER Control Register
-   @{
+    @addtogroup REGISTER Control Register
+    @{
 */
 
 /**
     @addtogroup TIMER Timer Controller (TIMER)
     Memory Mapped Structure for TIMER Controller
-@{ */
+    @{
+*/
 
 typedef struct
 {
@@ -668,9 +669,9 @@ typedef struct
 #define TIMER_PWMCMPBUF_CMPBUF_Pos       (0)                                               /*!< TIMER_T::PWMCMPBUF: CMPBUF Position    */
 #define TIMER_PWMCMPBUF_CMPBUF_Msk       (0xfffful << TIMER_PWMCMPBUF_CMPBUF_Pos)          /*!< TIMER_T::PWMCMPBUF: CMPBUF Mask        */
 
-/**@}*/ /* TIMER_CONST */
-/**@}*/ /* end of TIMER register group */
-/**@}*/ /* end of REGISTER group */
+/** @} TIMER_CONST */
+/** @} end of TIMER register group */
+/** @} end of REGISTER group */
 
 #if defined ( __CC_ARM   )
     #pragma no_anon_unions

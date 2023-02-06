@@ -15,14 +15,15 @@
 #endif
 
 /**
-   @addtogroup REGISTER Control Register
-   @{
+    @addtogroup REGISTER Control Register
+    @{
 */
 
 /**
     @addtogroup UART Universal Asynchronous Receiver/Transmitter Controller (UART)
     Memory Mapped Structure for UART Controller
-@{ */
+    @{
+*/
 
 typedef struct
 {
@@ -1291,10 +1292,9 @@ typedef struct
 #define UART_DWKCOMP_STCOMP_Pos          (0)                                               /*!< UART_T::DWKCOMP: STCOMP Position       */
 #define UART_DWKCOMP_STCOMP_Msk          (0xfffful << UART_DWKCOMP_STCOMP_Pos)             /*!< UART_T::DWKCOMP: STCOMP Mask           */
 
-
-/**@}*/ /* UART_CONST */
-/**@}*/ /* end of UART register group */
-/**@}*/ /* end of REGISTER group */
+/** @} UART_CONST */
+/** @} end of UART register group */
+/** @} end of REGISTER group */
 
 #if defined ( __CC_ARM   )
     #pragma no_anon_unions

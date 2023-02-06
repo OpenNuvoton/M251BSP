@@ -66,7 +66,6 @@ static uint32_t g_AES_au32CTL[1];
   *         - \ref AES_OUT_SWAP
   *         - \ref AES_IN_SWAP
   *         - \ref AES_IN_OUT_SWAP
-  * @return None
   */
 void AES_Open(CRPT_T *crpt, uint32_t u32Channel, uint32_t u32EncDec,
               uint32_t u32OpMode, uint32_t u32KeySize, uint32_t u32SwapType)
@@ -87,7 +86,6 @@ void AES_Open(CRPT_T *crpt, uint32_t u32Channel, uint32_t u32EncDec,
   *         - \ref CRYPTO_DMA_ONE_SHOT   Do one shot encrypt/decrypt with DMA.
   *         - \ref CRYPTO_DMA_CONTINUE   Do continuous encrypt/decrypt in DMA cascade.
   *         - \ref CRYPTO_DMA_LAST       Do last encrypt/decrypt in DMA cascade.
-  * @return None
   */
 void AES_Start(CRPT_T *crpt, uint32_t u32Channel, uint32_t u32DMAMode)
 {
@@ -104,7 +102,6 @@ void AES_Start(CRPT_T *crpt, uint32_t u32Channel, uint32_t u32DMAMode)
   *         - \ref AES_KEY_SIZE_128
   *         - \ref AES_KEY_SIZE_192
   *         - \ref AES_KEY_SIZE_256
-  * @return None
   */
 void AES_SetKey(CRPT_T *crpt, uint32_t u32Channel, uint32_t au32Keys[], uint32_t u32KeySize)
 {
@@ -125,7 +122,6 @@ void AES_SetKey(CRPT_T *crpt, uint32_t u32Channel, uint32_t au32Keys[], uint32_t
   * @param[in]  crpt   Reference to Crypto module.
   * @param[in]  u32Channel  AES channel. Must be 0.
   * @param[in]  au32IV      A four entry word array contains AES initial vectors.
-  * @return None
   */
 void AES_SetInitVect(CRPT_T *crpt, uint32_t u32Channel, uint32_t au32IV[])
 {
@@ -147,7 +143,6 @@ void AES_SetInitVect(CRPT_T *crpt, uint32_t u32Channel, uint32_t au32IV[])
   * @param[in]  u32SrcAddr   AES DMA source address
   * @param[in]  u32DstAddr   AES DMA destination address
   * @param[in]  u32TransCnt  AES DMA transfer byte count
-  * @return None
   */
 void AES_SetDMATransfer(CRPT_T *crpt, uint32_t u32Channel, uint32_t u32SrcAddr,
                         uint32_t u32DstAddr, uint32_t u32TransCnt)
@@ -164,10 +159,10 @@ void AES_SetDMATransfer(CRPT_T *crpt, uint32_t u32Channel, uint32_t u32SrcAddr,
     outpw(u32RegAddr, u32TransCnt);
 }
 
-/*@}*/ /* end of group CRYPTO_EXPORTED_FUNCTIONS */
+/** @} end of group CRYPTO_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group CRYPTO_Driver */
+/** @} end of group CRYPTO_Driver */
 
-/*@}*/ /* end of group Standard_Driver */
+/** @} end of group Standard_Driver */
 
 /*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/

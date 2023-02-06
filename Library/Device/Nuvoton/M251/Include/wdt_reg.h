@@ -15,14 +15,15 @@
 #endif
 
 /**
-   @addtogroup REGISTER Control Register
-   @{
+    @addtogroup REGISTER Control Register
+    @{
 */
 
 /**
     @addtogroup WDT Watch Dog Timer Controller (WDT)
     Memory Mapped Structure for WDT Controller
-@{ */
+    @{
+*/
 
 typedef struct
 {
@@ -160,9 +161,9 @@ typedef struct
 #define WDT_ALTCTL_RSTDSEL_Pos           (0)                                               /*!< WDT_T::ALTCTL: RSTDSEL Position        */
 #define WDT_ALTCTL_RSTDSEL_Msk           (0x3ul << WDT_ALTCTL_RSTDSEL_Pos)                 /*!< WDT_T::ALTCTL: RSTDSEL Mask            */
 
-/**@}*/ /* WDT_CONST */
-/**@}*/ /* end of WDT register group */
-/**@}*/ /* end of REGISTER group */
+/** @} WDT_CONST */
+/** @} end of WDT register group */
+/** @} end of REGISTER group */
 
 #if defined ( __CC_ARM   )
     #pragma no_anon_unions

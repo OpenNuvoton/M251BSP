@@ -15,14 +15,15 @@
 #endif
 
 /**
-   @addtogroup REGISTER Control Register
-  @{
+    @addtogroup REGISTER Control Register
+    @{
 */
 
 /**
     @addtogroup DAC Digital to Analog Converter (DAC)
     Memory Mapped Structure for DAC Controller
-@{ */
+    @{
+*/
 
 typedef struct
 {
@@ -200,9 +201,9 @@ typedef struct
 #define DAC_TCTL_SETTLET_Pos             (0)                                               /*!< DAC_T::TCTL: SETTLET Position          */
 #define DAC_TCTL_SETTLET_Msk             (0x3fful << DAC_TCTL_SETTLET_Pos)                 /*!< DAC_T::TCTL: SETTLET Mask              */
 
-/**@}*/ /* DAC_CONST */
-/**@}*/ /* end of DAC register group */
-/**@}*/ /* end of REGISTER group */
+/** @} DAC_CONST */
+/** @} end of DAC register group */
+/** @} end of REGISTER group */
 
 #if defined ( __CC_ARM   )
     #pragma no_anon_unions

@@ -17,7 +17,6 @@
     #pragma diag_suppress=Pm150
 #endif
 
-
 #if defined ( __CC_ARM   )
     #if (__ARMCC_VERSION < 400000)
     #else
@@ -29,7 +28,8 @@
 #ifndef DEBUG_PORT
     #define DEBUG_PORT   UART0
 #endif
-# define BUF_SIZE     512
+
+#define BUF_SIZE     512
 
 
 /*---------------------------------------------------------------------------------------------------------*/
@@ -92,14 +92,13 @@ int fputc(int ch, FILE *stream);
 char GetChar(void);
 void SendChar_ToUART(int ch);
 void SendChar(int ch);
-static volatile int32_t g_ICE_Conneced = 1;
+static volatile int32_t g_ICE_Connected = 1;
 enum { r0, r1, r2, r3, r12, lr, pc, psr};
 
 
 /**
  * @brief       Helper function to dump register while hard fault occurred
  * @param[in]   stack pointer points to the dumped registers in SRAM
- * @return      None
  * @details     This function is implement to print r0, r1, r2, r3, r12, lr, pc, psr
  */
 static void DumpStack(uint32_t stack[])
@@ -115,7 +114,6 @@ static void DumpStack(uint32_t stack[])
         printf("psr=0x%x\n", stack[psr]);
     */
 }
-
 
 #if defined(DEBUG_ENABLE_SEMIHOST)
 
@@ -135,7 +133,7 @@ static char g_buf_len = 0;
  */
 int32_t SH_Return(int32_t n32In_R0, int32_t n32In_R1, int32_t *pn32Out_R0)
 {
-    if (g_ICE_Conneced)
+    if (g_ICE_Connected)
     {
         if (pn32Out_R0)
             *pn32Out_R0 = n32In_R0;
@@ -146,7 +144,6 @@ int32_t SH_Return(int32_t n32In_R0, int32_t n32In_R1, int32_t *pn32Out_R0)
     return 0;
 }
 
-
 #else // defined(DEBUG_ENABLE_SEMIHOST)
 
 #if defined ( __GNUC__ ) && !defined (__ARMCC_VERSION)
@@ -154,9 +151,6 @@ int32_t SH_Return(int32_t n32In_R0, int32_t n32In_R1, int32_t *pn32Out_R0)
 /**
  * @brief    This HardFault handler is implemented to show r0, r1, r2, r3, r12, lr, pc, psr
  *
- * @param    None
- *
- * @returns  None
  *
  * @details  This function is implement to print r0, r1, r2, r3, r12, lr, pc, psr.
  *
@@ -173,6 +167,7 @@ __attribute__((weak)) void HardFault_Handler(void)
 }
 
 #else
+
 int32_t SH_Return(int32_t n32In_R0, int32_t n32In_R1, int32_t *pn32Out_R0);
 int32_t SH_Return(int32_t n32In_R0, int32_t n32In_R1, int32_t *pn32Out_R0)
 {
@@ -193,7 +188,7 @@ uint32_t ProcessHardFault(uint32_t lr, uint32_t msp, uint32_t psp)
     uint32_t *sp;
     uint32_t inst;
 
-    /* It is casued by hardfault. Just process the hard fault */
+    /* It is caused by hardfault. Just process the hard fault */
     /* TODO: Implement your hardfault handle code here */
 
     /* Check the used stack */
@@ -235,9 +230,9 @@ uint32_t ProcessHardFault(uint32_t lr, uint32_t msp, uint32_t psp)
             If the instruction is 0xBEAB, it means it is caused by BKPT without ICE connected.
             We still return for output/input message to UART.
         */
-        g_ICE_Conneced = 0; // Set a flag for ICE offline
-        sp[6] += 2;         // Return to next instruction
-        return lr;          // Keep lr in R0
+        g_ICE_Connected = 0; // Set a flag for ICE offline
+        sp[6] += 2;          // Return to next instruction
+        return lr;           // Keep lr in R0
     }
 
     printf("  HardFault!\n\n");
@@ -255,8 +250,6 @@ uint32_t ProcessHardFault(uint32_t lr, uint32_t msp, uint32_t psp)
  *
  * @param[in] ch  A character data writes to debug port
  *
- * @returns  Send value from UART debug port
- *
  * @details  Send a target char to UART debug port .
  */
 #ifndef NONBLOCK_PRINTF
@@ -269,7 +262,6 @@ void SendChar_ToUART(int ch)
         DEBUG_PORT->DAT = '\r';
 
         while (DEBUG_PORT->FIFOSTS & UART_FIFOSTS_TXFULL_Msk) {}
-
     }
 
     DEBUG_PORT->DAT = (uint32_t)ch;
@@ -360,7 +352,7 @@ __WEAK void SendChar(int ch)
     if (g_buf_len + 1 >= sizeof(g_buf) || ch == '\n' || ch == '\0')
     {
         /* Send the char */
-        if (g_ICE_Conneced)
+        if (g_ICE_Connected)
         {
 
             if (SH_DoCommand(0x04, (int)g_buf, NULL) != 0)
@@ -392,7 +384,6 @@ __WEAK void SendChar(int ch)
 /**
  * @brief    Routine to get a char
  *
- * @param    None
  *
  * @returns  Get value from UART debug port or semihost
  *
@@ -402,7 +393,7 @@ char GetChar(void)
 {
 #ifdef DEBUG_ENABLE_SEMIHOST
 
-    if (g_ICE_Conneced)
+    if (g_ICE_Connected)
     {
 #if defined (__ICCARM__)
         int nRet;
@@ -434,7 +425,7 @@ char GetChar(void)
 #if (DEBUG_ENABLE_SEMIHOST == 1) // Re-direct to UART Debug Port only when DEBUG_ENABLE_SEMIHOST=1
 
         /* Use debug port when ICE is not connected at semihost mode */
-        while (!g_ICE_Conneced)
+        while (!g_ICE_Connected)
         {
             if ((DEBUG_PORT->FIFOSTS & UART_FIFOSTS_RXEMPTY_Msk) == 0U)
             {
@@ -464,7 +455,6 @@ char GetChar(void)
 /**
  * @brief    Check any char input from UART
  *
- * @param    None
  *
  * @retval   1: No any char input
  * @retval   0: Have some char input
@@ -478,12 +468,10 @@ int kbhit(void)
 
 
 /**
- * @brief    Check if debug message finished
+ * @brief  Check if debug message finished
  *
- * @param    None
- *
- * @retval   1: Message is finished
- * @retval   0: Message is transmitting.
+ * @return   1 Message is finished.
+ *           0 Message is transmitting.
  *
  * @details  Check if message finished (FIFO empty of debug port)
  */
@@ -497,8 +485,6 @@ int IsDebugFifoEmpty(void)
  * @brief    C library retargetting
  *
  * @param[in]  ch  Write a character data
- *
- * @returns  None
  *
  * @details  Check if message finished (FIFO empty of debug port)
  */
@@ -526,7 +512,7 @@ void _ttywrch(int ch)
  *
  *
  */
-#if(__VER__ >= 9000000)
+#if defined (__ICCARM__) && (__VER__ >= 9000000)
 size_t __write(int handle, const unsigned char *buffer, size_t size)
 {
     size_t nChars = 0;
@@ -613,7 +599,7 @@ int _read(int fd, char *ptr, int len)
  * @details    For get message from debug port or semihosting.
  *
  */
-#if(__VER__ >= 9000000)
+#if defined (__ICCARM__) && (__VER__ >= 9000000)
 size_t __read(int handle, unsigned char *buffer, size_t size)
 {
     /* Remove the #if #endif pair to enable the implementation */

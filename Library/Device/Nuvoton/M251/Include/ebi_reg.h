@@ -15,14 +15,15 @@
 #endif
 
 /**
-   @addtogroup REGISTER Control Register
-   @{
+    @addtogroup REGISTER Control Register
+    @{
 */
 
 /**
     @addtogroup EBI External Bus Interface Controller (EBI)
     Memory Mapped Structure for EBI Controller
-@{ */
+    @{
+*/
 
 typedef struct
 {
@@ -280,9 +281,9 @@ typedef struct
 #define EBI_TCTL_R2R_Pos                 (24)                                              /*!< EBI_T::TCTL: R2R Position              */
 #define EBI_TCTL_R2R_Msk                 (0xful << EBI_TCTL_R2R_Pos)                       /*!< EBI_T::TCTL: R2R Mask                  */
 
-/**@}*/ /* EBI_CONST */
-/**@}*/ /* end of EBI register group */
-/**@}*/ /* end of REGISTER group */
+/** @} EBI_CONST */
+/** @} end of EBI register group */
+/** @} end of REGISTER group */
 
 #if defined ( __CC_ARM   )
     #pragma no_anon_unions

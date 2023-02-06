@@ -47,7 +47,7 @@ void SetTkMultiFun(uint32_t u32TkMsk)
     psTkFeat = TK_GetFeaturePtr();
     unsigned int i;
 
-    for (i = 0; i < TKLIB_TOL_NUM_KEY; i++)
+    for (i = 0; i < (TKLIB_TOL_NUM_KEY + TK_SE_NUM); i++)
     {
         if ((1ul << i) & u32TkMsk)
         {

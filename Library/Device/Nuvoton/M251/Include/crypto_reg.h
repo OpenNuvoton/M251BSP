@@ -15,14 +15,15 @@
 #endif
 
 /**
-   @addtogroup REGISTER Control Register
-   @{
+    @addtogroup REGISTER Control Register
+    @{
 */
 
 /**
     @addtogroup CRPT Cryptographic Accelerator (CRPT)
     Memory Mapped Structure for Cryptographic Accelerator
-@{ */
+    @{
+*/
 
 typedef struct
 {
@@ -373,13 +374,12 @@ typedef struct
 #define CRPT_AES_CNT_CNT_Pos           (0)                                               /*!< CRPT_T::AES_CNT: CNT Position        */
 #define CRPT_AES_CNT_CNT_Msk           (0xfffffffful << CRPT_AES_CNT_CNT_Pos)            /*!< CRPT_T::AES_CNT: CNT Mask            */
 
-/**@}*/ /* CRPT_CONST CRYPTO */
-/**@}*/ /* end of CRYPTO register group */
-/**@}*/ /* end of REGISTER group */
+/** @} CRPT_CONST CRYPTO */
+/** @} end of CRYPTO register group */
+/** @} end of REGISTER group */
 
 #if defined ( __CC_ARM   )
     #pragma no_anon_unions
 #endif
-
 
 #endif /* __CRYPTO_REG_H__ */

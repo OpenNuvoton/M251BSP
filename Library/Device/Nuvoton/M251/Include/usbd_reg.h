@@ -15,14 +15,15 @@
 #endif
 
 /**
-   @addtogroup REGISTER Control Register
-   @{
+    @addtogroup REGISTER Control Register
+    @{
 */
 
 /**
     @addtogroup USBD USB Device Controller (USBD)
     Memory Mapped Structure for USBD Controller
-@{ */
+    @{
+*/
 
 typedef struct
 {
@@ -710,9 +711,9 @@ typedef struct
 #define USBD_CFGP_SSTALL_Pos             (1)                                               /*!< USBD_EP_T::CFGP: SSTALL Position       */
 #define USBD_CFGP_SSTALL_Msk             (0x1ul << USBD_CFGP_SSTALL_Pos)                   /*!< USBD_EP_T::CFGP: SSTALL Mask           */
 
-/**@}*/ /* USBD_CONST */
-/**@}*/ /* end of USBD register group */
-/**@}*/ /* end of REGISTER group */
+/** @} USBD_CONST */
+/** @} end of USBD register group */
+/** @} end of REGISTER group */
 
 #if defined ( __CC_ARM   )
     #pragma no_anon_unions

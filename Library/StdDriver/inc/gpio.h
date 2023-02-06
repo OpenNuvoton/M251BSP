@@ -210,7 +210,6 @@ extern "C"
  *                          It could be BIT0 ~ BIT13, and BIT15 for PD.
  *                          It could be BIT0 ~ BIT7, and BIT14 ~ BIT15 for PF.
  *
- * @return      None
  *
  * @details     Clear the interrupt status of specified GPIO pin.
  */
@@ -226,7 +225,6 @@ extern "C"
  *                          It could be BIT0 ~ BIT13, and BIT15 for PD.
  *                          It could be BIT0 ~ BIT7, and BIT14 ~ BIT15 for PF.
  *
- * @return      None
  *
  * @details     Disable the interrupt de-bounce function of specified GPIO pin.
  */
@@ -242,7 +240,6 @@ extern "C"
  *                          It could be BIT0 ~ BIT13, and BIT15 for PD.
  *                          It could be BIT0 ~ BIT7, and BIT14 ~ BIT15 for PF.
  *
- * @return      None
  *
  * @details     Enable the interrupt de-bounce function of specified GPIO pin.
  */
@@ -258,7 +255,6 @@ extern "C"
  *                          It could be BIT0 ~ BIT13, and BIT15 for PD.
  *                          It could be BIT0 ~ BIT7, and BIT14 ~ BIT15 for PF.
  *
- * @return      None
  *
  * @details     Disable I/O digital input path of specified GPIO pin.
  */
@@ -274,7 +270,6 @@ extern "C"
  *                          It could be BIT0 ~ BIT13, and BIT15 for PD.
  *                          It could be BIT0 ~ BIT7, and BIT14 ~ BIT15 for PF.
  *
- * @return      None
  *
  * @details     Enable I/O digital input path of specified GPIO pin.
  */
@@ -290,7 +285,6 @@ extern "C"
  *                          It could be BIT0 ~ BIT13, and BIT15 for PD.
  *                          It could be BIT0 ~ BIT7, and BIT14 ~ BIT15 for PF.
  *
- * @return      None
  *
  * @details     Disable I/O DOUT mask of specified GPIO pin.
  */
@@ -306,7 +300,6 @@ extern "C"
  *                          It could be BIT0 ~ BIT13, and BIT15 for PD.
  *                          It could be BIT0 ~ BIT7, and BIT14 ~ BIT15 for PF.
  *
- * @return      None
  *
  * @details     Enable I/O DOUT mask of specified GPIO pin.
  */
@@ -351,7 +344,6 @@ extern "C"
  *                            - \ref GPIO_DBCTL_DBCLKSEL_16384
  *                            - \ref GPIO_DBCTL_DBCLKSEL_32768
  *
- * @return      None
  *
  * @details     Set the interrupt de-bounce sampling cycle time based on the debounce counter clock source. \n
  *              Example: GPIO_SET_DEBOUNCE_TIME(GPIO_DBCTL_DBCLKSRC_LIRC, GPIO_DBCTL_DBCLKSEL_4). \n
@@ -368,7 +360,6 @@ extern "C"
  *
  * @param[in]   port        GPIO port. It could be PA, PB, PC, PD, PE or PF.
  *
- * @return      None
  *
  * @details     Set the I/O pins edge detection circuit always active after reset for specified port.
  */
@@ -379,7 +370,6 @@ extern "C"
  *
  * @param[in]   port        GPIO port. It could be PA, PB, PC, PD, PE or PF.
  *
- * @return      None
  *
  * @details     Set edge detection circuit active only if I/O pin edge interrupt enabled for specified port
  */
@@ -402,7 +392,6 @@ extern "C"
  * @param[in]   port        GPIO port. It could be PA, PB, PC, PD, PE or PF.
  * @param[in]   u32Data     GPIO port data.
  *
- * @return      None
  *
  * @details     Set the Data into specified GPIO port.
  */
@@ -413,7 +402,6 @@ extern "C"
  *
  * @param[in]   u32Pin      Pxy
  *
- * @return      None
  *
  * @details     Toggle the specified GPIO pint.
  */
@@ -433,7 +421,6 @@ extern "C"
 * @param[in]   u32IntAttribs   The interrupt attribute of specified GPIO pin. It could be \n
 *                              GPIO_INT_RISING, GPIO_INT_FALLING, GPIO_INT_BOTH_EDGE, GPIO_INT_HIGH, GPIO_INT_LOW.
 *
-* @return      None
 *
 * @details     This function is used to enable specified GPIO pin interrupt.
 */
@@ -449,7 +436,6 @@ extern "C"
 *                              It could be 0 ~ 13, 15 for PD. \n
 *                              It could be 0 ~ 7, 14, 15 for PF. \n
 *
-* @return      None
 *
 * @details     This function is used to enable specified GPIO pin interrupt.
 */
@@ -461,11 +447,11 @@ void GPIO_EnableInt(GPIO_T *port, uint32_t u32Pin, uint32_t u32IntAttribs);
 void GPIO_DisableInt(GPIO_T *port, uint32_t u32Pin);
 void GPIO_SetSlewCtl(GPIO_T *port, uint32_t u32PinMask, uint32_t u32Mode);
 void GPIO_SetPullCtl(GPIO_T *port, uint32_t u32PinMask, uint32_t u32Mode);
-/*@}*/ /* end of group GPIO_EXPORTED_FUNCTIONS */
+/** @} end of group GPIO_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group GPIO_Driver */
+/** @} end of group GPIO_Driver */
 
-/*@}*/ /* end of group Standard_Driver */
+/** @} end of group Standard_Driver */
 
 #ifdef __cplusplus
 }

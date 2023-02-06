@@ -77,7 +77,7 @@ extern "C"
 #define EBI_OPMODE_NORMAL       0x0UL                 /*!< EBI bus operate in normal mode \hideinitializer */
 #define EBI_OPMODE_CACCESS      (EBI_CTL_CACCESS_Msk) /*!< EBI bus operate in Continuous Data Access mode \hideinitializer */
 
-/*@}*/ /* end of group EBI_EXPORTED_CONSTANTS */
+/** @} end of group EBI_EXPORTED_CONSTANTS */
 
 
 /** @addtogroup M25_EBI_EXPORTED_FUNCTIONS EBI Exported Functions
@@ -102,7 +102,6 @@ extern "C"
   * @param[in]  u32Addr     The data address on EBI bank0.
   * @param[in]  u32Data     Specify data to be written.
   *
-  * @return     None
   *
   * @details    This macro is used to write 8-bit data to specify address on EBI bank0.
   * \hideinitializer
@@ -127,7 +126,6 @@ extern "C"
   * @param[in]  u32Addr     The data address on EBI bank0.
   * @param[in]  u32Data     Specify data to be written.
   *
-  * @return     None
   *
   * @details    This macro is used to write 16-bit data to specify address on EBI bank0.
   * \hideinitializer
@@ -152,7 +150,6 @@ extern "C"
   * @param[in]  u32Addr     The data address on EBI bank0.
   * @param[in]  u32Data     Specify data to be written.
   *
-  * @return     None
   *
   * @details    This macro is used to write 32-bit data to specify address on EBI bank0.
   * \hideinitializer
@@ -177,7 +174,6 @@ extern "C"
   * @param[in]  u32Addr     The data address on EBI bank1.
   * @param[in]  u32Data     Specify data to be written.
   *
-  * @return     None
   *
   * @details    This macro is used to write 8-bit data to specify address on EBI bank1.
   * \hideinitializer
@@ -202,7 +198,6 @@ extern "C"
   * @param[in]  u32Addr     The data address on EBI bank1.
   * @param[in]  u32Data     Specify data to be written.
   *
-  * @return     None
   *
   * @details    This macro is used to write 16-bit data to specify address on EBI bank1.
   * \hideinitializer
@@ -227,7 +222,6 @@ extern "C"
   * @param[in]  u32Addr     The data address on EBI bank1.
   * @param[in]  u32Data     Specify data to be written.
   *
-  * @return     None
   *
   * @details    This macro is used to write 32-bit data to specify address on EBI bank1.
   * \hideinitializer
@@ -252,7 +246,6 @@ extern "C"
   * @param[in]  u32Addr     The data address on EBI bank2.
   * @param[in]  u32Data     Specify data to be written.
   *
-  * @return     None
   *
   * @details    This macro is used to write 8-bit data to specify address on EBI bank2.
   * \hideinitializer
@@ -277,7 +270,6 @@ extern "C"
   * @param[in]  u32Addr     The data address on EBI bank2.
   * @param[in]  u32Data     Specify data to be written.
   *
-  * @return     None
   *
   * @details    This macro is used to write 16-bit data to specify address on EBI bank2.
   * \hideinitializer
@@ -302,7 +294,6 @@ extern "C"
   * @param[in]  u32Addr     The data address on EBI bank2.
   * @param[in]  u32Data     Specify data to be written.
   *
-  * @return     None
   *
   * @details    This macro is used to write 32-bit data to specify address on EBI bank2.
   * \hideinitializer
@@ -312,9 +303,7 @@ extern "C"
 /**
   * @brief       Enable EBI Write Buffer
   *
-  * @param       None
   *
-  * @return      None
   *
   * @details     This macro is used to improve EBI write operation for EBI bank0 and bank1.
   * \hideinitializer
@@ -324,9 +313,7 @@ extern "C"
 /**
   * @brief       Disable EBI Write Buffer
   *
-  * @param       None
   *
-  * @return      None
   *
   * @details     This macro is used to disable EBI write buffer function.
   * \hideinitializer
@@ -337,11 +324,11 @@ void EBI_Open(uint32_t u32Bank, uint32_t u32DataWidth, uint32_t u32TimingClass, 
 void EBI_Close(uint32_t u32Bank);
 void EBI_SetBusTiming(uint32_t u32Bank, uint32_t u32TimingConfig, uint32_t u32MclkDiv);
 
-/*@}*/ /* end of group EBI_EXPORTED_FUNCTIONS */
+/** @} end of group EBI_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group EBI_Driver */
+/** @} end of group EBI_Driver */
 
-/*@}*/ /* end of group Standard_Driver */
+/** @} end of group Standard_Driver */
 
 #ifdef __cplusplus
 }

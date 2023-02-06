@@ -15,14 +15,15 @@
 #endif
 
 /**
-   @addtogroup REGISTER Control Register
-   @{
+    @addtogroup REGISTER Control Register
+    @{
 */
 
 /**
     @addtogroup USPI SPI Mode of USCI Controller (USPI)
     Memory Mapped Structure for USPI Controller
-@{ */
+    @{
+*/
 
 typedef struct
 {
@@ -671,11 +672,9 @@ typedef struct
 #define USPI_PROTSTS_SLVUDR_Pos          (18)                                              /*!< USPI_T::PROTSTS: SLVUDR Position       */
 #define USPI_PROTSTS_SLVUDR_Msk          (0x1ul << USPI_PROTSTS_SLVUDR_Pos)                /*!< USPI_T::PROTSTS: SLVUDR Mask           */
 
-/**@}*/ /* USPI_CONST */
-/**@}*/ /* end of USPI register group */
-
-
-/**@}*/ /* end of REGISTER group */
+/** @} USPI_CONST */
+/** @} end of USPI register group */
+/** @} end of REGISTER group */
 
 #if defined ( __CC_ARM   )
     #pragma no_anon_unions

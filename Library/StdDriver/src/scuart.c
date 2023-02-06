@@ -26,7 +26,6 @@ int32_t g_SCUART_i32ErrCode = 0;       /*!< SCUART global error code */
 /**
   * @brief The function is used to disable smartcard interface UART mode.
   * @param sc The base address of smartcard module.
-  * @return None
   */
 void SCUART_Close(SC_T *sc)
 {
@@ -195,7 +194,6 @@ uint32_t SCUART_SetLineConfig(SC_T *sc, uint32_t u32Baudrate, uint32_t u32DataWi
   * @param[in] sc The base address of smartcard module.
   * @param[in] u32TOC Rx timeout counter, using baudrate as counter unit. Valid range are 0~0x1FF,
   *                   set this value to 0 will disable timeout counter
-  * @return None
   * @details The time-out counter resets and starts counting whenever the RX buffer received a
   *          new data word. Once the counter decrease to 1 and no new data is received or CPU
   *          does not read any data from FIFO, a receiver time-out interrupt will be generated.
@@ -246,10 +244,10 @@ uint32_t SCUART_Write(SC_T *sc, uint8_t pu8TxBuf[], uint32_t u32WriteBytes)
 }
 
 
-/*@}*/ /* end of group SCUART_EXPORTED_FUNCTIONS */
+/** @} end of group SCUART_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group SCUART_Driver */
+/** @} end of group SCUART_Driver */
 
-/*@}*/ /* end of group Standard_Driver */
+/** @} end of group Standard_Driver */
 
 /*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/

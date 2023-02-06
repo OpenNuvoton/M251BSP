@@ -31,8 +31,6 @@
  *
  *  @param[in]  u32Zone     the assigned number of display area
  *  @param[in]  InputStr    Text string to show on display
- *
- *  @return None
  */
 void LCDLIB_Printf(uint32_t u32Zone, char *InputStr)
 {
@@ -63,7 +61,8 @@ void LCDLIB_Printf(uint32_t u32Zone, char *InputStr)
             /* The Main Digit Table is an ASCII table beginning with "SPACE" (hex is 0x20) */
             ch = ch - 0x20;
 
-            if ((ch >= 0) && (ch < sizeof(auMAINDigitMap) / sizeof(*(g_LCDZoneInfo[u32Zone].pu16LCDDispTable))))
+            /* ASCII "0" to "z" */
+            if ((ch >= 0) && (ch < 91))
             {
                 DispData = *(g_LCDZoneInfo[u32Zone].pu16LCDDispTable + ch);
             }
@@ -115,8 +114,6 @@ void LCDLIB_Printf(uint32_t u32Zone, char *InputStr)
  *
  *  @param[in]  u32Zone     the assigned number of display area
  *  @param[in]  InputNum    number to show on display
- *
- *  @return None
  */
 void LCDLIB_PrintNumber(uint32_t u32Zone, uint32_t InputNum)
 {
@@ -177,8 +174,6 @@ void LCDLIB_PrintNumber(uint32_t u32Zone, uint32_t InputNum)
  *  @param[in]  u32Zone     the assigned number of display area
  *  @param[in]  u32Index    the requested display position in zone
  *  @param[in]  u8Ch        Character to show on display
- *
- *  @return None
  */
 void LCDLIB_PutChar(uint32_t u32Zone, uint32_t u32Index, uint8_t u8Ch)
 {
@@ -241,8 +236,6 @@ void LCDLIB_PutChar(uint32_t u32Zone, uint32_t u32Index, uint8_t u8Ch)
  *  @param[in]  u32Symbol   the combination of com, seg position
  *  @param[in]  u32OnOff    1: display symbol
  *                          0: not display symbol
- *
- *  @return     None
  */
 void LCDLIB_SetSymbol(uint32_t u32Symbol, uint32_t u32OnOff)
 {
@@ -257,8 +250,6 @@ void LCDLIB_SetSymbol(uint32_t u32Symbol, uint32_t u32OnOff)
         LCD_SetPixel(com, seg, 0); /* Turn off display */
 }
 
-/*@}*/ /* end of group LCDLIB_EXPORTED_FUNCTIONS */
-
-/*@}*/ /* end of group LCDLIB */
-
-/*@}*/ /* end of group Library */
+/** @} end of group LCDLIB_EXPORTED_FUNCTIONS */
+/** @} end of group LCDLIB */
+/** @} end of group Library */

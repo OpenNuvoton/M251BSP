@@ -15,14 +15,15 @@
 #endif
 
 /**
-   @addtogroup REGISTER Control Register
-   @{
+    @addtogroup REGISTER Control Register
+    @{
 */
 
 /**
     @addtogroup SPI Serial Peripheral Interface Controller (SPI)
     Memory Mapped Structure for SPI Controller
-@{ */
+    @{
+*/
 
 typedef struct
 {
@@ -872,9 +873,9 @@ typedef struct
 #define SPI_I2SSTS_TXCNT_Pos             (28)                                              /*!< SPI_T::I2SSTS: TXCNT Position          */
 #define SPI_I2SSTS_TXCNT_Msk             (0x7ul << SPI_I2SSTS_TXCNT_Pos)                   /*!< SPI_T::I2SSTS: TXCNT Mask              */
 
-/**@}*/ /* SPI_CONST */
-/**@}*/ /* end of SPI register group */
-/**@}*/ /* end of REGISTER group */
+/** @} SPI_CONST */
+/** @} end of SPI register group */
+/** @} end of REGISTER group */
 
 #if defined ( __CC_ARM   )
     #pragma no_anon_unions

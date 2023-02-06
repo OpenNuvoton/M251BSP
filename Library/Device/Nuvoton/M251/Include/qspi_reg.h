@@ -15,14 +15,16 @@
 #endif
 
 /**
-   @addtogroup REGISTER Control Register
-   @{
+    @addtogroup REGISTER Control Register
+    @{
 */
 
 /**
     @addtogroup QSPI Quad Serial Peripheral Interface Controller (QSPI)
     Memory Mapped Structure for QSPI Controller
-@{ */
+    @{
+*/
+
 typedef struct
 {
 
@@ -580,11 +582,9 @@ typedef struct
 #define QSPI_RX_RX_Pos                    (0)                                                /*!< QSPI_T::RX: RX Position                 */
 #define QSPI_RX_RX_Msk                    (0xfffffffful << QSPI_RX_RX_Pos)                   /*!< QSPI_T::RX: RX Mask                     */
 
-
-
-/**@}*/ /* QSPI_CONST */
-/**@}*/ /* end of QSPI register group */
-/**@}*/ /* end of REGISTER group */
+/** @} QSPI_CONST */
+/** @} end of QSPI register group */
+/** @} end of REGISTER group */
 
 #if defined ( __CC_ARM   )
     #pragma no_anon_unions

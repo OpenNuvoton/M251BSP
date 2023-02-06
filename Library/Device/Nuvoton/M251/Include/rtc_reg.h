@@ -15,14 +15,15 @@
 #endif
 
 /**
-   @addtogroup REGISTER Control Register
-  @{
+    @addtogroup REGISTER Control Register
+    @{
 */
 
 /**
     @addtogroup RTC Real Time Clock Controller (RTC)
     Memory Mapped Structure for RTC Controller
-@{ */
+    @{
+*/
 
 typedef struct
 {
@@ -286,7 +287,7 @@ typedef struct
      * |        |           |111 = L7 mode(Only for VBAT domain).
      * |[7]     |C32KS      |RTC Clock 32K Source Selection:
      * |        |           |0 = Internal RTC clock is from 32K crystal .
-     * |        |           |1 = Internal RTC clock is from LIRC32K.
+     * |        |           |1 = Internal RTC clock is from LIRC.
      * |[8]     |IOCTLSEL   |IO Pin Backup Control Selection (Only for VBAT Domain)
      * |        |           |When low speed 32 kHz oscillator is disabled or TAMP0EN is disabled, PF.4 pin (X32KO pin), PF.5 pin (X32KI pin) or
      * |        |           |PF.6 pin (TAMPER0 pin) can be used as GPIO function.User can program IOCTLSEL to decide PF.4, 5, 6 I/O function
@@ -774,10 +775,9 @@ typedef struct
 #define RTC_TAMPCAL_TENYEAR_Pos          (20)                                              /*!< RTC_T::TAMPCAL: TENYEAR Position       */
 #define RTC_TAMPCAL_TENYEAR_Msk          (0xful << RTC_TAMPCAL_TENYEAR_Pos)                /*!< RTC_T::TAMPCAL: TENYEAR Mask           */
 
-
-/**@}*/ /* RTC_CONST */
-/**@}*/ /* end of RTC register group */
-/**@}*/ /* end of REGISTER group */
+/** @} RTC_CONST */
+/** @} end of RTC register group */
+/** @} end of REGISTER group */
 
 #if defined ( __CC_ARM   )
     #pragma no_anon_unions

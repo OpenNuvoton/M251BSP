@@ -15,14 +15,15 @@
 #endif
 
 /**
-   @addtogroup REGISTER Control Register
-   @{
+    @addtogroup REGISTER Control Register
+    @{
 */
 
 /**
     @addtogroup EADC Enhanced Analog to Digital Converter (EADC)
     Memory Mapped Structure for EADC Controller
-@{ */
+    @{
+*/
 
 typedef struct
 {
@@ -816,9 +817,9 @@ typedef struct
 #define EADC_PDMACTL_PDMATEN_Pos         (0)                                               /*!< EADC_T::PDMACTL: PDMATEN Position      */
 #define EADC_PDMACTL_PDMATEN_Msk         (0x7fffful << EADC_PDMACTL_PDMATEN_Pos)           /*!< EADC_T::PDMACTL: PDMATEN Mask          */
 
-/**@}*/ /* EADC_CONST */
-/**@}*/ /* end of EADC register group */
-/**@}*/ /* end of REGISTER group */
+/** @} EADC_CONST */
+/** @} end of EADC register group */
+/** @} end of REGISTER group */
 
 #if defined ( __CC_ARM   )
     #pragma no_anon_unions

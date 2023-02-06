@@ -98,7 +98,7 @@ extern int32_t  g_FMC_i32ErrCode; /*!< FMC global error code */
 #define FMC_TIMEOUT_CHKSUM      (SystemCoreClock*2)      /*!< Get checksum command time-out 2 s    \hideinitializer */
 #define FMC_TIMEOUT_CHKALLONE   (SystemCoreClock*2)      /*!< Check-all-one command time-out 2 s   \hideinitializer */
 
-/*@}*/ /* end of group FMC_EXPORTED_CONSTANTS */
+/** @} end of group FMC_EXPORTED_CONSTANTS */
 
 /** @addtogroup FMC_EXPORTED_FUNCTIONS FMC Exported Functions
   @{
@@ -110,9 +110,7 @@ extern int32_t  g_FMC_i32ErrCode; /*!< FMC global error code */
 /**
  * @brief      Enable ISP Function
  *
- * @param      None
  *
- * @return     None
  *
  * @details    This function will set ISPEN bit of ISPCTL control register to enable ISP function.
  *
@@ -122,9 +120,7 @@ extern int32_t  g_FMC_i32ErrCode; /*!< FMC global error code */
 /**
  * @brief      Disable ISP Function
  *
- * @param      None
  *
- * @return     None
  *
  * @details    This function will clear ISPEN bit of ISPCTL control register to disable ISP function.
  *
@@ -134,9 +130,7 @@ extern int32_t  g_FMC_i32ErrCode; /*!< FMC global error code */
 /**
  * @brief      Enable LDROM Update Function
  *
- * @param      None
  *
- * @return     None
  *
  * @details    This function will set LDUEN bit of ISPCTL control register to enable LDROM update function.
  *             User needs to set LDUEN bit before they can update LDROM.
@@ -147,9 +141,7 @@ extern int32_t  g_FMC_i32ErrCode; /*!< FMC global error code */
 /**
  * @brief      Disable LDROM Update Function
  *
- * @param      None
  *
- * @return     None
  *
  * @details    This function will set ISPEN bit of ISPCTL control register to disable LDROM update function.
  *
@@ -159,9 +151,7 @@ extern int32_t  g_FMC_i32ErrCode; /*!< FMC global error code */
 /**
  * @brief      Enable User Configuration Update Function
  *
- * @param      None
  *
- * @return     None
  *
  * @details    This function will set CFGUEN bit of ISPCTL control register to enable User Configuration update function.
  *             User needs to set CFGUEN bit before they can update User Configuration area.
@@ -172,9 +162,7 @@ extern int32_t  g_FMC_i32ErrCode; /*!< FMC global error code */
 /**
  * @brief      Disable User Configuration Update Function
  *
- * @param      None
  *
- * @return     None
  *
  * @details    This function will clear CFGUEN bit of ISPCTL control register to disable User Configuration update function.
  *
@@ -185,9 +173,7 @@ extern int32_t  g_FMC_i32ErrCode; /*!< FMC global error code */
 /**
  * @brief      Enable APROM Update Function
  *
- * @param      None
  *
- * @return     None
  *
  * @details    This function will set APUEN bit of ISPCTL control register to enable APROM update function.
  *             User needs to set APUEN bit before they can update APROM in APROM boot mode.
@@ -198,9 +184,7 @@ extern int32_t  g_FMC_i32ErrCode; /*!< FMC global error code */
 /**
  * @brief      Disable APROM Update Function
  *
- * @param      None
  *
- * @return     None
  *
  * @details    This function will clear APUEN bit of ISPCTL control register to disable APROM update function.
  *
@@ -212,7 +196,6 @@ extern int32_t  g_FMC_i32ErrCode; /*!< FMC global error code */
  *
  * @param[in]  x   Booting from APROM(0)/LDROM(1)
  *
- * @return     None
  *
  * @details    This function will set MCU next booting from LDROM/APROM.
  *
@@ -224,9 +207,7 @@ extern int32_t  g_FMC_i32ErrCode; /*!< FMC global error code */
 /**
  * @brief      Get MCU Booting Status
  *
- * @param      None
  *
- * @return     None
  *
  * @details    This function will get status of chip next booting from LDROM/APROM.
  *
@@ -236,9 +217,7 @@ extern int32_t  g_FMC_i32ErrCode; /*!< FMC global error code */
 /**
  * @brief      Get ISP fail flag
  *
- * @param      None
  *
- * @return     None
  *
  * @details    This function will get the status of ISP falil flag
  *
@@ -248,9 +227,7 @@ extern int32_t  g_FMC_i32ErrCode; /*!< FMC global error code */
 /**
  * @brief      Clear ISP fail flag
  *
- * @param      None
  *
- * @return     None
  *
  * @details    This function will clear the status of ISP falil flag
  *
@@ -260,9 +237,7 @@ extern int32_t  g_FMC_i32ErrCode; /*!< FMC global error code */
 /**
   * @brief    Disable APROM update function
   *
-  * @param    None
   *
-  * @return   None
   *
   * @details  Disable APROM update function will forbid APROM programming when boot form APROM.
   *           APROM update is default to be disable.
@@ -273,9 +248,7 @@ extern int32_t  g_FMC_i32ErrCode; /*!< FMC global error code */
 /**
   * @brief    Disable User Configuration update function
   *
-  * @param    None
   *
-  * @return   None
   *
   * @details  Disable User Configuration update function will forbid User Configuration programming.
   *           User Configuration update is default to be disable.
@@ -285,9 +258,7 @@ extern int32_t  g_FMC_i32ErrCode; /*!< FMC global error code */
 /**
   * @brief    Disable LDROM update function
   *
-  * @param    None
   *
-  * @return   None
 
   * @details  Disable LDROM update function will forbid LDROM programming.
   *           LDROM update is default to be disable.
@@ -297,9 +268,7 @@ extern int32_t  g_FMC_i32ErrCode; /*!< FMC global error code */
 /**
   * @brief    Enable APROM update function
   *
-  * @param    None
   *
-  * @return   None
   *
   * @details  Enable APROM to be able to program when boot from APROM.
   *
@@ -309,9 +278,7 @@ extern int32_t  g_FMC_i32ErrCode; /*!< FMC global error code */
 /**
   * @brief    Enable User Configuration update function
   *
-  * @param    None
   *
-  * @return   None
   *
   * @details  Enable User Configuration to be able to program.
   *
@@ -321,9 +288,7 @@ extern int32_t  g_FMC_i32ErrCode; /*!< FMC global error code */
 /**
   * @brief    Enable LDROM update function
   *
-  * @param    None
   *
-  * @return   None
   *
   * @details  Enable LDROM to be able to program.
   *
@@ -388,7 +353,6 @@ static __INLINE uint32_t FMC_ReadUID(uint8_t u8Index)
 /**
   * @brief    Read company ID
   *
-  * @param    None
   *
   * @return   The company ID (32-bit)
   *           0xFFFFFFFF: Check g_FMC_i32ErrCode to know if command timeout
@@ -426,7 +390,6 @@ static __INLINE uint32_t FMC_ReadCID(void)
 /**
   * @brief    Read product ID
   *
-  * @param    None
   *
   * @return   The product ID (32-bit)
   *
@@ -502,8 +465,6 @@ static __INLINE uint32_t FMC_ReadUCID(uint32_t u32Index)
 /**
   * @brief      To read bang-gap voltage code
   *
-  * @param[in]  None
-  *
   * @return     The bang-gap voltage code
   *             0xFFFFFFFF: Check g_FMC_i32ErrCode to know if command timeout
   *
@@ -540,8 +501,6 @@ static __INLINE uint32_t FMC_ReadVBGCode(void)
 /**
   * @brief      To read the temperature sensor ADC code
   *
-  * @param[in]  None
-  *
   * @return     The temperature sensor ADC code
   *             0xFFFFFFFF: Check g_FMC_i32ErrCode to know if command timeout
   *
@@ -577,8 +536,6 @@ static __INLINE uint32_t FMC_ReadVTEMPCode(void)
 
 /**
   * @brief      To read the calibration value for ADC offset
-  *
-  * @param[in]  None
   *
   * @return     The calibration value for ADC offset
   *             0xFFFFFFFF: Check g_FMC_i32ErrCode to know if command timeout
@@ -618,8 +575,6 @@ static __INLINE uint32_t FMC_ReadADCOffset(void)
  *
  * @param[in]   u32PageAddr  The page address to remap to address 0x0. The address must be page alignment.
  *
- * @return      To set VECMAP to remap specified page address to 0x0.
- *
  * @details     This function is used to set VECMAP to map specified page to vector page (0x0).
  *
  * @note
@@ -651,7 +606,6 @@ static __INLINE void FMC_SetVectorPageAddr(uint32_t u32PageAddr)
 /**
  * @brief       Get current vector mapping address.
  *
- * @param       None
  *
  * @return      The current vector mapping address.
  *
@@ -745,11 +699,11 @@ uint32_t FMC_Read(uint32_t u32Addr);
 void FMC_Write(uint32_t u32Addr, uint32_t u32Data);
 uint32_t FMC_Write128(uint32_t u32Addr, uint32_t pu32Buf[]);
 
-/*@}*/ /* end of group FMC_EXPORTED_FUNCTIONS */
+/** @} end of group FMC_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group FMC_Driver */
+/** @} end of group FMC_Driver */
 
-/*@}*/ /* end of group Standard_Driver */
+/** @} end of group Standard_Driver */
 
 #ifdef __cplusplus
 }

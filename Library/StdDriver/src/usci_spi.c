@@ -109,7 +109,6 @@ uint32_t USPI_Open(USPI_T *psUSPI, uint32_t u32MasterSlave, uint32_t u32SPIMode,
 /**
   * @brief Disable USCI_SPI function mode.
   * @param[in]  psUSPI The pointer of the specified USCI_SPI module.
-  * @return None
   */
 void USPI_Close(USPI_T *psUSPI)
 {
@@ -119,7 +118,6 @@ void USPI_Close(USPI_T *psUSPI)
 /**
   * @brief Clear Rx buffer.
   * @param[in]  psUSPI The pointer of the specified USCI_SPI module.
-  * @return None
   */
 void USPI_ClearRxBuf(USPI_T *psUSPI)
 {
@@ -129,7 +127,6 @@ void USPI_ClearRxBuf(USPI_T *psUSPI)
 /**
   * @brief Clear Tx buffer.
   * @param[in]  psUSPI The pointer of the specified USCI_SPI module.
-  * @return None
   */
 void USPI_ClearTxBuf(USPI_T *psUSPI)
 {
@@ -139,7 +136,6 @@ void USPI_ClearTxBuf(USPI_T *psUSPI)
 /**
   * @brief Disable the automatic slave select function.
   * @param[in]  psUSPI The pointer of the specified USCI_SPI module.
-  * @return None
   */
 void USPI_DisableAutoSS(USPI_T *psUSPI)
 {
@@ -153,7 +149,6 @@ void USPI_DisableAutoSS(USPI_T *psUSPI)
   * @param[in]  u32ActiveLevel The active level of slave select signal. Valid values are:
   *                     - \ref USPI_SS_ACTIVE_HIGH
   *                     - \ref USPI_SS_ACTIVE_LOW
-  * @return None
   */
 void USPI_EnableAutoSS(USPI_T *psUSPI, uint32_t u32SSPinMask, uint32_t u32ActiveLevel)
 {
@@ -230,7 +225,6 @@ uint32_t USPI_GetBusClock(USPI_T *psUSPI)
   *           - \ref USPI_TXEND_INT_MASK
   *           - \ref USPI_RXST_INT_MASK
   *           - \ref USPI_RXEND_INT_MASK
-  * @return None
   */
 void USPI_EnableInt(USPI_T *psUSPI, uint32_t u32Mask)
 {
@@ -321,7 +315,6 @@ void USPI_EnableInt(USPI_T *psUSPI, uint32_t u32Mask)
   *           - \ref USPI_TXEND_INT_MASK
   *           - \ref USPI_RXST_INT_MASK
   *           - \ref USPI_RXEND_INT_MASK
-  * @return None
   */
 void USPI_DisableInt(USPI_T *psUSPI, uint32_t u32Mask)
 {
@@ -529,7 +522,6 @@ uint32_t USPI_GetIntFlag(USPI_T *psUSPI, uint32_t u32Mask)
   *           - \ref USPI_TXEND_INT_MASK
   *           - \ref USPI_RXST_INT_MASK
   *           - \ref USPI_RXEND_INT_MASK
-  * @return None
   */
 void USPI_ClearIntFlag(USPI_T *psUSPI, uint32_t u32Mask)
 {
@@ -683,7 +675,6 @@ uint32_t USPI_GetStatus(USPI_T *psUSPI, uint32_t u32Mask)
 /**
   * @brief  Enable USCI_SPI Wake-up Function.
   * @param[in]  psUSPI The pointer of the specified USCI_SPI module.
-  * @return None
   */
 void USPI_EnableWakeup(USPI_T *psUSPI)
 {
@@ -693,17 +684,16 @@ void USPI_EnableWakeup(USPI_T *psUSPI)
 /**
   * @brief  Disable USCI_SPI Wake-up Function.
   * @param[in]  psUSPI The pointer of the specified USCI_SPI module.
-  * @return None
   */
 void USPI_DisableWakeup(USPI_T *psUSPI)
 {
     psUSPI->WKCTL &= ~USPI_WKCTL_WKEN_Msk;
 }
 
-/*@}*/ /* end of group USCI_SPI_EXPORTED_FUNCTIONS */
+/** @} end of group USCI_SPI_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group USCI_SPI_Driver */
+/** @} end of group USCI_SPI_Driver */
 
-/*@}*/ /* end of group Standard_Driver */
+/** @} end of group Standard_Driver */
 
 /*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/

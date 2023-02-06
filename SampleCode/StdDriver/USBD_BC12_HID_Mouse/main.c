@@ -358,9 +358,6 @@ DCD_REPEAT_TIMER:
 
 void PowerDown()
 {
-    printf("Enter power down ...\n");
-
-    while (!IsDebugFifoEmpty());
 
     /* Wakeup Enable */
     USBD_ENABLE_INT(USBD_INTEN_WKEN_Msk);
@@ -375,7 +372,7 @@ void PowerDown()
         CLK->PWRCTL ^= CLK_PWRCTL_PDEN_Msk;
 
     SYS_LockReg();
-    printf("device wakeup!\n");
+
 }
 
 /*---------------------------------------------------------------------------------------------------------*/

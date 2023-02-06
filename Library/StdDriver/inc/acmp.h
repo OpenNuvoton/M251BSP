@@ -67,7 +67,7 @@ extern "C"
 #define ACMP_VREF_CRVSSEL_INTVREF    (1UL << ACMP_VREF_CRVSSEL_Pos)  /*!< ACMP_VREF setting for selecting internal reference voltage as the CRV source voltage \hideinitializer */
 
 
-/*@}*/ /* end of group ACMP_EXPORTED_CONSTANTS */
+/** @} end of group ACMP_EXPORTED_CONSTANTS */
 
 
 /** @addtogroup ACMP_EXPORTED_FUNCTIONS ACMP Exported Functions
@@ -83,7 +83,6 @@ extern "C"
   * @brief This macro is used to enable output inverse function
   * @param[in] acmp The pointer of the specified ACMP module
   * @param[in] u32ChNum The ACMP number
-  * @return None
   * @details This macro will set ACMPOINV bit of ACMP_CTL register to enable output inverse function.
   * \hideinitializer
   */
@@ -93,7 +92,6 @@ extern "C"
   * @brief This macro is used to disable output inverse function
   * @param[in] acmp The pointer of the specified ACMP module
   * @param[in] u32ChNum The ACMP number
-  * @return None
   * @details This macro will clear ACMPOINV bit of ACMP_CTL register to disable output inverse function.
   * \hideinitializer
   */
@@ -108,7 +106,6 @@ extern "C"
   *                  - \ref ACMP_CTL_NEGSEL_CRV
   *                  - \ref ACMP_CTL_NEGSEL_VBG
   *                  - \ref ACMP_CTL_NEGSEL_DAC
-  * @return None
   * @details This macro will set NEGSEL (ACMP_CTL[5:4]) to determine the source of negative input.
   * \hideinitializer
   */
@@ -118,7 +115,6 @@ extern "C"
   * @brief This macro is used to enable hysteresis function and set hysteresis to 30mV
   * @param[in] acmp The pointer of the specified ACMP module
   * @param[in] u32ChNum The ACMP number
-  * @return None
   * \hideinitializer
   */
 #define ACMP_ENABLE_HYSTERESIS(acmp, u32ChNum) ((acmp)->CTL[(u32ChNum)] |= ACMP_CTL_HYSTERESIS_30MV)
@@ -127,7 +123,6 @@ extern "C"
   * @brief This macro is used to disable hysteresis function
   * @param[in] acmp The pointer of the specified ACMP module
   * @param[in] u32ChNum The ACMP number
-  * @return None
   * @details This macro will clear HYSEL bits of ACMP_CTL register to disable hysteresis function.
   * \hideinitializer
   */
@@ -143,7 +138,6 @@ extern "C"
   *                  - \ref ACMP_CTL_HYSTERESIS_10MV
   *                  - \ref ACMP_CTL_HYSTERESIS_DISABLE
   * \hideinitializer
-  * @return None
   */
 #define ACMP_CONFIG_HYSTERESIS(acmp, u32ChNum, u32HysSel) ((acmp)->CTL[(u32ChNum)] = ((acmp)->CTL[(u32ChNum)] & ~ACMP_CTL_HYSSEL_Msk) | (u32HysSel))
 
@@ -151,7 +145,6 @@ extern "C"
   * @brief This macro is used to enable interrupt
   * @param[in] acmp The pointer of the specified ACMP module
   * @param[in] u32ChNum The ACMP number
-  * @return None
   * @details This macro will set ACMPIE bit of ACMP_CTL register to enable interrupt function.
   *          If wake-up function is enabled, the wake-up interrupt will be enabled as well.
   * \hideinitializer
@@ -162,7 +155,6 @@ extern "C"
   * @brief This macro is used to disable interrupt
   * @param[in] acmp The pointer of the specified ACMP module
   * @param[in] u32ChNum The ACMP number
-  * @return None
   * @details This macro will clear ACMPIE bit of ACMP_CTL register to disable interrupt function.
   * \hideinitializer
   */
@@ -172,7 +164,6 @@ extern "C"
   * @brief This macro is used to enable ACMP
   * @param[in] acmp The pointer of the specified ACMP module
   * @param[in] u32ChNum The ACMP number
-  * @return None
   * @details This macro will set ACMPEN bit of ACMP_CTL register to enable analog comparator.
   * \hideinitializer
   */
@@ -182,7 +173,6 @@ extern "C"
   * @brief This macro is used to disable ACMP
   * @param[in] acmp The pointer of the specified ACMP module
   * @param[in] u32ChNum The ACMP number
-  * @return None
   * @details This macro will clear ACMPEN bit of ACMP_CTL register to disable analog comparator.
   * \hideinitializer
   */
@@ -212,7 +202,6 @@ extern "C"
   * @brief This macro is used to clear ACMP interrupt flag
   * @param[in] acmp The pointer of the specified ACMP module
   * @param[in] u32ChNum The ACMP number
-  * @return   None
   * @details This macro will write 1 to ACMPIFn bit of ACMP_STATUS register to clear interrupt flag.
   * \hideinitializer
   */
@@ -222,7 +211,6 @@ extern "C"
   * @brief This macro is used to clear ACMP wake-up interrupt flag
   * @param[in] acmp The pointer of the specified ACMP module
   * @param[in] u32ChNum The ACMP number
-  * @return   None
   * @details This macro will write 1 to WKIFn bit of ACMP_STATUS register to clear interrupt flag.
   * \hideinitializer
   */
@@ -232,7 +220,6 @@ extern "C"
   * @brief This macro is used to enable ACMP wake-up function
   * @param[in] acmp The pointer of the specified ACMP module
   * @param[in] u32ChNum The ACMP number
-  * @return None
   * @details This macro will set WKEN (ACMP_CTL[16]) to enable ACMP wake-up function.
   * \hideinitializer
   */
@@ -242,7 +229,6 @@ extern "C"
   * @brief This macro is used to disable ACMP wake-up function
   * @param[in] acmp The pointer of the specified ACMP module
   * @param[in] u32ChNum The ACMP number
-  * @return None
   * @details This macro will clear WKEN (ACMP_CTL[16]) to disable ACMP wake-up function.
   * \hideinitializer
   */
@@ -257,7 +243,6 @@ extern "C"
   *                  - \ref ACMP_CTL_POSSEL_P1
   *                  - \ref ACMP_CTL_POSSEL_P2
   *                  - \ref ACMP_CTL_POSSEL_P3
-  * @return None
   * @details This macro will set POSSEL (ACMP_CTL[7:6]) to determine the comparator positive input pin.
   * \hideinitializer
   */
@@ -267,7 +252,6 @@ extern "C"
   * @brief This macro is used to enable ACMP filter function
   * @param[in] acmp The pointer of the specified ACMP module
   * @param[in] u32ChNum The ACMP number
-  * @return None
   * @details This macro will set OUTSEL (ACMP_CTL[12]) to enable output filter function.
   * \hideinitializer
   */
@@ -277,7 +261,6 @@ extern "C"
   * @brief This macro is used to disable ACMP filter function
   * @param[in] acmp The pointer of the specified ACMP module
   * @param[in] u32ChNum The ACMP number
-  * @return None
   * @details This macro will clear OUTSEL (ACMP_CTL[12]) to disable output filter function.
   * \hideinitializer
   */
@@ -296,7 +279,6 @@ extern "C"
   *                  - \ref ACMP_CTL_FILTSEL_16PCLK
   *                  - \ref ACMP_CTL_FILTSEL_32PCLK
   *                  - \ref ACMP_CTL_FILTSEL_64PCLK
-  * @return None
   * @details When ACMP output filter function is enabled, the output sampling count is determined by FILTSEL (ACMP_CTL[15:13]).
   * \hideinitializer
   */
@@ -309,7 +291,6 @@ extern "C"
   *             The formula is:
   *                       comparator reference voltage = CRV source voltage x (1/6 + u32Level/24)
   *             The range of u32Level is 0 ~ 15.
-  * @return   None
   * @details  When CRV is selected as ACMP negative input source, the CRV level is determined by CRVCTL (ACMP_VREF[3:0]).
   * \hideinitializer
   */
@@ -321,7 +302,6 @@ extern "C"
   * @param[in] u32Src is the source of CRV. Including:
   *                  - \ref ACMP_VREF_CRVSSEL_AVDD
   *                  - \ref ACMP_VREF_CRVSSEL_INTVREF
-  * @return None
   * @details The source of CRV can be VDDA or internal reference voltage. The internal reference voltage level is determined by SYS_VREFCTL register.
   * \hideinitializer
   */
@@ -335,7 +315,6 @@ extern "C"
   *                  - \ref ACMP_CTL_INTPOL_RF
   *                  - \ref ACMP_CTL_INTPOL_R
   *                  - \ref ACMP_CTL_INTPOL_F
-  * @return None
   * @details The ACMP output interrupt condition can be rising edge, falling edge or any edge.
   * \hideinitializer
   */
@@ -345,7 +324,6 @@ extern "C"
   * @brief This macro is used to enable ACMP window latch mode
   * @param[in] acmp The pointer of the specified ACMP module
   * @param[in] u32ChNum The ACMP number
-  * @return None
   * @details This macro will set WLATEN (ACMP_CTL[17]) to enable ACMP window latch mode.
   *          When ACMP0/1_WLAT pin is at high level, ACMPO0/1 passes through window latch
   *          block; when ACMP0/1_WLAT pin is at low level, the output of window latch block,
@@ -358,7 +336,6 @@ extern "C"
   * @brief This macro is used to disable ACMP window latch mode
   * @param[in] acmp The pointer of the specified ACMP module
   * @param[in] u32ChNum The ACMP number
-  * @return None
   * @details This macro will clear WLATEN (ACMP_CTL[17]) to disable ACMP window latch mode.
   * \hideinitializer
   */
@@ -368,7 +345,6 @@ extern "C"
   * @brief This macro is used to enable ACMP window compare mode
   * @param[in] acmp The pointer of the specified ACMP module
   * @param[in] u32ChNum The ACMP number
-  * @return None
   * @details This macro will set WCMPSEL (ACMP_CTL[18]) to enable ACMP window compare mode.
   *          When window compare mode is enabled, user can connect the specific analog voltage
   *          source to either the positive inputs of both comparators or the negative inputs of
@@ -385,7 +361,6 @@ extern "C"
   * @brief This macro is used to disable ACMP window compare mode
   * @param[in] acmp The pointer of the specified ACMP module
   * @param[in] u32ChNum The ACMP number
-  * @return None
   * @details This macro will clear WCMPSEL (ACMP_CTL[18]) to disable ACMP window compare mode.
   * \hideinitializer
   */
@@ -400,11 +375,11 @@ void ACMP_Close(ACMP_T *acmp, uint32_t u32ChNum);
 
 
 
-/*@}*/ /* end of group ACMP_EXPORTED_FUNCTIONS */
+/** @} end of group ACMP_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group ACMP_Driver */
+/** @} end of group ACMP_Driver */
 
-/*@}*/ /* end of group Standard_Driver */
+/** @} end of group Standard_Driver */
 
 #ifdef __cplusplus
 }

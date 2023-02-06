@@ -15,14 +15,15 @@
 #endif
 
 /**
-   @addtogroup REGISTER Control Register
-   @{
+    @addtogroup REGISTER Control Register
+    @{
 */
 
 /**
     @addtogroup UUART UART Mode of USCI Controller (UUART)
     Memory Mapped Structure for UUART Controller
-@{ */
+    @{
+*/
 
 typedef struct
 {
@@ -678,11 +679,9 @@ typedef struct
 #define UUART_PROTSTS_CTSLV_Pos           (17)                                              /*!< UUART_T::PROTSTS: CTSLV Position        */
 #define UUART_PROTSTS_CTSLV_Msk           (0x1ul << UUART_PROTSTS_CTSLV_Pos)                /*!< UUART_T::PROTSTS: CTSLV Mask            */
 
-/**@}*/ /* UUART_CONST */
-/**@}*/ /* end of UUART register group */
-
-
-/**@}*/ /* end of REGISTER group */
+/** @} UUART_CONST */
+/** @} end of UUART register group */
+/** @} end of REGISTER group */
 
 #if defined ( __CC_ARM   )
     #pragma no_anon_unions

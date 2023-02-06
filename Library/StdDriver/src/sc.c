@@ -65,7 +65,6 @@ uint32_t SC_IsCardInserted(SC_T *psSC)
   *
   * @param[in]  psSC    The pointer of smartcard module.
   *
-  * @return     None
   *
   * @details    This function reset both transmit and receive FIFO of specified smartcard module.
   */
@@ -84,7 +83,6 @@ void SC_ClearFIFO(SC_T *psSC)
   *
   * @param[in]  psSC    The pointer of smartcard module.
   *
-  * @return     None
   *
   * @details    SC will force all transition to IDLE state.
   */
@@ -120,7 +118,6 @@ void SC_Close(SC_T *psSC)
   *                         -\ref SC_PIN_STATE_HIGH
   *                         -\ref SC_PIN_STATE_LOW
   *
-  * @return     None
   *
   * @details    Initialization process configures smartcard and enables engine clock.
   */
@@ -162,7 +159,6 @@ void SC_Open(SC_T *psSC, uint32_t u32CardDet, uint32_t u32PWR)
   *
   * @param[in]  psSC    The pointer of smartcard module.
   *
-  * @return     None
   *
   * @details    Reset the Tx/Rx FIFO, clock and initial default parameter.
   */
@@ -239,7 +235,6 @@ void SC_ResetReader(SC_T *psSC)
   * @param[in]  psSC      The pointer of smartcard module.
   * @param[in]  u32BGT  Block guard time using ETU as unit, valid range are between 1 ~ 32.
   *
-  * @return     None
   *
   * @details    This function is used to configure block guard time (BGT) of specified smartcard module.
   */
@@ -254,7 +249,6 @@ void SC_SetBlockGuardTime(SC_T *psSC, uint32_t u32BGT)
   * @param[in]  psSC    The pointer of smartcard module.
   * @param[in]  u32CGT  Character guard time using ETU as unit, valid range are between 11 ~ 267.
   *
-  * @return     None
   *
   * @details    This function is used to configure character guard time (CGT) of specified smartcard module.
   * @note       Before using this API, user should set the correct stop bit length first.
@@ -271,7 +265,6 @@ void SC_SetCharGuardTime(SC_T *psSC, uint32_t u32CGT)
   *
   * @param[in]  psSC    The pointer of smartcard module.
   *
-  * @return     None
   *
   * @details    This function stop all smartcard timer of specified smartcard module.
   * @note       This function stop the timers within smartcard module, \b not timer module.
@@ -305,7 +298,6 @@ void SC_StopAllTimer(SC_T *psSC)
   * @param[in]  u32ETUCount Timer timeout duration, ETU based. For timer 0, valid  range are between 1 ~ 0x1000000 ETUs.
   *                         For timer 1 and timer 2, valid range are between 1 ~ 0x100 ETUs.
   *
-  * @return     None
   *
   * @details    Enable Timer starting, counter will count when condition match.
   * @note       This function start the timer within smartcard module, \b not timer module.
@@ -367,7 +359,6 @@ void SC_StartTimer(SC_T *psSC, uint32_t u32TimerNum, uint32_t u32Mode, uint32_t 
   * @param[in]  psSC        The pointer of smartcard module.
   * @param[in]  u32TimerNum Specify timer channel to stop. Valid values are 0, 1, 2.
   *
-  * @return     None
   *
   * @details    This function stop a smartcard timer of specified smartcard module.
   * @note       This function stop the timer within smartcard module, \b not timer module.
@@ -454,10 +445,10 @@ uint32_t SC_GetInterfaceClock(SC_T *psSC)
     return u32Clk;
 }
 
-/*@}*/ /* end of group SC_EXPORTED_FUNCTIONS */
+/** @} end of group SC_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group SC_Driver */
+/** @} end of group SC_Driver */
 
-/*@}*/ /* end of group Standard_Driver */
+/** @} end of group Standard_Driver */
 
 /*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/

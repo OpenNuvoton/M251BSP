@@ -15,14 +15,15 @@
 #endif
 
 /**
-   @addtogroup REGISTER Control Register
-   @{
+    @addtogroup REGISTER Control Register
+    @{
 */
 
 /**
     @addtogroup PSIO Programable Serial IO (PSIO)
     Memory Mapped Structure for PSIO Controller
-@{ */
+    @{
+*/
 
 typedef struct
 {
@@ -1441,9 +1442,9 @@ typedef struct
 #define PSIO_GNCT_CPCTL1_CKPT7ACT_Pos         (28)                                              /*!< PSIO_T::CPCTL1: CKPT7ACT Position      */
 #define PSIO_GNCT_CPCTL1_CKPT7ACT_Msk         (0x7ul << PSIO_GNCT_CPCTL1_CKPT7ACT_Pos)               /*!< PSIO_T::CPCTL1: CKPT7ACT Mask          */
 
-/**@}*/ /* PSIO_CONST */
-/**@}*/ /* end of PSIO register group */
-/**@}*/ /* end of REGISTER group */
+/** @} PSIO_CONST */
+/** @} end of PSIO register group */
+/** @} end of REGISTER group */
 
 #if defined ( __CC_ARM   )
     #pragma no_anon_unions

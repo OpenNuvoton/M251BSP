@@ -92,9 +92,6 @@ void GPB_IRQHandler(void)
 
 void PowerDown()
 {
-    printf("Enter power down ...\n");
-
-    while (!IsDebugFifoEmpty());
 
     /* Wakeup Enable */
     USBD->INTEN |= USBD_INTEN_WKEN_Msk;
@@ -116,10 +113,8 @@ void PowerDown()
         CLK_SysTickDelay(1000); /* Delay 1ms */
         USBD->ATTR ^= USBD_ATTR_RWAKEUP_Msk;
         g_u8RemoteWakeup_gpio = 0;
-        printf("Remote Wakeup!!\n");
     }
 
-    printf("device wakeup!\n");
 }
 
 /*---------------------------------------------------------------------------------------------------------*/

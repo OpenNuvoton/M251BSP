@@ -111,7 +111,7 @@ extern "C"
 
 #define TK_SCANALL_NUM                      (31)                                              /*!< Touch key scan all number */
 
-/*@}*/ /* end of group TK_EXPORTED_CONSTANTS */
+/** @} end of group TK_EXPORTED_CONSTANTS */
 
 
 /** @addtogroup TK_EXPORTED_FUNCTIONS TK Exported Functions
@@ -122,7 +122,6 @@ extern "C"
  * @brief Enable scan key(s)
  * @param[in] u32Mask Combination of enabled scan keys. Each bit corresponds to a touch key.
  *                           Bit 0 represents touch key 0, bit 1 represents touch key 1...
- * @return None
  * @note Touch key 16 is the default reference key, so touch key 16 is enabled.
  * \hideinitializer
  */
@@ -133,7 +132,6 @@ extern "C"
  * @brief Disable scan key(s)
  * @param[in] u32Mask Combination of disabled scan keys. Each bit corresponds to a touch key.
  *                           Bit 0 represents touch key 0, bit 1 represents touch key 1...
- * @return None
  * \hideinitializer
  */
 #define TK_DISABLE_SCAN_KEY(u32Mask) (TK->SCANC &= ~(u32Mask&0x1FFFF)); \
@@ -143,7 +141,6 @@ extern "C"
  * @brief Enable reference key(s)
  * @param[in] u32Mask Combination of enabled reference keys. Each bit corresponds to a touch key.
  *                           Bit 0 represents touch key 0, bit 1 represents touch key 1...
- * @return None
  * @note Touch key 16 is the default reference key, so touch key 16 is enabled.
  * \hideinitializer
  */
@@ -154,7 +151,6 @@ extern "C"
  * @brief Disable reference key(s)
  * @param[in] u32Mask Combination of disabled reference keys. Each bit corresponds to a touch key.
  *                           Bit 0 represents touch key 0, bit 1 represents touch key 1...
- * @return None
  * @note It must enable a reference key and touch key 16 is the default reference key.
  *       If no any one touch key as reference key except touch key 16, then reference Touch key 16 can't be disable.
  * \hideinitializer
@@ -163,8 +159,6 @@ extern "C"
     (TK->REFC1 &= ~(u32Mask>>17))
 /**
  * @brief Initiate enabled key(s) scan immediately.
- * @param None
- * @return None
  * \hideinitializer
  */
 #define TK_START_SCAN() (TK->SCANC |= TK_SCANC_SCAN_Msk)
@@ -178,7 +172,6 @@ extern "C"
  *              - \ref TK_SENSE_PULSE_8
  *              - \ref TK_SENSE_PULSE_250NS
  *              - \ref TK_SENSE_PULSE_500NS
- * @return None
  * \hideinitializer
  */
 #define TK_SET_PULSE_WIDTH(u32PulseWidth) (TK->REFC = (TK->REFC & ~TK_REFC_PULSET_Msk) | (u32PulseWidth))
@@ -194,7 +187,6 @@ extern "C"
  *              - \ref TK_SENSE_CNT_16
  *              - \ref TK_SENSE_CNT_32
  *              - \ref TK_SENSE_CNT_64
- * @return None
  * \hideinitializer
  */
 #define TK_SET_SENSING_CNT(u32SenseCnt) (TK->REFC = (TK->REFC & ~TK_REFC_SENSET_Msk) | (u32SenseCnt))
@@ -219,7 +211,6 @@ extern "C"
  *              - \ref TK_AVCCH_6_DIV_32
  *              - \ref TK_AVCCH_7_DIV_32
  *              - \ref TK_AVCCH_8_DIV_32
- * @return None
  * \hideinitializer
  */
 #define TK_SET_AVCCH(u32AVCCHSel) (TK->SCANC = (TK->SCANC & ~TK_SCANC_AVDDH_S_Msk) | (u32AVCCHSel))
@@ -249,7 +240,6 @@ extern "C"
 
 /**
  * @brief Get touch key busy status.
- * @param None
  * @retval 0 Touch key is scan completed or stopped.
  * @retval 1 Touch key is busy.
  * \hideinitializer
@@ -327,7 +317,6 @@ extern "C"
  *              - \ref TK_INT_SCAN_TH_TK14
  *              - \ref TK_INT_SCAN_TH_TK15
  *              - \ref TK_INT_SCAN_TH_TK16
- * @return None
  * \hideinitializer
  */
 #define TK_CLR_INT_FLAG(u32Mask) (TK->STA = (u32Mask))
@@ -345,7 +334,6 @@ extern "C"
  *              - \ref TK_INT_SCAN_TH_TK23
  *              - \ref TK_INT_SCAN_TH_TK24
  *              - \ref TK_INT_SCAN_TH_TK25
- * @return None
  * \hideinitializer
  */
 #define TK_CLR_INT_FLAG1(u32Mask) (TK->STA1 = (u32Mask))
@@ -375,11 +363,11 @@ void TK_ClearTKIF(void);
 
 void TK_ConfigPowerDown(uint8_t u8Sensitivity);
 
-/*@}*/ /* end of group TK_EXPORTED_FUNCTIONS */
+/** @} end of group TK_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group TK_Driver */
+/** @} end of group TK_Driver */
 
-/*@}*/ /* end of group Standard_Driver */
+/** @} end of group Standard_Driver */
 
 #ifdef __cplusplus
 }

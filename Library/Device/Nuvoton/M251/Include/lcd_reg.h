@@ -6,22 +6,20 @@
  * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2022 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
+
 #ifndef __LCD_REG_H__
 #define __LCD_REG_H__
 
-
-/** @addtogroup REGISTER Control Register
-
-  @{
-
+/**
+    @addtogroup REGISTER Control Register
+    @{
 */
 
-
-/*---------------------- Liquid-Crystal Display -------------------------*/
 /**
     @addtogroup LCD Liquid-Crystal Display(LCD)
     Memory Mapped Structure for LCD Controller
-@{ */
+    @{
+*/
 
 typedef struct
 {
@@ -1331,8 +1329,8 @@ typedef struct
 #define LCD_DATA11_DD3_Pos               (24)                                              /*!< LCD_T::DATA11: DD3 Position            */
 #define LCD_DATA11_DD3_Msk               (0xfful << LCD_DATA11_DD3_Pos)                    /*!< LCD_T::DATA11: DD3 Mask                */
 
-/**@}*/ /* LCD_CONST */
-/**@}*/ /* end of LCD register group */
-/**@}*/ /* end of REGISTER group */
+/** @} LCD_CONST */
+/** @} end of LCD register group */
+/** @} end of REGISTER group */
 
 #endif /* __LCD_REG_H__ */

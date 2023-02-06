@@ -31,7 +31,7 @@ extern "C"
 #define OPA_CALIBRATION_RV_1_2_AVDD                   (0UL)                     /*!< OPA calibration reference voltage select 1/2 AVDD  \hideinitializer */
 #define OPA_CALIBRATION_RV_H_L_VCM                    (1UL)                     /*!< OPA calibration reference voltage select from high vcm to low vcm \hideinitializer */
 
-/*@}*/ /* end of group OPA_EXPORTED_CONSTANTS */
+/** @} end of group OPA_EXPORTED_CONSTANTS */
 
 /** @addtogroup OPA_EXPORTED_FUNCTIONS OPA Exported Functions
   @{
@@ -47,7 +47,6 @@ __STATIC_INLINE int32_t OPA_Calibration(OPA_T *opa, uint32_t u32OpaNum, uint32_t
   * @brief This macro is used to power on the OPA circuit
   * @param[in] opa The pointer of the specified OPA module
   * @param[in] u32OpaNum The OPA number. 0 for OPA0.
-  * @return None
   * @details This macro will set OPENx (x=0) bit of OPA_CTL register to power on the OPA circuit.
   * \hideinitializer
   */
@@ -57,7 +56,6 @@ __STATIC_INLINE int32_t OPA_Calibration(OPA_T *opa, uint32_t u32OpaNum, uint32_t
   * @brief This macro is used to power down the OPA circuit
   * @param[in] opa The pointer of the specified OPA module
   * @param[in] u32OpaNum The OPA number. 0 for OPA0.
-  * @return None
   * @details This macro will clear OPENx (x=0) bit of OPA_CTL register to power down the OPA circuit.
   * \hideinitializer
   */
@@ -67,7 +65,6 @@ __STATIC_INLINE int32_t OPA_Calibration(OPA_T *opa, uint32_t u32OpaNum, uint32_t
   * @brief This macro is used to enable the OPA Schmitt trigger buffer
   * @param[in] opa The pointer of the specified OPA module
   * @param[in] u32OpaNum The OPA number. 0 for OPA0.
-  * @return None
   * @details This macro will set OPDOENx (x=0) bit of OPA_CTL register to enable the OPA Schmitt trigger buffer.
   * \hideinitializer
   */
@@ -77,7 +74,6 @@ __STATIC_INLINE int32_t OPA_Calibration(OPA_T *opa, uint32_t u32OpaNum, uint32_t
   * @brief This macro is used to disable the OPA Schmitt trigger buffer
   * @param[in] opa The pointer of the specified OPA module
   * @param[in] u32OpaNum The OPA number. 0 for OPA0.
-  * @return None
   * @details This macro will clear OPDOENx (x=0) bit of OPA_CTL register to disable the OPA Schmitt trigger buffer.
   * \hideinitializer
   */
@@ -87,7 +83,6 @@ __STATIC_INLINE int32_t OPA_Calibration(OPA_T *opa, uint32_t u32OpaNum, uint32_t
   * @brief This macro is used to enable OPA Schmitt trigger digital output interrupt
   * @param[in] opa The pointer of the specified OPA module
   * @param[in] u32OpaNum The OPA number. 0 for OPA0.
-  * @return None
   * @details This macro will set OPDOIENx (x=0) bit of OPA_CTL register to enable the OPA Schmitt trigger digital output interrupt.
   * \hideinitializer
   */
@@ -97,7 +92,6 @@ __STATIC_INLINE int32_t OPA_Calibration(OPA_T *opa, uint32_t u32OpaNum, uint32_t
   * @brief This macro is used to disable OPA Schmitt trigger digital output interrupt
   * @param[in] opa The pointer of the specified OPA module
   * @param[in] u32OpaNum The OPA number. 0 for OPA0.
-  * @return None
   * @details This macro will clear OPDOIENx (x=0) bit of OPA_CTL register to disable the OPA Schmitt trigger digital output interrupt.
   * \hideinitializer
   */
@@ -128,7 +122,6 @@ __STATIC_INLINE int32_t OPA_Calibration(OPA_T *opa, uint32_t u32OpaNum, uint32_t
   * @brief This macro is used to clear OPA interrupt flag
   * @param[in] opa The pointer of the specified OPA module
   * @param[in] u32OpaNum The OPA number. 0 for OPA0.
-  * @return   None
   * @details This macro will write 1 to OPDOIFx (x=0) bit of OPA_STATUS register to clear interrupt flag.
   * \hideinitializer
   */
@@ -188,11 +181,11 @@ __STATIC_INLINE int32_t OPA_Calibration(OPA_T *opa, uint32_t u32OpaNum, uint32_t
 
 
 
-/*@}*/ /* end of group OPA_EXPORTED_FUNCTIONS */
+/** @} end of group OPA_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group OPA_Driver */
+/** @} end of group OPA_Driver */
 
-/*@}*/ /* end of group Standard_Driver */
+/** @} end of group Standard_Driver */
 
 #ifdef __cplusplus
 }

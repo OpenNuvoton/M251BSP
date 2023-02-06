@@ -18,11 +18,11 @@ extern "C"
   @{
 */
 
-/** @addtogroup LCDZONE LCD Library
+/** @addtogroup LCDLIB LCD Library
   @{
 */
 
-/** @addtogroup LCDZONE_EXPORTED_CONSTANTS LCD ZONE Exported Constants
+/** @addtogroup M256D_LCDLIB_EXPORTED_CONSTANTS M256D LCD Zone Exported Constants
   @{
 */
 /*---------------------------------------------------------------------------------------------------------*/
@@ -40,39 +40,39 @@ extern "C"
 #define SYMBOL_V_11                                     ((27)<<4 | (7)<<0)
 #define SYMBOL_A_12                                     ((25)<<4 | (7)<<0)
 #define SYMBOL_W_13                                     ((23)<<4 | (7)<<0)
-#define SYMBOL_NVT_14                                       ((4)<<4 | (7)<<0)
-#define SYMBOL_WIFI_16                                      ((4)<<4 | (6)<<0)
-#define SYMBOL_SOUND_17                                     ((4)<<4 | (5)<<0)
-#define SYMBOL_BAT_FRAME_18                                     ((4)<<4 | (3)<<0)
-#define SYMBOL_BAT_1_18                                     ((4)<<4 | (1)<<0)
-#define SYMBOL_BAT_2_18                                     ((4)<<4 | (0)<<0)
-#define SYMBOL_BAT_3_18                                     ((4)<<4 | (2)<<0)
-#define SYMBOL_PERCENTAGE_30                                        ((8)<<4 | (7)<<0)
-#define SYMBOL_PPM_31                                       ((1)<<4 | (7)<<0)
-#define SYMBOL_TEMP_C_35                                        ((37)<<4 | (7)<<0)
-#define SYMBOL_TEMP_F_36                                        ((36)<<4 | (7)<<0)
-#define SYMBOL_VERSION_37                                       ((18)<<4 | (7)<<0)
+#define SYMBOL_NVT_14                                   ((4)<<4 | (7)<<0)
+#define SYMBOL_WIFI_16                                  ((4)<<4 | (6)<<0)
+#define SYMBOL_SOUND_17                                 ((4)<<4 | (5)<<0)
+#define SYMBOL_BAT_FRAME_18                             ((4)<<4 | (3)<<0)
+#define SYMBOL_BAT_1_18                                 ((4)<<4 | (1)<<0)
+#define SYMBOL_BAT_2_18                                 ((4)<<4 | (0)<<0)
+#define SYMBOL_BAT_3_18                                 ((4)<<4 | (2)<<0)
+#define SYMBOL_PERCENTAGE_30                            ((8)<<4 | (7)<<0)
+#define SYMBOL_PPM_31                                   ((1)<<4 | (7)<<0)
+#define SYMBOL_TEMP_C_35                                ((37)<<4 | (7)<<0)
+#define SYMBOL_TEMP_F_36                                ((36)<<4 | (7)<<0)
+#define SYMBOL_VERSION_37                               ((18)<<4 | (7)<<0)
 #define SYMBOL_P_50                                     ((0)<<4 | (0)<<0)
 #define SYMBOL_P_51                                     ((9)<<4 | (0)<<0)
 #define SYMBOL_P_52                                     ((13)<<4 | (0)<<0)
 #define SYMBOL_P_53                                     ((19)<<4 | (0)<<0)
 #define SYMBOL_P_54                                     ((24)<<4 | (0)<<0)
-#define SYMBOL_COL_57                                       ((0)<<4 | (2)<<0)
-#define SYMBOL_COL_59                                       ((9)<<4 | (2)<<0)
-#define SYMBOL_COL_61                                       ((13)<<4 | (2)<<0)
-#define SYMBOL_COL_63                                       ((19)<<4 | (2)<<0)
-#define SYMBOL_COL_65                                       ((24)<<4 | (2)<<0)
+#define SYMBOL_COL_57                                   ((0)<<4 | (2)<<0)
+#define SYMBOL_COL_59                                   ((9)<<4 | (2)<<0)
+#define SYMBOL_COL_61                                   ((13)<<4 | (2)<<0)
+#define SYMBOL_COL_63                                   ((19)<<4 | (2)<<0)
+#define SYMBOL_COL_65                                   ((24)<<4 | (2)<<0)
 #define SYMBOL_P_67                                     ((14)<<4 | (7)<<0)
 #define SYMBOL_P_68                                     ((20)<<4 | (7)<<0)
-#define SYMBOL_COL_69                                       ((12)<<4 | (2)<<0)
+#define SYMBOL_COL_69                                   ((12)<<4 | (2)<<0)
 #define SYMBOL_P_72                                     ((12)<<4 | (0)<<0)
 
 
-/*@}*/ /* end of group LCDZONE_EXPORTED_CONSTANTS */
+/** @} end of group M256D_LCDLIB_EXPORTED_CONSTANTS */
 
 
 
-/** @addtogroup LCDZONE_EXPORTED_STRUCTS LCD ZONE Exported Structs
+/** @addtogroup M256D_LCDLIB_EXPORTED_STRUCTS M256D LCD Zone Exported Structs
   @{
  */
 typedef struct
@@ -84,11 +84,11 @@ typedef struct
 
 } LCD_ZONE_INFO_T;
 
-/*@}*/ /* end of group LCDZONE_EXPORTED_STRUCTS */
+/** @} end of group M256D_LCDLIB_EXPORTED_STRUCTS */
 
 
 
-/** @addtogroup LCDZONE_EXPORTED_CONSTANTS LCD ZONE Exported Constants
+/** @addtogroup M256D_LCDLIB_EXPORTED_CONSTANTS M256D LCD Zone Exported Constants
   @{
 */
 
@@ -106,10 +106,10 @@ typedef struct
 
 
 
-/*@}*/ /* end of group LCDZONE_EXPORTED_CONSTANTS */
+/** @} end of group M256D_LCDLIB_EXPORTED_CONSTANTS */
 
 
-/** @addtogroup LCDZONE_EXPORTED_STRUCTS LCD ZONE Exported Structs
+/** @addtogroup M256D_LCDLIB_EXPORTED_STRUCTS M256D LCD Zone Exported Structs
   @{
  */
 
@@ -403,11 +403,9 @@ static const LCD_ZONE_INFO_T g_LCDZoneInfo[] =
 
 };
 
-/*@}*/ /* end of group LCDZONE_EXPORTED_STRUCTS */
-
-/*@}*/ /* end of group LCDZONE */
-
-/*@}*/ /* end of group Library */
+/** @} end of group M256D_LCDLIB_EXPORTED_STRUCTS */
+/** @} end of group LCDLIB */
+/** @} end of group Library */
 
 #ifdef __cplusplus
 }

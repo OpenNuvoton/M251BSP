@@ -15,15 +15,15 @@
 #endif
 
 /**
-   @addtogroup REGISTER Control Register
-   @{
+    @addtogroup REGISTER Control Register
+    @{
 */
 
 /**
     @addtogroup PDMA Peripheral Direct Memory Access Controller (PDMA)
     Memory Mapped Structure for PDMA Controller
-@{ */
-
+    @{
+*/
 
 typedef struct
 {
@@ -723,9 +723,9 @@ typedef struct
 #define PDMA_ASOCR_DASOL_Pos             (16)                                              /*!< PDMA_T::ASOCR: DASOL Position          */
 #define PDMA_ASOCR_DASOL_Msk             (0xfffful << PDMA_ASOCR_DASOL_Pos)                /*!< PDMA_T::ASOCR: DASOL Mask              */
 
-/**@}*/ /* PDMA_CONST */
-/**@}*/ /* end of PDMA register group */
-/**@}*/ /* end of REGISTER group */
+/** @} PDMA_CONST */
+/** @} end of PDMA register group */
+/** @} end of REGISTER group */
 
 #if defined ( __CC_ARM   )
     #pragma no_anon_unions

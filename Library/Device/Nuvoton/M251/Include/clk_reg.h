@@ -15,14 +15,15 @@
 #endif
 
 /**
-   @addtogroup REGISTER Control Register
-   @{
+    @addtogroup REGISTER Control Register
+    @{
 */
 
 /**
     @addtogroup CLK System Clock Controller (CLK)
     Memory Mapped Structure for CLK Controller
-@{ */
+    @{
+*/
 
 typedef struct
 {
@@ -1207,9 +1208,9 @@ typedef struct
 #define CLK_HXTFSEL_HXTFSEL_Pos          (0)                                               /*!< CLK_T::HXTFSEL: HXTFSEL Position       */
 #define CLK_HXTFSEL_HXTFSEL_Msk          (0x1ul << CLK_HXTFSEL_HXTFSEL_Pos)                /*!< CLK_T::HXTFSEL: HXTFSEL Mask           */
 
-/**@}*/ /* CLK_CONST */
-/**@}*/ /* end of CLK register group */
-/**@}*/ /* end of REGISTER group */
+/** @} CLK_CONST */
+/** @} end of CLK register group */
+/** @} end of REGISTER group */
 
 #if defined ( __CC_ARM   )
     #pragma no_anon_unions

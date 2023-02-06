@@ -240,7 +240,6 @@ uint32_t PWM_ConfigOutputChannel(PWM_T *pwm, uint32_t u32ChannelNum, uint32_t u3
  *                - PWM1 : PWM Group 1
  * @param[in] u32ChannelMask Combination of enabled channels. Each bit corresponds to a channel.
  *                           Bit 0 is channel 0, bit 1 is channel 1...
- * @return None
  * @details This function is used to start PWM module.
  * @note Every two channels share the same setting.
  */
@@ -264,7 +263,6 @@ void PWM_Start(PWM_T *pwm, uint32_t u32ChannelMask)
  *                - PWM1 : PWM Group 1
  * @param[in] u32ChannelMask Combination of enabled channels. Each bit corresponds to a channel.
  *                           Bit 0 is channel 0, bit 1 is channel 1...
- * @return None
  * @details This function is used to stop PWM module.
  * @note Every two channels share the same setting.
  */
@@ -288,7 +286,6 @@ void PWM_Stop(PWM_T *pwm, uint32_t u32ChannelMask)
  *                - PWM1 : PWM Group 1
  * @param[in] u32ChannelMask Combination of enabled channels. Each bit corresponds to a channel.
  *                           Bit 0 is channel 0, bit 1 is channel 1...
- * @return None
  * @details This function is used to stop PWM generation immediately by clear channel enable bit.
  * @note Every two channels share the same setting.
  */
@@ -319,7 +316,6 @@ void PWM_ForceStop(PWM_T *pwm, uint32_t u32ChannelMask)
  *                  - \ref PWM_TRIGGER_ADC_EVEN_CMP_DOWN_COUNT_POINT
  *                  - \ref PWM_TRIGGER_ADC_ODD_CMP_UP_COUNT_POINT
  *                  - \ref PWM_TRIGGER_ADC_ODD_CMP_DOWN_COUNT_POINT
- * @return None
  * @details This function is used to enable selected channel to trigger ADC.
  */
 void PWM_EnableADCTrigger(PWM_T *pwm, uint32_t u32ChannelNum, uint32_t u32Condition)
@@ -342,7 +338,6 @@ void PWM_EnableADCTrigger(PWM_T *pwm, uint32_t u32ChannelNum, uint32_t u32Condit
  *                - PWM0 : PWM Group 0
  *                - PWM1 : PWM Group 1
  * @param[in] u32ChannelNum PWM channel number. Valid values are between 0~5
- * @return None
  * @details This function is used to disable selected channel to trigger ADC.
  */
 void PWM_DisableADCTrigger(PWM_T *pwm, uint32_t u32ChannelNum)
@@ -364,7 +359,6 @@ void PWM_DisableADCTrigger(PWM_T *pwm, uint32_t u32ChannelNum)
  *                - PWM1 : PWM Group 1
  * @param[in] u32ChannelNum PWM channel number. Valid values are between 0~5
  * @param[in] u32Condition This parameter is not used
- * @return None
  * @details This function is used to clear selected channel trigger ADC flag.
  */
 void PWM_ClearADCTriggerFlag(PWM_T *pwm, uint32_t u32ChannelNum, uint32_t u32Condition)
@@ -410,7 +404,6 @@ uint32_t PWM_GetADCTriggerFlag(PWM_T *pwm, uint32_t u32ChannelNum)
  *                  - \ref PWM_FB_LEVEL_SYS_CSS
  *                  - \ref PWM_FB_LEVEL_SYS_BOD
  *                  - \ref PWM_FB_LEVEL_SYS_COR
- * @return None
  * @details This function is used to enable fault brake of selected channel(s).
  *          The write-protection function should be disabled before using this function.
  */
@@ -477,7 +470,6 @@ void PWM_EnableFaultBrake(PWM_T *pwm, uint32_t u32ChannelMask, uint32_t u32Level
  *                - PWM1 : PWM Group 1
  * @param[in] u32ChannelMask Combination of enabled channels. Each bit corresponds to a channel.
  *                           Bit 0 is channel 0, bit 1 is channel 1...
- * @return None
  * @details This function is used to enable capture of selected channel(s).
  */
 void PWM_EnableCapture(PWM_T *pwm, uint32_t u32ChannelMask)
@@ -493,7 +485,6 @@ void PWM_EnableCapture(PWM_T *pwm, uint32_t u32ChannelMask)
  *                - PWM1 : PWM Group 1
  * @param[in] u32ChannelMask Combination of enabled channels. Each bit corresponds to a channel.
  *                           Bit 0 is channel 0, bit 1 is channel 1...
- * @return None
  * @details This function is used to disable capture of selected channel(s).
  */
 void PWM_DisableCapture(PWM_T *pwm, uint32_t u32ChannelMask)
@@ -509,7 +500,6 @@ void PWM_DisableCapture(PWM_T *pwm, uint32_t u32ChannelMask)
  *                - PWM1 : PWM Group 1
  * @param[in] u32ChannelMask Combination of enabled channels. Each bit corresponds to a channel.
  *                           Set bit 0 to 1 enables channel 0 output, set bit 1 to 1 enables channel 1 output...
- * @return None
  * @details This function is used to enable PWM output generation of selected channel(s).
  */
 void PWM_EnableOutput(PWM_T *pwm, uint32_t u32ChannelMask)
@@ -524,7 +514,6 @@ void PWM_EnableOutput(PWM_T *pwm, uint32_t u32ChannelMask)
  *                - PWM1 : PWM Group 1
  * @param[in] u32ChannelMask Combination of enabled channels. Each bit corresponds to a channel
  *                           Set bit 0 to 1 disables channel 0 output, set bit 1 to 1 disables channel 1 output...
- * @return None
  * @details This function is used to disable PWM output generation of selected channel(s).
  */
 void PWM_DisableOutput(PWM_T *pwm, uint32_t u32ChannelMask)
@@ -539,7 +528,6 @@ void PWM_DisableOutput(PWM_T *pwm, uint32_t u32ChannelMask)
  *                - PWM1 : PWM Group 1
  * @param[in] u32ChannelNum PWM channel number. Valid values are between 0~5
  * @param[in] u32Duration Dead zone length in PWM clock count, valid values are between 0~0xFFF, but 0 means there is no Dead zone.
- * @return None
  * @details This function is used to enable Dead zone of selected channel.
  *          The write-protection function should be disabled before using this function.
  * @note Every two channels share the same setting.
@@ -557,7 +545,6 @@ void PWM_EnableDeadZone(PWM_T *pwm, uint32_t u32ChannelNum, uint32_t u32Duration
  *                - PWM0 : PWM Group 0
  *                - PWM1 : PWM Group 1
  * @param[in] u32ChannelNum PWM channel number. Valid values are between 0~5
- * @return None
  * @details This function is used to disable Dead zone of selected channel.
  *          The write-protection function should be disabled before using this function.
  */
@@ -576,7 +563,6 @@ void PWM_DisableDeadZone(PWM_T *pwm, uint32_t u32ChannelNum)
  * @param[in] u32Edge Rising or falling edge to latch counter.
  *              - \ref PWM_CAPTURE_INT_RISING_LATCH
  *              - \ref PWM_CAPTURE_INT_FALLING_LATCH
- * @return None
  * @details This function is used to enable capture interrupt of selected channel.
  */
 void PWM_EnableCaptureInt(PWM_T *pwm, uint32_t u32ChannelNum, uint32_t u32Edge)
@@ -593,7 +579,6 @@ void PWM_EnableCaptureInt(PWM_T *pwm, uint32_t u32ChannelNum, uint32_t u32Edge)
  * @param[in] u32Edge Rising or falling edge to latch counter.
  *              - \ref PWM_CAPTURE_INT_RISING_LATCH
  *              - \ref PWM_CAPTURE_INT_FALLING_LATCH
- * @return None
  * @details This function is used to disable capture interrupt of selected channel.
  */
 void PWM_DisableCaptureInt(PWM_T *pwm, uint32_t u32ChannelNum, uint32_t u32Edge)
@@ -610,7 +595,6 @@ void PWM_DisableCaptureInt(PWM_T *pwm, uint32_t u32ChannelNum, uint32_t u32Edge)
  * @param[in] u32Edge Rising or falling edge to latch counter.
  *              - \ref PWM_CAPTURE_INT_RISING_LATCH
  *              - \ref PWM_CAPTURE_INT_FALLING_LATCH
- * @return None
  * @details This function is used to clear capture interrupt of selected channel.
  */
 void PWM_ClearCaptureIntFlag(PWM_T *pwm, uint32_t u32ChannelNum, uint32_t u32Edge)
@@ -646,7 +630,6 @@ uint32_t PWM_GetCaptureIntFlag(PWM_T *pwm, uint32_t u32ChannelNum)
  * @param[in] u32IntDutyType Duty interrupt type, could be either
  *              - \ref PWM_DUTY_INT_DOWN_COUNT_MATCH_CMP
  *              - \ref PWM_DUTY_INT_UP_COUNT_MATCH_CMP
- * @return None
  * @details This function is used to enable duty interrupt of selected channel.
  */
 void PWM_EnableDutyInt(PWM_T *pwm, uint32_t u32ChannelNum, uint32_t u32IntDutyType)
@@ -660,7 +643,6 @@ void PWM_EnableDutyInt(PWM_T *pwm, uint32_t u32ChannelNum, uint32_t u32IntDutyTy
  *                - PWM0 : PWM Group 0
  *                - PWM1 : PWM Group 1
  * @param[in] u32ChannelNum PWM channel number. Valid values are between 0~5
- * @return None
  * @details This function is used to disable duty interrupt of selected channel.
  */
 void PWM_DisableDutyInt(PWM_T *pwm, uint32_t u32ChannelNum)
@@ -674,7 +656,6 @@ void PWM_DisableDutyInt(PWM_T *pwm, uint32_t u32ChannelNum)
  *                - PWM0 : PWM Group 0
  *                - PWM1 : PWM Group 1
  * @param[in] u32ChannelNum PWM channel number. Valid values are between 0~5
- * @return None
  * @details This function is used to clear duty interrupt flag of selected channel.
  */
 void PWM_ClearDutyIntFlag(PWM_T *pwm, uint32_t u32ChannelNum)
@@ -707,7 +688,6 @@ uint32_t PWM_GetDutyIntFlag(PWM_T *pwm, uint32_t u32ChannelNum)
  * @param[in] u32LoadMode PWM counter loading mode.
  *              - \ref PWM_LOAD_MODE_IMMEDIATE
  *              - \ref PWM_LOAD_MODE_CENTER
- * @return None
  * @details This function is used to enable load mode of selected channel.
  */
 void PWM_EnableLoadMode(PWM_T *pwm, uint32_t u32ChannelNum, uint32_t u32LoadMode)
@@ -724,7 +704,6 @@ void PWM_EnableLoadMode(PWM_T *pwm, uint32_t u32ChannelNum, uint32_t u32LoadMode
  * @param[in] u32LoadMode PWM counter loading mode.
  *              - \ref PWM_LOAD_MODE_IMMEDIATE
  *              - \ref PWM_LOAD_MODE_CENTER
- * @return None
  * @details This function is used to disable load mode of selected channel.
  */
 void PWM_DisableLoadMode(PWM_T *pwm, uint32_t u32ChannelNum, uint32_t u32LoadMode)
@@ -738,7 +717,6 @@ void PWM_DisableLoadMode(PWM_T *pwm, uint32_t u32ChannelNum, uint32_t u32LoadMod
  * @param[in] u32BrakeSource Fault brake source.
  *              - \ref PWM_FB_EDGE
  *              - \ref PWM_FB_LEVEL
- * @return None
  * @details This function is used to enable fault brake interrupt.
  *          The write-protection function should be disabled before using this function.
  * @note Every two channels share the same setting.
@@ -754,7 +732,6 @@ void PWM_EnableFaultBrakeInt(PWM_T *pwm, uint32_t u32BrakeSource)
  * @param[in] u32BrakeSource Fault brake source.
  *              - \ref PWM_FB_EDGE
  *              - \ref PWM_FB_LEVEL
- * @return None
  * @details This function is used to disable fault brake interrupt.
  *          The write-protection function should be disabled before using this function.
  * @note Every two channels share the same setting.
@@ -770,7 +747,6 @@ void PWM_DisableFaultBrakeInt(PWM_T *pwm, uint32_t u32BrakeSource)
  * @param[in] u32BrakeSource Fault brake source.
  *              - \ref PWM_FB_EDGE
  *              - \ref PWM_FB_LEVEL
- * @return None
  * @details This function is used to clear fault brake interrupt of selected source.
  *          The write-protection function should be disabled before using this function.
  */
@@ -802,7 +778,6 @@ uint32_t PWM_GetFaultBrakeIntFlag(PWM_T *pwm, uint32_t u32BrakeSource)
  *                - PWM1 : PWM Group 1
  * @param[in] u32ChannelNum PWM channel number. Valid values are between 0~5. Every two channels share the same setting.
  * @param[in] u32IntPeriodType Period interrupt type. This parameter is not used.
- * @return None
  * @details This function is used to enable period interrupt of selected channel.
  */
 void PWM_EnablePeriodInt(PWM_T *pwm, uint32_t u32ChannelNum,  uint32_t u32IntPeriodType)
@@ -816,7 +791,6 @@ void PWM_EnablePeriodInt(PWM_T *pwm, uint32_t u32ChannelNum,  uint32_t u32IntPer
  *                - PWM0 : PWM Group 0
  *                - PWM1 : PWM Group 1
  * @param[in] u32ChannelNum PWM channel number. Valid values are between 0~5. Every two channels share the same setting.
- * @return None
  * @details This function is used to disable period interrupt of selected channel.
  */
 void PWM_DisablePeriodInt(PWM_T *pwm, uint32_t u32ChannelNum)
@@ -830,7 +804,6 @@ void PWM_DisablePeriodInt(PWM_T *pwm, uint32_t u32ChannelNum)
  *                - PWM0 : PWM Group 0
  *                - PWM1 : PWM Group 1
  * @param[in] u32ChannelNum PWM channel number. Valid values are between 0~5. Every two channels share the same setting.
- * @return None
  * @details This function is used to clear period interrupt of selected channel.
  */
 void PWM_ClearPeriodIntFlag(PWM_T *pwm, uint32_t u32ChannelNum)
@@ -860,7 +833,6 @@ uint32_t PWM_GetPeriodIntFlag(PWM_T *pwm, uint32_t u32ChannelNum)
  *                - PWM0 : PWM Group 0
  *                - PWM1 : PWM Group 1
  * @param[in] u32ChannelNum PWM channel number. Valid values are between 0~5. Every two channels share the same setting.
- * @return None
  * @details This function is used to enable zero interrupt of selected channel.
  */
 void PWM_EnableZeroInt(PWM_T *pwm, uint32_t u32ChannelNum)
@@ -874,7 +846,6 @@ void PWM_EnableZeroInt(PWM_T *pwm, uint32_t u32ChannelNum)
  *                - PWM0 : PWM Group 0
  *                - PWM1 : PWM Group 1
  * @param[in] u32ChannelNum PWM channel number. Valid values are between 0~5. Every two channels share the same setting.
- * @return None
  * @details This function is used to disable zero interrupt of selected channel.
  */
 void PWM_DisableZeroInt(PWM_T *pwm, uint32_t u32ChannelNum)
@@ -888,7 +859,6 @@ void PWM_DisableZeroInt(PWM_T *pwm, uint32_t u32ChannelNum)
  *                - PWM0 : PWM Group 0
  *                - PWM1 : PWM Group 1
  * @param[in] u32ChannelNum PWM channel number. Valid values are between 0~5. Every two channels share the same setting.
- * @return None
  * @details This function is used to clear zero interrupt of selected channel.
  */
 void PWM_ClearZeroIntFlag(PWM_T *pwm, uint32_t u32ChannelNum)
@@ -924,7 +894,6 @@ uint32_t PWM_GetZeroIntFlag(PWM_T *pwm, uint32_t u32ChannelNum)
  *              - \ref PWM_CLKSRC_TIMER1
  *              - \ref PWM_CLKSRC_TIMER2
  *              - \ref PWM_CLKSRC_TIMER3
- * @return None
  * @details This function is used to set PWM clock source.
  * @note Every two channels share the same setting.
  */
@@ -950,7 +919,6 @@ void PWM_SetClockSource(PWM_T *pwm, uint32_t u32ChannelNum, uint32_t u32ClkSrcSe
  *              - \ref PWM_NF_CLK_DIV_32
  *              - \ref PWM_NF_CLK_DIV_64
  *              - \ref PWM_NF_CLK_DIV_128
- * @return None
  * @details This function is used to enable PWM brake noise filter function.
  */
 void PWM_EnableBrakeNoiseFilter(PWM_T *pwm, uint32_t u32BrakePinNum, uint32_t u32ClkCnt, uint32_t u32ClkDivSel)
@@ -965,7 +933,6 @@ void PWM_EnableBrakeNoiseFilter(PWM_T *pwm, uint32_t u32BrakePinNum, uint32_t u3
  *                - PWM0 : PWM Group 0
  *                - PWM1 : PWM Group 1
  * @param[in] u32BrakePinNum Brake pin selection. Valid values are 0 or 1.
- * @return None
  * @details This function is used to disable PWM brake noise filter function.
  */
 void PWM_DisableBrakeNoiseFilter(PWM_T *pwm, uint32_t u32BrakePinNum)
@@ -979,7 +946,6 @@ void PWM_DisableBrakeNoiseFilter(PWM_T *pwm, uint32_t u32BrakePinNum)
  *                - PWM0 : PWM Group 0
  *                - PWM1 : PWM Group 1
  * @param[in] u32BrakePinNum Brake pin selection. Valid values are 0 or 1.
- * @return None
  * @details This function is used to enable PWM brake pin inverse function.
  */
 void PWM_EnableBrakePinInverse(PWM_T *pwm, uint32_t u32BrakePinNum)
@@ -993,7 +959,6 @@ void PWM_EnableBrakePinInverse(PWM_T *pwm, uint32_t u32BrakePinNum)
  *                - PWM0 : PWM Group 0
  *                - PWM1 : PWM Group 1
  * @param[in] u32BrakePinNum Brake pin selection. Valid values are 0 or 1.
- * @return None
  * @details This function is used to disable PWM brake pin inverse function.
  */
 void PWM_DisableBrakePinInverse(PWM_T *pwm, uint32_t u32BrakePinNum)
@@ -1008,7 +973,6 @@ void PWM_DisableBrakePinInverse(PWM_T *pwm, uint32_t u32BrakePinNum)
  *                - PWM1 : PWM Group 1
  * @param[in] u32BrakePinNum Brake pin selection. Valid values are 0 or 1.
  * @param[in] u32SelAnotherModule Select to another module. Valid values are TRUE or FALSE.
- * @return None
  * @details This function is used to set PWM brake pin source.
  */
 void PWM_SetBrakePinSource(PWM_T *pwm, uint32_t u32BrakePinNum, uint32_t u32SelAnotherModule)
@@ -1038,7 +1002,6 @@ uint32_t PWM_GetWrapAroundFlag(PWM_T *pwm, uint32_t u32ChannelNum)
  *                - PWM0 : PWM Group 0
  *                - PWM1 : PWM Group 1
  * @param[in] u32ChannelNum PWM channel number. Valid values are between 0~5. Every two channels share the same setting.
- * @return None
  * @details This function is used to clear the time-base counter reached its maximum value flag of selected channel.
  */
 void PWM_ClearWrapAroundFlag(PWM_T *pwm, uint32_t u32ChannelNum)
@@ -1057,7 +1020,6 @@ void PWM_ClearWrapAroundFlag(PWM_T *pwm, uint32_t u32ChannelNum)
  *              - \ref PWM_CAPTURE_PDMA_RISING_LATCH
  *              - \ref PWM_CAPTURE_PDMA_FALLING_LATCH
  *              - \ref PWM_CAPTURE_PDMA_RISING_FALLING_LATCH
- * @return None
  * @details This function is used to enable PDMA transfer of selected channel(s) for PWM capture.
  * @note This function can only selects even or odd channel of pairs to do PDMA transfer.
  */
@@ -1076,7 +1038,6 @@ void PWM_EnablePDMA(PWM_T *pwm, uint32_t u32ChannelNum, uint32_t u32RisingFirst,
  *                - PWM0 : PWM Group 0
  *                - PWM1 : PWM Group 1
  * @param[in] u32ChannelNum PWM channel number.
- * @return None
  * @details This function is used to enable PDMA transfer of selected channel(s) for PWM capture.
  */
 void PWM_DisablePDMA(PWM_T *pwm, uint32_t u32ChannelNum)
@@ -1084,10 +1045,10 @@ void PWM_DisablePDMA(PWM_T *pwm, uint32_t u32ChannelNum)
     (pwm)->PDMACTL &= ~(PWM_PDMACTL_CHEN0_1_Msk << ((u32ChannelNum >> 1UL) << 3UL));
 }
 
-/*@}*/ /* end of group PWM_EXPORTED_FUNCTIONS */
+/** @} end of group PWM_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group PWM_Driver */
+/** @} end of group PWM_Driver */
 
-/*@}*/ /* end of group Standard_Driver */
+/** @} end of group Standard_Driver */
 
 /*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/
