@@ -396,8 +396,7 @@ void MSC_ClassRequest(void)
             default:
             {
                 /* Setup error, stall the device */
-                USBD_SetStall(EP0);
-                USBD_SetStall(EP1);
+                USBD_SetStall(0);
                 DBG_PRINTF("Unknow MSC req(0x%x). stall ctrl pipe\n", buf[1]);
                 break;
             }
@@ -439,8 +438,7 @@ void MSC_ClassRequest(void)
                 else /* Invalid Reset command */
                 {
                     /* Setup error, stall the device */
-                    USBD_SetStall(EP0);
-                    USBD_SetStall(EP1);
+                    USBD_SetStall(0);
                 }
 
 
@@ -452,8 +450,7 @@ void MSC_ClassRequest(void)
             {
                 // Stall
                 /* Setup error, stall the device */
-                USBD_SetStall(EP0);
-                USBD_SetStall(EP1);
+                USBD_SetStall(0);
                 DBG_PRINTF("Unknow MSC req (0x%x). stall ctrl pipe\n", buf[1]);
                 break;
             }

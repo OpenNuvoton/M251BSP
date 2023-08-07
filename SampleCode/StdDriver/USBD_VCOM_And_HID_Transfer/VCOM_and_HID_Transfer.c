@@ -365,8 +365,7 @@ void HID_ClassRequest(void)
             default:
             {
                 /* Setup error, stall the device */
-                USBD_SetStall(EP0);
-                USBD_SetStall(EP1);
+                USBD_SetStall(0);
                 break;
             }
         }
@@ -439,8 +438,7 @@ void HID_ClassRequest(void)
             {
                 /* Stall */
                 /* Setup error, stall the device */
-                USBD_SetStall(EP0);
-                USBD_SetStall(EP1);
+                USBD_SetStall(0);
                 break;
             }
         }

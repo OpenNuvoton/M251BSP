@@ -360,7 +360,7 @@ int32_t main(void)
     }
     else if (SET_PDMSEL == CLK_PMUCTL_PDMSEL_DPD)
     {
-        CLK_EnableDPDWKPin(CLK_DPDWKPIN_2, CLK_DPDWKPIN_RISING);
+        CLK_EnableDPDWKPin(CLK_DPDWKPIN_2, CLK_DPDWKPIN_FALLING);
     }
     else
     {

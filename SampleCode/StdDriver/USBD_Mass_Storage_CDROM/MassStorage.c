@@ -488,8 +488,7 @@ void MSC_ClassRequest(void)
                 }
                 else     /* Invalid Get MaxLun command */
                 {
-                    USBD_SetStall(EP0);
-                    USBD_SetStall(EP1);
+                    USBD_SetStall(0);
                 }
 
                 USBD_SET_DATA0(EP2);
@@ -500,8 +499,7 @@ void MSC_ClassRequest(void)
             default:
             {
                 /* Setup error, stall the device */
-                USBD_SetStall(EP0);
-                USBD_SetStall(EP1);
+                USBD_SetStall(0);
                 break;
             }
         }
@@ -536,8 +534,7 @@ void MSC_ClassRequest(void)
                 }
                 else     /* Invalid Reset command */
                 {
-                    USBD_SetStall(EP0);
-                    USBD_SetStall(EP1);
+                    USBD_SetStall(0);
                 }
 
                 break;
@@ -547,8 +544,7 @@ void MSC_ClassRequest(void)
             {
                 // Stall
                 /* Setup error, stall the device */
-                USBD_SetStall(EP0);
-                USBD_SetStall(EP1);
+                USBD_SetStall(0);
                 break;
             }
         }

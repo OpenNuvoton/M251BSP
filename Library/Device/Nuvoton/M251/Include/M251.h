@@ -44,8 +44,8 @@
   *
   * <b>Copyright Notice</b>
   *
- * SPDX-License-Identifier: Apache-2.0
-  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
+  * SPDX-License-Identifier: Apache-2.0<br/>
+  * Copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
   */
 
 #ifndef __M251_H__
