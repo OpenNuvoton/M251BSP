@@ -125,7 +125,7 @@ uint32_t PWM_ConfigCaptureChannel(PWM_T *pwm, uint32_t u32ChannelNum, uint32_t u
 }
 
 /**
- * @brief This function Configure PWM generator and get the nearest frequency in edge aligned auto-reload mode
+ * @brief This function Configure PWM generator and get the nearest frequency in up count auto-reload mode
  * @param[in] pwm The pointer of the specified PWM module
  *                - PWM0 : PWM Group 0
  *                - PWM1 : PWM Group 1
@@ -203,32 +203,17 @@ uint32_t PWM_ConfigOutputChannel(PWM_T *pwm, uint32_t u32ChannelNum, uint32_t u3
     u16Prescale = u16Prescale - 1UL;
     // every two channels share a prescaler
     PWM_SET_PRESCALER(pwm, u32ChannelNum, (uint32_t)u16Prescale);
-    // set PWM to down count type(edge aligned)
-    (pwm)->CTL1 = ((pwm)->CTL1 & ~(PWM_CTL1_CNTTYPE0_Msk << ((u32ChannelNum >> 1UL) << 2UL))) | (1UL << ((u32ChannelNum >> 1UL) << 2UL));
+    // set PWM to up count type
+    (pwm)->CTL1 = ((pwm)->CTL1 & ~(PWM_CTL1_CNTTYPE0_Msk << ((u32ChannelNum >> 1UL) << 2UL)));
 
     u16CNR -= 1UL;
     PWM_SET_CNR(pwm, u32ChannelNum, u16CNR);
+    PWM_SET_CMR(pwm, u32ChannelNum, u32DutyCycle * (u16CNR + 1UL) / 100UL);
 
-    if (u32DutyCycle)
-    {
-        if (u32DutyCycle >= 100UL)
-            PWM_SET_CMR(pwm, u32ChannelNum, u16CNR);
-        else
-            PWM_SET_CMR(pwm, u32ChannelNum, u32DutyCycle * (u16CNR + 1UL) / 100UL);
-
-        (pwm)->WGCTL0 &= ~((PWM_WGCTL0_PRDPCTL0_Msk | PWM_WGCTL0_ZPCTL0_Msk) << (u32ChannelNum << 1UL));
-        (pwm)->WGCTL0 |= (PWM_OUTPUT_LOW << ((u32ChannelNum << 1UL) + PWM_WGCTL0_PRDPCTL0_Pos));
-        (pwm)->WGCTL1 &= ~((PWM_WGCTL1_CMPDCTL0_Msk | PWM_WGCTL1_CMPUCTL0_Msk) << (u32ChannelNum << 1UL));
-        (pwm)->WGCTL1 |= (PWM_OUTPUT_HIGH << ((u32ChannelNum << 1UL) + PWM_WGCTL1_CMPDCTL0_Pos));
-    }
-    else
-    {
-        PWM_SET_CMR(pwm, u32ChannelNum, 0UL);
-        (pwm)->WGCTL0 &= ~((PWM_WGCTL0_PRDPCTL0_Msk | PWM_WGCTL0_ZPCTL0_Msk) << (u32ChannelNum << 1UL));
-        (pwm)->WGCTL0 |= (PWM_OUTPUT_LOW << ((u32ChannelNum << 1UL) + PWM_WGCTL0_ZPCTL0_Pos));
-        (pwm)->WGCTL1 &= ~((PWM_WGCTL1_CMPDCTL0_Msk | PWM_WGCTL1_CMPUCTL0_Msk) << (u32ChannelNum << 1UL));
-        (pwm)->WGCTL1 |= (PWM_OUTPUT_HIGH << ((u32ChannelNum << 1UL) + PWM_WGCTL1_CMPDCTL0_Pos));
-    }
+    (pwm)->WGCTL0 = ((pwm)->WGCTL0 & ~((PWM_WGCTL0_PRDPCTL0_Msk | PWM_WGCTL0_ZPCTL0_Msk) << (u32ChannelNum << 1UL))) | \
+                    ((uint32_t)PWM_OUTPUT_HIGH << ((u32ChannelNum << 1UL) + (uint32_t)PWM_WGCTL0_ZPCTL0_Pos));
+    (pwm)->WGCTL1 = ((pwm)->WGCTL1 & ~((PWM_WGCTL1_CMPDCTL0_Msk | PWM_WGCTL1_CMPUCTL0_Msk) << (u32ChannelNum << 1UL))) | \
+                    ((uint32_t)PWM_OUTPUT_LOW << ((u32ChannelNum << 1UL) + (uint32_t)PWM_WGCTL1_CMPUCTL0_Pos));
 
     return (i);
 }

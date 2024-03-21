@@ -175,7 +175,6 @@ int8_t TK_CmdType1(uint8_t *pu8RXBuf)
     int8_t i8Ret = 0;
     uint8_t u8Chan;
     uint32_t u32Data;
-    uint32_t u32PDID;
     S_TKFEAT *psTkFeat;
     S_KEYINFO *pKeyInfo;
     S_TKINFO *psTkInfo;

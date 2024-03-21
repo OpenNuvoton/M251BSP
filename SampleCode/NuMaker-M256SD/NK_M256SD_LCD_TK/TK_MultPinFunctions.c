@@ -28,7 +28,6 @@
  * TK14     PD.2
  * TK15     PD.1
  * TK16     PD.0
- * TKx      PD.12
  * TKx      PB.14
  ******************************************************************************/
 
@@ -42,9 +41,25 @@
 void SetTkMultiFun(uint32_t u32TkMsk)
 {
     /* Avoid using the pointer to set multiple pin function registers */
-    S_TKFEAT *psTkFeat;
-    psTkFeat = TK_GetFeaturePtr();
     unsigned int i;
+
+    SYS->GPD_MFPH = (SYS->GPD_MFPH & (~SYS_GPD_MFPH_PD15MFP_Msk));
+    SYS->GPA_MFPL = (SYS->GPA_MFPL & (~SYS_GPA_MFPL_PA5MFP_Msk));
+    SYS->GPA_MFPL = (SYS->GPA_MFPL & (~SYS_GPA_MFPL_PA4MFP_Msk));
+    SYS->GPA_MFPL = (SYS->GPA_MFPL & (~SYS_GPA_MFPL_PA3MFP_Msk));
+    SYS->GPA_MFPL = (SYS->GPA_MFPL & (~SYS_GPA_MFPL_PA2MFP_Msk));
+    SYS->GPA_MFPL = (SYS->GPA_MFPL & (~SYS_GPA_MFPL_PA1MFP_Msk));
+    SYS->GPA_MFPL = (SYS->GPA_MFPL & (~SYS_GPA_MFPL_PA0MFP_Msk));
+    SYS->GPF_MFPH = (SYS->GPF_MFPH & (~SYS_GPF_MFPH_PF15MFP_Msk));
+    SYS->GPC_MFPL = (SYS->GPC_MFPL & (~SYS_GPC_MFPL_PC5MFP_Msk));
+    SYS->GPC_MFPL = (SYS->GPC_MFPL & (~SYS_GPC_MFPL_PC4MFP_Msk));
+    SYS->GPC_MFPL = (SYS->GPC_MFPL & (~SYS_GPC_MFPL_PC3MFP_Msk));
+    SYS->GPC_MFPL = (SYS->GPC_MFPL & (~SYS_GPC_MFPL_PC2MFP_Msk));
+    SYS->GPD_MFPL = (SYS->GPD_MFPL & (~SYS_GPD_MFPL_PD3MFP_Msk));
+    SYS->GPD_MFPL = (SYS->GPD_MFPL & (~SYS_GPD_MFPL_PD2MFP_Msk));
+    SYS->GPD_MFPL = (SYS->GPD_MFPL & (~SYS_GPD_MFPL_PD1MFP_Msk));
+    SYS->GPD_MFPL = (SYS->GPD_MFPL & (~SYS_GPD_MFPL_PD0MFP_Msk));
+    SYS->GPB_MFPH = (SYS->GPB_MFPH & (~SYS_GPB_MFPH_PB14MFP_Msk));
 
     for (i = 0; i < (TKLIB_TOL_NUM_KEY + TK_SE_NUM); i++)
     {
@@ -122,10 +137,6 @@ void SetTkMultiFun(uint32_t u32TkMsk)
 
                 case 17: /* HBG040 : PB.14 */
                     SYS->GPB_MFPH = (SYS->GPB_MFPH & (~SYS_GPB_MFPH_PB14MFP_Msk)) | SYS_GPB_MFPH_PB14MFP_TK_SE;
-                    break;
-
-                case 18: /* HBG040 : PD.12 */
-                    SYS->GPD_MFPH = (SYS->GPD_MFPH & (~SYS_GPD_MFPH_PD12MFP_Msk)) | SYS_GPD_MFPH_PD12MFP_TK_SE;
                     break;
 
                 default:

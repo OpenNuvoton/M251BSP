@@ -29,8 +29,6 @@
  * TK14     PD.6/2
  * TK15     PD.5/1
  * TK16     PD.4/0
- * TKx      PD.12
- * TKx      PB.14
  * TK17     PC.7
  * TK18     PC.6
  * TK19     PA.7
@@ -40,6 +38,8 @@
  * TK23     PD.8
  * TK24     PC.1
  * TK25     PC.0
+ * TKx      PD.12
+ * TKx      PB.14
  ******************************************************************************/
 
 /**************************************************************************//**
@@ -56,7 +56,42 @@ void SetTkMultiFun(uint32_t u32TkMsk)
     psTkFeat = TK_GetFeaturePtr();
     unsigned int i;
 
-    for (i = 0; i < (u8MaxScKeyNum + 2); i++)
+    SYS->GPD_MFPH = (SYS->GPD_MFPH & (~SYS_GPD_MFPH_PD15MFP_Msk));
+    SYS->GPA_MFPL = (SYS->GPA_MFPL & (~SYS_GPA_MFPL_PA5MFP_Msk));
+    SYS->GPA_MFPL = (SYS->GPA_MFPL & (~SYS_GPA_MFPL_PA4MFP_Msk));
+    SYS->GPA_MFPL = (SYS->GPA_MFPL & (~SYS_GPA_MFPL_PA3MFP_Msk));
+    SYS->GPA_MFPL = (SYS->GPA_MFPL & (~SYS_GPA_MFPL_PA2MFP_Msk));
+    SYS->GPA_MFPL = (SYS->GPA_MFPL & (~SYS_GPA_MFPL_PA1MFP_Msk));
+    SYS->GPA_MFPL = (SYS->GPA_MFPL & (~SYS_GPA_MFPL_PA0MFP_Msk));
+    SYS->GPF_MFPH = (SYS->GPF_MFPH & (~SYS_GPF_MFPH_PF15MFP_Msk));
+    SYS->GPE_MFPH = (SYS->GPE_MFPH & (~SYS_GPE_MFPH_PE14MFP_Msk));
+    SYS->GPC_MFPL = (SYS->GPC_MFPL & (~SYS_GPC_MFPL_PC5MFP_Msk));
+    SYS->GPC_MFPL = (SYS->GPC_MFPL & (~SYS_GPC_MFPL_PC4MFP_Msk));
+    SYS->GPC_MFPL = (SYS->GPC_MFPL & (~SYS_GPC_MFPL_PC3MFP_Msk));
+    SYS->GPC_MFPL = (SYS->GPC_MFPL & (~SYS_GPC_MFPL_PC2MFP_Msk));
+    SYS->GPD_MFPL = (SYS->GPD_MFPL & (~SYS_GPD_MFPL_PD7MFP_Msk));
+    SYS->GPD_MFPL = (SYS->GPD_MFPL & (~SYS_GPD_MFPL_PD3MFP_Msk));
+    SYS->GPD_MFPL = (SYS->GPD_MFPL & (~SYS_GPD_MFPL_PD6MFP_Msk));
+    SYS->GPD_MFPL = (SYS->GPD_MFPL & (~SYS_GPD_MFPL_PD2MFP_Msk));
+    SYS->GPD_MFPL = (SYS->GPD_MFPL & (~SYS_GPD_MFPL_PD5MFP_Msk));
+    SYS->GPD_MFPL = (SYS->GPD_MFPL & (~SYS_GPD_MFPL_PD1MFP_Msk));
+    SYS->GPD_MFPL = (SYS->GPD_MFPL & (~SYS_GPD_MFPL_PD4MFP_Msk));
+    SYS->GPD_MFPL = (SYS->GPD_MFPL & (~SYS_GPD_MFPL_PD0MFP_Msk));
+    SYS->GPB_MFPH = (SYS->GPB_MFPH & (~SYS_GPB_MFPH_PB14MFP_Msk));
+    SYS->GPD_MFPH = (SYS->GPD_MFPH & (~SYS_GPD_MFPH_PD12MFP_Msk));
+    SYS->GPC_MFPL = (SYS->GPC_MFPL & (~SYS_GPC_MFPL_PC7MFP_Msk));
+    SYS->GPC_MFPL = (SYS->GPC_MFPL & (~SYS_GPC_MFPL_PC6MFP_Msk));
+    SYS->GPA_MFPL = (SYS->GPA_MFPL & (~SYS_GPA_MFPL_PA7MFP_Msk));
+    SYS->GPA_MFPL = (SYS->GPA_MFPL & (~SYS_GPA_MFPL_PA6MFP_Msk));
+    SYS->GPE_MFPH = (SYS->GPE_MFPH & (~SYS_GPE_MFPH_PE15MFP_Msk));
+    SYS->GPD_MFPH = (SYS->GPD_MFPH & (~SYS_GPD_MFPH_PD9MFP_Msk));
+    SYS->GPD_MFPH = (SYS->GPD_MFPH & (~SYS_GPD_MFPH_PD8MFP_Msk));
+    SYS->GPC_MFPL = (SYS->GPC_MFPL & (~SYS_GPC_MFPL_PC1MFP_Msk));
+    SYS->GPC_MFPL = (SYS->GPC_MFPL & (~SYS_GPC_MFPL_PC0MFP_Msk));
+    SYS->GPB_MFPH = (SYS->GPB_MFPH & (~SYS_GPB_MFPH_PB14MFP_Msk));
+    SYS->GPD_MFPH = (SYS->GPD_MFPH & (~SYS_GPD_MFPH_PD12MFP_Msk));
+
+    for (i = 0; i < (u8MaxScKeyNum + TK_SE_NUM); i++)
     {
         if ((1ul << i) & u32TkMsk)
         {
@@ -147,31 +182,13 @@ void SetTkMultiFun(uint32_t u32TkMsk)
                     break;
 
                 case 17:
-                    if (u8MaxScKeyNum == 26) //for HAG051 Version
-                    {
-                        /* HAG051 : PC.7 */
-                        SYS->GPC_MFPL = (SYS->GPC_MFPL & (~SYS_GPC_MFPL_PC7MFP_Msk)) | SYS_GPC_MFPL_PC7MFP_TK_TK17;
-                    }
-                    else
-                    {
-                        /* HBG040 : PB.14 */
-                        SYS->GPB_MFPH = (SYS->GPB_MFPH & (~SYS_GPB_MFPH_PB14MFP_Msk)) | SYS_GPB_MFPH_PB14MFP_TK_SE;
-                    }
-
+                    /* HAG051 : PC.7 */
+                    SYS->GPC_MFPL = (SYS->GPC_MFPL & (~SYS_GPC_MFPL_PC7MFP_Msk)) | SYS_GPC_MFPL_PC7MFP_TK_TK17;
                     break;
 
                 case 18:
-                    if (u8MaxScKeyNum == 26) //for M258G Version
-                    {
-                        /* HAG051 : PC.6 */
-                        SYS->GPC_MFPL = (SYS->GPC_MFPL & (~SYS_GPC_MFPL_PC6MFP_Msk)) | SYS_GPC_MFPL_PC6MFP_TK_TK18;
-                    }
-                    else
-                    {
-                        /* HBG040 : PD.12 */
-                        SYS->GPD_MFPH = (SYS->GPD_MFPH & (~SYS_GPD_MFPH_PD12MFP_Msk)) | SYS_GPD_MFPH_PD12MFP_TK_SE;
-                    }
-
+                    /* HAG051 : PC.6 */
+                    SYS->GPC_MFPL = (SYS->GPC_MFPL & (~SYS_GPC_MFPL_PC6MFP_Msk)) | SYS_GPC_MFPL_PC6MFP_TK_TK18;
                     break;
 
                 case 19: /* HAG051 : PA.7 */

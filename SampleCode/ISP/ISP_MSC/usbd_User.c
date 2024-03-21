@@ -99,18 +99,20 @@ void USBD_Open(const S_USBD_INFO_T *param)
   *
   * @details  Enable WAKEUP, FLDET, USB and BUS interrupts. Disable software-disconnect function after 100ms delay with SysTick timer.
   */
-// void USBD_Start(void)
-// {
-//     CLK_SysTickDelay(100000);
-//     /* Disable software-disconnect function */
-//     USBD_CLR_SE0();
+#if 0   // Move to main function
+void USBD_Start(void)
+{
+    CLK_SysTickDelay(100000);
+    /* Disable software-disconnect function */
+    USBD_CLR_SE0();
 
-//     /* Clear USB-related interrupts before enable interrupt */
-//     USBD_CLR_INT_FLAG(USBD_INT_BUS | USBD_INT_USB | USBD_INT_FLDET | USBD_INT_WAKEUP);
+    /* Clear USB-related interrupts before enable interrupt */
+    USBD_CLR_INT_FLAG(USBD_INT_BUS | USBD_INT_USB | USBD_INT_FLDET | USBD_INT_WAKEUP);
 
-//     /* Enable USB-related interrupts. */
-//     USBD_ENABLE_INT(USBD_INT_BUS | USBD_INT_USB | USBD_INT_FLDET | USBD_INT_WAKEUP);
-// }
+    /* Enable USB-related interrupts. */
+    USBD_ENABLE_INT(USBD_INT_BUS | USBD_INT_USB | USBD_INT_FLDET | USBD_INT_WAKEUP);
+}
+#endif
 
 /**
   * @brief      Get the received SETUP packet

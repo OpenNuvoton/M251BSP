@@ -28,6 +28,7 @@
 #define USER_ID                           (('N'<<24) | ('U'<<16) | ('V'<<8) | 'O')
 
 #define TK_SCAN_EVENT_FREQ                (50)
+#define TK_SE_NUM                         (2)
 
 //TK_Param.c
 int8_t TK_LoadPara(uint32_t *pu32ChanelMsk);

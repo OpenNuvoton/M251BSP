@@ -375,6 +375,8 @@ int32_t I2C0_Read_Write_Slave(uint16_t u16SlvAddr)
             /* Compare data */
             if (s_u8MstRxData != s_au8MstTxData[2])
             {
+                /* Disable I2C timeout */
+                I2C_DisableTimeout(I2C0);
                 printf("I2C Byte Write/Read Failed, Data 0x%x\n", s_u8MstRxData);
                 return -1;
             }
@@ -382,8 +384,8 @@ int32_t I2C0_Read_Write_Slave(uint16_t u16SlvAddr)
         }
     } while (s_u8MstReStartFlag); /*If unexpected abort happens, re-start the transmition*/
 
-
-
+    /* Disable I2C timeout */
+    I2C_DisableTimeout(I2C0);
     printf("Master Access Slave (0x%X) Test OK\n", u16SlvAddr);
     return 0;
 }

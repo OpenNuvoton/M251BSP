@@ -39,11 +39,7 @@ const uint8_t HID_DeviceReportDescriptor[] =
 const uint8_t gu8DeviceDescriptor[] = {
     LEN_DEVICE,  /* bLength */
     DESC_DEVICE, /* bDescriptorType */
-#ifdef SUPPORT_LPM
-    0x01, 0x02, /* bcdUSB => 0x0201 to support LPM */
-#else
     0x10, 0x01, /* bcdUSB */
-#endif
     0x00,             /* bDeviceClass */
     0x00,             /* bDeviceSubClass */
     0x00,             /* bDeviceProtocol */
@@ -138,28 +134,6 @@ const uint8_t gu8ProductStringDesc[] =
     'H', 0, 'I', 0, 'D', 0, ' ', 0, 'T', 0, 'r', 0, 'a', 0, 'n', 0, 's', 0, 'f', 0, 'e', 0, 'r', 0
 };
 
-/*!<USB BOS Descriptor */
-const uint8_t gu8BosDescriptor[] =
-{
-    LEN_BOS,                         /* bLength         */
-    DESC_BOS,                        /* bDescriptorType */
-    ((LEN_BOS + LEN_DEVCAP) & 0xFF), /* wTotalLength    */
-    ((LEN_BOS + LEN_DEVCAP) >> 8),   /* wTotalLength    */
-    0x01,                            /* bNumDevcieCaps  */
-    LEN_DEVCAP,                      /* bLength         */
-    DESC_CAPABILITY,                 /* bDescriptorType */
-    0x02,                            /* bDevCapabilityType, 0x02 is USB 2.0 Extension */
-    0x02, 0x00, 0x00, 0x00           /* bmAttributes    */
-    /* bit 0     : Reserved. Must be 0.                                         */
-    /* bit 1     : Set 1 to support LPM.                                        */
-    /* bit 2     : Set 1 to support BSL & Alternative HIRD.                     */
-    /* bit 3     : Set 1 to use Baseline BESL.                                  */
-    /* bit 4     : Set 1 to use Deep BESL.                                      */
-    /* bit 11:8  : Baseline BESL value. Ignore it if bit3 is zero.              */
-    /* bit 15:12 : Deep BESL value. Ignore it if bit4 is zero.                  */
-    /* bit 31:16 : Reserved. Must be 0.                                         */
-};
-
 const uint8_t *gpu8UsbString[4] =
 {
     gu8StringLang,
@@ -195,11 +169,7 @@ const S_USBD_INFO_T gsInfo =
     (uint8_t *) gu8ConfigDescriptor,
     (uint8_t **)gpu8UsbString,
     (uint8_t **)gu8UsbHidReport,
-#ifdef SUPPORT_LPM
-    (uint8_t *) gu8BosDescriptor,
-#else
-    0,
-#endif
+    NULL,
     (uint32_t *)gu32UsbHidReportLen,
     (uint32_t *)gu32ConfigHidDescIdx,
 };

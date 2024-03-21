@@ -576,78 +576,6 @@ extern int32_t g_CLK_i32ErrCode;
 #define CLK_SET_WKTMR_INTERVAL(u32Interval)   (CLK->PMUCTL |= (u32Interval))
 
 
-/*---------------------------------------------------------------------------------------------------------*/
-/* static inline functions                                                                                 */
-/*---------------------------------------------------------------------------------------------------------*/
-/* Declare these inline functions here to avoid MISRA C 2004 rule 8.1 error */
-__STATIC_INLINE void CLK_SysTickDelay(uint32_t u32USec);
-__STATIC_INLINE void CLK_SysTickLongDelay(uint32_t u32USec);
-
-/**
-  * @brief      This function execute delay function.
-  * @param[in]  u32USec  Delay time. The Max value is 2^24 / CPU Clock(MHz). Ex:
-  *                             50MHz => 335544us, 48MHz => 349525us, 28MHz => 699050us ...
-  * @details    Use the SysTick to generate the delay time and the UNIT is in us.
-  *             The SysTick clock source is from HCLK, i.e the same as system core clock.
-  *             User can use SystemCoreClockUpdate() to calculate CyclesPerUs automatically before using this function.
-  */
-__STATIC_INLINE void CLK_SysTickDelay(uint32_t u32USec)
-{
-    SysTick->LOAD = u32USec * CyclesPerUs;
-    SysTick->VAL  = (0x0u);
-    SysTick->CTRL = SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_ENABLE_Msk;
-
-    /* Waiting for down-count to zero */
-    while ((SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk) == 0u)
-    {
-    }
-
-    /* Disable SysTick counter */
-    SysTick->CTRL = 0u;
-}
-
-/**
-  * @brief      This function execute long delay function.
-  * @param[in]  u32USec  Delay time.
-  * @details    Use the SysTick to generate the long delay time and the UNIT is in us.
-  *             The SysTick clock source is from HCLK, i.e the same as system core clock.
-  *             User can use SystemCoreClockUpdate() to calculate CyclesPerUs automatically before using this function.
-  */
-__STATIC_INLINE void CLK_SysTickLongDelay(uint32_t u32USec)
-{
-    uint32_t u32Delay;
-
-    /* It should <= 349525us for each delay loop */
-    u32Delay = 349525UL;
-
-    do
-    {
-        if (u32USec > u32Delay)
-        {
-            u32USec -= u32Delay;
-        }
-        else
-        {
-            u32Delay = u32USec;
-            u32USec = 0UL;
-        }
-
-        SysTick->LOAD = u32Delay * CyclesPerUs;
-        SysTick->VAL  = (0x0UL);
-        SysTick->CTRL = SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_ENABLE_Msk;
-
-        /* Waiting for down-count to zero */
-        while ((SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk) == 0UL)
-        {
-        }
-
-        /* Disable SysTick counter */
-        SysTick->CTRL = 0UL;
-
-    } while (u32USec > 0UL);
-
-}
-
 void CLK_DisableCKO(void);
 void CLK_EnableCKO(uint32_t u32ClkSrc, uint32_t u32ClkDiv, uint32_t u32ClkDivBy1En);
 uint32_t CLK_PowerDown(void);
@@ -683,6 +611,8 @@ void CLK_EnableDPDWKPin4(uint32_t u32TriggerType);
 uint32_t CLK_GetPMUWKSrc(void);
 uint32_t CLK_GetModuleClockSource(uint32_t u32ModuleIdx);
 uint32_t CLK_GetModuleClockDivider(uint32_t u32ModuleIdx);
+void CLK_SysTickDelay(uint32_t u32USec);
+void CLK_SysTickLongDelay(uint32_t u32USec);
 
 /** @} end of group CLK_EXPORTED_FUNCTIONS */
 

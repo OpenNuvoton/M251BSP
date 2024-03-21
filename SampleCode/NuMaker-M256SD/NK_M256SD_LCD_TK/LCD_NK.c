@@ -25,8 +25,6 @@ static S_LCD_CFG_T g_LCDCfg =
 
 void LCD_Init(void)
 {
-    uint32_t u32ActiveFPS;
-
     /* Configure LCD multi-function pins */
     /*
         Summary of LCD pin usage:

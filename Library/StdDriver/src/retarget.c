@@ -43,7 +43,7 @@ struct __FILE
 };
 #else
 #if !defined(__MICROLIB)
-    #if (__OPTIMIZE__ == -O0)
+    #if (__OPTIMIZE__ == -O0) && (__ARMCC_VERSION < 6150000)
         __asm(".global __ARM_use_no_argv\n\t" "__ARM_use_no_argv:\n\t");
     #endif /* (__OPTIMIZE__ == -O0) */
 #endif /* !defined(__MICROLIB) */

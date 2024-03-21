@@ -95,9 +95,6 @@ void UART_Init()
  */
 uint32_t CalNewDutyCMR(PWM_T *pwm, uint32_t u32ChannelNum, uint32_t u32DutyCycle, uint32_t u32CycleResolution)
 {
-    if (u32DutyCycle >= u32CycleResolution)
-        return PWM_GET_CNR(pwm, u32ChannelNum);
-
     return (u32DutyCycle * (PWM_GET_CNR(pwm, u32ChannelNum) + 1) / u32CycleResolution);
 }
 

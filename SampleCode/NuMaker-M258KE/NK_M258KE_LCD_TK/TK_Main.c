@@ -341,11 +341,11 @@ int32_t main(void)
     /* Init TK Controller */
     TK_Init();
 
-    /* Initialize LCD pin */
-    LCD_Init_Setting();
-
     /* Initialize Multiple Function Pins for TK */
     SetTkMultiFun(u32ChanelMsk);
+
+    /* Initialize LCD pin */
+    LCD_Init_Setting();
 
     /* Init systick 20ms/tick */
     Init_SysTick();

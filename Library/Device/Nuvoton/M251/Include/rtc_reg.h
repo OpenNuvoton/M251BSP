@@ -532,7 +532,7 @@ typedef struct
 #define RTC_CLKFMT_24HEN_Pos             (0)                                               /*!< RTC_T::CLKFMT: 24HEN Position          */
 #define RTC_CLKFMT_24HEN_Msk             (0x1ul << RTC_CLKFMT_24HEN_Pos)                   /*!< RTC_T::CLKFMT: 24HEN Mask              */
 
-#define RTC_CLKFMT_DCOMPEN_Pos           (8)                                               /*!< RTC_T::CLKFMT: DCOMPEN Position        */
+#define RTC_CLKFMT_DCOMPEN_Pos           (16)                                               /*!< RTC_T::CLKFMT: DCOMPEN Position        */
 #define RTC_CLKFMT_DCOMPEN_Msk           (0x1ul << RTC_CLKFMT_DCOMPEN_Pos)                 /*!< RTC_T::CLKFMT: DCOMPEN Mask            */
 
 #define RTC_WEEKDAY_WEEKDAY_Pos          (0)                                               /*!< RTC_T::WEEKDAY: WEEKDAY Position       */

@@ -15,19 +15,6 @@ extern "C"
 {
 #endif
 
-/*!< Definition for enabling Link Power Management(LPM) function.
-    LPM related handler will raise after LPM event happen.
-    if bcdUSB >= 0x0201, USB version is equal or higher than 2.1,
-    OS(Windows) will issue "get BOS descriptor" request to check the support of LPM.
-
-    Notice:
-        If bcdUSB >= 0x0201, where USB version is equal or higher than 2.1,
-        WIN8 ~ WIN10 will fail to enumerate the device if device stalls the "get BOS descriptor" request.
-        WIN7 can still enumerate this device even though the "get BOS descriptor" request been stalled.
-
-*/
-//#define SUPPORT_LPM
-
 /** @addtogroup Standard_Driver Standard Driver
   @{
 */

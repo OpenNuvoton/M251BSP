@@ -18,7 +18,22 @@
 #define USBD_DIV            1
 #define PLL_CLOCK           48000000
 
-/* This is a dummy implementation to replace the same function in clk.c for size limitation. */
+/* There are dummy or customized function for code size limitation. */
+void ISP_CLK_SysTickDelay(uint32_t u32USec)
+{
+    SysTick->LOAD = u32USec * CyclesPerUs;
+    SysTick->VAL  = (0x0u);
+    SysTick->CTRL = SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_ENABLE_Msk;
+
+    /* Waiting for down-count to zero */
+    while ((SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk) == 0u)
+    {
+    }
+
+    /* Disable SysTick counter */
+    SysTick->CTRL = 0u;
+}
+
 uint32_t CLK_GetPLLClockFreq(void)
 {
     return PLL_CLOCK;

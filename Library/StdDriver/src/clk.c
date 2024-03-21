@@ -100,6 +100,9 @@ uint32_t CLK_PowerDown(void)
     /* Chip enter Power-down mode after CPU run WFI instruction */
     __WFI();
 
+    /* Clear deep sleep mode selection */
+    SCB->SCR &= ~SCB_SCR_SLEEPDEEP_Msk;
+
     /* Restore HIRC/MIRC control register */
     SYS->HIRCTRIMCTL = u32HIRCTRIMCTL;
     SYS->MIRCTRIMCTL = u32MIRCTRIMCTL;
@@ -1250,6 +1253,121 @@ uint32_t CLK_GetModuleClockDivider(uint32_t u32ModuleIdx)
     }
 
     return u32TmpVal;
+}
+
+/**
+  * @brief      This function execute delay function.
+  * @param[in]  u32USec  Delay time. The Max value is 2^24 / CPU Clock(MHz). Ex:
+  *                             50MHz => 335544us, 48MHz => 349525us, 28MHz => 699050us ...
+  * @details    Use the SysTick to generate the delay time and the UNIT is in us.
+  *             The SysTick clock source is from HCLK, i.e the same as system core clock.
+  *             User can use SystemCoreClockUpdate() to calculate CyclesPerUs automatically before using this function.
+  */
+void CLK_SysTickDelay(uint32_t u32USec)
+{
+    uint32_t u32TargetValue, u32TargetInt, u32TargetRem, u32DelayCycles;
+
+    /* Systick function is using and clock source is core clock */
+    if ((SysTick->CTRL & (SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_ENABLE_Msk)) == (SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_ENABLE_Msk))
+    {
+        u32DelayCycles = u32USec * CyclesPerUs;
+
+        if (u32DelayCycles > SysTick->LOAD)
+        {
+            /* Calculate re-load cycles with current SysTick->LOAD */
+            u32TargetInt = u32DelayCycles / SysTick->LOAD;
+
+            /* Calculate remainder delay cycles */
+            u32TargetRem = u32DelayCycles % SysTick->LOAD;
+        }
+        else
+        {
+            u32TargetInt = 0;
+            u32TargetRem = u32DelayCycles;
+        }
+
+        if (u32TargetRem > SysTick->VAL)
+        {
+            u32TargetValue = SysTick->LOAD;
+            u32TargetValue = u32TargetValue - (u32TargetRem - SysTick->VAL);
+            u32TargetInt++;
+        }
+        else
+        {
+            u32TargetValue = SysTick->VAL - u32TargetRem;
+        }
+
+        while (u32TargetInt > 0)
+        {
+            /* Waiting for down-count to zero */
+            while ((SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk) == 0UL)
+            {
+            }
+
+            u32TargetInt--;
+        }
+
+        /* Waiting for down-count to target */
+        while (SysTick->VAL > u32TargetValue)
+        {
+        }
+    }
+    else
+    {
+        SysTick->LOAD = u32USec * CyclesPerUs;
+        SysTick->VAL  = 0x0UL;
+        SysTick->CTRL = SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_ENABLE_Msk;
+
+        /* Waiting for down-count to zero */
+        while ((SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk) == 0UL)
+        {
+        }
+
+        /* Disable SysTick counter */
+        SysTick->CTRL = 0UL;
+    }
+}
+
+/**
+  * @brief      This function execute long delay function.
+  * @param[in]  u32USec  Delay time.
+  * @details    Use the SysTick to generate the long delay time and the UNIT is in us.
+  *             The SysTick clock source is from HCLK, i.e the same as system core clock.
+  *             User can use SystemCoreClockUpdate() to calculate CyclesPerUs automatically before using this function.
+  */
+void CLK_SysTickLongDelay(uint32_t u32USec)
+{
+    uint32_t u32Delay;
+
+    /* It should <= 349525us for each delay loop */
+    u32Delay = 349525UL;
+
+    do
+    {
+        if (u32USec > u32Delay)
+        {
+            u32USec -= u32Delay;
+        }
+        else
+        {
+            u32Delay = u32USec;
+            u32USec = 0UL;
+        }
+
+        SysTick->LOAD = u32Delay * CyclesPerUs;
+        SysTick->VAL  = (0x0UL);
+        SysTick->CTRL = SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_ENABLE_Msk;
+
+        /* Waiting for down-count to zero */
+        while ((SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk) == 0UL)
+        {
+        }
+
+        /* Disable SysTick counter */
+        SysTick->CTRL = 0UL;
+
+    } while (u32USec > 0UL);
+
 }
 
 /** @} end of group CLK_EXPORTED_FUNCTIONS */

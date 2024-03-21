@@ -21,6 +21,8 @@ extern "C"
 {
 #endif
 
+extern void ISP_CLK_SysTickDelay(uint32_t u32USec);
+
 /** @addtogroup Standard_Driver Standard Driver
   @{
 */
@@ -100,7 +102,7 @@ void USBD_Open(const S_USBD_INFO_T *param, CLASS_REQ pfnClassReq, SET_INTERFACE_
   */
 void USBD_Start(void)
 {
-    CLK_SysTickDelay(100000);
+    ISP_CLK_SysTickDelay(100000);
     /* Disable software-disconnect function */
     USBD_CLR_SE0();
 
