@@ -71,11 +71,11 @@ void ACMP01_IRQHandler(void)
     /* Check Comparator 0 Output Status */
     if (ACMP_GET_OUTPUT(ACMP01, 1))
     {
-        printf("ACMP1_P voltage >  DAC voltage (%u) ACMP1_O(%d)\n", u32Cnt, PC0);
+        printf("[%d] ACMP1_P voltage >  DAC voltage, ACMP1_O = %d.\n", u32Cnt, PC0);
     }
     else
     {
-        printf("ACMP1_P voltage <= DAC voltage (%u) ACMP1_O(%d)\n", u32Cnt, PC0);
+        printf("[%d] ACMP1_P voltage <= DAC voltage, ACMP1_O = %d.\n", u32Cnt, PC0);
     }
 
     u32Cnt++;
@@ -145,7 +145,9 @@ void SYS_Init(void)
     /* User can use SystemCoreClockUpdate() to calculate SystemCoreClock and CyclesPerUs automatically. */
     SystemCoreClockUpdate();
 
-    /* Note:ACMP  negative input source is not support DAC (Part no. M258KG6AE,M254KG6AE,M258QG6AE,M256QG6AE,M258SG6AE M254SG6AE) */
+    /* Note: ACMP negative input source does not support DAC.
+     * (Part no. M254KG6AE, M258KG6AE, M256QG6AE, M258QG6AE, M254SG6AE, M258SG6AE)
+     */
     if ((SYS->PDID & 0x01920000) == 0x01920000)
     {
         /* Set PA.8 to input mode */
@@ -173,15 +175,13 @@ void SYS_Init(void)
         SYS->GPC_MFPL = (SYS->GPC_MFPL & ~SYS_GPC_MFPL_PC0MFP_Msk) | SYS_GPC_MFPL_PC0MFP_ACMP1_O;
     }
 
-
-
-#if !(defined(DEBUG_ENABLE_SEMIHOST))
     /* Set PA multi-function pins for UART0 RXD and TXD */
     SYS->GPA_MFPL = (SYS->GPA_MFPL & ~SYS_GPA_MFPL_PA4MFP_Msk) | SYS_GPA_MFPL_PA4MFP_UART0_RXD;
     SYS->GPA_MFPL = (SYS->GPA_MFPL & ~SYS_GPA_MFPL_PA5MFP_Msk) | SYS_GPA_MFPL_PA5MFP_UART0_TXD;
-#endif
 
-    /* Note:ACMP  negative input source is not support DAC (Part no. M258KG6AE,M254KG6AE,M258QG6AE,M256QG6AE,M258SG6AE M254SG6AE) */
+    /* Note: ACMP negative input source does not support DAC.
+     * (Part no. M254KG6AE, M258KG6AE, M256QG6AE, M258QG6AE, M254SG6AE, M258SG6AE)
+     */
     if ((SYS->PDID & 0x01920000) == 0x01920000)
     {
         /* Disable digital input path of analog pin DAC0_OUT to prevent leakage */
@@ -219,29 +219,32 @@ int32_t main(void)
     initialise_monitor_handles();
 #endif
 
-#if !(defined(DEBUG_ENABLE_SEMIHOST))
     /* Configure UART0: 115200, 8-bit word, no parity bit, 1 stop bit. */
     UART_Open(UART0, 115200);
-#endif
 
     printf("\n\nCPU @ %dHz\n", SystemCoreClock);
+    printf("This sample code demonstrates [ACMP1] function.\n");
 
-    /* Note:ACMP negative input source is not support DAC (Part no. M258KG6AE,M254KG6AE,M258QG6AE,M256QG6AE,M258SG6AE M254SG6AE) */
+    /* Note: ACMP negative input source does not support DAC.
+     * (Part no. M254KG6AE, M258KG6AE, M256QG6AE, M258QG6AE, M254SG6AE, M258SG6AE)
+     */
     if ((SYS->PDID & 0x01920000) == 0x01920000)
     {
-        printf("\nThis sample code demonstrates ACMP1 function. Using ACMP1_P1 (PB4) as ACMP1\n");
-        printf("positive input and using DAC output as the negative input.\n");
-        printf("Note: ACMP negative input source does not support DAC, so user must connect DAC output (PA8) to ACMP1_N (PB5)\n");
-        printf("Please connect the ACMP1_P1(PB4) to 1.5v .\n");
+        printf("  ACMP1_N:  Using PB5 as negative input.\n");
+        printf("  ACMP1_P1: Using PB4 as positive input.\n");
+        printf("  ACMP1_O:  Using PC0 as compare output.\n");
+        printf("Note: Becasue ACMP negative input source does not support DAC.\n");
+        printf("Please connect ACMP1_N (PB5) to DAC output (PA8).\n");
     }
     else
     {
-        printf("\nThis sample code demonstrates ACMP1 function. Using ACMP1_P1 (PB4) as ACMP1\n");
-        printf("positive input and using DAC output as the negative input.\n");
-        printf("Please connect the ACMP1_P1(PB4) to 1.5v .\n");
+        printf("  ACMP1_N:  Using DAC output as negative input.\n");
+        printf("  ACMP1_P1: Using PB4 as positive input.\n");
+        printf("  ACMP1_O:  Using PC0 as compare output.\n");
     }
 
-    printf("The compare result reflects on ACMP1_O (PC0).\n");
+    printf("Please connect ACMP1_P1 (PB4) to 1.5 v.\n");
+    printf("\nThe compare result reflects on ACMP1_O (PC0).\n");
     printf("Press any key to start ...\n");
     getchar();
 
@@ -294,5 +297,3 @@ int32_t main(void)
 }
 
 /*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/
-
-

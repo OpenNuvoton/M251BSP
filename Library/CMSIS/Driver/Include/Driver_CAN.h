@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2017 ARM Limited. All rights reserved.
+ * Copyright (c) 2015-2020 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -15,13 +15,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * $Date:        2. Feb 2017
- * $Revision:    V1.1
+ * $Date:        31. March 2020
+ * $Revision:    V1.3
  *
  * Project:      CAN (Controller Area Network) Driver definitions
  */
 
 /* History:
+ *  Version 1.3
+ *    Removed volatile from ARM_CAN_STATUS
+ *  Version 1.2
+ *    Added ARM_CAN_UNIT_STATE_BUS_OFF unit state and
+ *    ARM_CAN_EVENT_UNIT_INACTIVE unit event
  *  Version 1.1
  *    ARM_CAN_STATUS made volatile
  *  Version 1.0
@@ -38,7 +43,11 @@ extern "C"
 
 #include "Driver_Common.h"
 
-#define ARM_CAN_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(1,1)  /* API version */
+#define ARM_CAN_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(1,3)  /* API version */
+
+
+#define _ARM_Driver_CAN_(n)      Driver_CAN##n
+#define  ARM_Driver_CAN_(n) _ARM_Driver_CAN_(n)
 
 
 /****** CAN Bitrate selection codes *****/
@@ -151,9 +160,10 @@ typedef struct _ARM_CAN_MSG_INFO {
 #define ARM_CAN_NO_MESSAGE_AVAILABLE   (ARM_DRIVER_ERROR_SPECIFIC - 7)          ///< Message is not available
 
 /****** CAN Status codes *****/
-#define ARM_CAN_UNIT_STATE_INACTIVE    (0U)             ///< Unit state: Not active on bus (initialize or error bus off)
+#define ARM_CAN_UNIT_STATE_INACTIVE    (0U)             ///< Unit state: Not active on bus (initialization)
 #define ARM_CAN_UNIT_STATE_ACTIVE      (1U)             ///< Unit state: Active on bus (can generate active error frame)
 #define ARM_CAN_UNIT_STATE_PASSIVE     (2U)             ///< Unit state: Error passive (can not generate active error frame)
+#define ARM_CAN_UNIT_STATE_BUS_OFF     (3U)             ///< Unit state: Bus-off (can recover to active state)
 #define ARM_CAN_LEC_NO_ERROR           (0U)             ///< Last error code: No error
 #define ARM_CAN_LEC_BIT_ERROR          (1U)             ///< Last error code: Bit error
 #define ARM_CAN_LEC_STUFF_ERROR        (2U)             ///< Last error code: Bit stuffing error
@@ -164,7 +174,7 @@ typedef struct _ARM_CAN_MSG_INFO {
 /**
 \brief CAN Status
 */
-typedef volatile struct _ARM_CAN_STATUS {
+typedef struct _ARM_CAN_STATUS {
   uint32_t unit_state       : 4;        ///< Unit bus state
   uint32_t last_error_code  : 4;        ///< Last error code
   uint32_t tx_error_count   : 8;        ///< Transmitter error count
@@ -174,10 +184,11 @@ typedef volatile struct _ARM_CAN_STATUS {
 
 
 /****** CAN Unit Event *****/
+#define ARM_CAN_EVENT_UNIT_INACTIVE    (0U)             ///< Unit entered Inactive state
 #define ARM_CAN_EVENT_UNIT_ACTIVE      (1U)             ///< Unit entered Error Active state
 #define ARM_CAN_EVENT_UNIT_WARNING     (2U)             ///< Unit entered Error Warning state (one or both error counters >= 96)
 #define ARM_CAN_EVENT_UNIT_PASSIVE     (3U)             ///< Unit entered Error Passive state
-#define ARM_CAN_EVENT_UNIT_BUS_OFF     (4U)             ///< Unit entered bus off state
+#define ARM_CAN_EVENT_UNIT_BUS_OFF     (4U)             ///< Unit entered Bus-off state
 
 /****** CAN Send/Receive Event *****/
 #define ARM_CAN_EVENT_SEND_COMPLETE    (1UL << 0)       ///< Send complete
@@ -307,13 +318,11 @@ typedef volatile struct _ARM_CAN_STATUS {
   \fn          void ARM_CAN_SignalUnitEvent (uint32_t event)
   \brief       Signal CAN unit event.
   \param[in]   event \ref CAN_unit_events
-  \return      none
 
   \fn          void ARM_CAN_SignalObjectEvent (uint32_t obj_idx, uint32_t event)
   \brief       Signal CAN object event.
   \param[in]   obj_idx  Object index
   \param[in]   event \ref CAN_events
-  \return      none
 */
 
 typedef void (*ARM_CAN_SignalUnitEvent_t)   (uint32_t event);                   ///< Pointer to \ref ARM_CAN_SignalUnitEvent   : Signal CAN Unit Event.

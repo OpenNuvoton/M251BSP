@@ -672,6 +672,7 @@ void EADC_SetExtendSampleTime(EADC_T *eadc, uint32_t u32ModuleNum, uint32_t u32E
 
 #ifdef __cplusplus
 }
+
 #endif
 
 #endif /* __EADC_H__ */

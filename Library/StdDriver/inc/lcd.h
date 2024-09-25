@@ -571,6 +571,7 @@ void LCD_SetSavingMode(uint32_t u32PowerSavingMode, uint32_t u32PowerSavingLevel
 
 #ifdef __cplusplus
 }
+
 #endif
 
 #endif  /* __LCD_H__ */

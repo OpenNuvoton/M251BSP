@@ -313,6 +313,7 @@ void main_full(void)
     site, or the FreeRTOS tutorial books for more details. */
     for (;;);
 }
+
 /*-----------------------------------------------------------*/
 
 /* See the description at the top of this file. */
@@ -392,6 +393,7 @@ static void prvCheckTimerCallback(TimerHandle_t xTimer)
         }
     }
 }
+
 /*-----------------------------------------------------------*/
 
 static void prvSemaphoreTakeTask(void *pvParameters)
@@ -407,6 +409,7 @@ static void prvSemaphoreTakeTask(void *pvParameters)
         vParTestToggleLED(mainSEMAPHORE_LED);
     }
 }
+
 /*-----------------------------------------------------------*/
 
 static void prvFlashTimerCallback(TimerHandle_t xTimer)

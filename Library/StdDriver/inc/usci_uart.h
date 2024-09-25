@@ -525,6 +525,7 @@ void UUART_DisableFlowCtrl(UUART_T *psUUART);
 
 #ifdef __cplusplus
 }
+
 #endif
 
 #endif /* __USCI_UART_H__ */

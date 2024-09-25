@@ -116,7 +116,11 @@ void SYS_Init(void)
     /*---------------------------------------------------------------------------------------------------------*/
     /* Init I/O Multi-function                                                                                 */
     /*---------------------------------------------------------------------------------------------------------*/
-    //    Uart0DefaultMPF();  // Semihost
+#if !(defined(DEBUG_ENABLE_SEMIHOST))
+    /* Set PA multi-function pins for UART0 RXD and TXD */
+    SYS->GPA_MFPL = (SYS->GPA_MFPL & ~SYS_GPA_MFPL_PA4MFP_Msk) | SYS_GPA_MFPL_PA4MFP_UART0_RXD;
+    SYS->GPA_MFPL = (SYS->GPA_MFPL & ~SYS_GPA_MFPL_PA5MFP_Msk) | SYS_GPA_MFPL_PA5MFP_UART0_TXD;
+#endif
 }
 
 void UART0_Init(void)
@@ -126,7 +130,10 @@ void UART0_Init(void)
     /*---------------------------------------------------------------------------------------------------------*/
 
     /* Configure UART0 and set UART0 Baudrate */
+#if !(defined(DEBUG_ENABLE_SEMIHOST))
+    /* Configure UART0 and set UART0 Baudrate */
     UART_Open(UART0, 115200);
+#endif
 }
 
 /*---------------------------------------------------------------------------------------------------------*/

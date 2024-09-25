@@ -119,6 +119,7 @@ void TK_RawDataView(void)
             }
 
         }
+
 #endif
 #if defined(OPT_WHEEL)
 
@@ -147,6 +148,7 @@ void TK_RawDataView(void)
                 DBG_PRINTF("Wheel %d\n", i8WheelPercentage);
             }
         }
+
 #endif
 
     }

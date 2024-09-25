@@ -22,6 +22,7 @@ extern "C"
 
 #ifdef __cplusplus
 }
+
 #endif
 
 #endif //__TARGET_H__

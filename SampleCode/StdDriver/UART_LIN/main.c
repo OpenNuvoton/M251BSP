@@ -137,12 +137,13 @@ void SYS_Init(void)
     /* Lock protected registers */
     SYS_LockReg();
 }
+
 /*---------------------------------------------------------------------------------------------------------*/
 /*                                             Init UART1                                                  */
 /*---------------------------------------------------------------------------------------------------------*/
 void UART1_Init(void)
 {
-    /* Configure UART0 and set UART0 baud rate */
+    /* Configure UART1 and set UART1 baud rate */
     UART_Open(UART1, 115200);
 }
 

@@ -455,6 +455,7 @@ void GPIO_SetPullCtl(GPIO_T *port, uint32_t u32PinMask, uint32_t u32Mode);
 
 #ifdef __cplusplus
 }
+
 #endif
 
 #endif  /* __GPIO_H__ */

@@ -32,8 +32,67 @@ uint32_t g_au32SourceData[TEST_COUNT];
 uint32_t g_au32DestinationData[TEST_COUNT];
 
 /* Function prototype declaration */
-void SYS_Init(void);
-void USCI_SPI_Init(void);
+void SYS_Init(void)
+{
+    /*---------------------------------------------------------------------------------------------------------*/
+    /* Init System Clock                                                                                       */
+    /*---------------------------------------------------------------------------------------------------------*/
+
+    /* Enable Internal RC 48MHz clock */
+    CLK_EnableXtalRC(CLK_PWRCTL_HIRCEN_Msk);
+
+    /* Waiting for Internal RC clock ready */
+    CLK_WaitClockReady(CLK_STATUS_HIRCSTB_Msk);
+
+    /* Switch HCLK clock source to Internal RC and HCLK source divide 1 */
+    CLK_SetHCLK(CLK_CLKSEL0_HCLKSEL_HIRC, CLK_CLKDIV0_HCLK(1));
+
+    /* Enable peripheral clock */
+    CLK_EnableModuleClock(UART0_MODULE);
+    CLK_EnableModuleClock(USCI0_MODULE);
+
+    /* Peripheral clock source */
+    CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HIRC, CLK_CLKDIV0_UART0(1));
+
+    /* Update System Core Clock */
+    /* User can use SystemCoreClockUpdate() to calculate SystemCoreClock and cyclesPerUs automatically. */
+    SystemCoreClockUpdate();
+
+    /*---------------------------------------------------------------------------------------------------------*/
+    /* Init I/O Multi-function                                                                                 */
+    /*---------------------------------------------------------------------------------------------------------*/
+#if defined (__GNUC__) && !defined(__ARMCC_VERSION) && defined(OS_USE_SEMIHOSTING)
+    Uart0DefaultMPF();
+#else
+    /* Set GPB multi-function pins for UART0 RXD and TXD */
+    SYS->GPB_MFPH = (SYS->GPB_MFPH & ~SYS_GPB_MFPH_PB8MFP_Msk) | SYS_GPB_MFPH_PB8MFP_UART0_RXD;
+    SYS->GPB_MFPH = (SYS->GPB_MFPH & ~SYS_GPB_MFPH_PB9MFP_Msk) | SYS_GPB_MFPH_PB9MFP_UART0_TXD;
+#endif
+
+    /* Set USPI0 multi-function pins */
+    SYS->GPB_MFPH = SYS->GPB_MFPH & ~(SYS_GPB_MFPH_PB12MFP_Msk | SYS_GPB_MFPH_PB13MFP_Msk | SYS_GPB_MFPH_PB14MFP_Msk);
+    SYS->GPB_MFPH = SYS->GPB_MFPH | (SYS_GPB_MFPH_PB12MFP_USCI0_CLK | SYS_GPB_MFPH_PB13MFP_USCI0_DAT0 | SYS_GPB_MFPH_PB14MFP_USCI0_DAT1);
+#if  !(defined(NOT_SUPPORT_SS_PIN))
+    SYS->GPC_MFPH = SYS->GPC_MFPH & ~SYS_GPC_MFPH_PC14MFP_Msk;
+    SYS->GPC_MFPH = SYS->GPC_MFPH | SYS_GPC_MFPH_PC14MFP_USCI0_CTL0;
+#else
+    /*M251 C is not supoort USCI_CTL0(SS)*/
+    /*Replace the USCI_CTL0(SS) pin with GPIO PA2 */
+    SYS->GPA_MFPL = SYS->GPA_MFPL & ~SYS_GPA_MFPL_PA2MFP_Msk;
+    GPIO_SetMode(PA, BIT2, GPIO_MODE_OUTPUT);
+#endif
+
+}
+
+void USCI_SPI_Init(void)
+{
+    /*---------------------------------------------------------------------------------------------------------*/
+    /* Init USCI_SPI0                                                                                          */
+    /*---------------------------------------------------------------------------------------------------------*/
+    /* Configure USCI_SPI0 as a master, clock idle low, 16-bit transaction, drive output on falling clock edge and latch input on rising edge. */
+    /* Set USCI_SPI0 clock rate = 2MHz */
+    USPI_Open(USPI0, USPI_MASTER, USPI_MODE_0, 16, 2000000);
+}
 
 /*---------------------------------------------------------------------------------------------------------*/
 /*  MAIN function                                                                                          */
@@ -52,14 +111,14 @@ int main(void)
     initialise_monitor_handles();
 #endif
 
-    /* Lock protected registers */
-    SYS_LockReg();
-
     /* Configure UART0: 115200, 8-bit word, no parity bit, 1 stop bit. */
     UART_Open(UART0, 115200);
 
     /* Init USCI_SPI0 */
     USCI_SPI_Init();
+
+    /* Lock protected registers */
+    SYS_LockReg();
 
     printf("\n\n");
     printf("+------------------------------------------------------------------+\n");
@@ -135,62 +194,6 @@ int main(void)
     USPI_Close(USPI0);
 
     while (1);
-}
-
-void SYS_Init(void)
-{
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* Init System Clock                                                                                       */
-    /*---------------------------------------------------------------------------------------------------------*/
-
-    /* Enable Internal RC 48MHz clock */
-    CLK_EnableXtalRC(CLK_PWRCTL_HIRCEN_Msk);
-
-    /* Waiting for Internal RC clock ready */
-    CLK_WaitClockReady(CLK_STATUS_HIRCSTB_Msk);
-
-    /* Switch HCLK clock source to Internal RC and HCLK source divide 1 */
-    CLK_SetHCLK(CLK_CLKSEL0_HCLKSEL_HIRC, CLK_CLKDIV0_HCLK(1));
-
-    /* Enable peripheral clock */
-    CLK_EnableModuleClock(UART0_MODULE);
-    CLK_EnableModuleClock(USCI0_MODULE);
-
-    /* Peripheral clock source */
-    CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HIRC, CLK_CLKDIV0_UART0(1));
-
-    /* Update System Core Clock */
-    /* User can use SystemCoreClockUpdate() to calculate SystemCoreClock and cyclesPerUs automatically. */
-    SystemCoreClockUpdate();
-
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* Init I/O Multi-function                                                                                 */
-    /*---------------------------------------------------------------------------------------------------------*/
-    Uart0DefaultMPF();
-
-    /* Set USPI0 multi-function pins */
-    SYS->GPB_MFPH = SYS->GPB_MFPH & ~(SYS_GPB_MFPH_PB12MFP_Msk | SYS_GPB_MFPH_PB13MFP_Msk | SYS_GPB_MFPH_PB14MFP_Msk);
-    SYS->GPB_MFPH = SYS->GPB_MFPH | (SYS_GPB_MFPH_PB12MFP_USCI0_CLK | SYS_GPB_MFPH_PB13MFP_USCI0_DAT0 | SYS_GPB_MFPH_PB14MFP_USCI0_DAT1);
-#if  !(defined(NOT_SUPPORT_SS_PIN))
-    SYS->GPC_MFPH = SYS->GPC_MFPH & ~SYS_GPC_MFPH_PC14MFP_Msk;
-    SYS->GPC_MFPH = SYS->GPC_MFPH | SYS_GPC_MFPH_PC14MFP_USCI0_CTL0;
-#else
-    /*M251 C is not supoort USCI_CTL0(SS)*/
-    /*Replace the USCI_CTL0(SS) pin with GPIO PA2 */
-    SYS->GPA_MFPL = SYS->GPA_MFPL & ~SYS_GPA_MFPL_PA2MFP_Msk;
-    GPIO_SetMode(PA, BIT2, GPIO_MODE_OUTPUT);
-#endif
-
-}
-
-void USCI_SPI_Init(void)
-{
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* Init USCI_SPI0                                                                                          */
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* Configure USCI_SPI0 as a master, clock idle low, 16-bit transaction, drive output on falling clock edge and latch input on rising edge. */
-    /* Set USCI_SPI0 clock rate = 2MHz */
-    USPI_Open(USPI0, USPI_MASTER, USPI_MODE_0, 16, 2000000);
 }
 
 /*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/

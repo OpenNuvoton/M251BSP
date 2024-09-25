@@ -41,10 +41,11 @@ struct __FILE
 {
     int handle; /* Add whatever you need here */
 };
+
 #else
 #if !defined(__MICROLIB)
     #if (__OPTIMIZE__ == -O0) && (__ARMCC_VERSION < 6150000)
-        __asm(".global __ARM_use_no_argv\n\t" "__ARM_use_no_argv:\n\t");
+        __ASM(".global __ARM_use_no_argv\n\t" "__ARM_use_no_argv:\n\t");
     #endif /* (__OPTIMIZE__ == -O0) */
 #endif /* !defined(__MICROLIB) */
 #endif /* (__ARMCC_VERSION < 6040000) */
@@ -54,6 +55,7 @@ struct __FILE
 {
     int handle; /* Add whatever you need here */
 };
+
 #endif /* !(defined(__ICCARM__) && (__VER__ >= 6010000)) */
 
 FILE __stdout;
@@ -157,13 +159,14 @@ int32_t SH_Return(int32_t n32In_R0, int32_t n32In_R1, int32_t *pn32Out_R0)
  */
 __attribute__((weak)) void HardFault_Handler(void)
 {
-    asm("MOV     R0, LR  \n"
+    __ASM(
+        "MOV     R0, LR  \n"
         "MRS     R1, MSP \n"
         "MRS     R2, PSP \n"
         "LDR     R3, =ProcessHardFault \n"
         "BLX     R3 \n"
         "BX      R0 \n"
-       );
+    );
 }
 
 #else
@@ -173,6 +176,7 @@ int32_t SH_Return(int32_t n32In_R0, int32_t n32In_R1, int32_t *pn32Out_R0)
 {
     return 0;
 }
+
 #endif
 
 #endif /* defined(DEBUG_ENABLE_SEMIHOST) */
@@ -327,6 +331,7 @@ void SendChar_ToUART(int ch)
             break; // FIFO full
     } while (i32Tail != i32Head);
 }
+
 #endif /* else for NONBLOCK_PRINTF */
 
 
@@ -542,12 +547,14 @@ size_t __write(int handle, const unsigned char *buffer, size_t size)
 
     return nChars;
 }
+
 #else
 int fputc(int ch, FILE *stream)
 {
     SendChar(ch);
     return ch;
 }
+
 #endif
 
 #if defined ( __GNUC__ ) && !defined (__ARMCC_VERSION)
@@ -585,6 +592,7 @@ int _read(int fd, char *ptr, int len)
     *ptr = DEBUG_PORT->DAT;
     return 1;
 }
+
 #endif
 
 #else
@@ -634,11 +642,13 @@ long __lseek(int handle, long offset, int whence)
 {
     return -1;
 }
+
 #else
 int fgetc(FILE *stream)
 {
     return ((int)GetChar());
 }
+
 #endif
 
 /**
@@ -659,6 +669,7 @@ int ferror(FILE *stream)
 {
     return EOF;
 }
+
 #endif
 
 

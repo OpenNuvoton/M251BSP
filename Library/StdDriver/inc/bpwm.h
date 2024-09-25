@@ -358,6 +358,7 @@ void BPWM_ClearWrapAroundFlag(BPWM_T *bpwm, uint32_t u32ChannelNum);
 
 #ifdef __cplusplus
 }
+
 #endif
 
 #endif /* __BPWM_H__ */

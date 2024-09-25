@@ -114,6 +114,7 @@ uint32_t CRC_GetChecksum(void);
 
 #ifdef __cplusplus
 }
+
 #endif
 
 #endif /* __CRC_H__ */

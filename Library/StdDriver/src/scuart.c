@@ -34,6 +34,7 @@ void SCUART_Close(SC_T *sc)
     sc->CTL = 0UL;
 
 }
+
 /** @cond HIDDEN_SYMBOLS */
 /**
   * @brief This function returns module clock of specified SC interface

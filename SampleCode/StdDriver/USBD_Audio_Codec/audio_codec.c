@@ -21,6 +21,7 @@ void RecoveryFromArbLost(void)
     I2C0->CTL0 &= ~I2C_CTL0_I2CEN_Msk;
     I2C0->CTL0 |= I2C_CTL0_I2CEN_Msk;
 }
+
 #if NAU8822
 /*---------------------------------------------------------------------------------------------------------*/
 /*  Write 9-bit data to 7-bit address register of WAU8822 with I2C0                                        */

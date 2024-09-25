@@ -491,6 +491,7 @@ void I2C_SMBusClockLoTimeout(I2C_T *i2c, uint32_t ms, uint32_t u32Pclk);
 
 #ifdef __cplusplus
 }
+
 #endif
 #endif /* __I2C_H__ */
 

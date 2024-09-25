@@ -1,0 +1,80 @@
+project:
+  packs:
+    - pack: Nuvoton::NuMicro_DFP
+  setups:
+    - output:
+        # bin, elf, hex, lib
+        type: bin
+    - setup: Options for Blinky
+      add-path:
+        - ../../../../Library/CMSIS/Core/Include
+        - ../../../../Library/Device/Nuvoton/M251/Include
+        - ../../../../Library/StdDriver/inc
+        - ../../../../ThirdParty/FreeRTOS/Source/include
+        - ../../../../ThirdParty/FreeRTOS/Source/portable/GCC/ARM_CM23_NTZ/non_secure
+        - ../../../../ThirdParty/FreeRTOS/Demo/Common/include
+        - ../../Blinky
+      debug: "on"
+      define:
+        - __MICROLIB
+      define-asm:
+        - __MICROLIB
+      misc:
+        - for-compiler: AC6
+          C:
+            - -std=c11 -fno-rtti -funsigned-char -fshort-enums -fshort-wchar -ffunction-sections -fdata-sections -w
+            - -D__MICROLIB
+          ASM:
+            - -masm=auto
+          Link:
+            - --library_type=microlib --map --load_addr_map_info --symbols
+            - --info sizes --info totals --strict --summary_stderr --info summarysizes --pd="-DSRAM_SIZE=0x8000"
+        - for-compiler: GCC
+          C:
+            - -std=gnu11 -mthumb -masm-syntax-unified -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections
+          Link:
+            - -mthumb -fmessage-length=0 -fsigned-char --specs=nano.specs --specs=nosys.specs
+            - -Wl,--gc-sections,-Map="$elf()$.map"
+  linker:
+    - script: ../../../../Library/Device/Nuvoton/M251/Source/ARM/APROM.sct
+      for-compiler: AC6
+    - script: ../GCC/flash32k_ram32k.ld
+      for-compiler: GCC
+  groups:
+    - group: CMSIS
+      files:
+        - file: ../../../../Library/Device/Nuvoton/M251/Source/system_M251.c
+        - file: ../../../../Library/Device/Nuvoton/M251/Source/ARM/startup_M251.c
+          for-compiler: AC6
+        - file: ../../../../Library/Device/Nuvoton/M251/Source/GCC/startup_M251.S
+          for-compiler: GCC
+    - group: Libraries
+      files:
+        - file: ../../../../Library/StdDriver/src/retarget.c
+        - file: ../../../../Library/StdDriver/src/clk.c
+        - file: ../../../../Library/StdDriver/src/sys.c
+        - file: ../../../../Library/StdDriver/src/uart.c
+    - group: User
+      files:
+        - file: ../main.c
+        - file: ../main-blinky.c
+        - file: ../main-full.c
+        - file: ../ParTest_M251.c
+        - file: ../Reg_Test.c
+    - group: FreeRTOS
+      files:
+        - file: ../../../../ThirdParty/FreeRTOS/Source/portable/GCC/ARM_CM23_NTZ/non_secure/port.c
+        - file: ../../../../ThirdParty/FreeRTOS/Source/portable/GCC/ARM_CM23_NTZ/non_secure/portasm.c
+        - file: ../../../../ThirdParty/FreeRTOS/Source/timers.c
+        - file: ../../../../ThirdParty/FreeRTOS/Source/list.c
+        - file: ../../../../ThirdParty/FreeRTOS/Source/queue.c
+        - file: ../../../../ThirdParty/FreeRTOS/Source/tasks.c
+        - file: ../../../../ThirdParty/FreeRTOS/Source/portable/MemMang/heap_4.c
+    - group: CommonDemo
+      files:
+        - file: ../../../../ThirdParty/FreeRTOS/Demo/Common/Minimal/dynamic.c
+        - file: ../../../../ThirdParty/FreeRTOS/Demo/Common/Minimal/recmutex.c
+        - file: ../../../../ThirdParty/FreeRTOS/Demo/Common/Minimal/blocktim.c
+        - file: ../../../../ThirdParty/FreeRTOS/Demo/Common/Minimal/countsem.c
+        - file: ../../../../ThirdParty/FreeRTOS/Demo/Common/Minimal/QueueSet.c
+        - file: ../../../../ThirdParty/FreeRTOS/Demo/Common/Minimal/QueueOverwrite.c

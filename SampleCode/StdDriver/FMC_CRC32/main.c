@@ -66,6 +66,7 @@ int32_t main(void)
     printf("+------------------------------------+\n");
     printf("|      FMC CRC32 Sample Demo         |\n");
     printf("+------------------------------------+\n");
+    printf("* Start address and size of CRC32 calculation region must be page alignment.\n");
 
     SYS_UnlockReg();                   /* Unlock protected registers to operate FMC ISP function */
 
@@ -97,31 +98,30 @@ int32_t main(void)
 
     printf("0x%x\n", u32ChkSum);       /* print out LDROM CRC32 check sum value */
 
-    printf("\nAPROM bank0 (0x0 ~ 0x4000) CRC32 checksum =>  ");
+    printf("\nAPROM (0x0 ~ 0x4000) CRC32 checksum =>  ");
 
     /*
-     *  Request FMC hardware to run CRC32 caculation on APROM bank 0.
-     *  Note that FMC CRC32 checksum calculation area must not cross bank boundary.
+     *  Request FMC hardware to run CRC32 caculation on APROM.
      */
     u32ChkSum = FMC_GetChkSum(FMC_APROM_BASE, 0x4000);
 
     if (u32ChkSum == 0xFFFFFFFF)
     {
-        printf("Failed on calculating APROM bank0 CRC32 checksum!\n");
+        printf("Failed on calculating APROM CRC32 checksum!\n");
         goto lexit;
     }
 
     printf("0x%x\n", u32ChkSum);       /* print out APROM CRC32 check sum value */
 
     /*
-     *  Request FMC hardware to run CRC32 caculation on APROM bank 1.
+     *  Request FMC hardware to run CRC32 caculation on APROM.
      */
-    printf("\nAPROM bank1 (0x4000 ~ 0x8000) CRC32 checksum =>  ");
-    u32ChkSum = FMC_GetChkSum(FMC_APROM_BASE + 0x4000, 0x8000);
+    printf("\nAPROM (0x0 ~ 0x8000) CRC32 checksum =>  ");
+    u32ChkSum = FMC_GetChkSum(FMC_APROM_BASE, 0x8000);
 
     if (u32ChkSum == 0xFFFFFFFF)
     {
-        printf("Failed on calculating APROM bank1 CRC32 checksum!\n");
+        printf("Failed on calculating APROM CRC32 checksum!\n");
         goto lexit;
     }
 
@@ -135,6 +135,5 @@ lexit:
 
     while (1);
 }
+
 /*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/
-
-

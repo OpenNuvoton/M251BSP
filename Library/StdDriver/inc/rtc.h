@@ -336,6 +336,7 @@ void RTC_StaticTamperDisable(uint32_t u32TamperSelect);
 
 #ifdef __cplusplus
 }
+
 #endif
 
 #endif /* __RTC_H__ */

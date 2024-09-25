@@ -232,6 +232,7 @@ void NAU88L25_Setup(void)
 
     printf("NAU88L25 Configured done.\n");
 }
+
 #endif
 
 

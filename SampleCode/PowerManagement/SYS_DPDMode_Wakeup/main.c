@@ -346,6 +346,7 @@ void CheckResetStatus(void)
     /* Clear all reset flag */
     SYS->RSTSTS = SYS->RSTSTS;
 }
+
 /*---------------------------------------------------------------------------------------------------------*/
 /*                           Enable the external 32768Hz XTAL Clock                                        */
 /*---------------------------------------------------------------------------------------------------------*/
@@ -493,7 +494,6 @@ int32_t main(void)
     printf("|[3] DPD Wake-up by RTC Tick(1 second).                          |\n");
     printf("|[4] DPD Wake-up by RTC Alarm.                                   |\n");
     printf("|[5] DPD Wake-up by RTC Tamper0.                                 |\n");
-    printf("|    Tamper pin detect voltage level is low.                     |\n");
     printf("+----------------------------------------------------------------+\n");
     u8Item = getchar();
 

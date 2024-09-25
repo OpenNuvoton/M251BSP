@@ -594,6 +594,7 @@ void SPII2S_SetFIFO(SPI_T *i2s, uint32_t u32TxThreshold, uint32_t u32RxThreshold
 
 #ifdef __cplusplus
 }
+
 #endif
 
 #endif

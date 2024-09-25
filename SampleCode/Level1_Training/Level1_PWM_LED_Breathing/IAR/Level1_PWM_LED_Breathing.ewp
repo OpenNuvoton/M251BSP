@@ -346,7 +346,7 @@
                 <option>
                     <name>CCIncludePath2</name>
                     <state>$PROJ_DIR$\..\..\..\..\Library\Device\Nuvoton\M251\Include</state>
-                    <state>$PROJ_DIR$\..\..\..\..\Library\CMSIS\Include</state>
+                    <state>$PROJ_DIR$\..\..\..\..\Library\CMSIS\Core\Include</state>
                     <state>$PROJ_DIR$\..\..\..\..\Library\StdDriver\inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\Library\SmartcardLib\Include</state>
                 </option>
@@ -1384,7 +1384,7 @@
                 <option>
                     <name>CCIncludePath2</name>
                     <state>$PROJ_DIR$\..\..\..\..\Library\Device\Nuvoton\M251\Include</state>
-                    <state>$PROJ_DIR$\..\..\..\..\Library\CMSIS\Include</state>
+                    <state>$PROJ_DIR$\..\..\..\..\Library\CMSIS\Core\Include</state>
                     <state>$PROJ_DIR$\..\..\..\..\Library\StdDriver\inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\Library\SmartcardLib\Include</state>
                 </option>

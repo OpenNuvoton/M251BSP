@@ -150,6 +150,7 @@ void vParTestInitialise(void)
     printf("\b\b\b\b\b\b\n\nFreeRTOS ...\n");
 
 }
+
 /*-----------------------------------------------------------*/
 
 void vParTestSetLED(unsigned long ulLED, signed portBASE_TYPE xValue)
@@ -167,6 +168,7 @@ void vParTestSetLED(unsigned long ulLED, signed portBASE_TYPE xValue)
         PA11 = 1;
     }
 }
+
 /*-----------------------------------------------------------*/
 
 void vParTestToggleLED(unsigned long ulLED)
@@ -174,5 +176,6 @@ void vParTestToggleLED(unsigned long ulLED)
     (void)ulLED;
     PA11 ^= 1;
 }
+
 /*-----------------------------------------------------------*/
 

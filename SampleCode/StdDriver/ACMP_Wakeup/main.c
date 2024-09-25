@@ -48,6 +48,7 @@ void ACMP01_IRQHandler(void)
     /* Clear wake-up interrupt flag */
     ACMP_CLR_WAKEUP_INT_FLAG(ACMP01, 1);
 }
+
 /*---------------------------------------------------------------------------------------------------------*/
 /*                                         PWRWU  Handle                                                   */
 /*---------------------------------------------------------------------------------------------------------*/
@@ -192,15 +193,17 @@ int32_t main(void)
     /* Configure UART0: 115200, 8-bit word, no parity bit, 1 stop bit. */
     UART_Open(UART0, 115200);
 
-    printf("\nThis sample code demonstrates ACMP1 function. Using ACMP1_P1 (PB4) as ACMP1\n");
-    printf("positive input and using internal CRV as the negative input.\n");
-    printf("The compare result reflects on ACMP1_O (PC0).\n");
+    printf("\nThis sample code demonstrates [ACMP1] wakeup function.\n");
+    printf("  ACMP1_N:  Using internal CRV as negative input.\n");
+    printf("  ACMP1_P1: Using PB4 as positive input.\n");
+    printf("  ACMP1_O:  Using PC0 as compare output.\n");
+    printf("\nThe compare result reflects on ACMP1_O (PC0).\n");
     printf("Press any key to enter power down mode ...\n");
     getchar();
 
     /* Select VDDA as CRV source */
     ACMP_SELECT_CRV_SRC(ACMP01, ACMP_VREF_CRVSSEL_AVDD);
-    /* Select CRV level: VDDA * 9 / 24 */
+    /* Select CRV level: VDDA * 5 / 24 */
     ACMP_CRV_SEL(ACMP01, 5);
     /* Configure ACMP1. Enable ACMP1 and select CRV as the source of ACMP negative input. */
     ACMP_Open(ACMP01, 1, ACMP_CTL_NEGSEL_CRV, ACMP_CTL_HYSTERESIS_DISABLE);
@@ -242,6 +245,7 @@ int32_t main(void)
     while (1);
 
 }
+
 /*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/
 
 

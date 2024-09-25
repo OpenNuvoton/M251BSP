@@ -651,6 +651,7 @@ void USBD_LockEpStall(uint32_t u32EpBitmap);
 
 #ifdef __cplusplus
 }
+
 #endif
 
 #endif /* __USBD_H__ */

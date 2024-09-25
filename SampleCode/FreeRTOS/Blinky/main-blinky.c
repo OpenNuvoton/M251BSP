@@ -187,6 +187,7 @@ void main_blinky(void)
     FreeRTOS web site for more details. */
     for (;;);
 }
+
 /*-----------------------------------------------------------*/
 
 static void prvQueueSendTask(void *pvParameters)
@@ -216,6 +217,7 @@ static void prvQueueSendTask(void *pvParameters)
 
     }
 }
+
 /*-----------------------------------------------------------*/
 
 static void prvQueueReceiveTask(void *pvParameters)
@@ -241,5 +243,6 @@ static void prvQueueReceiveTask(void *pvParameters)
         }
     }
 }
+
 /*-----------------------------------------------------------*/
 

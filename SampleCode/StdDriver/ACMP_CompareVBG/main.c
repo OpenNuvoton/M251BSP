@@ -37,9 +37,13 @@ void ACMP01_IRQHandler(void)
 
     /* Check Comparator 0 Output Status */
     if (ACMP_GET_OUTPUT(ACMP01, 1))
-        printf("ACMP1_P voltage > VBG (%u) ACMP1_O(%d)\n", u32Cnt, PC0);
+    {
+        printf("[%d] ACMP1_P voltage >  VBG, ACMP1_O = %d.\n", u32Cnt, PC0);
+    }
     else
-        printf("ACMP1_P voltage <= VBG (%u) ACMP1_O(%d)\n", u32Cnt, PC0);
+    {
+        printf("[%d] ACMP1_P voltage <= VBG, ACMP1_O = %d.\n", u32Cnt, PC0);
+    }
 
     u32Cnt++;
 }
@@ -143,9 +147,11 @@ int32_t main(void)
     /* Configure UART0: 115200, 8-bit word, no parity bit, 1 stop bit. */
     UART_Open(UART0, 115200);
 
-    printf("\nThis sample code demonstrates ACMP1 function. Using ACMP1_P1 (PB4) as ACMP1\n");
-    printf("positive input and using internal band-gap voltage as the negative input.\n");
-    printf("The compare result reflects on ACMP1_O (PC0).\n");
+    printf("\nThis sample code demonstrates [ACMP1] function.\n");
+    printf("  ACMP1_N:  Using internal band-gap voltage as negative input.\n");
+    printf("  ACMP1_P1: Using PB4 as positive input.\n");
+    printf("  ACMP1_O:  Using PC0 as compare output.\n");
+    printf("\nThe compare result reflects on ACMP1_O (PC0).\n");
     printf("Press any key to start ...\n");
     getchar();
 

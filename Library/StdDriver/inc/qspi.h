@@ -396,6 +396,7 @@ uint32_t QSPI_GetStatus(QSPI_T *qspi, uint32_t u32Mask);
 
 #ifdef __cplusplus
 }
+
 #endif
 
 #endif /* __QSPI_H__ */

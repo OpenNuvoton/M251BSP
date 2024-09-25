@@ -60,6 +60,7 @@ uint8_t Intf_AbortTxRx(int32_t intf);
 
 #ifdef  __cplusplus
 }
+
 #endif
 
 #endif // __SC_INTF_H__

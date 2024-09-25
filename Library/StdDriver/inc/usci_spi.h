@@ -407,6 +407,7 @@ void USPI_DisableWakeup(USPI_T *psUSPI);
 
 #ifdef __cplusplus
 }
+
 #endif
 
 #endif /* __USCI_SPI_H__ */

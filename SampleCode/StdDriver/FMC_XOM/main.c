@@ -69,7 +69,7 @@ int32_t main(void)
 
     printf("\n\n");
     printf("+----------------------------------------+\n");
-    printf("|  FMC XOM config & erase  Sample Code   |\n");
+    printf("|   FMC XOM config & erase Sample Code   |\n");
     printf("+----------------------------------------+\n");
 
     /* Unlock protected registers to operate FMC ISP function */

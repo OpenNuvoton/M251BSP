@@ -339,6 +339,7 @@ void PDMA_SetStride(PDMA_T *pdma, uint32_t u32Ch, uint32_t u32DestLen, uint32_t 
 
 #ifdef __cplusplus
 }
+
 #endif
 
 #endif /* __PDMA_H__ */

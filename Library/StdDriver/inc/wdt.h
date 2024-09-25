@@ -200,6 +200,7 @@ void WDT_Open(uint32_t u32TimeoutInterval, uint32_t u32ResetDelay, uint32_t u32E
 
 #ifdef __cplusplus
 }
+
 #endif
 
 #endif /* __WDT_H__ */

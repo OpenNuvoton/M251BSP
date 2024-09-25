@@ -37,56 +37,6 @@ uint16_t g_au16SlaveToMasterTestPattern[TEST_COUNT];
 uint16_t g_au16MasterRxBuffer[TEST_COUNT];
 uint16_t g_au16SlaveRxBuffer[TEST_COUNT];
 
-/*---------------------------------------------------------------------------------------------------------*/
-/*  MAIN function                                                                                          */
-/*---------------------------------------------------------------------------------------------------------*/
-int main(void)
-{
-    /* Unlock protected registers */
-    SYS_UnlockReg();
-
-    /* Init System, peripheral clock and multi-function I/O */
-    SYS_Init();
-
-#if defined (__GNUC__) && !defined(__ARMCC_VERSION) && defined(OS_USE_SEMIHOSTING)
-    initialise_monitor_handles();
-#endif
-
-    /* Lock protected registers */
-    SYS_LockReg();
-
-    /* Configure UART0: 115200, 8-bit word, no parity bit, 1 stop bit. */
-    UART_Open(UART0, 115200);
-
-    /* Init USCI_SPI */
-    USCI_SPI_Init();
-
-    printf("\n\n");
-    printf("+--------------------------------------------------------------+\n");
-    printf("|                  USCI_SPI + PDMA Sample Code                 |\n");
-    printf("+--------------------------------------------------------------+\n");
-    printf("\n");
-    printf("Configure USCI_SPI0 as a master and USCI_SPI1 as a slave.\n");
-    printf("Bit length of a transaction: 16\n");
-    printf("The I/O connection for USCI_SPI0/USCI_SPI1 loopback:\n");
-    printf("    USCI_SPI0_SS(PC14)   <--> USCI_SPI1_SS(PB5)\n    USCI_SPI0_CLK(PB12)  <--> USCI_SPI1_CLK(PB1)\n");
-    printf("    USCI_SPI0_MISO(PB14) <--> USCI_SPI1_MISO(PB3)\n    USCI_SPI0_MOSI(PB13) <--> USCI_SPI1_MOSI(PB2)\n\n");
-    printf("Please connect USCI_SPI0 with USCI_SPI1, and press any key to start transmission ...");
-    getchar();
-    printf("\n");
-
-    SpiLoopTest_WithPDMA();
-
-    printf("\n\nExit USCI_SPI driver sample code.\n");
-
-    /* Close USCI_SPI0 */
-    USPI_Close(USPI0);
-    /* Close USCI_SPI1 */
-    USPI_Close(USPI1);
-
-    while (1);
-}
-
 void SYS_Init(void)
 {
     /*---------------------------------------------------------------------------------------------------------*/
@@ -118,7 +68,13 @@ void SYS_Init(void)
     /*---------------------------------------------------------------------------------------------------------*/
     /* Init I/O Multi-function                                                                                 */
     /*---------------------------------------------------------------------------------------------------------*/
+#if defined (__GNUC__) && !defined(__ARMCC_VERSION) && defined(OS_USE_SEMIHOSTING)
     Uart0DefaultMPF();
+#else
+    /* Set GPB multi-function pins for UART0 RXD and TXD */
+    SYS->GPB_MFPH = (SYS->GPB_MFPH & ~SYS_GPB_MFPH_PB8MFP_Msk) | SYS_GPB_MFPH_PB8MFP_UART0_RXD;
+    SYS->GPB_MFPH = (SYS->GPB_MFPH & ~SYS_GPB_MFPH_PB9MFP_Msk) | SYS_GPB_MFPH_PB9MFP_UART0_TXD;
+#endif
 
     /* Set USPI0 multi-function pins */
     SYS->GPB_MFPH = SYS->GPB_MFPH & ~(SYS_GPB_MFPH_PB12MFP_Msk | SYS_GPB_MFPH_PB13MFP_Msk | SYS_GPB_MFPH_PB14MFP_Msk);
@@ -385,4 +341,54 @@ void SpiLoopTest_WithPDMA(void)
     {
         printf(" [PASS]\n");
     }
+}
+
+/*---------------------------------------------------------------------------------------------------------*/
+/*  MAIN function                                                                                          */
+/*---------------------------------------------------------------------------------------------------------*/
+int main(void)
+{
+    /* Unlock protected registers */
+    SYS_UnlockReg();
+
+    /* Init System, peripheral clock and multi-function I/O */
+    SYS_Init();
+
+#if defined (__GNUC__) && !defined(__ARMCC_VERSION) && defined(OS_USE_SEMIHOSTING)
+    initialise_monitor_handles();
+#endif
+
+    /* Lock protected registers */
+    SYS_LockReg();
+
+    /* Configure UART0: 115200, 8-bit word, no parity bit, 1 stop bit. */
+    UART_Open(UART0, 115200);
+
+    /* Init USCI_SPI */
+    USCI_SPI_Init();
+
+    printf("\n\n");
+    printf("+--------------------------------------------------------------+\n");
+    printf("|                  USCI_SPI + PDMA Sample Code                 |\n");
+    printf("+--------------------------------------------------------------+\n");
+    printf("\n");
+    printf("Configure USCI_SPI0 as a master and USCI_SPI1 as a slave.\n");
+    printf("Bit length of a transaction: 16\n");
+    printf("The I/O connection for USCI_SPI0/USCI_SPI1 loopback:\n");
+    printf("    USCI_SPI0_SS(PC14)   <--> USCI_SPI1_SS(PB5)\n    USCI_SPI0_CLK(PB12)  <--> USCI_SPI1_CLK(PB1)\n");
+    printf("    USCI_SPI0_MISO(PB14) <--> USCI_SPI1_MISO(PB3)\n    USCI_SPI0_MOSI(PB13) <--> USCI_SPI1_MOSI(PB2)\n\n");
+    printf("Please connect USCI_SPI0 with USCI_SPI1, and press any key to start transmission ...");
+    getchar();
+    printf("\n");
+
+    SpiLoopTest_WithPDMA();
+
+    printf("\n\nExit USCI_SPI driver sample code.\n");
+
+    /* Close USCI_SPI0 */
+    USPI_Close(USPI0);
+    /* Close USCI_SPI1 */
+    USPI_Close(USPI1);
+
+    while (1);
 }

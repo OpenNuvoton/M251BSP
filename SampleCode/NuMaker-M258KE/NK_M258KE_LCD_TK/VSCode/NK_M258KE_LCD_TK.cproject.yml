@@ -1,0 +1,144 @@
+project:
+  packs:
+    - pack: Nuvoton::NuMicro_DFP
+  setups:
+    - output:
+        # bin, elf, hex, lib
+        type: bin
+    - setup: Options for FreeRun
+      for-context: .FreeRun
+      output :
+        base-name: NK_M258KE_LCD_TK_FreeRun
+        # bin, elf, hex, lib
+        type: bin      
+      add-path:
+        - ../../../../Library/Device/Nuvoton/M251/Include
+        - ../../../../Library/StdDriver/inc
+        - ../../../../Library/TKLib/Include
+        - ../../../../Library/CMSIS/Core/Include
+        - ../../../../Library/LCDLib/Include
+      debug: "on"
+      define:
+        - DEMO_FREERUN
+      misc:
+        - for-compiler: AC6
+          C:
+            - -std=c11 -fno-rtti -funsigned-char -fshort-enums -fshort-wchar -ffunction-sections -fdata-sections -w
+            - -D__MICROLIB
+          ASM:
+            - -masm=auto
+          Link:
+            - --library_type=microlib --map --load_addr_map_info --symbols
+            - --info sizes --info totals --strict --summary_stderr --info summarysizes
+        - for-compiler: GCC
+          C:
+            - -std=gnu11 -mthumb -masm-syntax-unified -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections
+          Link:
+            - -mthumb -fmessage-length=0 -fsigned-char --specs=nano.specs --specs=nosys.specs
+            - -Wl,--gc-sections,-Map="$elf()$.map"
+    - setup: Options for Calibration
+      for-context: .Calibration
+      output :
+        base-name: NK_M258KE_LCD_TK_Calibration
+        # bin, elf, hex, lib
+        type: bin      
+      add-path:
+        - ../../../../Library/Device/Nuvoton/M251/Include
+        - ../../../../Library/StdDriver/inc
+        - ../../../../Library/TKLib/Include
+        - ../../../../Library/CMSIS/Core/Include
+        - ../../../../Library/LCDLib/Include
+      debug: "on"
+      define:
+        - DEMO_CALIBRATION
+        - DEBUG_PORT: UART1
+      misc:
+        - for-compiler: AC6
+          C:
+            - -std=c11 -fno-rtti -funsigned-char -fshort-enums -fshort-wchar -ffunction-sections -fdata-sections -w
+            - -D__MICROLIB
+          ASM:
+            - -masm=auto
+          Link:
+            - --library_type=microlib --map --load_addr_map_info --symbols
+            - --info sizes --info totals --strict --summary_stderr --info summarysizes
+        - for-compiler: GCC
+          C:
+            - -std=gnu11 -mthumb -masm-syntax-unified -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections
+          Link:
+            - -mthumb -fmessage-length=0 -fsigned-char --specs=nano.specs --specs=nosys.specs
+            - -Wl,--gc-sections,-Map="$elf()$.map"
+  linker:
+    - script: TK_FreeRun.sct
+      for-context: .FreeRun
+      for-compiler: AC6
+    - script: TK_Calibration.sct
+      for-context: .Calibration
+      for-compiler: AC6
+    - script: gcc_arm.ld
+      for-context: .FreeRun
+      for-compiler: GCC
+    - script: gcc_arm.ld
+      for-context: .Calibration
+      for-compiler: GCC      
+  groups:
+    - group: Startup
+      files:
+        - file: ../../../../Library/Device/Nuvoton/M251/Source/system_M251.c
+        - file: ../../../../Library/Device/Nuvoton/M251/Source/ARM/startup_M251.c
+          for-compiler: AC6
+        - file: ../../../../Library/Device/Nuvoton/M251/Source/GCC/startup_M251.S
+          for-compiler: GCC
+    - group: Library
+      for-context: .FreeRun
+      files:
+        - file: ../../../../Library/TKLib/TKLib_FreeRun.lib
+          for-compiler: AC6
+        - file: ../../../../Library/TKLib/libTKLib_FreeRun.a
+          for-compiler: GCC
+    - group: Source
+      for-context: .FreeRun
+      files:
+        - file: ../TK_DebugUART.c
+        - file: ../TK_Main.c
+        - file: ../TK_MultPinFunctions.c
+        - file: ../TK_SysTick.c
+    - group: Driver
+      files:
+        - file: ../../../../Library/StdDriver/src/uart.c
+        - file: ../../../../Library/StdDriver/src/timer.c
+        - file: ../../../../Library/StdDriver/src/clk.c
+        - file: ../../../../Library/StdDriver/src/sys.c
+        - file: ../../../../Library/StdDriver/src/retarget.c
+        - file: ../../../../Library/StdDriver/src/gpio.c
+        - file: ../../../../Library/StdDriver/src/tk.c
+        - file: ../../../../Library/StdDriver/src/fmc.c
+    - group: Temperature
+      files:
+        - file: ../ADC_Vtemp.c
+        - file: ../../../../Library/StdDriver/src/eadc.c
+    - group: LCD
+      files:
+        - file: ../../../../Library/StdDriver/src/lcd.c
+        - file: ../LCD_NK.c
+        - file: ../../../../Library/LCDLib/Source/lcdlib.c
+    - group: Inc
+      for-context: .FreeRun
+      files:
+        - file: ../TK_Data.c
+    - group: Library
+      for-context: .Calibration
+      files:
+        - file: ../../../../Library/TKLib/TKLib_Calibration.lib
+          for-compiler: AC6
+        - file: ../../../../Library/TKLib/libTKLib_Calibration.a
+          for-compiler: GCC        
+    - group: Source
+      for-context: .Calibration
+      files:
+        - file: ../TK_DebugUART.c
+        - file: ../TK_Main.c
+        - file: ../TK_MultPinFunctions.c
+        - file: ../TK_SysTick.c
+        - file: ../TK_UartCmd.c
+        - file: ../TK_MassProduction.c

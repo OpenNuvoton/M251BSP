@@ -1,0 +1,22 @@
+solution:
+  created-by: uv2csolution@1.5.0
+  created-for: CMSIS-Toolbox@2.4.0
+  select-compiler:
+    - compiler: AC6@>=5.19.0
+    - compiler: GCC@>=10.3.1
+  build-types:
+    - type: FreeRun                   # build-type name, used in context with: .FreeRun
+      optimize: balanced              # optimize for balanced
+      debug: on                       # generate debug info. for the release build (Set off to disable)
+    - type: Calibration               # build-type name, used in context with: .Calibration
+      optimize: balanced              # optimize for balanced
+      debug: on                       # generate debug info. for the debug build
+  target-types:
+    - type: ARMCLANG
+      compiler: AC6
+      device: Nuvoton::M256SD2AE
+    - type: GNUC
+      compiler: GCC
+      device: Nuvoton::M256SD2AE
+  projects:
+    - project: NK_M256SD_LCD_TK.cproject.yml

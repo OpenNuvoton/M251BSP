@@ -119,22 +119,22 @@ extern "C"
   */
 typedef struct
 {
-unsigned CKPT0SLT:
+    unsigned CKPT0SLT:
     4;   ///< Link check point and slot controller slot. \ref PSIO_SLOT_DISABLE, \ref PSIO_SLOT0, \ref PSIO_SLOT1, \ref PSIO_SLOT2, \ref PSIO_SLOT3, \ref PSIO_SLOT4, \ref PSIO_SLOT5, \ref PSIO_SLOT6, \ref PSIO_SLOT7
     unsigned CKPT1SLT: 4;   ///< Link check point and slot controller slot. Reference to \ref S_PSIO_CP_CONFIG::CKPT0SLT
-unsigned CKPT2SLT:
+    unsigned CKPT2SLT:
     4;   ///< Link check point and slot controller slot. Reference to \ref S_PSIO_CP_CONFIG::CKPT0SLT
-unsigned CKPT3SLT:
+    unsigned CKPT3SLT:
     4;   ///< Link check point and slot controller slot. Reference to \ref S_PSIO_CP_CONFIG::CKPT0SLT
-unsigned CKPT4SLT:
+    unsigned CKPT4SLT:
     4;   ///< Link check point and slot controller slot. Reference to \ref S_PSIO_CP_CONFIG::CKPT0SLT
-unsigned CKPT5SLT:
+    unsigned CKPT5SLT:
     4;   ///< Link check point and slot controller slot. Reference to \ref S_PSIO_CP_CONFIG::CKPT0SLT
-unsigned CKPT6SLT:
+    unsigned CKPT6SLT:
     4;   ///< Link check point and slot controller slot. Reference to \ref S_PSIO_CP_CONFIG::CKPT0SLT
-unsigned CKPT7SLT:
+    unsigned CKPT7SLT:
     4;   ///< Link check point and slot controller slot. Reference to \ref S_PSIO_CP_CONFIG::CKPT0SLT
-unsigned CKPT0ACT:
+    unsigned CKPT0ACT:
     4;   ///< select action at check point0. \ref PSIO_NO_ACTION, \ref PSIO_OUT_LOW, \ref PSIO_OUT_HIGH, \ref PSIO_OUT_BUFFER, \ref PSIO_OUT_TOGGLE, \ref PSIO_IN_BUFFER, \ref PSIO_IN_STATUS, \ref PSIO_IN_STATUS_UPDATE
     unsigned CKPT1ACT: 4;   ///< Select action at check point1. Reference to \ref S_PSIO_CP_CONFIG::CKPT0ACT
     unsigned CKPT2ACT: 4;   ///< Select action at check point2. Reference to \ref S_PSIO_CP_CONFIG::CKPT0ACT
@@ -144,6 +144,7 @@ unsigned CKPT0ACT:
     unsigned CKPT6ACT: 4;   ///< Select action at check point6. Reference to \ref S_PSIO_CP_CONFIG::CKPT0ACT
     unsigned CKPT7ACT: 4;   ///< Select action at check point7. Reference to \ref S_PSIO_CP_CONFIG::CKPT0ACT
 } S_PSIO_CP_CONFIG;
+
 /** @} end of group PSIO_EXPORTED_STRUCTS */
 
 /** @addtogroup PSIO_EXPORTED_FUNCTIONS PSIO Exported Functions
@@ -1163,6 +1164,7 @@ __STATIC_INLINE void PSIO_SET_CP_CONFIG(PSIO_T *psio, uint32_t u32Pin, const S_P
 
 #ifdef __cplusplus
 }
+
 #endif
 
 #endif /* __PSIO_H__ */

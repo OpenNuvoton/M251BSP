@@ -359,8 +359,8 @@ void HID_UpdateMouseData(void)
             {
                 /* Update new report data */
                 pu8Buf[0] = 0x00;
-                pu8Buf[1] = 0x00;//g_i8MouseTable[g_u8MouseIdx & 0x07];
-                pu8Buf[2] = 0x00;//g_i8MouseTable[(g_u8MouseIdx + 2) & 0x07];
+                pu8Buf[1] = g_i8MouseTable[g_u8MouseIdx & 0x07];
+                pu8Buf[2] = g_i8MouseTable[(g_u8MouseIdx + 2) & 0x07];
                 pu8Buf[3] = 0x00;
                 g_u8MouseIdx++;
                 g_u8MoveLen = 0;

@@ -15,8 +15,7 @@
 #include "targetdev.h"
 #include "uart_transfer.h"
 
-
-#define PLL_CLOCK               48000000
+#define PLL_CLOCK   FREQ_48MHZ
 
 /* This is a dummy implementation to replace the same function in clk.c for size limitation. */
 uint32_t CLK_GetPLLClockFreq(void)
@@ -115,10 +114,10 @@ _ISP:
     }
 
 _APROM:
+    /* Reset system and boot from APROM */
     SYS->RSTSTS = (SYS_RSTSTS_PORF_Msk | SYS_RSTSTS_PINRF_Msk);
+    /* FMC_ISPCTL_BS_Msk only works with Boot from APROM/LDROM without IAP mode. */
     FMC->ISPCTL &= ~(FMC_ISPCTL_ISPEN_Msk | FMC_ISPCTL_BS_Msk);
+    /* Wait system reset */
     NVIC_SystemReset();
-
-    /* Trap the CPU */
-    while (1);
 }

@@ -371,6 +371,7 @@ void TK_ConfigPowerDown(uint8_t u8Sensitivity);
 
 #ifdef __cplusplus
 }
+
 #endif
 
 #endif //__TK_H__

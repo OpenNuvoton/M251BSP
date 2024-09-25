@@ -189,6 +189,7 @@ __STATIC_INLINE int32_t OPA_Calibration(OPA_T *opa, uint32_t u32OpaNum, uint32_t
 
 #ifdef __cplusplus
 }
+
 #endif
 
 #endif /* __OPA_H__ */

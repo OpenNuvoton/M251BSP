@@ -571,6 +571,7 @@ __STATIC_INLINE void TPWM_ClearWakeupFlag(TIMER_T *timer)
 
 #ifdef __cplusplus
 }
+
 #endif
 
 #endif /* __TIMER_PWM_H__ */

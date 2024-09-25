@@ -82,8 +82,8 @@ int32_t main(void)
 
     for (u32addr = APROM_TEST_BASE; u32addr < APROM_TEST_END; u32addr += FMC_FLASH_PAGE_SIZE)
     {
-        printf("Multiword program APROM page 0x%x =>\n", u32addr);
-        printf("    Erase...\n");
+        printf("Multi-word program APROM page 0x%x =>\n", u32addr);
+        printf("  Erase...");
 
         if (FMC_Erase(u32addr) < 0)
         {
@@ -91,7 +91,8 @@ int32_t main(void)
             goto err_out;
         }
 
-        printf("    Program...\n");
+        printf("[OK]\n");
+        printf("  Program...");
 
         for (u32maddr = u32addr; u32maddr < u32addr + FMC_FLASH_PAGE_SIZE; u32maddr += MULTI_WORD_PROG_LEN)
         {
@@ -101,13 +102,14 @@ int32_t main(void)
 
             /* execute multi-word program */
             if (FMC_Write128(u32maddr, g_au32page_buff) != 0)
+            {
+                printf("Failed !\n");
                 goto err_out;
-
+            }
         }
 
-        printf("    [OK]\n");
-
-        printf("    Verify...\n");
+        printf("[OK]\n");
+        printf("  Verify...");
 
         for (u32LoopCnt = 0; u32LoopCnt < FMC_FLASH_PAGE_SIZE; u32LoopCnt += 4)
             g_au32page_buff[u32LoopCnt / 4] = u32addr + u32LoopCnt;
@@ -116,6 +118,7 @@ int32_t main(void)
         {
             if (FMC_Read(u32addr + u32LoopCnt) != g_au32page_buff[u32LoopCnt / 4])
             {
+                printf("Failed !\n");
                 printf("\n[FAILED] Data mismatch at address 0x%x, expect: 0x%x, read: 0x%x!\n", u32addr + u32LoopCnt, g_au32page_buff[u32LoopCnt / 4], FMC_Read(u32addr + u32LoopCnt));
                 goto err_out;
             }

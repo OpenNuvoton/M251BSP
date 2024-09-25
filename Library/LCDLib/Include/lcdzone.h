@@ -530,6 +530,7 @@ static const LCD_ZONE_INFO_T g_LCDZoneInfo[] =
 
 #ifdef __cplusplus
 }
+
 #endif
 
 #endif  /* __LCDZONE_H */

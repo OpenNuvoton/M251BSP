@@ -14,7 +14,7 @@
 #include "NuMicro.h"
 
 /*
- The ARM M0 Generic User Guide lists the following sources for a hard fault:
+ The ARM M23 Generic User Guide lists the following sources for a hard fault:
 
  All faults result in the HardFault exception being taken or cause lockup if
  they occur in the NMI or HardFault handler. The faults are:
@@ -56,8 +56,20 @@
 /* Define functions prototype                                                                              */
 /*---------------------------------------------------------------------------------------------------------*/
 
-int main(void);
+#if defined ( __GNUC__ ) && !defined (__ARMCC_VERSION)
+void HardFault_Handler(void)
+{
+    __ASM(
+        "MOV     R0, LR  \n"
+        "MRS     R1, MSP \n"
+        "MRS     R2, PSP \n"
+        "LDR     R3, =ProcessHardFault \n"
+        "BLX     R3 \n"
+        "BX      R0 \n"
+    );
+}
 
+#endif
 
 void SYS_Init(void)
 {
@@ -78,7 +90,8 @@ void SYS_Init(void)
     CLK_SetHCLK(CLK_CLKSEL0_HCLKSEL_HIRC, CLK_CLKDIV0_HCLK(1));
 
     /* Enable IP clock */
-    CLK->APBCLK0 |= CLK_APBCLK0_UART0CKEN_Msk | CLK_APBCLK0_TMR1CKEN_Msk;
+    CLK_EnableModuleClock(TMR1_MODULE);
+    CLK_EnableModuleClock(UART0_MODULE);
 
     /* Select IP clock source */
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HIRC, CLK_CLKDIV0_UART0(1));
@@ -179,7 +192,7 @@ uint32_t ProcessHardFault(uint32_t u32_lr, uint32_t u32msp, uint32_t u32psp)
         Memory access faults can be caused by:
             Invalid address - read/write wrong address
             Data alignment issue - Violate alignment rule of Cortex-M processor
-            Memory access permission - MPU violations or unprivileged access (Cortex-M0+)
+            Memory access permission - MPU violations or unprivileged access (Cortex-M23)
             Bus components or peripheral returned an error response.
     */
 
@@ -194,6 +207,7 @@ uint32_t ProcessHardFault(uint32_t u32_lr, uint32_t u32msp, uint32_t u32psp)
 
     while (1);
 }
+
 #endif
 
 

@@ -511,6 +511,7 @@ int32_t TIMER_ResetCounter(TIMER_T *timer);
 
 #ifdef __cplusplus
 }
+
 #endif
 
 #endif /* __TIMER_H__ */

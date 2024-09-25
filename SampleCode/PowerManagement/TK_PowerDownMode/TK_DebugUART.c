@@ -19,6 +19,7 @@ void UART0_Init(void)
     NVIC_EnableIRQ(UART0_IRQn);
 
 }
+
 #endif //DEMO_CALIBRATION
 
 #ifdef UART1_DBG

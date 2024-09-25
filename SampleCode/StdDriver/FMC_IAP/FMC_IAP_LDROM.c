@@ -65,6 +65,7 @@ void __set_SP(uint32_t _sp)
         "BX lr			 \n"
     );
 }
+
 #endif
 
 
@@ -126,6 +127,7 @@ void Hard_Fault_Handler(uint32_t stack[])
 
     while (1);
 }
+
 #endif
 
 int main()
@@ -158,7 +160,7 @@ int main()
 
     PutString("\n\nChange VECMAP and branch to APROM...\n");
 
-    while (!(UART0->FIFOSTS & UART_FIFOSTS_TXEMPTY_Msk));       /* wait until UART3 TX FIFO is empty */
+    while (!(UART0->FIFOSTS & UART_FIFOSTS_TXEMPTY_Msk));       /* wait until UART TX FIFO is empty */
 
     /*  NOTE!
      *     Before change VECMAP, user MUST disable all interrupts.

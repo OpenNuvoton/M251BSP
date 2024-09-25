@@ -340,6 +340,9 @@ int32_t main(void)
         goto lexit;
     }
 
+    printf("Press any key to enter Power-down mode.\n");
+    getchar();
+
     /* Enter to Power-down mode */
     if (SET_PDMSEL == CLK_PMUCTL_PDMSEL_PD)        printf("Enter to PD Power-Down ......\n");
     else if (SET_PDMSEL == CLK_PMUCTL_PDMSEL_FWPD) printf("Enter to FWPD Power-Down ......\n");

@@ -53,6 +53,7 @@ void LCDLIB_SetSymbol(uint32_t u32Symbol, uint32_t u32OnOff);
 
 #ifdef __cplusplus
 }
+
 #endif
 
 #endif  /* __LCDLIB_H */

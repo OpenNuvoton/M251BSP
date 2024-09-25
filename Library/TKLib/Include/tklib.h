@@ -170,6 +170,7 @@ int TK_Calibration_Touch(uint8_t u8chan, uint8_t u8n, uint8_t u8m); /*!< Calibra
 
 #ifdef __cplusplus
 }
+
 #endif
 
 #endif /* __TKLIB_H__ */

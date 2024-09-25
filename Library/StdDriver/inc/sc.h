@@ -364,6 +364,7 @@ uint32_t SC_GetInterfaceClock(SC_T *psSC);
 
 #ifdef __cplusplus
 }
+
 #endif
 
 #endif /* __SC_H__ */

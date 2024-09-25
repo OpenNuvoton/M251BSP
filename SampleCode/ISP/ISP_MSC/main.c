@@ -10,6 +10,7 @@
 #include "M251_User.h"
 #include "massstorage.h"
 
+#define DetectPin           PA0
 #define TRIM_INIT           (SYS_BASE + 0x118)
 #define PLL_CLOCK           48000000
 
@@ -56,10 +57,9 @@ void SYS_Init(void)
     CLK->APBCLK0 |= CLK_APBCLK0_USBDCKEN_Msk;
     CLK->AHBCLK  |= (CLK_AHBCLK_ISPCKEN_Msk | CLK_AHBCLK_GPBCKEN_Msk);
 
-    /* Set PB.15 to input mode */
-    PB->MODE &= ~(GPIO_MODE_MODE15_Msk);
-
-    SYS->GPB_MFPH &= ~(SYS_GPB_MFPH_PB15MFP_Msk) | SYS_GPB_MFPH_PB15MFP_GPIO;
+    /* Set detect pin to input mode */
+    PA->MODE &= ~GPIO_MODE_MODE0_Msk;
+    SYS->GPA_MFPL &= ~SYS_GPA_MFPL_PA0MFP_Msk;
 }
 
 /*---------------------------------------------------------------------------------------------------------*/
@@ -102,8 +102,8 @@ int32_t main(void)
     /* Clear SOF */
     USBD_CLR_INT_FLAG(USBD_INTSTS_SOFIF_Msk);
 
-    /* Check if GPB.15 is low */
-    while (PB15 == 0)
+    /* Check if detect pin is low */
+    while (DetectPin == 0)
     {
         /* Start USB trim function if it is not enabled. */
         if ((SYS->HIRCTRIMCTL & SYS_HIRCTRIMCTL_FREQSEL_Msk) != 0x1)
@@ -146,9 +146,10 @@ int32_t main(void)
         MSC_ProcessCmd();
     }
 
-    /* Boot from APROM */
-    FMC->ISPCTL &= ~FMC_ISPCTL_BS_Msk;
+    /* Reset system and boot from APROM */
+    SYS->RSTSTS = (SYS_RSTSTS_PORF_Msk | SYS_RSTSTS_PINRF_Msk);
+    /* FMC_ISPCTL_BS_Msk only works with Boot from APROM/LDROM without IAP mode. */
+    FMC->ISPCTL &= ~(FMC_ISPCTL_ISPEN_Msk | FMC_ISPCTL_BS_Msk);
+    /* Wait system reset */
     NVIC_SystemReset();
-
-    while (1);
 }

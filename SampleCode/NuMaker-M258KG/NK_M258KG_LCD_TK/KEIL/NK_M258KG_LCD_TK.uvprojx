@@ -10,14 +10,14 @@
       <TargetName>NK_M258KG_LCD_TK_FreeRun</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6120000::V6.12::.\ARMCLANG</pCCUsed>
+      <pCCUsed>6190000::V6.19::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>M258KG6AE</Device>
           <Vendor>Nuvoton</Vendor>
-          <PackID>Nuvoton.NuMicro_DFP.1.3.13</PackID>
-          <PackURL>https://github.com/OpenNuvoton/cmsis-packs/raw/master/</PackURL>
+          <PackID>Nuvoton.NuMicro_DFP.1.3.24</PackID>
+          <PackURL>https://github.com/OpenNuvoton/cmsis-packs/raw/master/Nuvoton_DFP/</PackURL>
           <Cpu>IRAM(0x20000000,0x8000) IROM(0x00000000,0x40000) CPUTYPE("Cortex-M23") CLOCK(12000000)</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
@@ -134,11 +134,11 @@
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
-            <DriverSelection>4100</DriverSelection>
+            <DriverSelection>4102</DriverSelection>
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>BIN\UL2V8M.DLL</Flash2>
-          <Flash3></Flash3>
+          <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
           <pFcarmGrp></pFcarmGrp>
@@ -185,6 +185,8 @@
             <uocXRam>0</uocXRam>
             <RvdsVP>0</RvdsVP>
             <RvdsMve>0</RvdsMve>
+            <RvdsCdeCp>0</RvdsCdeCp>
+            <nBranchProt>0</nBranchProt>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -321,13 +323,13 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>0</wLevel>
+            <wLevel>3</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
             <uC99>0</uC99>
             <uGnu>0</uGnu>
             <useXO>0</useXO>
-            <v6Lang>3</v6Lang>
+            <v6Lang>5</v6Lang>
             <v6LangP>3</v6LangP>
             <vShortEn>1</vShortEn>
             <vShortWch>1</vShortWch>
@@ -336,9 +338,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>DEMO_FREERUN,DEBUG_ENABLE_SEMIHOST</Define>
+              <Define>DEMO_FREERUN</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\TouchKey;..\..\..\..\Library\Device\Nuvoton\M251\Include;..\..\..\..\Library\StdDriver\inc;..\..\..\..\Library\TkLib\Include;..\..\..\..\Library\CMSIS\Include;..\..\..\..\Library\LCDLib\Include</IncludePath>
+              <IncludePath>..\..\TouchKey;..\..\..\..\Library\Device\Nuvoton\M251\Include;..\..\..\..\Library\StdDriver\inc;..\..\..\..\Library\TkLib\Include;..\..\..\..\Library\CMSIS\Core\Include;..\..\..\..\Library\LCDLib\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -351,7 +353,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <uClangAs>0</uClangAs>
+            <ClangAsOpt>1</ClangAsOpt>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -383,9 +385,9 @@
           <GroupName>Startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_M251.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>..\..\..\..\Library\Device\Nuvoton\M251\Source\ARM\startup_M251.s</FilePath>
+              <FileName>startup_M251.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Library\Device\Nuvoton\M251\Source\ARM\startup_M251.c</FilePath>
             </File>
             <File>
               <FileName>system_M251.c</FileName>
@@ -502,20 +504,20 @@
                     <Optim>0</Optim>
                     <oTime>2</oTime>
                     <SplitLS>2</SplitLS>
-                    <OneElfS>2</OneElfS>
+                    <OneElfS>1</OneElfS>
                     <Strict>2</Strict>
                     <EnumInt>2</EnumInt>
                     <PlainCh>2</PlainCh>
                     <Ropi>2</Ropi>
                     <Rwpi>2</Rwpi>
-                    <wLevel>0</wLevel>
+                    <wLevel>1</wLevel>
                     <uThumb>2</uThumb>
                     <uSurpInc>2</uSurpInc>
                     <uC99>2</uC99>
                     <uGnu>2</uGnu>
                     <useXO>2</useXO>
-                    <v6Lang>0</v6Lang>
-                    <v6LangP>0</v6LangP>
+                    <v6Lang>5</v6Lang>
+                    <v6LangP>3</v6LangP>
                     <vShortEn>2</vShortEn>
                     <vShortWch>2</vShortWch>
                     <v6Lto>2</v6Lto>
@@ -558,20 +560,20 @@
                     <Optim>0</Optim>
                     <oTime>2</oTime>
                     <SplitLS>2</SplitLS>
-                    <OneElfS>2</OneElfS>
+                    <OneElfS>1</OneElfS>
                     <Strict>2</Strict>
                     <EnumInt>2</EnumInt>
                     <PlainCh>2</PlainCh>
                     <Ropi>2</Ropi>
                     <Rwpi>2</Rwpi>
-                    <wLevel>0</wLevel>
+                    <wLevel>1</wLevel>
                     <uThumb>2</uThumb>
                     <uSurpInc>2</uSurpInc>
                     <uC99>2</uC99>
                     <uGnu>2</uGnu>
                     <useXO>2</useXO>
-                    <v6Lang>0</v6Lang>
-                    <v6LangP>0</v6LangP>
+                    <v6Lang>5</v6Lang>
+                    <v6LangP>3</v6LangP>
                     <vShortEn>2</vShortEn>
                     <vShortWch>2</vShortWch>
                     <v6Lto>2</v6Lto>
@@ -699,20 +701,20 @@
                     <Optim>0</Optim>
                     <oTime>2</oTime>
                     <SplitLS>2</SplitLS>
-                    <OneElfS>2</OneElfS>
+                    <OneElfS>1</OneElfS>
                     <Strict>2</Strict>
                     <EnumInt>2</EnumInt>
                     <PlainCh>2</PlainCh>
                     <Ropi>2</Ropi>
                     <Rwpi>2</Rwpi>
-                    <wLevel>0</wLevel>
+                    <wLevel>1</wLevel>
                     <uThumb>2</uThumb>
                     <uSurpInc>2</uSurpInc>
                     <uC99>2</uC99>
                     <uGnu>2</uGnu>
                     <useXO>2</useXO>
-                    <v6Lang>0</v6Lang>
-                    <v6LangP>0</v6LangP>
+                    <v6Lang>5</v6Lang>
+                    <v6LangP>3</v6LangP>
                     <vShortEn>2</vShortEn>
                     <vShortWch>2</vShortWch>
                     <v6Lto>2</v6Lto>
@@ -736,14 +738,14 @@
       <TargetName>NK_M258KG_LCD_TK_Calibration</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6120000::V6.12::.\ARMCLANG</pCCUsed>
+      <pCCUsed>6190000::V6.19::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>M258KG6AE</Device>
           <Vendor>Nuvoton</Vendor>
-          <PackID>Nuvoton.NuMicro_DFP.1.3.13</PackID>
-          <PackURL>https://github.com/OpenNuvoton/cmsis-packs/raw/master/</PackURL>
+          <PackID>Nuvoton.NuMicro_DFP.1.3.24</PackID>
+          <PackURL>https://github.com/OpenNuvoton/cmsis-packs/raw/master/Nuvoton_DFP/</PackURL>
           <Cpu>IRAM(0x20000000,0x8000) IROM(0x00000000,0x40000) CPUTYPE("Cortex-M23") CLOCK(12000000)</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
@@ -911,6 +913,8 @@
             <uocXRam>0</uocXRam>
             <RvdsVP>0</RvdsVP>
             <RvdsMve>0</RvdsMve>
+            <RvdsCdeCp>0</RvdsCdeCp>
+            <nBranchProt>0</nBranchProt>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -1038,7 +1042,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>0</Optim>
+            <Optim>3</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -1047,13 +1051,13 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>0</wLevel>
+            <wLevel>3</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
             <uC99>0</uC99>
             <uGnu>0</uGnu>
             <useXO>0</useXO>
-            <v6Lang>3</v6Lang>
+            <v6Lang>5</v6Lang>
             <v6LangP>3</v6LangP>
             <vShortEn>1</vShortEn>
             <vShortWch>1</vShortWch>
@@ -1064,7 +1068,7 @@
               <MiscControls></MiscControls>
               <Define>DEMO_CALIBRATION,DEBUG_PORT=UART1</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\TouchKey;..\..\..\..\Library\Device\Nuvoton\M251\Include;..\..\..\..\Library\StdDriver\inc;..\..\..\..\Library\TkLib\Include;..\..\..\..\Library\CMSIS\Include;..\..\..\..\Library\LCDLib\Include</IncludePath>
+              <IncludePath>..\..\TouchKey;..\..\..\..\Library\Device\Nuvoton\M251\Include;..\..\..\..\Library\StdDriver\inc;..\..\..\..\Library\TkLib\Include;..\..\..\..\Library\CMSIS\Core\Include;..\..\..\..\Library\LCDLib\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1077,7 +1081,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <uClangAs>0</uClangAs>
+            <ClangAsOpt>1</ClangAsOpt>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -1109,9 +1113,9 @@
           <GroupName>Startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_M251.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>..\..\..\..\Library\Device\Nuvoton\M251\Source\ARM\startup_M251.s</FilePath>
+              <FileName>startup_M251.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Library\Device\Nuvoton\M251\Source\ARM\startup_M251.c</FilePath>
             </File>
             <File>
               <FileName>system_M251.c</FileName>
@@ -1323,20 +1327,20 @@
                     <Optim>0</Optim>
                     <oTime>2</oTime>
                     <SplitLS>2</SplitLS>
-                    <OneElfS>2</OneElfS>
+                    <OneElfS>1</OneElfS>
                     <Strict>2</Strict>
                     <EnumInt>2</EnumInt>
                     <PlainCh>2</PlainCh>
                     <Ropi>2</Ropi>
                     <Rwpi>2</Rwpi>
-                    <wLevel>0</wLevel>
+                    <wLevel>1</wLevel>
                     <uThumb>2</uThumb>
                     <uSurpInc>2</uSurpInc>
                     <uC99>2</uC99>
                     <uGnu>2</uGnu>
                     <useXO>2</useXO>
-                    <v6Lang>0</v6Lang>
-                    <v6LangP>0</v6LangP>
+                    <v6Lang>5</v6Lang>
+                    <v6LangP>3</v6LangP>
                     <vShortEn>2</vShortEn>
                     <vShortWch>2</vShortWch>
                     <v6Lto>2</v6Lto>

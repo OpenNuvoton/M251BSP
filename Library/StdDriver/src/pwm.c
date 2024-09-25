@@ -606,6 +606,7 @@ uint32_t PWM_GetCaptureIntFlag(PWM_T *pwm, uint32_t u32ChannelNum)
     u32CapRFlag = (((pwm)->CAPIF & (PWM_CAPIF_CRLIF0_Msk << u32ChannelNum)) ? 1UL : 0UL) ;
     return ((u32CapFFlag << 1UL) | u32CapRFlag);
 }
+
 /**
  * @brief Enable duty interrupt of selected channel
  * @param[in] pwm The pointer of the specified PWM module

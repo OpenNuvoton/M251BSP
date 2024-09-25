@@ -622,6 +622,7 @@ void CLK_SysTickLongDelay(uint32_t u32USec);
 
 #ifdef __cplusplus
 }
+
 #endif
 
 #endif /* __CLK_H__ */

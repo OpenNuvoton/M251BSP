@@ -143,11 +143,13 @@ int32_t main(void)
     /* Configure UART0: 115200, 8-bit word, no parity bit, 1 stop bit. */
     UART_Open(UART0, 115200);
 
-    printf("\nThis sample code demonstrates ACMP1 window latch function. Using ACMP1_P1 (PB4) as ACMP1\n");
-    printf("positive input and using internal band-gap voltage as the negative input. ACMP1_WLAT is at\n");
-    printf("PA6, when PA6 is low, compare result on ACMP1_O (PC0) does not change with ACMP1_P1. When PA6");
-    printf("is high, ACMP1_O works as usual\n");
-
+    printf("\nThis sample code demonstrates [ACMP1] window latch function.\n");
+    printf("  ACMP1_N:    Using internal band-gap voltage as negative input.\n");
+    printf("  ACMP1_P1:   Using PB4 as positive input.\n");
+    printf("  ACMP1_O:    Using PC0 as compare output.\n");
+    printf("  ACMP1_WLAT: Using PA6 as window latch pin.\n");
+    printf("\nWhen ACMP1_WLAT is low,  ACMP1_O does not change with ACMP1_P1.\n");
+    printf("When ACMP1_WLAT is high, ACMP1_O works as usual.\n");
     printf("Press any key to start ...\n");
     getchar();
     /* Configure ACMP1. Enable ACMP1 and select band-gap voltage as the source of ACMP negative input. */

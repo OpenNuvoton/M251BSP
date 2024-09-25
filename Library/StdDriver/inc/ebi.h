@@ -332,6 +332,7 @@ void EBI_SetBusTiming(uint32_t u32Bank, uint32_t u32TimingConfig, uint32_t u32Mc
 
 #ifdef __cplusplus
 }
+
 #endif
 
 #endif /* __EBI_H__ */

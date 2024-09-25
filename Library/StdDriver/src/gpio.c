@@ -149,6 +149,7 @@ void GPIO_SetPullCtl(GPIO_T *port, uint32_t u32PinMask, uint32_t u32Mode)
         }
     }
 }
+
 /** @} end of group GPIO_EXPORTED_FUNCTIONS */
 
 /** @} end of group GPIO_Driver */

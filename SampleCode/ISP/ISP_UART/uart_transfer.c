@@ -59,6 +59,9 @@ void PutString(void)
 
         UART0->DAT = response_buff[i];
     }
+
+    /* Reset RX FIFO to clear unexpected RX data */
+    UART_RESET_RXFIFO(UART0);
 }
 
 void UART_Init()

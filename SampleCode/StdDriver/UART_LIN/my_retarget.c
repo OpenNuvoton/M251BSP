@@ -37,6 +37,7 @@ struct __FILE
 {
     int handle; /* Add whatever you need here */
 };
+
 #else
 #if !defined(__MICROLIB)
     #if (__OPTIMIZE__ == -O0)
@@ -50,6 +51,7 @@ struct __FILE
 {
     int handle; /* Add whatever you need here */
 };
+
 #endif /* !(defined(__ICCARM__) && (__VER__ >= 6010000)) */
 
 FILE __stdout;
@@ -174,6 +176,7 @@ int32_t SH_Return(int32_t n32In_R0, int32_t n32In_R1, int32_t *pn32Out_R0)
 {
     return 0;
 }
+
 #endif
 
 #endif /* defined(DEBUG_ENABLE_SEMIHOST) */
@@ -331,6 +334,7 @@ void SendChar_ToUART(int ch)
             break; // FIFO full
     } while (i32Tail != i32Head);
 }
+
 #endif /* else for NONBLOCK_PRINTF */
 
 
@@ -565,6 +569,7 @@ int _read(int fd, char *ptr, int len)
     *ptr = DEBUG_PORT->DAT;
     return 1;
 }
+
 #endif
 
 #else
@@ -603,6 +608,7 @@ int ferror(FILE *stream)
 {
     return EOF;
 }
+
 #endif
 
 

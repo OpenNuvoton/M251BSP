@@ -69,6 +69,7 @@ typedef struct _HIDP_BUTTON_CAPS
             USHORT   DesignatorMin,    DesignatorMax;
             USHORT   DataIndexMin,     DataIndexMax;
         } Range;
+
         struct
         {
             USAGE    Usage,            Reserved1;
@@ -183,6 +184,7 @@ typedef struct _HIDP_LINK_COLLECTION_NODE
     ULONG    Reserved: 23;
     PVOID    UserContext; // The user can hang his coat here.
 } HIDP_LINK_COLLECTION_NODE, *PHIDP_LINK_COLLECTION_NODE;
+
 //
 // When a link collection is described by a delimiter, alias link collection
 // nodes are created.  (One for each usage within the delimiter).
@@ -241,6 +243,7 @@ typedef struct _HIDP_DATA
         BOOLEAN On; // for buttons MUST BE TRUE for buttons.
     };
 } HIDP_DATA, *PHIDP_DATA;
+
 //
 // The HIDP_DATA structure is used with HidP_GetData and HidP_SetData
 // functions.
@@ -1189,10 +1192,11 @@ typedef struct _HIDP_KEYBOARD_MODIFIER_STATE
             ULONG NumLock: 1;
             ULONG Reserved: 21;
         };
+
         ULONG ul;
     };
 
-} HIDP_KEYBOARD_MODIFIER_STATE, * PHIDP_KEYBOARD_MODIFIER_STATE;
+} HIDP_KEYBOARD_MODIFIER_STATE, *PHIDP_KEYBOARD_MODIFIER_STATE;
 
 //
 // A call back function to give the i8042 scan codes to the caller of

@@ -108,11 +108,9 @@ int ParseCmd(unsigned char *buffer, uint8_t len)
             i = (FMC->ISPCTL & 0xFFFFFFFE);//ISP disable
         }
 
-        outpw(&FMC->ISPCTL, i);
+        FMC->ISPCTL = i;
+        /* Wait system reset */
         NVIC_SystemReset();
-
-        /* Trap the CPU */
-        while (1);
     }
     else if (lcmd == CMD_CONNECT)
     {

@@ -26,19 +26,92 @@ volatile uint32_t g_u32ComRhead  = 0;
 volatile uint32_t g_u32ComRtail  = 0;
 volatile int32_t g_i32Wait         = TRUE;
 
-/*---------------------------------------------------------------------------------------------------------*/
-/* Define functions prototype                                                                              */
-/*---------------------------------------------------------------------------------------------------------*/
-int32_t main(void);
-void SYS_Init(void);
-void UART0_Init(void);
-void UART0_IRQHandler(void);
-void UART_TEST_HANDLE(void);
-void UART_FunctionTest(void);
-
 #if defined (__GNUC__) && !defined(__ARMCC_VERSION) && defined(OS_USE_SEMIHOSTING)
     extern void initialise_monitor_handles(void);
 #endif
+
+/*---------------------------------------------------------------------------------------------------------*/
+/* UART Callback function                                                                                  */
+/*---------------------------------------------------------------------------------------------------------*/
+void UART_TEST_HANDLE(void)
+{
+
+    uint32_t u32IntSts = UART0->INTSTS;
+
+    if ((u32IntSts & UART_INTSTS_RDAINT_Msk) || (u32IntSts & UART_INTSTS_RXTOINT_Msk))
+    {
+
+        printf("\nInput:");
+
+        /* Get all the input characters */
+        while (UART_GET_RX_EMPTY(UART0) == 0)
+        {
+            /* Get the character from UART Buffer */
+            uint8_t u8InChar = UART_READ(UART0);
+
+            printf("%c\n", u8InChar);
+
+            if (u8InChar == '0')
+            {
+                g_i32Wait = FALSE;
+            }
+
+            /* Check if buffer full */
+            if (g_u32ComRbytes < RXBUFSIZE)
+            {
+                /* Enqueue the character */
+                g_au8RecData[g_u32ComRtail] = u8InChar;
+                g_u32ComRtail = (g_u32ComRtail == (RXBUFSIZE - 1)) ? 0 : (g_u32ComRtail + 1);
+                g_u32ComRbytes++;
+            }
+        }
+
+        printf("Transmission Test:");
+        /*Forces a write of all user-space buffered data for the given output*/
+        fflush(stdout);
+
+
+    }
+
+    if (u32IntSts & UART_INTSTS_THREINT_Msk)
+    {
+        uint16_t u16Temp;
+        u16Temp = g_u32ComRtail;
+
+        if (g_u32ComRhead != u16Temp)
+        {
+            uint8_t u8InChar = g_au8RecData[g_u32ComRhead];
+
+            while (UART_IS_TX_FULL(UART0)); /* Wait Tx is not full to transmit data */
+
+            UART_WRITE(UART0, u8InChar);
+            g_u32ComRhead = (g_u32ComRhead == (RXBUFSIZE - 1)) ? 0 : (g_u32ComRhead + 1);
+            g_u32ComRbytes--;
+        }
+    }
+
+    if (UART0->FIFOSTS & (UART_FIFOSTS_BIF_Msk | UART_FIFOSTS_FEF_Msk | UART_FIFOSTS_PEF_Msk | UART_FIFOSTS_RXOVIF_Msk))
+    {
+        UART0->FIFOSTS = (UART_FIFOSTS_BIF_Msk | UART_FIFOSTS_FEF_Msk | UART_FIFOSTS_PEF_Msk | UART_FIFOSTS_RXOVIF_Msk);
+    }
+}
+
+/*---------------------------------------------------------------------------------------------------------*/
+/* ISR to handle UART Channel 0 interrupt event                                                            */
+/*---------------------------------------------------------------------------------------------------------*/
+void UART0_IRQHandler(void)
+{
+    UART_TEST_HANDLE();
+}
+
+/*---------------------------------------------------------------------------------------------------------*/
+/* Init UART                                                                                               */
+/*---------------------------------------------------------------------------------------------------------*/
+void UART0_Init(void)
+{
+    /* Configure UART0 and set UART0 baud rate */
+    UART_Open(UART0, 115200);
+}
 
 void SYS_Init(void)
 {
@@ -109,135 +182,8 @@ void SYS_Init(void)
     /* Set PB multi-function pins for UART0 RXD and TXD */
     Uart0DefaultMPF();
 
-
     /* Lock protected registers */
     SYS_LockReg();
-
-}
-/*---------------------------------------------------------------------------------------------------------*/
-/* Init UART                                                                                               */
-/*---------------------------------------------------------------------------------------------------------*/
-void UART0_Init(void)
-{
-    /* Configure UART0 and set UART0 baud rate */
-    UART_Open(UART0, 115200);
-}
-
-/*---------------------------------------------------------------------------------------------------------*/
-/* UART Test Sample                                                                                        */
-/* Test Item                                                                                               */
-/* It sends the received data to HyperTerminal.                                                            */
-/*---------------------------------------------------------------------------------------------------------*/
-
-/*---------------------------------------------------------------------------------------------------------*/
-/*  Main Function                                                                                          */
-/*---------------------------------------------------------------------------------------------------------*/
-int32_t main(void)
-{
-
-    /* Unlock protected registers */
-    SYS_UnlockReg();
-
-    /* Init System, peripheral clock and multi-function I/O */
-    SYS_Init();
-
-    /* Lock protected registers */
-    SYS_LockReg();
-
-#if defined (__GNUC__) && !defined(__ARMCC_VERSION) && defined(OS_USE_SEMIHOSTING)
-    initialise_monitor_handles();
-#endif
-
-    /* Init UART0 for printf and test */
-    UART0_Init();
-
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* SAMPLE CODE                                                                                             */
-    /*---------------------------------------------------------------------------------------------------------*/
-
-    printf("\n\nCPU @ %d Hz\n", SystemCoreClock);
-
-    printf("\nUART Sample Program\n");
-
-    /* UART sample function */
-    UART_FunctionTest();
-
-    while (1);
-
-}
-
-/*---------------------------------------------------------------------------------------------------------*/
-/* ISR to handle UART Channel 0 interrupt event                                                            */
-/*---------------------------------------------------------------------------------------------------------*/
-void UART0_IRQHandler(void)
-{
-    UART_TEST_HANDLE();
-}
-
-/*---------------------------------------------------------------------------------------------------------*/
-/* UART Callback function                                                                                  */
-/*---------------------------------------------------------------------------------------------------------*/
-void UART_TEST_HANDLE(void)
-{
-
-    uint32_t u32IntSts = UART0->INTSTS;
-
-    if ((u32IntSts & UART_INTSTS_RDAINT_Msk) || (u32IntSts & UART_INTSTS_RXTOINT_Msk))
-    {
-
-        printf("\nInput:");
-
-        /* Get all the input characters */
-        while (UART_GET_RX_EMPTY(UART0) == 0)
-        {
-            /* Get the character from UART Buffer */
-            uint8_t u8InChar = UART_READ(UART0);
-
-            printf("%c\n", u8InChar);
-
-            if (u8InChar == '0')
-            {
-                g_i32Wait = FALSE;
-            }
-
-            /* Check if buffer full */
-            if (g_u32ComRbytes < RXBUFSIZE)
-            {
-                /* Enqueue the character */
-                g_au8RecData[g_u32ComRtail] = u8InChar;
-                g_u32ComRtail = (g_u32ComRtail == (RXBUFSIZE - 1)) ? 0 : (g_u32ComRtail + 1);
-                g_u32ComRbytes++;
-            }
-        }
-
-        printf("Transmission Test:");
-        /*Forces a write of all user-space buffered data for the given output*/
-        fflush(stdout);
-
-
-    }
-
-    if (u32IntSts & UART_INTSTS_THREINT_Msk)
-    {
-        uint16_t u16Temp;
-        u16Temp = g_u32ComRtail;
-
-        if (g_u32ComRhead != u16Temp)
-        {
-            uint8_t u8InChar = g_au8RecData[g_u32ComRhead];
-
-            while (UART_IS_TX_FULL(UART0)); /* Wait Tx is not full to transmit data */
-
-            UART_WRITE(UART0, u8InChar);
-            g_u32ComRhead = (g_u32ComRhead == (RXBUFSIZE - 1)) ? 0 : (g_u32ComRhead + 1);
-            g_u32ComRbytes--;
-        }
-    }
-
-    if (UART0->FIFOSTS & (UART_FIFOSTS_BIF_Msk | UART_FIFOSTS_FEF_Msk | UART_FIFOSTS_PEF_Msk | UART_FIFOSTS_RXOVIF_Msk))
-    {
-        UART0->FIFOSTS = (UART_FIFOSTS_BIF_Msk | UART_FIFOSTS_FEF_Msk | UART_FIFOSTS_PEF_Msk | UART_FIFOSTS_RXOVIF_Msk);
-    }
 
 }
 
@@ -280,6 +226,44 @@ void UART_FunctionTest(void)
 
 }
 
+/*---------------------------------------------------------------------------------------------------------*/
+/* UART Test Sample                                                                                        */
+/* Test Item                                                                                               */
+/* It sends the received data to HyperTerminal.                                                            */
+/*---------------------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------*/
+/*  Main Function                                                                                          */
+/*---------------------------------------------------------------------------------------------------------*/
+int32_t main(void)
+{
 
+    /* Unlock protected registers */
+    SYS_UnlockReg();
 
+    /* Init System, peripheral clock and multi-function I/O */
+    SYS_Init();
 
+    /* Lock protected registers */
+    SYS_LockReg();
+
+#if defined (__GNUC__) && !defined(__ARMCC_VERSION) && defined(OS_USE_SEMIHOSTING)
+    initialise_monitor_handles();
+#endif
+
+    /* Init UART0 for printf and test */
+    UART0_Init();
+
+    /*---------------------------------------------------------------------------------------------------------*/
+    /* SAMPLE CODE                                                                                             */
+    /*---------------------------------------------------------------------------------------------------------*/
+
+    printf("\n\nCPU @ %d Hz\n", SystemCoreClock);
+
+    printf("\nUART Sample Program\n");
+
+    /* UART sample function */
+    UART_FunctionTest();
+
+    while (1);
+
+}

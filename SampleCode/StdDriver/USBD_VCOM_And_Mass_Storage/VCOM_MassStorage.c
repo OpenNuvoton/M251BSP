@@ -317,6 +317,7 @@ void EP3_Handler(void)
         g_i8BulkOutReady = 1;
     }
 }
+
 void EP7_Handler(void)
 {
     g_u8EP7Ready = 1;

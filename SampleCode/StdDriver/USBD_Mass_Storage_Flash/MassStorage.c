@@ -662,6 +662,7 @@ void MSC_ReadCapacity16(void)
     *((uint8_t *)(MassCMD_BUF + 7)) = *((uint8_t *)&tmp + 0);
     *((uint8_t *)(MassCMD_BUF + 10)) = 0x02;
 }
+
 void MSC_ModeSense10(void)
 {
     uint8_t i, j;

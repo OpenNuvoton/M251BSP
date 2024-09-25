@@ -1,0 +1,20 @@
+{
+    "cmsis-csolution.actions": [
+        {
+            "path": "ISP_I2C.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "Flash Device LDROM",
+                "debug": "Embedded Debug"
+            }
+        },
+        {
+            "path": "ISP_I2C.csolution.yml",
+            "target": "GNUC",
+            "config": {
+                "run": "Flash Device LDROM",
+                "debug": "Embedded Debug"
+            }
+        }
+    ]
+}

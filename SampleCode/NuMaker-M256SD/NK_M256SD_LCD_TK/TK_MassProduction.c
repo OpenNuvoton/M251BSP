@@ -27,6 +27,7 @@ void TK_MP_Close()
 {
     TickClearTickEvent(i8MpTickEventID);                    /* Stop time out timer */
 }
+
 /**
   * The function is time out callback function.
   *
@@ -47,6 +48,7 @@ void TK_MP_Open()
     gbIsFineTuneDone = 0x0;
     i8MpTickEventID = TickSetTickEvent(150, (void *)TickCallback_FineTuneTimeOut);    /* 3 second time out */
 }
+
 #endif
 
 #if defined(MASS_FINETUNE)
@@ -90,4 +92,5 @@ void TK_MassProduction(int8_t *pai8Signal)
         }
     }
 }
+
 #endif

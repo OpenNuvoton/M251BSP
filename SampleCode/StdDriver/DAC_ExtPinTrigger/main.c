@@ -67,8 +67,10 @@ void SYS_Init(void)
     /* Enable DAC module clock */
     CLK_EnableModuleClock(DAC_MODULE);
 
-    /* Set UART0 Default MPF */
-    //    Uart0DefaultMPF() ;
+    /* Set MFPs for UART0 RXD and TXD */
+    SYS->GPA_MFPL = (SYS->GPA_MFPL & ~SYS_GPA_MFPL_PA4MFP_Msk) | SYS_GPA_MFPL_PA4MFP_UART0_RXD;
+    SYS->GPA_MFPL = (SYS->GPA_MFPL & ~SYS_GPA_MFPL_PA5MFP_Msk) | SYS_GPA_MFPL_PA5MFP_UART0_TXD;
+
     if ((SYS->PDID & 0x01920000) == 0x01920000)
     {
         /* Set PA multi-function pin for DAC voltage output */
@@ -95,10 +97,9 @@ void SYS_Init(void)
     SYS->GPA_MFPL = (SYS->GPA_MFPL & ~SYS_GPA_MFPL_PA1MFP_Msk) ;
     /* Set the PA1 is Output mode*/
     GPIO_SetMode(PA, BIT1, GPIO_MODE_OUTPUT);
+
     /* Lock protected registers */
     SYS_LockReg();
-
-
 }
 
 int32_t main(void)
@@ -118,7 +119,7 @@ int32_t main(void)
     printf("|            DAC Driver Sample Code                        |\n");
     printf("+----------------------------------------------------------+\n");
     printf("Please connect PA0 with PA1, use PA1 to trigger DAC conversion\n");
-    /*Set PA1 Outpur level is Low*/
+    /*Set PA1 Output level is Low*/
     PA1 = 0;
     /* Set the rising edge trigger DAC and enable D/A converter */
     DAC_Open(DAC0, 0, DAC_RISING_EDGE_TRIGGER);

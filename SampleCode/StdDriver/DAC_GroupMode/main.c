@@ -91,9 +91,9 @@ void SYS_Init(void)
     /* Enable GPB peripheral clock */
     CLK_EnableModuleClock(GPB_MODULE);
 
-
-    /* Set UART0 Default MPF */
-    //    Uart0DefaultMPF() ;
+    /* Set MFPs for UART0 RXD and TXD */
+    SYS->GPA_MFPL = (SYS->GPA_MFPL & ~SYS_GPA_MFPL_PA4MFP_Msk) | SYS_GPA_MFPL_PA4MFP_UART0_RXD;
+    SYS->GPA_MFPL = (SYS->GPA_MFPL & ~SYS_GPA_MFPL_PA5MFP_Msk) | SYS_GPA_MFPL_PA5MFP_UART0_TXD;
 
     if ((SYS->PDID & 0x01920000) == 0x01920000)
     {
@@ -129,8 +129,6 @@ void SYS_Init(void)
 
     /* Lock protected registers */
     SYS_LockReg();
-
-
 }
 
 int32_t main(void)
@@ -148,7 +146,8 @@ int32_t main(void)
     printf("+----------------------------------------------------------+\n");
     printf("|            DAC Group Sample Code                         |\n");
     printf("+----------------------------------------------------------+\n");
-    printf("DAC0 and DAC1 is configured in group mode and update simultaneously\n");
+    printf("DAC0 and DAC1 are configured in group mode and update simultaneously\n");
+    printf("* Only chip with 2 DACs supports group mode function.\n");
     /* Single Mode test */
     /* Set the software trigger DAC and enable D/A converter */
     DAC_Open(DAC0, 0, DAC_SOFTWARE_TRIGGER);
@@ -178,4 +177,3 @@ int32_t main(void)
     while (1) {};
 
 }
-

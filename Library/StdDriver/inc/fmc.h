@@ -707,6 +707,7 @@ uint32_t FMC_Write128(uint32_t u32Addr, uint32_t pu32Buf[]);
 
 #ifdef __cplusplus
 }
+
 #endif
 
 #endif /* __FMC_H__ */

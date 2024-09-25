@@ -1352,6 +1352,7 @@ void SYS_SetPowerLevel(uint32_t u32PowerLevel);
 
 #ifdef __cplusplus
 }
+
 #endif
 
 #endif /* __SYS_H__ */

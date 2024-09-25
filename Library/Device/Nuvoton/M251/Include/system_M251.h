@@ -16,9 +16,19 @@ extern "C" {
 
 #include <stdint.h>
 
-/*----------------------------------------------------------------------------
-  Define clocks
- *----------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------*/
+/* Macro Definition                                                           */
+/*----------------------------------------------------------------------------*/
+#define __PC()                                                \
+    __extension__({                                           \
+        register unsigned int current_pc;                     \
+        __asm volatile("mov %0, pc" : "=r"(current_pc) : : ); \
+        current_pc;                                           \
+    })    /*!< Current program counter            */
+
+/*----------------------------------------------------------------------------*/
+/* Define clocks                                                              */
+/*----------------------------------------------------------------------------*/
 #ifndef __HXT
 #define __HXT       (12000000UL)              /*!< External Crystal Clock Frequency           */
 #endif /* !defined(__HXT) */
@@ -39,6 +49,10 @@ extern uint32_t SystemCoreClock;    /*!< System Clock Frequency (Core Clock)  */
 extern uint32_t CyclesPerUs;        /*!< Cycles per micro second              */
 extern uint32_t PllClock;           /*!< PLL Output Clock Frequency           */
 
+/**
+  \brief Exception / Interrupt Handler Function Prototype
+*/
+typedef void(*VECTOR_TABLE_Type)(void);
 
 /**
  * @brief    System Initialization
@@ -75,6 +89,7 @@ extern int IsDebugFifoEmpty(void);
 
 #ifdef __cplusplus
 }
+
 #endif
 
 #endif /* __SYSTEM_M251_H__ */

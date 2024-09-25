@@ -636,6 +636,7 @@ uint32_t UART_Write(UART_T *uart, uint8_t pu8TxBuf[], uint32_t u32WriteBytes)
     return u32Count;
 
 }
+
 /**
  *    @brief        Select Single Wire mode function
  *

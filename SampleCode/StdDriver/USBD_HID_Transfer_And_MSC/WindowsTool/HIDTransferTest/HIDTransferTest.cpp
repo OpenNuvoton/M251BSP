@@ -9,7 +9,7 @@
 #include "HID.hpp"
 
 #ifdef _DEBUG
-#define new DEBUG_NEW
+    #define new DEBUG_NEW
 #endif
 
 #define USB_VID         0x0416  /* Vendor ID */
@@ -25,13 +25,14 @@
 #define HID_CMD_TEST     0xB4
 
 
-#define PAGE_SIZE       512/*256*/
-#define SECTOR_SIZE     1024
+#define PAGE_SIZE       2048/*256*/
+#define SECTOR_SIZE     4096
 #define HID_PACKET_SIZE 64
+
 
 #define USB_TIME_OUT    100
 
-// 僅有的一個應用程式物件
+// The only application object
 
 CWinApp theApp;
 
@@ -39,20 +40,20 @@ using namespace std;
 
 int main(void);
 
-int _tmain(int argc, TCHAR* argv[], TCHAR* envp[])
+int _tmain(int argc, TCHAR *argv[], TCHAR *envp[])
 {
     int nRetCode = 0;
 
-    // 初始化 MFC 並於失敗時列印錯誤
-    if(!AfxWinInit(::GetModuleHandle(NULL), NULL, ::GetCommandLine(), 0))
+    // Initialize MFC and print errors on failure
+    if (!AfxWinInit(::GetModuleHandle(NULL), NULL, ::GetCommandLine(), 0))
     {
-        // TODO: 配合您的需要變更錯誤碼
-        _tprintf(_T("嚴重錯誤: MFC 初始化失敗\n"));
+        // TODO: Change the error code to suit your needs
+        _tprintf(_T("Fatal error: MFC initialization failed\n"));
         nRetCode = 1;
     }
     else
     {
-        // TODO: 在此撰寫應用程式行為的程式碼。
+        // TODO: Write the code for your application's behavior here
         main();
 
 
@@ -87,7 +88,8 @@ unsigned int CalCheckSum(unsigned char *buf, unsigned int size)
 
     i = 0;
     sum = 0;
-    while(size--)
+
+    while (size--)
     {
         sum += buf[i++];
     }
@@ -116,7 +118,8 @@ int ReadPages(unsigned char *pReadBuf, unsigned int startPage, unsigned int page
 
     readBytes = 0;
     isDeviceOpened = 0;
-    if(!io.OpenDevice(USB_VID, USB_PID))
+
+    if (!io.OpenDevice(USB_VID, USB_PID))
     {
         printf("Can't Open HID Device\n");
         goto lexit;
@@ -125,7 +128,7 @@ int ReadPages(unsigned char *pReadBuf, unsigned int startPage, unsigned int page
     {
         isDeviceOpened = TRUE;
         printf("USB HID Device VID[%04x] PID[%04x] Open Success.\n", USB_VID, USB_PID);
-        printf(">>> Read pages: %u - %u\n", startPage, startPage + pages - 1);
+        printf(">>> Read pages: %d - %d\n", startPage, startPage + pages - 1);
 
         cmd.cmd = HID_CMD_READ;
         cmd.len = sizeof(cmd) - 4; /* Not include checksum */
@@ -135,25 +138,28 @@ int ReadPages(unsigned char *pReadBuf, unsigned int startPage, unsigned int page
         cmd.checksum = CalCheckSum((unsigned char *)&cmd, cmd.len);
 
         bRet = io.WriteFile((unsigned char *)&cmd, sizeof(cmd), &length, USB_TIME_OUT);
-        if(!bRet)
+
+        if (!bRet)
         {
             printf("ERROR: Send read command error!\n");
             goto lexit;
         }
 
-        while(1)
+        while (1)
         {
-            if(readBytes >= cmd.arg2 * PAGE_SIZE)
+            if (readBytes >= cmd.arg2 * PAGE_SIZE)
             {
                 break;
             }
 
             bRet = io.ReadFile(pReadBuf + readBytes, 256, &length, USB_TIME_OUT);
-            if(!bRet)
+
+            if (!bRet)
             {
                 printf("ERROR: Read fail!\n");
                 goto lexit;
             }
+
             readBytes += length;
         }
 
@@ -162,7 +168,7 @@ int ReadPages(unsigned char *pReadBuf, unsigned int startPage, unsigned int page
 
 lexit:
 
-    if(isDeviceOpened)
+    if (isDeviceOpened)
         io.CloseDevice();
 
     return readBytes;
@@ -187,7 +193,8 @@ int EraseSectors(unsigned int startSector, unsigned int sectors)
 
     eraseCnt = 0;
     isDeviceOpened = 0;
-    if(!io.OpenDevice(USB_VID, USB_PID))
+
+    if (!io.OpenDevice(USB_VID, USB_PID))
     {
         printf("Can't Open HID Device\n");
         goto lexit;
@@ -196,7 +203,7 @@ int EraseSectors(unsigned int startSector, unsigned int sectors)
     {
         isDeviceOpened = TRUE;
         printf("USB HID Device VID[%04x] PID[%04x] Open Success.\n", USB_VID, USB_PID);
-        printf(">>> Erase sectors: %u - %u\n", startSector, startSector + sectors - 1);
+        printf(">>> Erase sectors: %d - %d\n", startSector, startSector + sectors - 1);
 
         cmd.cmd = HID_CMD_ERASE;
         cmd.len = sizeof(cmd) - 4; /* Not include checksum */
@@ -206,18 +213,20 @@ int EraseSectors(unsigned int startSector, unsigned int sectors)
         cmd.checksum = CalCheckSum((unsigned char *)&cmd, cmd.len);
 
         bRet = io.WriteFile((unsigned char *)&cmd, sizeof(cmd), &length, USB_TIME_OUT);
-        if(!bRet)
+
+        if (!bRet)
         {
             printf("ERROR: Send erase command error!\n");
             goto lexit;
         }
+
         eraseCnt = sectors;
     }
 
 
 lexit:
 
-    if(isDeviceOpened)
+    if (isDeviceOpened)
         io.CloseDevice();
 
     return eraseCnt;
@@ -244,7 +253,8 @@ int WritePages(unsigned char *pWriteBuf, unsigned int startPage, unsigned int pa
 
     writeBytes = 0;
     isDeviceOpened = 0;
-    if(!io.OpenDevice(USB_VID, USB_PID))
+
+    if (!io.OpenDevice(USB_VID, USB_PID))
     {
         printf("Can't Open HID Device\n");
         goto lexit;
@@ -253,7 +263,7 @@ int WritePages(unsigned char *pWriteBuf, unsigned int startPage, unsigned int pa
     {
         isDeviceOpened = TRUE;
         printf("USB HID Device VID[%04x] PID[%04x] Open Success.\n", USB_VID, USB_PID);
-        printf(">>> Write pages: %u - %u\n", startPage, startPage + pages - 1);
+        printf(">>> Write pages: %d - %d\n", startPage, startPage + pages - 1);
 
         cmd.cmd = HID_CMD_WRITE;
         cmd.len = sizeof(cmd) - 4; /* Not include checksum */
@@ -263,25 +273,28 @@ int WritePages(unsigned char *pWriteBuf, unsigned int startPage, unsigned int pa
         cmd.checksum = CalCheckSum((unsigned char *)&cmd, cmd.len);
 
         bRet = io.WriteFile((unsigned char *)&cmd, sizeof(cmd), &length, USB_TIME_OUT);
-        if(!bRet)
+
+        if (!bRet)
         {
             printf("ERROR: Send read command error!\n");
             goto lexit;
         }
 
-        while(1)
+        while (1)
         {
-            if(writeBytes >= cmd.arg2 * PAGE_SIZE)
+            if (writeBytes >= cmd.arg2 * PAGE_SIZE)
             {
                 break;
             }
 
             bRet = io.WriteFile(pWriteBuf + writeBytes, HID_PACKET_SIZE, &length, USB_TIME_OUT);
-            if(!bRet)
+
+            if (!bRet)
             {
                 printf("ERROR: Write fail!\n");
                 goto lexit;
             }
+
             writeBytes += length;
         }
 
@@ -290,7 +303,7 @@ int WritePages(unsigned char *pWriteBuf, unsigned int startPage, unsigned int pa
 
 lexit:
 
-    if(isDeviceOpened)
+    if (isDeviceOpened)
         io.CloseDevice();
 
     return writeBytes;
@@ -309,7 +322,8 @@ int SendTestCmd(void)
 
 
     isDeviceOpened = 0;
-    if(!io.OpenDevice(USB_VID, USB_PID))
+
+    if (!io.OpenDevice(USB_VID, USB_PID))
     {
         printf("Can't Open HID Device\n");
         goto lexit;
@@ -328,7 +342,8 @@ int SendTestCmd(void)
         cmd.checksum = CalCheckSum((unsigned char *)&cmd, cmd.len);
 
         bRet = io.WriteFile((unsigned char *)&cmd, sizeof(cmd), &length, USB_TIME_OUT);
-        if(!bRet)
+
+        if (!bRet)
         {
             printf("ERROR: Send test command error!\n");
             goto lexit;
@@ -338,7 +353,7 @@ int SendTestCmd(void)
 
 lexit:
 
-    if(isDeviceOpened)
+    if (isDeviceOpened)
         io.CloseDevice();
 
     return 0;
@@ -346,7 +361,7 @@ lexit:
 
 
 #define TEST_PAGES   4       /* 4 pages */
-#define TEST_BASE    0x4000    /* 16kbytes */
+#define TEST_BASE    0x10000    /* 64kbytes */
 
 int main(void)
 {
@@ -361,23 +376,25 @@ int main(void)
     /* Blank check */
     ReadPages(buf, TEST_BASE / PAGE_SIZE, TEST_PAGES);
     isErr = 0;
-    for(i = 0; i < TEST_PAGES * PAGE_SIZE; i++)
+
+    for (i = 0; i < TEST_PAGES * PAGE_SIZE; i++)
     {
-        if(buf[i] != (unsigned char)0xFF)
+        if (buf[i] != (unsigned char)0xFF)
         {
             isErr = 1;
             break;
         }
     }
 
-    if(isErr)
+    if (isErr)
     {
         printf("ERROR: Blank test fail!\n");
         return -1;
     }
 
-    for(i = 0; i < TEST_PAGES * PAGE_SIZE; i++)
+    for (i = 0; i < TEST_PAGES * PAGE_SIZE; i++)
         buf[i] = i & 0xFF;
+
     /* Write test data */
     WritePages(buf, TEST_BASE / PAGE_SIZE, TEST_PAGES);
 
@@ -387,16 +404,17 @@ int main(void)
     /* Test the write data */
     ReadPages(buf, TEST_BASE / PAGE_SIZE, TEST_PAGES);
     isErr = 0;
-    for(i = 0; i < TEST_PAGES * PAGE_SIZE; i++)
+
+    for (i = 0; i < TEST_PAGES * PAGE_SIZE; i++)
     {
-        if(buf[i] != (i & 0xFF))
+        if (buf[i] != (i & 0xFF))
         {
             isErr = 1;
             break;
         }
     }
 
-    if(isErr)
+    if (isErr)
     {
         printf("ERROR: Programming test fail!\n");
         return -1;
@@ -409,24 +427,26 @@ int main(void)
     memset(buf, 0xCC, TEST_PAGES * PAGE_SIZE);
     ReadPages(buf, TEST_BASE / PAGE_SIZE, TEST_PAGES);
     isErr = 0;
-    for(i = 0; i < SECTOR_SIZE; i++)
+
+    for (i = 0; i < SECTOR_SIZE; i++)
     {
-        if(buf[i] != (i & 0xFF))
-        {
-            isErr = 1;
-            break;
-        }
-    }
-    for(i = SECTOR_SIZE; i < SECTOR_SIZE * 2; i++)
-    {
-        if(buf[i] != (unsigned char)0xFF)
+        if (buf[i] != (i & 0xFF))
         {
             isErr = 1;
             break;
         }
     }
 
-    if(isErr)
+    for (i = SECTOR_SIZE; i < SECTOR_SIZE * 2; i++)
+    {
+        if (buf[i] != (unsigned char)0xFF)
+        {
+            isErr = 1;
+            break;
+        }
+    }
+
+    if (isErr)
     {
         printf("ERROR: Single sector erase test fail!\n");
         return -1;
@@ -434,7 +454,7 @@ int main(void)
 
 
     printf("HID Transfer test ok!\n");
-    system("pause");
+
     return 0;
 
 

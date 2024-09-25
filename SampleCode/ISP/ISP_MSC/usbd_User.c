@@ -112,6 +112,7 @@ void USBD_Start(void)
     /* Enable USB-related interrupts. */
     USBD_ENABLE_INT(USBD_INT_BUS | USBD_INT_USB | USBD_INT_FLDET | USBD_INT_WAKEUP);
 }
+
 #endif
 
 /**
@@ -510,4 +511,5 @@ void USBD_SwReset(void)
 
 #ifdef __cplusplus
 }
+
 #endif

@@ -327,6 +327,7 @@ int32_t SCLIB_SetSpecificAtrBR(uint32_t num, uint32_t br);
 
 #ifdef __cplusplus
 }
+
 #endif
 
 /** @} end of group SCLIB_EXPORTED_FUNCTIONS */

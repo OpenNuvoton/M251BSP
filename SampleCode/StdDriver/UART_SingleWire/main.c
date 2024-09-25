@@ -145,8 +145,6 @@ void SYS_Init(void)
     SYS->GPA_MFPL &= ~(SYS_GPA_MFPL_PA2MFP_Msk);
     SYS->GPA_MFPL |= (SYS_GPA_MFPL_PA2MFP_UART1_RXD);
 
-
-
     /* Lock protected registers */
     SYS_LockReg();
 }
@@ -161,8 +159,6 @@ void SC0UART_Init(void)
     /* Configure SC0_UART and set SC0_UART baud rate */
     SCUART_Open(SC0, 115200);
 }
-
-
 
 /*---------------------------------------------------------------------------------------------------------*/
 /*                                Init Single Wire(UART0)                                                  */
@@ -185,8 +181,6 @@ void UART1_Init(void)
     UART_Open(UART1, 115200);
     UART_SelectSingleWireMode(UART1);
 }
-
-
 
 /*---------------------------------------------------------------------------------------------------------*/
 /* UART Test Sample                                                                                        */
@@ -323,6 +317,7 @@ void UART0_TEST_HANDLE(void)
 
     }
 }
+
 /*---------------------------------------------------------------------------------------------------------*/
 /*                              Bulid Source Pattern function                                              */
 /*---------------------------------------------------------------------------------------------------------*/

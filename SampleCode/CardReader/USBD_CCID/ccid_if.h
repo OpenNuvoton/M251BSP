@@ -90,6 +90,7 @@ void ccid_T0TimeExtension(void);
 
 #ifdef  __cplusplus
 }
+
 #endif
 
 #endif // __CCID_IF_H__

@@ -67,6 +67,7 @@ typedef struct dma_desc_t
     uint32_t dest;
     uint32_t offset;
 } DMA_DESC_T;
+
 DMA_DESC_T DMA_DESC[1];
 
 uint32_t GetPDMAChecksum(uint32_t u32Address, uint32_t u32Size)

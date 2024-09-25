@@ -33,11 +33,11 @@ void ACMP01_IRQHandler(void)
 
     if (ACMP01->STATUS & ACMP_STATUS_ACMPWO_Msk)
     {
-        printf("The input voltage is within the window\n");
+        printf("The input voltage is inside the window\n");
     }
     else
     {
-        printf("The input voltage is not within the window\n");
+        printf("The input voltage is outside the window\n");
     }
 }
 
@@ -132,10 +132,12 @@ int32_t main(void)
     /* Configure UART0: 115200, 8-bit word, no parity bit, 1 stop bit. */
     UART_Open(UART0, 115200);
 
-    printf("\nThis sample code demonstrates ACMP window compare function\n");
-    printf("Connect the specific analog voltage source to the positive inputs\n");
-    printf("of both comparators, PB2 and PB4. This sample code will monitor if the\n");
-    printf("input is between the range of VDDA * 14 / 24 and bandgap.\n");
+    printf("\nThis sample code demonstrates ACMP window compare function.\n");
+    printf("  ACMP0_P1: Using PB2 as ACMP0 positive input.\n");
+    printf("  ACMP1_P1: Using PB4 as ACMP1 positive input.\n");
+    printf("Connect the analog voltage source to the positive inputs of both comparators.\n");
+    printf("\nACMP will monitor if the input voltage is between\n");
+    printf("  (VDDA * 14 / 24) and internal band-gap voltage.\n");
     printf("Press any key to continue ...\n");
     getchar();
 
@@ -143,7 +145,7 @@ int32_t main(void)
     /* Select VDDA as CRV source */
     ACMP_SELECT_CRV_SRC(ACMP01, ACMP_VREF_CRVSSEL_AVDD);
     /* Select CRV level: VDDA * 14 / 24 */
-    ACMP_CRV_SEL(ACMP01, 10);
+    ACMP_CRV_SEL(ACMP01, 14);
     /* Configure ACMP0. Enable ACMP0 and select VBG as the source of ACMP negative input. */
     ACMP_Open(ACMP01, 0, ACMP_CTL_NEGSEL_VBG, ACMP_CTL_HYSTERESIS_DISABLE);
     /* Configure ACMP1. Enable ACMP1 and select CRV as the source of ACMP negative input. */
@@ -165,11 +167,11 @@ int32_t main(void)
 
     if (ACMP01->STATUS & ACMP_STATUS_ACMPWO_Msk)
     {
-        printf("The input voltage in inside the window\n");
+        printf("The input voltage is inside the window\n");
     }
     else
     {
-        printf("The input voltage in outside the window\n");
+        printf("The input voltage is outside the window\n");
     }
 
     /* Enable interrupt */
@@ -181,6 +183,7 @@ int32_t main(void)
     while (1);
 
 }
+
 /*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/
 
 

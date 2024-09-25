@@ -383,6 +383,7 @@ void ACMP_Close(ACMP_T *acmp, uint32_t u32ChNum);
 
 #ifdef __cplusplus
 }
+
 #endif
 
 

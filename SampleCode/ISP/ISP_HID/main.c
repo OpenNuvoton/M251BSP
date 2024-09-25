@@ -51,9 +51,9 @@ void SYS_Init(void)
     /*---------------------------------------------------------------------------------------------------------*/
     /* Init I/O Multi-function                                                                                 */
     /*---------------------------------------------------------------------------------------------------------*/
-    /* Set PA.12 ~ PA.14 to input mode */
-    PA->MODE &= ~(GPIO_MODE_MODE12_Msk | GPIO_MODE_MODE13_Msk | GPIO_MODE_MODE14_Msk);
-    SYS->GPA_MFPH &= ~(SYS_GPA_MFPH_PA12MFP_Msk | SYS_GPA_MFPH_PA13MFP_Msk | SYS_GPA_MFPH_PA14MFP_Msk | SYS_GPA_MFPH_PA15MFP_Msk);
+    /* Set detect pin to input mode */
+    PA->MODE &= ~GPIO_MODE_MODE0_Msk;
+    SYS->GPA_MFPL &= ~SYS_GPA_MFPL_PA0MFP_Msk;
 }
 
 void USBD_IRQHandler(void);
@@ -154,10 +154,10 @@ int32_t main(void)
     while ((SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk) == 0);
 
 _APROM:
-    outpw(&SYS->RSTSTS, SYS_RSTSTS_PORF_Msk | SYS_RSTSTS_PINRF_Msk); //clear bit
-    outpw(&FMC->ISPCTL, inpw(&FMC->ISPCTL) & 0xFFFFFFFC);
+    /* Reset system and boot from APROM */
+    SYS->RSTSTS = (SYS_RSTSTS_PORF_Msk | SYS_RSTSTS_PINRF_Msk);
+    /* FMC_ISPCTL_BS_Msk only works with Boot from APROM/LDROM without IAP mode. */
+    FMC->ISPCTL &= ~(FMC_ISPCTL_ISPEN_Msk | FMC_ISPCTL_BS_Msk);
+    /* Wait system reset */
     NVIC_SystemReset();
-
-    /* Trap the CPU */
-    while (1);
 }

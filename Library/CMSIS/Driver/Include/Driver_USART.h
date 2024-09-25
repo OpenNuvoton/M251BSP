@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2017 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2020 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -15,18 +15,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * $Date:        2. Feb 2017
- * $Revision:    V2.3
+ * $Date:        31. March 2020
+ * $Revision:    V2.4
  *
  * Project:      USART (Universal Synchronous Asynchronous Receiver Transmitter)
  *               Driver definitions
  */
 
 /* History:
+ *  Version 2.4
+ *    Removed volatile from ARM_USART_STATUS and ARM_USART_MODEM_STATUS
  *  Version 2.3
  *    ARM_USART_STATUS and ARM_USART_MODEM_STATUS made volatile
  *  Version 2.2
- *    Corrected ARM_USART_CPOL_Pos and ARM_USART_CPHA_Pos definitions 
+ *    Corrected ARM_USART_CPOL_Pos and ARM_USART_CPHA_Pos definitions
  *  Version 2.1
  *    Removed optional argument parameter from Signal Event
  *  Version 2.0
@@ -38,7 +40,7 @@
  *      Synchronous
  *      Single-wire
  *      IrDA
- *      Smart Card  
+ *      Smart Card
  *    Changed prefix ARM_DRV -> ARM_DRIVER
  *  Version 1.10
  *    Namespace prefix ARM_ added
@@ -62,7 +64,11 @@ extern "C"
 
 #include "Driver_Common.h"
 
-#define ARM_USART_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,3)  /* API version */
+#define ARM_USART_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,4)  /* API version */
+
+
+#define _ARM_Driver_USART_(n)      Driver_USART##n
+#define  ARM_Driver_USART_(n) _ARM_Driver_USART_(n)
 
 
 /****** USART Control Codes *****/
@@ -125,7 +131,7 @@ extern "C"
 
 /*----- USART Control Codes: Miscellaneous Controls  -----*/
 #define ARM_USART_SET_DEFAULT_TX_VALUE      (0x10UL << ARM_USART_CONTROL_Pos)   ///< Set default Transmit value (Synchronous Receive only); arg = value
-#define ARM_USART_SET_IRDA_PULSE            (0x11UL << ARM_USART_CONTROL_Pos)   ///< Set IrDA Pulse in ns; arg: 0=3/16 of bit period  
+#define ARM_USART_SET_IRDA_PULSE            (0x11UL << ARM_USART_CONTROL_Pos)   ///< Set IrDA Pulse in ns; arg: 0=3/16 of bit period
 #define ARM_USART_SET_SMART_CARD_GUARD_TIME (0x12UL << ARM_USART_CONTROL_Pos)   ///< Set Smart Card Guard Time; arg = number of bit periods
 #define ARM_USART_SET_SMART_CARD_CLOCK      (0x13UL << ARM_USART_CONTROL_Pos)   ///< Set Smart Card Clock in Hz; arg: 0=Clock not generated
 #define ARM_USART_CONTROL_SMART_CARD_NACK   (0x14UL << ARM_USART_CONTROL_Pos)   ///< Smart Card NACK generation; arg: 0=disabled, 1=enabled
@@ -152,7 +158,7 @@ extern "C"
 /**
 \brief USART Status
 */
-typedef volatile struct _ARM_USART_STATUS {
+typedef struct _ARM_USART_STATUS {
   uint32_t tx_busy          : 1;        ///< Transmitter busy flag
   uint32_t rx_busy          : 1;        ///< Receiver busy flag
   uint32_t tx_underflow     : 1;        ///< Transmit data underflow detected (cleared on start of next send operation)
@@ -176,7 +182,7 @@ typedef enum _ARM_USART_MODEM_CONTROL {
 /**
 \brief USART Modem Status
 */
-typedef volatile struct _ARM_USART_MODEM_STATUS {
+typedef struct _ARM_USART_MODEM_STATUS {
   uint32_t cts      : 1;                ///< CTS state: 1=Active, 0=Inactive
   uint32_t dsr      : 1;                ///< DSR state: 1=Active, 0=Inactive
   uint32_t dcd      : 1;                ///< DCD state: 1=Active, 0=Inactive
@@ -209,7 +215,7 @@ typedef volatile struct _ARM_USART_MODEM_STATUS {
   \return      \ref ARM_DRIVER_VERSION
 
   \fn          ARM_USART_CAPABILITIES ARM_USART_GetCapabilities (void)
-  \brief       Get driver capabilities
+  \brief       Get driver capabilities.
   \return      \ref ARM_USART_CAPABILITIES
 
   \fn          int32_t ARM_USART_Initialize (ARM_USART_SignalEvent_t cb_event)
@@ -268,7 +274,7 @@ typedef volatile struct _ARM_USART_MODEM_STATUS {
   \fn          int32_t ARM_USART_SetModemControl (ARM_USART_MODEM_CONTROL control)
   \brief       Set USART Modem Control line state.
   \param[in]   control  \ref ARM_USART_MODEM_CONTROL
-  \return      \ref execution_status 
+  \return      \ref execution_status
 
   \fn          ARM_USART_MODEM_STATUS ARM_USART_GetModemStatus (void)
   \brief       Get USART Modem Status lines state.
@@ -277,7 +283,6 @@ typedef volatile struct _ARM_USART_MODEM_STATUS {
   \fn          void ARM_USART_SignalEvent (uint32_t event)
   \brief       Signal USART Events.
   \param[in]   event  \ref USART_events notification mask
-  \return      none
 */
 
 typedef void (*ARM_USART_SignalEvent_t) (uint32_t event);  ///< Pointer to \ref ARM_USART_SignalEvent : Signal USART Event.
@@ -287,7 +292,7 @@ typedef void (*ARM_USART_SignalEvent_t) (uint32_t event);  ///< Pointer to \ref 
 \brief USART Device Driver Capabilities.
 */
 typedef struct _ARM_USART_CAPABILITIES {
-  uint32_t asynchronous       : 1;      ///< supports UART (Asynchronous) mode 
+  uint32_t asynchronous       : 1;      ///< supports UART (Asynchronous) mode
   uint32_t synchronous_master : 1;      ///< supports Synchronous Master mode
   uint32_t synchronous_slave  : 1;      ///< supports Synchronous Slave mode
   uint32_t single_wire        : 1;      ///< supports UART Single-wire mode

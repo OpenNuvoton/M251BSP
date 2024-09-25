@@ -61,7 +61,7 @@ int32_t main(void)
     /*---------------------------------------------------------------------------------------------------------*/
 
     printf("+------------------------------------------+\n");
-    printf("|        FMC_ReadAllOne Sample Demo        |\n");
+    printf("|       FMC Read-All-One Sample Demo       |\n");
     printf("+------------------------------------------+\n");
 
     SYS_UnlockReg();                   /* Unlock protected registers to operate FMC ISP function */

@@ -10,13 +10,7 @@
 #include <stdio.h>
 #include "NuMicro.h"
 
-void GPIO_SingleCycleIO_Test(void);
-
-#if (defined(__GNUC__) && !defined(__ARMCC_VERSION))
-    __attribute__((used, long_call, section(".fastcode"))) void GPIO_SingleCycleIO_Test(void)
-#else
-    void GPIO_SingleCycleIO_Test(void)
-#endif
+void GPIO_SingleCycleIO_Test(void)
 {
     uint32_t u32CounterTMR0 = 0, u32CounterTMR2 = 0, u32MicroSec, u32MHz;
 

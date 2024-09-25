@@ -758,6 +758,7 @@ void USBD_LockEpStall(uint32_t u32EpBitmap)
 
 #ifdef __cplusplus
 }
+
 #endif
 
 /*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/

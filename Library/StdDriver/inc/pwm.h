@@ -488,6 +488,7 @@ void PWM_DisablePDMA(PWM_T *pwm, uint32_t u32ChannelNum);
 
 #ifdef __cplusplus
 }
+
 #endif
 
 #endif /* __PWM_H__ */

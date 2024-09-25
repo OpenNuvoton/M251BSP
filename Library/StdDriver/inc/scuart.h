@@ -258,6 +258,7 @@ uint32_t SCUART_Write(SC_T *psSC, uint8_t pu8TxBuf[], uint32_t u32WriteBytes);
 
 #ifdef __cplusplus
 }
+
 #endif
 
 #endif /* __SCUART_H__ */

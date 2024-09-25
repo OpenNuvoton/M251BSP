@@ -113,7 +113,6 @@ struct CSW
 };
 
 /*-------------------------------------------------------------*/
-#define MASS_STORAGE_OFFSET       0x20001000 /* To avoid the code to write R/W section on SRAM  */
 
 #define DATA_FLASH_STORAGE_SIZE   (28*1024) /*Hardfault may raise if target device is with insufficient RAM space   */
 /* Configure the DATA FLASH storage size                                */
@@ -128,9 +127,11 @@ struct CSW
 
 extern uint32_t g_au32MassBlock[];
 extern uint32_t g_au32StorageBlock[];
+extern uint32_t g_au32Storage[];
 
 #define MassCMD_BUF        ((uint32_t)&g_au32MassBlock[0])
 #define STORAGE_DATA_BUF   ((uint32_t)&g_au32StorageBlock[0])
+#define STORAGE_BASE       ((uint32_t)&g_au32Storage[0])
 
 /*-------------------------------------------------------------*/
 

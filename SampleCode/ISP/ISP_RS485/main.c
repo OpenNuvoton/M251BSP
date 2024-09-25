@@ -13,7 +13,7 @@
 
 #define HCLK_DIV                1
 
-#define nRTSPin                 (PB14)
+#define nRTSPin                 (PB5)
 #define REVEIVE_MODE            (0)
 #define TRANSMIT_MODE           (1)
 
@@ -53,10 +53,10 @@ void SYS_Init(void)
     /*---------------------------------------------------------------------------------------------------------*/
     /* Init I/O Multi-function                                                                                 */
     /*---------------------------------------------------------------------------------------------------------*/
-    PB->MODE = (PB->MODE & ~(0x3ul << (14 << 1))) | (GPIO_MODE_OUTPUT << (14 << 1));
+    PB->MODE = (PB->MODE & ~(0x3ul << (5 << 1))) | (GPIO_MODE_OUTPUT << (5 << 1));
     nRTSPin = REVEIVE_MODE;
-    SYS->GPA_MFPL = (SYS->GPA_MFPL & ~(SYS_GPA_MFPL_PA2MFP_Msk)) | SYS_GPA_MFPL_PA2MFP_UART1_RXD;
-    SYS->GPA_MFPL = (SYS->GPA_MFPL & ~(SYS_GPA_MFPL_PA3MFP_Msk)) | SYS_GPA_MFPL_PA3MFP_UART1_TXD;
+    SYS->GPB_MFPL = (SYS->GPB_MFPL & ~(SYS_GPB_MFPL_PB2MFP_Msk)) | SYS_GPB_MFPL_PB2MFP_UART1_RXD;
+    SYS->GPB_MFPL = (SYS->GPB_MFPL & ~(SYS_GPB_MFPL_PB3MFP_Msk)) | SYS_GPB_MFPL_PB3MFP_UART1_TXD;
 }
 
 /*---------------------------------------------------------------------------------------------------------*/
@@ -128,10 +128,10 @@ _ISP:
     }
 
 _APROM:
+    /* Reset system and boot from APROM */
     SYS->RSTSTS = (SYS_RSTSTS_PORF_Msk | SYS_RSTSTS_PINRF_Msk);
+    /* FMC_ISPCTL_BS_Msk only works with Boot from APROM/LDROM without IAP mode. */
     FMC->ISPCTL &= ~(FMC_ISPCTL_ISPEN_Msk | FMC_ISPCTL_BS_Msk);
+    /* Wait system reset */
     NVIC_SystemReset();
-
-    /* Trap the CPU */
-    while (1);
 }

@@ -243,6 +243,7 @@ uint32_t DAC_SetDelayTime(DAC_T *dac, uint32_t u32Delay);
 
 #ifdef __cplusplus
 }
+
 #endif
 
 #endif /* __DAC_H__ */

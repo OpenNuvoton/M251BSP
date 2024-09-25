@@ -311,6 +311,7 @@ int8_t TK_CmdType1(uint8_t *pu8RXBuf)
                     (pKeyInfo + chan)->level = 0;
                 }
             }
+
             i8Ret = 2;
             break;
 
@@ -606,6 +607,7 @@ int8_t TK_CmdType2(uint8_t *pu8RXBuf)
 
     return i8Ret;
 }
+
 typedef void (*f)(void);
 void TK_RawDataView(void);
 int8_t TK_GetPacket(uint32_t *pu32ChanelMsk)

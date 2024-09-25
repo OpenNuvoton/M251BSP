@@ -5311,6 +5311,7 @@ SetupDiGetActualSectionToInstallW(
 
 #ifdef __cplusplus
 }
+
 #endif
 
 #include <poppack.h>

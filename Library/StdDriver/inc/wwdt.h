@@ -143,6 +143,7 @@ void WWDT_Open(uint32_t u32PreScale, uint32_t u32CmpValue, uint32_t u32EnableInt
 
 #ifdef __cplusplus
 }
+
 #endif
 
 #endif /* __WWDT_H__ */

@@ -133,6 +133,7 @@ void AES_SetDMATransfer(CRPT_T *crpt, uint32_t u32Channel, uint32_t u32SrcAddr, 
 
 #ifdef __cplusplus
 }
+
 #endif
 
 #endif  /* __CRYPTO_H__ */
