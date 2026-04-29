@@ -228,7 +228,7 @@ void AutoBaudRateTxTest(void)
 /*---------------------------------------------------------------------------------------------------------*/
 uint32_t GetUartBaudrate(UART_T *uart)
 {
-    uint8_t u8UartClkSrcSel = 0ul, u8UartClkDivNum;
+    uint8_t u8UartClkSrcSel = 0ul, u8UartClkDivNum = 0ul;
     uint32_t au32ClkTbl[6] = {__HXT, 0ul, __LXT, __HIRC, 0ul, __LIRC};
     uint32_t u32Baud_Div;
 

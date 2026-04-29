@@ -37,7 +37,7 @@ uint32_t PWM_ConfigCaptureChannel(PWM_T *pwm, uint32_t u32ChannelNum, uint32_t u
     (void) u32CaptureEdge;
     uint32_t u32Src;
     uint32_t u32PWMClockSrc;
-    uint32_t u32NearestUnitTimeNsec;
+    uint32_t u32NearestUnitTimeNsec = 0UL;
     uint16_t u16Prescale = 1UL, u16CNR = 0xFFFFUL;
     uint8_t u8BreakLoop = 0UL;
 
@@ -133,16 +133,18 @@ uint32_t PWM_ConfigCaptureChannel(PWM_T *pwm, uint32_t u32ChannelNum, uint32_t u
  * @param[in] u32ChannelNum PWM channel number. Valid values are between 0~5
  * @param[in] u32Frequency Target generator frequency
  * @param[in] u32DutyCycle Target generator duty cycle percentage. Valid range are between 0 ~ 100. 10 means 10%, 20 means 20%...
- * @return Nearest frequency clock in nano second
+ * @return Nearest frequency clock
  * @note Since every two channels, (0 & 1), (2 & 3), shares a prescaler. Call this API to configure PWM frequency may affect
  *       existing frequency of other channel.
  */
 uint32_t PWM_ConfigOutputChannel(PWM_T *pwm, uint32_t u32ChannelNum, uint32_t u32Frequency, uint32_t u32DutyCycle)
 {
-    uint32_t u32Src;
-    uint32_t u32PWMClockSrc;
-    uint32_t i;
-    uint16_t u16Prescale = 1UL, u16CNR = 0xFFFFUL;
+    uint32_t u32Src, u32PWMClockSrc;
+    uint32_t u32NearestFrequency, u32NearestCNR, u32CNR = 0x10000UL;
+    uint32_t u32Prescale = 1UL;
+
+    if (u32Frequency == 0)
+        return u32Frequency;
 
     // M251/2_C clock source is not supported PLL
     if ((SYS->PDID & 0xfff0) == 0x52E0 || (SYS->PDID & 0xfff0) == 0x52A0 || (SYS->PDID & 0xfff0) == 0x52B0 || (SYS->PDID & 0xfff0) == 0x51E0 || (SYS->PDID & 0xfff0) == 0x51A0
@@ -185,38 +187,44 @@ uint32_t PWM_ConfigOutputChannel(PWM_T *pwm, uint32_t u32ChannelNum, uint32_t u3
         }
     }
 
-    for (u16Prescale = 1UL; u16Prescale < 0xFFFUL; u16Prescale++)   //prescale could be 0~0xFFF
+    if (u32Frequency > u32PWMClockSrc)
+        return 0;
+
+    for (u32Prescale = 1UL; u32Prescale <= 0x1000UL; u32Prescale++)   //CLKPSC could be 0~0xFFF
     {
-        i = (u32PWMClockSrc / u32Frequency) / u16Prescale;
+        u32NearestCNR = (u32PWMClockSrc / u32Frequency) / u32Prescale;
 
         // If target value is larger than CNR, need to use a larger prescaler
-        if (i <= (0x10000UL))
+        if (u32NearestCNR <= (0x10000UL))
         {
-            u16CNR = (uint16_t)i;
+            u32CNR = u32NearestCNR;
             break;
         }
     }
 
-    // Store return value here 'cos we're gonna change u16Prescale & u16CNR to the real value to fill into register
-    i = u32PWMClockSrc / ((uint32_t)u16Prescale * (uint32_t)u16CNR);
+    if (u32Prescale > 0x1000UL)
+        return 0;
+
+    // Store return value here 'cos we're gonna change u32Prescale & u32CNR to the real value to fill into register
+    u32NearestFrequency = u32PWMClockSrc / (u32Prescale * u32CNR);
 
     // convert to real register value
-    u16Prescale = u16Prescale - 1UL;
+    u32Prescale = u32Prescale - 1UL;
     // every two channels share a prescaler
-    PWM_SET_PRESCALER(pwm, u32ChannelNum, (uint32_t)u16Prescale);
+    PWM_SET_PRESCALER(pwm, u32ChannelNum, u32Prescale);
     // set PWM to up count type
     (pwm)->CTL1 = ((pwm)->CTL1 & ~(PWM_CTL1_CNTTYPE0_Msk << ((u32ChannelNum >> 1UL) << 2UL)));
 
-    u16CNR -= 1UL;
-    PWM_SET_CNR(pwm, u32ChannelNum, u16CNR);
-    PWM_SET_CMR(pwm, u32ChannelNum, u32DutyCycle * (u16CNR + 1UL) / 100UL);
+    u32CNR -= 1UL;
+    PWM_SET_CNR(pwm, u32ChannelNum, u32CNR);
+    PWM_SET_CMR(pwm, u32ChannelNum, u32DutyCycle * (u32CNR + 1UL) / 100UL);
 
     (pwm)->WGCTL0 = ((pwm)->WGCTL0 & ~((PWM_WGCTL0_PRDPCTL0_Msk | PWM_WGCTL0_ZPCTL0_Msk) << (u32ChannelNum << 1UL))) | \
                     ((uint32_t)PWM_OUTPUT_HIGH << ((u32ChannelNum << 1UL) + (uint32_t)PWM_WGCTL0_ZPCTL0_Pos));
     (pwm)->WGCTL1 = ((pwm)->WGCTL1 & ~((PWM_WGCTL1_CMPDCTL0_Msk | PWM_WGCTL1_CMPUCTL0_Msk) << (u32ChannelNum << 1UL))) | \
                     ((uint32_t)PWM_OUTPUT_LOW << ((u32ChannelNum << 1UL) + (uint32_t)PWM_WGCTL1_CMPUCTL0_Pos));
 
-    return (i);
+    return (u32NearestFrequency);
 }
 
 /**
@@ -376,7 +384,7 @@ uint32_t PWM_GetADCTriggerFlag(PWM_T *pwm, uint32_t u32ChannelNum)
  * @param[in] u32ChannelMask Combination of enabled channels. Each bit corresponds to a channel.
  * @param[in] u32LevelMask Output high or low while fault brake occurs, each bit represent the level of a channel
  *                         while fault brake occurs. Bit 0 represents channel 0, bit 1 represents channel 1...
- * @param[in] u32BrakeSource Fault brake source, could be one of following source
+ * @param[in] u32BrakeSourceMask Fault brake source Mask, could be Mask of following source
  *                  - \ref PWM_FB_EDGE_ACMP0
  *                  - \ref PWM_FB_EDGE_ACMP1
  *                  - \ref PWM_FB_EDGE_BKP0
@@ -394,7 +402,7 @@ uint32_t PWM_GetADCTriggerFlag(PWM_T *pwm, uint32_t u32ChannelNum)
  * @details This function is used to enable fault brake of selected channel(s).
  *          The write-protection function should be disabled before using this function.
  */
-void PWM_EnableFaultBrake(PWM_T *pwm, uint32_t u32ChannelMask, uint32_t u32LevelMask, uint32_t u32BrakeSource)
+void PWM_EnableFaultBrake(PWM_T *pwm, uint32_t u32ChannelMask, uint32_t u32LevelMask, uint32_t u32BrakeSourceMask)
 {
     uint32_t i;
 
@@ -402,17 +410,15 @@ void PWM_EnableFaultBrake(PWM_T *pwm, uint32_t u32ChannelMask, uint32_t u32Level
     {
         if (u32ChannelMask & (1UL << i))
         {
-            if ((u32BrakeSource == PWM_FB_EDGE_SYS_CSS) || (u32BrakeSource == PWM_FB_EDGE_SYS_BOD) || \
-                    (u32BrakeSource == PWM_FB_EDGE_SYS_COR) || \
-                    (u32BrakeSource == PWM_FB_LEVEL_SYS_CSS) || (u32BrakeSource == PWM_FB_LEVEL_SYS_BOD) || \
-                    (u32BrakeSource == PWM_FB_LEVEL_SYS_COR))
+            if (u32BrakeSourceMask & (PWM_FB_EDGE_SYS_CSS | PWM_FB_EDGE_SYS_BOD | PWM_FB_EDGE_SYS_COR | \
+                                      PWM_FB_LEVEL_SYS_CSS | PWM_FB_LEVEL_SYS_BOD | PWM_FB_LEVEL_SYS_COR))
             {
-                (pwm)->BRKCTL[i >> 1UL] |= (u32BrakeSource & (PWM_BRKCTL_SYSEBEN_Msk | PWM_BRKCTL_SYSLBEN_Msk));
-                (pwm)->FAILBRK |= (u32BrakeSource & 0xBUL);
+                (pwm)->BRKCTL[i >> 1UL] |= (u32BrakeSourceMask & (PWM_BRKCTL_SYSEBEN_Msk | PWM_BRKCTL_SYSLBEN_Msk));
+                (pwm)->FAILBRK |= (u32BrakeSourceMask & 0xBUL);
             }
             else
             {
-                (pwm)->BRKCTL[i >> 1UL] |= u32BrakeSource;
+                (pwm)->BRKCTL[i >> 1UL] |= u32BrakeSourceMask;
             }
         }
 

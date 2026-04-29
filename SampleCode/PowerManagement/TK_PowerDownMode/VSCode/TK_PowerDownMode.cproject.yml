@@ -29,6 +29,8 @@ project:
           Link:
             - --library_type=microlib --map --load_addr_map_info --symbols
             - --info sizes --info totals --strict --summary_stderr --info summarysizes
+          C-CPP:
+            - -Wconditional-uninitialized
         - for-compiler: GCC
           C:
             - -std=gnu11 -mthumb -masm-syntax-unified -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections
@@ -36,12 +38,14 @@ project:
             - -mthumb -fmessage-length=0 -fsigned-char --specs=nano.specs --specs=nosys.specs
             - -Wl,--gc-sections,-Map="$elf()$.map"
             - -Wl,--no-warn-rwx-segments
+          C-CPP:
+            - -Wmaybe-uninitialized
     - setup: Options for FreeRun_M256
       for-context: .FreeRun_M256
       output:
         base-name: TK_M256_PowerDownMode_FreeRun
         # bin, elf, hex, lib
-        type: bin      
+        type: bin
       add-path:
         - ../../../../Library/Device/Nuvoton/M251/Include
         - ../../../../Library/StdDriver/inc
@@ -63,6 +67,8 @@ project:
           Link:
             - --library_type=microlib --map --load_addr_map_info --symbols
             - --info sizes --info totals --strict --summary_stderr --info summarysizes
+          C-CPP:
+            - -Wconditional-uninitialized
         - for-compiler: GCC
           C:
             - -std=gnu11 -mthumb -masm-syntax-unified -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections
@@ -70,12 +76,14 @@ project:
             - -mthumb -fmessage-length=0 -fsigned-char --specs=nano.specs --specs=nosys.specs
             - -Wl,--gc-sections,-Map="$elf()$.map"
             - -Wl,--no-warn-rwx-segments
+          C-CPP:
+            - -Wmaybe-uninitialized
     - setup: Options for Calibration
       for-context: .Calibration
       output:
         base-name: TK_PowerDownMode_Calibration
         # bin, elf, hex, lib
-        type: bin 
+        type: bin
       add-path:
         - ../../../../Library/Device/Nuvoton/M251/Include
         - ../../../../Library/StdDriver/inc
@@ -96,6 +104,8 @@ project:
           Link:
             - --library_type=microlib --map --load_addr_map_info --symbols
             - --info sizes --info totals --strict --summary_stderr --info summarysizes
+          C-CPP:
+            - -Wconditional-uninitialized
         - for-compiler: GCC
           C:
             - -std=gnu11 -mthumb -masm-syntax-unified -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections
@@ -103,14 +113,16 @@ project:
             - -mthumb -fmessage-length=0 -fsigned-char --specs=nano.specs --specs=nosys.specs
             - -Wl,--gc-sections,-Map="$elf()$.map"
             - -Wl,--no-warn-rwx-segments
+          C-CPP:
+            - -Wmaybe-uninitialized
   linker:
-    - script: TK_FreeRun.sct
+    - script: TK_FreeRun.scf
       for-context: .FreeRun
       for-compiler: AC6
-    - script: TK_FreeRun.sct
+    - script: TK_FreeRun.scf
       for-context: .FreeRun_M256
-      for-compiler: AC6      
-    - script: TK_Calibration.sct
+      for-compiler: AC6
+    - script: TK_Calibration.scf
       for-context: .Calibration
       for-compiler: AC6
     - script: gcc_arm.ld
@@ -118,20 +130,20 @@ project:
       for-compiler: GCC
     - script: gcc_arm_M256.ld
       for-context: .FreeRun_M256
-      for-compiler: GCC      
+      for-compiler: GCC
     - script: gcc_arm.ld
       for-context: .Calibration
-      for-compiler: GCC      
+      for-compiler: GCC
   groups:
     - group: Startup
-      files:    
+      files:
         - file: ../../../../Library/Device/Nuvoton/M251/Source/system_M251.c
         - file: ../../../../Library/Device/Nuvoton/M251/Source/ARM/startup_M251.c
           for-compiler: AC6
         - file: ../../../../Library/Device/Nuvoton/M251/Source/GCC/startup_M251.S
-          for-compiler: GCC        
+          for-compiler: GCC
         - file: ../../../../Library/Device/Nuvoton/M251/Source/GCC/_syscalls.c
-          for-compiler: GCC        
+          for-compiler: GCC
     - group: Library
       for-context: .FreeRun
       files:
@@ -159,7 +171,7 @@ project:
         - file: ../TK_DebugUART.c
         - file: ../TK_Main.c
         - file: ../TK_MultPinFunctions.c
-        - file: ../TK_SysTick.c        
+        - file: ../TK_SysTick.c
     - group: Driver
       files:
         - file: ../../../../Library/StdDriver/src/uart.c
@@ -177,7 +189,7 @@ project:
     - group: Inc
       for-context: .FreeRun_M256
       files:
-        - file: ../TK_Data.c        
+        - file: ../TK_Data.c
     - group: Library
       for-context: .Calibration
       files:

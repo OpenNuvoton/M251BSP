@@ -94,7 +94,6 @@ int32_t main(void)
 #if CRYSTAL_LESS
     uint32_t u32TrimInit;
 #endif
-    uint8_t au8Str[9];
 
     /* Unlock protected registers */
     SYS_UnlockReg();
@@ -180,11 +179,7 @@ int32_t main(void)
         if (g_u8Suspend)
             PowerDown();
 
-
         CLK_SysTickDelay(2000);   // delay
-
-        if (++au8Str[1] > 0x39)
-            au8Str[1] = 0x30;      // increase 1 to 10 than reset to 0
 
         PB->DOUT ^= 0x10; // PB.4
     }

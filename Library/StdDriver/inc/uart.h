@@ -582,13 +582,13 @@ void UART_DisableInt(UART_T  *uart, uint32_t u32InterruptFlag);
 void UART_EnableFlowCtrl(UART_T *uart);
 void UART_EnableInt(UART_T  *uart, uint32_t u32InterruptFlag);
 void UART_Open(UART_T *uart, uint32_t u32BaudRate);
-uint32_t UART_Read(UART_T *uart, uint8_t pu8RxBuf[], uint32_t u32ReadBytes);
+uint32_t UART_Read(const UART_T *uart, uint8_t pu8RxBuf[], uint32_t u32ReadBytes);
 void UART_SetLine_Config(UART_T *uart, uint32_t u32BaudRate, uint32_t u32DataWidth, uint32_t u32Parity, uint32_t  u32StopBits);
 void UART_SetTimeoutCnt(UART_T *uart, uint32_t u32TOC);
 void UART_SelectIrDAMode(UART_T *uart, uint32_t u32BuadRate, uint32_t u32Direction);
 void UART_SelectRS485Mode(UART_T *uart, uint32_t u32Mode, uint32_t u32Addr);
 void UART_SelectLINMode(UART_T *uart, uint32_t u32Mode, uint32_t u32BreakLength);
-uint32_t UART_Write(UART_T *uart, uint8_t pu8TxBuf[], uint32_t u32WriteBytes);
+uint32_t UART_Write(UART_T *uart, const uint8_t pu8TxBuf[], uint32_t u32WriteBytes);
 void UART_SelectSingleWireMode(UART_T *uart);
 
 

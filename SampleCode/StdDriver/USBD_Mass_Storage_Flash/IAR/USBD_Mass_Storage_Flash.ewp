@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='iso-8859-1'?>
+<?xml version='1.0' encoding='UTF-8'?>
 <project>
   <fileVersion>2</fileVersion>
   <configuration>
@@ -76,7 +76,7 @@
         </option>
         <option>
           <name>OGLastSavedByProductVersion</name>
-          <state>7.80.3.12143</state>
+          <state>8.42.1.23678</state>
         </option>
         <option>
           <name>GeneralEnableMisra</name>

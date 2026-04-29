@@ -551,14 +551,14 @@ static __INLINE void USBD_SetStall(uint8_t epnum)
     for (i = 0; i < USBD_MAX_EP; i++)
     {
         u32CfgAddr = (uint32_t)(i << 4) + (uint32_t)&USBD->EP[0].CFG; /* USBD_CFG0 */
-        u32Cfg = *((__IO uint32_t *)(u32CfgAddr));
+        u32Cfg = inp32(u32CfgAddr);
 
         if ((u32Cfg & 0xf) == epnum)
         {
             u32CfgAddr = (uint32_t)(i << 4) + (uint32_t)&USBD->EP[0].CFGP; /* USBD_CFGP0 */
-            u32Cfg = *((__IO uint32_t *)(u32CfgAddr));
+            u32Cfg = inp32(u32CfgAddr);
 
-            *((__IO uint32_t *)(u32CfgAddr)) = (u32Cfg | USBD_CFGP_SSTALL);
+            outp32(u32CfgAddr, (u32Cfg | USBD_CFGP_SSTALL));
             break;
         }
     }
@@ -582,14 +582,14 @@ static __INLINE void USBD_ClearStall(uint8_t epnum)
     for (i = 0; i < USBD_MAX_EP; i++)
     {
         u32CfgAddr = (uint32_t)(i << 4) + (uint32_t)&USBD->EP[0].CFG; /* USBD_CFG0 */
-        u32Cfg = *((__IO uint32_t *)(u32CfgAddr));
+        u32Cfg = inp32(u32CfgAddr);
 
         if ((u32Cfg & 0xf) == epnum)
         {
             u32CfgAddr = (uint32_t)(i << 4) + (uint32_t)&USBD->EP[0].CFGP; /* USBD_CFGP0 */
-            u32Cfg = *((__IO uint32_t *)(u32CfgAddr));
+            u32Cfg = inp32(u32CfgAddr);
 
-            *((__IO uint32_t *)(u32CfgAddr)) = (u32Cfg & ~USBD_CFGP_SSTALL);
+            outp32(u32CfgAddr, (u32Cfg & ~USBD_CFGP_SSTALL));
             break;
         }
     }
@@ -608,14 +608,14 @@ static __INLINE void USBD_ClearStall(uint8_t epnum)
   */
 static __INLINE uint32_t USBD_GetStall(uint8_t epnum)
 {
-    uint32_t u32CfgAddr;
+    uint32_t u32CfgAddr = (uint32_t)&USBD->EP[0].CFG;;
     uint32_t u32Cfg;
     int i;
 
     for (i = 0; i < USBD_MAX_EP; i++)
     {
         u32CfgAddr = (uint32_t)(i << 4) + (uint32_t)&USBD->EP[0].CFG; /* USBD_CFG0 */
-        u32Cfg = *((__IO uint32_t *)(u32CfgAddr));
+        u32Cfg = inp32(u32CfgAddr);
 
         if ((u32Cfg & 0xf) == epnum)
         {
@@ -624,7 +624,7 @@ static __INLINE uint32_t USBD_GetStall(uint8_t epnum)
         }
     }
 
-    return ((*((__IO uint32_t *)(u32CfgAddr))) & USBD_CFGP_SSTALL);
+    return (inp32(u32CfgAddr) & USBD_CFGP_SSTALL);
 }
 
 

@@ -38,7 +38,7 @@ uint32_t BPWM_ConfigCaptureChannel(BPWM_T *bpwm, uint32_t u32ChannelNum, uint32_
     (void) u32CaptureEdge;
     uint32_t u32Src;
     uint32_t u32BPWMClockSrc;
-    uint32_t u32NearestUnitTimeNsec;
+    uint32_t u32NearestUnitTimeNsec = 0UL;
     uint16_t u16Prescale = 1UL, u16CNR = 0xFFFFUL;
     uint8_t u8BreakLoop = 0UL;
 
@@ -137,16 +137,18 @@ uint32_t BPWM_ConfigCaptureChannel(BPWM_T *bpwm, uint32_t u32ChannelNum, uint32_
  * @param[in] u32ChannelNum BPWM channel number. Valid values are between 0~5
  * @param[in] u32Frequency Target generator frequency
  * @param[in] u32DutyCycle Target generator duty cycle percentage. Valid range are between 0 ~ 100. 10 means 10%, 20 means 20%...
- * @return Nearest frequency clock in nano second
+ * @return Nearest frequency clock
  * @note Since all channels shares a prescaler. Call this API to configure BPWM frequency may affect
  *       existing frequency of other channel.
  */
 uint32_t BPWM_ConfigOutputChannel(BPWM_T *bpwm, uint32_t u32ChannelNum, uint32_t u32Frequency, uint32_t u32DutyCycle)
 {
-    uint32_t u32Src;
-    uint32_t u32BPWMClockSrc;
-    uint32_t i;
-    uint16_t u16Prescale = 1UL, u16CNR = 0xFFFFUL;
+    uint32_t u32Src, u32BPWMClockSrc;
+    uint32_t u32NearestFrequency, u32NearestCNR, u32CNR = 0x10000UL;
+    uint32_t u32Prescale = 1UL;
+
+    if (u32Frequency == 0)
+        return u32Frequency;
 
     // M254/6/8 clock source is not supported PLL
     if ((SYS->PDID & 0xff00) == 0x5800 || (SYS->PDID & 0xff00) == 0x5600 || (SYS->PDID & 0xff00) == 0x5400)
@@ -192,38 +194,44 @@ uint32_t BPWM_ConfigOutputChannel(BPWM_T *bpwm, uint32_t u32ChannelNum, uint32_t
         }
     }
 
-    for (u16Prescale = 1UL; u16Prescale < 0xFFFUL; u16Prescale++)   //prescale could be 0~0xFFF
+    if (u32Frequency > u32BPWMClockSrc)
+        return 0;
+
+    for (u32Prescale = 1UL; u32Prescale <= 0x1000UL; u32Prescale++)   //CLKPSC could be 0~0xFFF
     {
-        i = (u32BPWMClockSrc / u32Frequency) / u16Prescale;
+        u32NearestCNR = (u32BPWMClockSrc / u32Frequency) / u32Prescale;
 
         // If target value is larger than CNR, need to use a larger prescaler
-        if (i <= (0x10000UL))
+        if (u32NearestCNR <= (0x10000UL))
         {
-            u16CNR = (uint16_t)i;
+            u32CNR = u32NearestCNR;
             break;
         }
     }
 
-    // Store return value here 'cos we're gonna change u16Prescale & u16CNR to the real value to fill into register
-    i = u32BPWMClockSrc / ((uint32_t)u16Prescale * (uint32_t)u16CNR);
+    if (u32Prescale > 0x1000UL)
+        return 0;
+
+    // Store return value here 'cos we're gonna change u32Prescale & u32CNR to the real value to fill into register
+    u32NearestFrequency = u32BPWMClockSrc / (u32Prescale * u32CNR);
 
     // convert to real register value
-    u16Prescale = u16Prescale - 1UL;
+    u32Prescale = u32Prescale - 1UL;
     // all channels share a prescaler
-    BPWM_SET_PRESCALER(bpwm, u32ChannelNum, (uint32_t)u16Prescale);
+    BPWM_SET_PRESCALER(bpwm, u32ChannelNum, u32Prescale);
     // set BPWM to up count type
     (bpwm)->CTL1 = BPWM_UP_COUNTER;
 
-    u16CNR = u16CNR - 1UL;
-    BPWM_SET_CNR(bpwm, u32ChannelNum, u16CNR);
-    BPWM_SET_CMR(bpwm, u32ChannelNum, u32DutyCycle * (u16CNR + 1UL) / 100UL);
+    u32CNR = u32CNR - 1UL;
+    BPWM_SET_CNR(bpwm, u32ChannelNum, u32CNR);
+    BPWM_SET_CMR(bpwm, u32ChannelNum, u32DutyCycle * (u32CNR + 1UL) / 100UL);
 
     (bpwm)->WGCTL0 = ((bpwm)->WGCTL0 & ~((BPWM_WGCTL0_PRDPCTL0_Msk | BPWM_WGCTL0_ZPCTL0_Msk) << (u32ChannelNum << 1UL))) | \
                      (BPWM_OUTPUT_HIGH << (u32ChannelNum << 1UL << BPWM_WGCTL0_ZPCTL0_Pos));
     (bpwm)->WGCTL1 = ((bpwm)->WGCTL1 & ~((BPWM_WGCTL1_CMPDCTL0_Msk | BPWM_WGCTL1_CMPUCTL0_Msk) << (u32ChannelNum << 1UL))) | \
                      (BPWM_OUTPUT_LOW << (u32ChannelNum << 1UL << BPWM_WGCTL1_CMPUCTL0_Pos));
 
-    return (i);
+    return (u32NearestFrequency);
 }
 
 /**

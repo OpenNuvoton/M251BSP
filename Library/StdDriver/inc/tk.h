@@ -125,7 +125,7 @@ extern "C"
  * @note Touch key 16 is the default reference key, so touch key 16 is enabled.
  * \hideinitializer
  */
-#define TK_ENABLE_SCAN_KEY(u32Mask) (TK->SCANC |= (u32Mask&0x1FFFF)); \
+#define TK_ENABLE_SCAN_KEY(u32Mask) (TK->SCANC |= ((u32Mask)&0x1FFFF)); \
     (TK->SCANC1 |= ((u32Mask)>>17))
 
 /**
@@ -134,7 +134,7 @@ extern "C"
  *                           Bit 0 represents touch key 0, bit 1 represents touch key 1...
  * \hideinitializer
  */
-#define TK_DISABLE_SCAN_KEY(u32Mask) (TK->SCANC &= ~(u32Mask&0x1FFFF)); \
+#define TK_DISABLE_SCAN_KEY(u32Mask) (TK->SCANC &= ~((u32Mask)&0x1FFFF)); \
     (TK->SCANC1 &= ~((u32Mask)>>17))
 
 /**
@@ -144,8 +144,8 @@ extern "C"
  * @note Touch key 16 is the default reference key, so touch key 16 is enabled.
  * \hideinitializer
  */
-#define TK_ENABLE_REF_KEY(u32Mask) (TK->REFC |= (u32Mask&0x1FFFF)); \
-    (TK->REFC1 |= (u32Mask>>17))
+#define TK_ENABLE_REF_KEY(u32Mask) (TK->REFC |= ((u32Mask)&0x1FFFF)); \
+    (TK->REFC1 |= ((u32Mask)>>17))
 
 /**
  * @brief Disable reference key(s)
@@ -155,8 +155,8 @@ extern "C"
  *       If no any one touch key as reference key except touch key 16, then reference Touch key 16 can't be disable.
  * \hideinitializer
  */
-#define TK_DISABLE_REF_KEY(u32Mask) (TK->REFC &= ~(u32Mask&0x1FFFF)); \
-    (TK->REFC1 &= ~(u32Mask>>17))
+#define TK_DISABLE_REF_KEY(u32Mask) (TK->REFC &= ~((u32Mask)&0x1FFFF)); \
+    (TK->REFC1 &= ~((u32Mask)>>17))
 /**
  * @brief Initiate enabled key(s) scan immediately.
  * \hideinitializer
@@ -221,7 +221,7 @@ extern "C"
  * @return Complement capacitor bank data
  * \hideinitializer
  */
-#define TK_GET_COMP_CAP_BANK_DATA(u32TKNum) ((u32TKNum<=16) ? (((*(__IO uint32_t *) (&(TK->CCBD0) + ((u32TKNum%17) >> 2))) >> ((u32TKNum%17) % 4 * 8) & TK_CCBD0_CCBD0_Msk)):(((*(__IO uint32_t *) (&(TK->CCBD5) + ((u32TKNum%17) >> 2))) >> ((u32TKNum%17) % 4 * 8) & TK_CCBD0_CCBD0_Msk)))
+#define TK_GET_COMP_CAP_BANK_DATA(u32TKNum) (((u32TKNum)<=16) ? (((*(__IO uint32_t *) (&(TK->CCBD0) + (((u32TKNum)%17) >> 2))) >> (((u32TKNum)%17) % 4 * 8) & TK_CCBD0_CCBD0_Msk)):(((*(__IO uint32_t *) (&(TK->CCBD5) + (((u32TKNum)%17) >> 2))) >> (((u32TKNum)%17) % 4 * 8) & TK_CCBD0_CCBD0_Msk)))
 
 /**
  * @brief Get touch key sensing result data.
@@ -229,7 +229,7 @@ extern "C"
  * @return Sensing result data
  * \hideinitializer
  */
-#define TK_GET_SENSE_DATA(u32TKNum) ((u32TKNum<=16) ? (((*(__IO uint32_t *) (&(TK->DAT0) + ((u32TKNum%17) >> 2))) >> ((u32TKNum%17) % 4 * 8) & TK_DAT0_TKDAT0_Msk)):(((*(__IO uint32_t *) (&(TK->DAT5) + ((u32TKNum%17) >> 2))) >> ((u32TKNum%17) % 4 * 8) & TK_DAT0_TKDAT0_Msk)))
+#define TK_GET_SENSE_DATA(u32TKNum) (((u32TKNum)<=16) ? (((*(__IO uint32_t *) (&(TK->DAT0) + (((u32TKNum)%17) >> 2))) >> (((u32TKNum)%17) % 4 * 8) & TK_DAT0_TKDAT0_Msk)):(((*(__IO uint32_t *) (&(TK->DAT5) + (((u32TKNum)%17) >> 2))) >> (((u32TKNum)%17) % 4 * 8) & TK_DAT0_TKDAT0_Msk)))
 
 /**
  * @brief Get touch All key sensing result data.

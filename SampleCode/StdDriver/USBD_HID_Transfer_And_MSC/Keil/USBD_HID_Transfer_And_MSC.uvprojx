@@ -18,7 +18,7 @@
           <Vendor>Nuvoton</Vendor>
           <PackID>Nuvoton.NuMicroM23_DFP.1.0.0</PackID>
           <PackURL>https://github.com/OpenNuvoton/cmsis-packs/raw/master/Nuvoton_DFP/</PackURL>
-          <Cpu>IRAM(0x20000000,0x8000) IROM(0x00000000,0x40000) CPUTYPE("Cortex-M23") CLOCK(12000000)</Cpu>
+          <Cpu>IRAM(0x20000000,0x8000) IROM(0x00000000,0x40000) CPUTYPE("Cortex-M23") CLOCK(12000000) IROM2(0x00100000,0x1000)</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
           <FlashDriverDll>UL2V8M(-S0 -C0 -P0 -FD20000000 -FC1000 -FN1 -FF0M251_AP_256 -FS00 -FL040000 -FP0($$Device:M252KG6AE$Flash\M251_AP_256.FLM))</FlashDriverDll>
@@ -337,7 +337,7 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls></MiscControls>
+              <MiscControls>-Wconditional-uninitialized</MiscControls>
               <Define></Define>
               <Undefine></Undefine>
               <IncludePath>.\;..\..\..\..\Library\CMSIS\Core\Include;..\..\..\..\Library\Device\Nuvoton\M251\Include;..\..\..\..\Library\StdDriver\inc</IncludePath>
@@ -371,7 +371,7 @@
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase></pXoBase>
-            <ScatterFile>.\USBD_HID_Transfer_And MSC_Storage.sct</ScatterFile>
+            <ScatterFile>.\USBD_HID_Transfer_And MSC_Storage.scf</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
             <Misc></Misc>

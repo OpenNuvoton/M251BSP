@@ -173,6 +173,16 @@ extern "C"
 #define QSPI_GET_TX_FIFO_FULL_FLAG(qspi)   (((qspi)->STATUS & QSPI_STATUS_TXFULL_Msk)>>QSPI_STATUS_TXFULL_Pos)
 
 /**
+  * @brief      Get the count of available data in TX FIFO.
+  * @param[in]  qspi The pointer of the specified QSPI module.
+  * @return     The count of available data in TX FIFO.
+  * @details    Read TXCNT (QSPI_STATUS[31:28]) to get the count of available data in TX FIFO.
+  * \hideinitializer
+  */
+#define QSPI_GET_TX_FIFO_COUNT(qspi)        \
+    (((qspi)->STATUS & QSPI_STATUS_TXCNT_Msk) >> QSPI_STATUS_TXCNT_Pos)
+
+/**
   * @brief      Get the datum read from RX register.
   * @param[in]  qspi The pointer of the specified QSPI module.
   * @return     Data in RX register.
@@ -373,19 +383,19 @@ extern "C"
 
 /* Function prototype declaration */
 uint32_t QSPI_Open(QSPI_T *qspi, uint32_t u32MasterSlave, uint32_t u32QSPIMode, uint32_t u32DataWidth, uint32_t u32BusClock);
-void QSPI_Close(QSPI_T *qspi);
+void QSPI_Close(const QSPI_T *qspi);
 void QSPI_ClearRxFIFO(QSPI_T *qspi);
 void QSPI_ClearTxFIFO(QSPI_T *qspi);
 void QSPI_DisableAutoSS(QSPI_T *qspi);
 void QSPI_EnableAutoSS(QSPI_T *qspi, uint32_t u32SSPinMask, uint32_t u32ActiveLevel);
 uint32_t QSPI_SetBusClock(QSPI_T *qspi, uint32_t u32BusClock);
 void QSPI_SetFIFO(QSPI_T *qspi, uint32_t u32TxThreshold, uint32_t u32RxThreshold);
-uint32_t QSPI_GetBusClock(QSPI_T *qspi);
+uint32_t QSPI_GetBusClock(const QSPI_T *qspi);
 void QSPI_EnableInt(QSPI_T *qspi, uint32_t u32Mask);
 void QSPI_DisableInt(QSPI_T *qspi, uint32_t u32Mask);
-uint32_t QSPI_GetIntFlag(QSPI_T *qspi, uint32_t u32Mask);
+uint32_t QSPI_GetIntFlag(const QSPI_T *qspi, uint32_t u32Mask);
 void QSPI_ClearIntFlag(QSPI_T *qspi, uint32_t u32Mask);
-uint32_t QSPI_GetStatus(QSPI_T *qspi, uint32_t u32Mask);
+uint32_t QSPI_GetStatus(const QSPI_T *qspi, uint32_t u32Mask);
 
 
 /** @} end of group QSPI_EXPORTED_FUNCTIONS */

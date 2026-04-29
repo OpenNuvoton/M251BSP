@@ -4,7 +4,7 @@ project:
   setups:
     - output:
         # bin, elf, hex, lib
-        type: bin  
+        type: bin
     - setup: Options for USBDMassStorageSRAM
       add-path:
         - ../../../../Library/Device/Nuvoton/M251/Include
@@ -20,6 +20,8 @@ project:
           Link:
             - --library_type=microlib --map --load_addr_map_info --symbols
             - --info sizes --info totals --strict --summary_stderr --info summarysizes
+          C-CPP:
+            - -Wconditional-uninitialized
         - for-compiler: GCC
           C:
             - -std=gnu11 -mthumb -masm-syntax-unified -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections
@@ -27,8 +29,10 @@ project:
             - -mthumb -fmessage-length=0 -fsigned-char --specs=nano.specs --specs=nosys.specs
             - -Wl,--gc-sections,-Map="$elf()$.map"
             - -Wl,--no-warn-rwx-segments
+          C-CPP:
+            - -Wmaybe-uninitialized
   linker:
-    - script: USBD_Mass_Storage_SRAM.sct
+    - script: USBD_Mass_Storage_SRAM.scf
       for-compiler: AC6
     - script: gcc_msc_sram.ld
       for-compiler: GCC

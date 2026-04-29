@@ -125,7 +125,7 @@ extern "C"
   *             Transfer error interrupt, Transmit buffer empty interrupt or Receive data reach trigger level interrupt.
   * \hideinitializer
   */
-#define SC_CHECK_INTSTS(psSC, u32Mask)     ((psSC)->INTSTS &= u32Mask)
+#define SC_CHECK_INTSTS(psSC, u32Mask)     ((psSC)->INTSTS &= (u32Mask))
 
 /**
   * @brief      Clear Smartcard Interrupt Status Flag
@@ -150,7 +150,7 @@ extern "C"
   *             Transfer error interrupt, Transmit buffer empty interrupt or Receive data reach trigger level interrupt.
   * \hideinitializer
   */
-#define SC_CLEAR_INTSTS(psSC, u32Mask)     ((psSC)->INTSTS = u32Mask)
+#define SC_CLEAR_INTSTS(psSC, u32Mask)     ((psSC)->INTSTS = (u32Mask))
 
 /**
   * @brief      Set ETU Divider
@@ -345,7 +345,7 @@ __STATIC_INLINE void SC_SetRxRetry(SC_T *psSC, uint32_t u32Count)
 }
 
 
-uint32_t SC_IsCardInserted(SC_T *psSC);
+uint32_t SC_IsCardInserted(const SC_T *psSC);
 void SC_ClearFIFO(SC_T *psSC);
 void SC_Close(SC_T *psSC);
 void SC_Open(SC_T *psSC, uint32_t u32CardDet, uint32_t u32PWR);
@@ -355,7 +355,7 @@ void SC_SetCharGuardTime(SC_T *psSC, uint32_t u32CGT);
 void SC_StopAllTimer(SC_T *psSC);
 void SC_StartTimer(SC_T *psSC, uint32_t u32TimerNum, uint32_t u32Mode, uint32_t u32ETUCount);
 void SC_StopTimer(SC_T *psSC, uint32_t u32TimerNum);
-uint32_t SC_GetInterfaceClock(SC_T *psSC);
+uint32_t SC_GetInterfaceClock(const SC_T *psSC);
 /** @} end of group SC_EXPORTED_FUNCTIONS */
 
 /** @} end of group SC_Driver */

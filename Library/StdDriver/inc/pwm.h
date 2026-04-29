@@ -440,7 +440,7 @@ void PWM_EnableADCTrigger(PWM_T *pwm, uint32_t u32ChannelNum, uint32_t u32Condit
 void PWM_DisableADCTrigger(PWM_T *pwm, uint32_t u32ChannelNum);
 void PWM_ClearADCTriggerFlag(PWM_T *pwm, uint32_t u32ChannelNum, uint32_t u32Condition);
 uint32_t PWM_GetADCTriggerFlag(PWM_T *pwm, uint32_t u32ChannelNum);
-void PWM_EnableFaultBrake(PWM_T *pwm, uint32_t u32ChannelMask, uint32_t u32LevelMask, uint32_t u32BrakeSource);
+void PWM_EnableFaultBrake(PWM_T *pwm, uint32_t u32ChannelMask, uint32_t u32LevelMask, uint32_t u32BrakeSourceMask);
 void PWM_EnableCapture(PWM_T *pwm, uint32_t u32ChannelMask);
 void PWM_DisableCapture(PWM_T *pwm, uint32_t u32ChannelMask);
 void PWM_EnableOutput(PWM_T *pwm, uint32_t u32ChannelMask);

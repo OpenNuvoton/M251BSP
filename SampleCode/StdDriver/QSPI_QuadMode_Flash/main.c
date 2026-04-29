@@ -9,13 +9,83 @@
 #include <stdio.h>
 #include "NuMicro.h"
 
+//------------------------------------------------------------------------------
+// *** <<< Use Configuration Wizard in Context Menu >>> ***
+// <o> GPIO Slew Rate Control
+// <0=> Normal <1=> High <2=> Fast
+#define SlewRateMode        1
+// <c1> Enable QSPI Optimize
+// <i> Use FIFO mechanism and enable PDMA for QSPI RX to maximize throughput.
+#define ENABLE_QSPI_OPTIMIZE
+// </c>
+// *** <<< end of configuration section >>> ***
+
 #define TEST_NUMBER         1   /* page numbers */
 #define TEST_LENGTH         256 /* length */
 
-#define SPI_FLASH_PORT  QSPI0
+#define SPI_FLASH_PORT      QSPI0
+#define PDMA_PORT           PDMA
+
+#ifdef ENABLE_QSPI_OPTIMIZE
+    #define QSPI_RX_PDMA_CH 0
+#endif
 
 uint8_t g_au8SrcArray[TEST_LENGTH];
 uint8_t g_au8DestArray[TEST_LENGTH];
+
+//------------------------------------------------------------------------------
+#ifdef ENABLE_QSPI_OPTIMIZE
+static void QSPI_PDMA_Rx_Init(QSPI_T *module, uint32_t *u32RxTargetAddr, uint32_t u32TransferCount)
+{
+    /* Reset PDMA module */
+    SYS_ResetModule(PDMA_RST);
+
+    PDMA_Open(PDMA_PORT, (1 << QSPI_RX_PDMA_CH));
+
+    /* --- RX PDMA  --- */
+    /* Set transfer width (32 bits) and transfer count */
+    PDMA_SetTransferCnt(PDMA_PORT, QSPI_RX_PDMA_CH, PDMA_WIDTH_32, u32TransferCount);
+    //:APB to MEM (QSPI RX RAM)
+    PDMA_SetTransferMode(PDMA_PORT, QSPI_RX_PDMA_CH, PDMA_QSPI0_RX, FALSE, 0);
+
+    /* Set source/destination address and attributes */
+    PDMA_SetTransferAddr(PDMA_PORT, QSPI_RX_PDMA_CH,
+                         (uint32_t) & (module)->RX,
+                         PDMA_SAR_FIX,
+                         (uint32_t)u32RxTargetAddr,
+                         PDMA_DAR_INC);
+    /* Single request type. SPI only support PDMA single request type. */
+    PDMA_SetBurstType(PDMA_PORT, QSPI_RX_PDMA_CH, PDMA_REQ_SINGLE, 0);
+    /* Disable table interrupt */
+    PDMA_PORT->DSCT[QSPI_RX_PDMA_CH].CTL |= PDMA_DSCT_CTL_TBINTDIS_Msk;
+}
+
+static void QSPI_PDMA_Rx_Polling(void)
+{
+    uint32_t u32RetryTimes = SystemCoreClock;
+
+    while (1)
+    {
+        /* Polling status flag. */
+        if (PDMA_GET_TD_STS(PDMA_PORT) & (1 << QSPI_RX_PDMA_CH))
+        {
+            break;
+        }
+
+        u32RetryTimes--;
+
+        if (u32RetryTimes == 0)
+        {
+            break;
+        }
+    }
+
+    PDMA_CLR_TD_FLAG(PDMA_PORT, (1 << QSPI_RX_PDMA_CH));
+
+    /* Disable SPI master's PDMA transfer function */
+    QSPI_DISABLE_RX_PDMA(SPI_FLASH_PORT);
+}
+#endif
 
 void B0B1_SwitchToNormalMode(void)
 {
@@ -263,7 +333,22 @@ void spiFlash_DisableQEBit(void)
 
 void SpiFlash_QuadFastRead(uint32_t StartAddress, uint8_t *u8DataBuffer)
 {
+
+#if !defined (ENABLE_QSPI_OPTIMIZE)
     uint32_t u32Cnt;
+#else
+    uint8_t u8TXS;
+    uint32_t u32TxDataCount = 0;
+
+    /* Set transfer width (32 bits) and transfer count */
+    PDMA_SetTransferCnt(PDMA_PORT, QSPI_RX_PDMA_CH, PDMA_WIDTH_32, 64);
+    /* Set source/destination address and attributes */
+    PDMA_SetTransferAddr(PDMA_PORT, QSPI_RX_PDMA_CH,
+                         (uint32_t) & ((QSPI_T *)SPI_FLASH_PORT)->RX,
+                         PDMA_SAR_FIX,
+                         (uint32_t)u8DataBuffer,
+                         PDMA_DAR_INC);
+#endif
 
     // enable quad mode
     spiFlash_EnableQEBit();
@@ -297,6 +382,28 @@ void SpiFlash_QuadFastRead(uint32_t StartAddress, uint8_t *u8DataBuffer)
     // clear RX buffer
     QSPI_ClearRxFIFO(SPI_FLASH_PORT);
 
+#ifdef ENABLE_QSPI_OPTIMIZE
+    QSPI_ENABLE_BYTE_REORDER(SPI_FLASH_PORT);
+    QSPI_SET_DATA_WIDTH(SPI_FLASH_PORT, 32);
+
+    /* Enable SPI master PDMA function */
+    QSPI_TRIGGER_RX_PDMA(QSPI0);
+
+    while (u32TxDataCount < 64)
+    {
+        /* Check TX FIFO count. The Maximum FIFO is 8 layers. */
+        u8TXS = (8 - QSPI_GET_TX_FIFO_COUNT(SPI_FLASH_PORT));
+        u32TxDataCount += u8TXS;
+
+        while (u8TXS--)
+        {
+            QSPI_WRITE_TX(SPI_FLASH_PORT, 0xFFFFFFFF);
+        }
+    }
+
+    QSPI_PDMA_Rx_Polling();
+#else
+
     // read data
     for (u32Cnt = 0; u32Cnt < 256; u32Cnt++)
     {
@@ -307,11 +414,18 @@ void SpiFlash_QuadFastRead(uint32_t StartAddress, uint8_t *u8DataBuffer)
         u8DataBuffer[u32Cnt] = QSPI_READ_RX(SPI_FLASH_PORT);
     }
 
+#endif
+
     // wait tx finish
     while (QSPI_IS_BUSY(SPI_FLASH_PORT));
 
     // /CS: de-active
     QSPI_SET_SS_HIGH(SPI_FLASH_PORT);
+
+#ifdef ENABLE_QSPI_OPTIMIZE
+    QSPI_DISABLE_BYTE_REORDER(SPI_FLASH_PORT);
+    QSPI_SET_DATA_WIDTH(SPI_FLASH_PORT, 8);
+#endif
 
     QSPI_DISABLE_QUAD_MODE(SPI_FLASH_PORT);
     B0B1_SwitchToNormalMode();
@@ -347,6 +461,11 @@ void SYS_Init(void)
     /* Enable QSPI0 peripheral clock */
     CLK_EnableModuleClock(QSPI0_MODULE);
 
+#ifdef ENABLE_QSPI_OPTIMIZE
+    /* Enable PDMA0 module clock */
+    CLK_EnableModuleClock(PDMA_MODULE);
+#endif
+
     /*---------------------------------------------------------------------------------------------------------*/
     /* Init I/O Multi-function                                                                                 */
     /*---------------------------------------------------------------------------------------------------------*/
@@ -362,6 +481,17 @@ void SYS_Init(void)
     /* Update System Core Clock */
     /* User can use SystemCoreClockUpdate() to calculate SystemCoreClock and CyclesPerUs automatically. */
     SystemCoreClockUpdate();
+
+#if (SlewRateMode == 0)
+    /* Enable QSPI0 I/O normal slew rate */
+    GPIO_SetSlewCtl(PA, BIT0 | BIT1 | BIT2 | BIT3 | BIT4 | BIT5, GPIO_SLEWCTL_NORMAL);
+#elif (SlewRateMode == 1)
+    /* Enable QSPI0 I/O high slew rate */
+    GPIO_SetSlewCtl(PA, BIT0 | BIT1 | BIT2 | BIT3 | BIT4 | BIT5, GPIO_SLEWCTL_HIGH);
+#elif (SlewRateMode == 2)
+    /* Enable QSPI0 I/O fast slew rate */
+    GPIO_SetSlewCtl(PA, BIT0 | BIT1 | BIT2 | BIT3 | BIT4 | BIT5, GPIO_SLEWCTL_FAST);
+#endif
 }
 
 /* Main */
@@ -387,6 +517,10 @@ int main(void)
 
     /* Disable auto SS function, control SS signal manually. */
     QSPI_DisableAutoSS(SPI_FLASH_PORT);
+
+#ifdef ENABLE_QSPI_OPTIMIZE
+    QSPI_PDMA_Rx_Init(SPI_FLASH_PORT, 0, 0);
+#endif
 
     printf("\n+------------------------------------------------------------------------+\n");
     printf("|                SPI Quad Mode with Flash Sample Code                    |\n");

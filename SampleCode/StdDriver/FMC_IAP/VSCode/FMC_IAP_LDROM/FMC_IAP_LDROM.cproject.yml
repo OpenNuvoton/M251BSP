@@ -20,6 +20,8 @@ project:
           Link:
             - --library_type=microlib --map --load_addr_map_info --symbols
             - --info sizes --info totals --strict --summary_stderr --info summarysizes
+          C-CPP:
+            - -Wconditional-uninitialized
         - for-compiler: GCC
           C:
             - -std=gnu11 -mthumb -masm-syntax-unified -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections
@@ -27,8 +29,10 @@ project:
             - -mthumb -fmessage-length=0 -fsigned-char --specs=nano.specs --specs=nosys.specs
             - -Wl,--gc-sections,-Map="$elf()$.map"
             - -Wl,--no-warn-rwx-segments
+          C-CPP:
+            - -Wmaybe-uninitialized
   linker:
-    - script: ../../../../../Library/Device/Nuvoton/M251/Source/ARM/LDROM.sct
+    - script: ../../../../../Library/Device/Nuvoton/M251/Source/ARM/LDROM.scf
       for-compiler: AC6
     - script: ../../../../../Library/Device/Nuvoton/M251/Source/GCC/LDROM.ld
       for-compiler: GCC

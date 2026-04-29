@@ -33,39 +33,41 @@ extern "C"
 /*---------------------------------------------------------------------------------------------------------*/
 typedef enum
 {
-    eFMC_ERRCODE_SUCCESS       = 0,
-    eFMC_ERRCODE_CMD_TIMEOUT   = -1,
-    eFMC_ERRCODE_INVALID_PARAM = -2,
-    eFMC_ERRCODE_CMD_FAIL      = -3,
+    eFMC_ERRCODE_SUCCESS            = 0,
+    eFMC_ERRCODE_CMD_TIMEOUT        = -1,
+    eFMC_ERRCODE_INVALID_PARAM      = -2,
+    eFMC_ERRCODE_CMD_FAIL           = -3,
+    eFMC_ERRCODE_PROG_INTERRUPTED   = -4,
 } E_FMC_ERRCODE;
 extern int32_t  g_FMC_i32ErrCode; /*!< FMC global error code */
 
 /*---------------------------------------------------------------------------------------------------------*/
-/* Global constant definitions                                                                                     */
+/* Global constant definitions                                                                             */
 /*---------------------------------------------------------------------------------------------------------*/
 #define ISBEN   0
 
 /*---------------------------------------------------------------------------------------------------------*/
 /* Define Base Address                                                                                     */
 /*---------------------------------------------------------------------------------------------------------*/
-#define FMC_APROM_BASE          0x00000000UL    /*!< APROM  Base Address             */
-#define FMC_APROM_END           0x00040000UL    /*!< APROM end address               */
-#define FMC_LDROM_BASE          0x00100000UL    /*!< LDROM  Base Address             */
-#define FMC_LDROM_END           0x00101000UL    /*!< LDROM end address               */
-#define FMC_XOM_BASE            0x00200000UL    /*!< XOM  Base Address               */
+#define FMC_APROM_BASE          0x00000000UL    /*!< APROM Base Address              */
+#define FMC_APROM_END           0x00040000UL    /*!< APROM End Address               */
+#define FMC_LDROM_BASE          0x00100000UL    /*!< LDROM Base Address              */
+#define FMC_LDROM_END           0x00101000UL    /*!< LDROM End Address               */
+#define FMC_XOM_BASE            0x00200000UL    /*!< XOM Base Address                */
 #define FMC_CONFIG_BASE         0x00300000UL    /*!< CONFIG Base Address             */
 
-#define FMC_CONFIG0_ADDR        (FMC_CONFIG_BASE)           /*!< CONFIG 0 Address    */
-#define FMC_CONFIG1_ADDR        (FMC_CONFIG_BASE + 0x4UL)   /*!< CONFIG 1 Address    */
-#define FMC_CONFIG2_ADDR        (FMC_CONFIG_BASE + 0x8UL)   /*!< CONFIG 2 Address    */
+#define FMC_CONFIG0_ADDR        (FMC_CONFIG_BASE)               /*!< CONFIG 0 Address               */
+#define FMC_CONFIG1_ADDR        ((FMC_CONFIG_BASE) + 0x4UL)     /*!< CONFIG 1 Address               */
+#define FMC_CONFIG2_ADDR        ((FMC_CONFIG_BASE) + 0x8UL)     /*!< CONFIG 2 Address               */
 
-#define FMC_XOMR0BASE_ADDR      (FMC_XOM_BASE)           /*!< XOMR 0 Base Address    */
+#define FMC_XOMR0BASE_ADDR      (FMC_XOM_BASE)                  /*!< XOMR 0 Base Address            */
 
-#define FMC_APROM_SIZE          FMC_APROM_END   /*!< APROM Size                      */
-#define FMC_LDROM_SIZE          0x1000UL        /*!< LDROM Size (4 Kbytes)           */
+#define FMC_APROM_SIZE          ((FMC_APROM_END) - (FMC_APROM_BASE))    /*!< APROM Size             */
+#define FMC_LDROM_SIZE          ((FMC_LDROM_END) - (FMC_LDROM_BASE))    /*!< LDROM Size             */
 
-#define FMC_FLASH_PAGE_SIZE     0x200UL         /*!< Flash Page Size (512 Bytes)     */
-#define FMC_PAGE_ADDR_MASK      0xFFFFFE00UL    /*!< Flash page address mask         */
+#define FMC_FLASH_PAGE_SIZE     0x200UL                         /*!< Flash Page Size (512 Bytes)    */
+#define FMC_PAGE_ADDR_MASK      ((~(FMC_FLASH_PAGE_SIZE) - 1))  /*!< Flash page address mask        */
+#define FMC_MULTI_WORD_PROG_LEN 128UL                           /*!< Length of multi-word program.  */
 /*---------------------------------------------------------------------------------------------------------*/
 /*  ISPCTL constant definitions                                                                            */
 /*---------------------------------------------------------------------------------------------------------*/
@@ -697,7 +699,7 @@ int32_t FMC_Erase(uint32_t u32Addr);
 int32_t FMC_Config_XOM(uint32_t xom_num, uint32_t xom_base, uint8_t xom_page);
 uint32_t FMC_Read(uint32_t u32Addr);
 void FMC_Write(uint32_t u32Addr, uint32_t u32Data);
-uint32_t FMC_Write128(uint32_t u32Addr, uint32_t pu32Buf[]);
+int32_t FMC_Write128(uint32_t u32Addr, uint32_t pu32Buf[]);
 
 /** @} end of group FMC_EXPORTED_FUNCTIONS */
 

@@ -16,9 +16,9 @@
         <TargetCommonOption>
           <Device>M258KE3AE</Device>
           <Vendor>Nuvoton</Vendor>
-          <PackID>Nuvoton.NuMicroM23_DFP.1.0.0</PackID>
+          <PackID>Nuvoton.NuMicroM23_DFP.1.0.4</PackID>
           <PackURL>https://github.com/OpenNuvoton/cmsis-packs/raw/master/Nuvoton_DFP/</PackURL>
-          <Cpu>IRAM(0x20000000,0x4000) IROM(0x00000000,0x10000) CPUTYPE("Cortex-M23") CLOCK(12000000)</Cpu>
+          <Cpu>IRAM(0x20000000,0x4000) IROM(0x00000000,0x20000) CPUTYPE("Cortex-M23") CLOCK(12000000) IROM2(0x00100000,0x1000)</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
           <FlashDriverDll>UL2V8M(-S0 -C0 -P0 -FD20000000 -FC1000 -FN1 -FF0M251_AP_64 -FS00 -FL010000 -FP0($$Device:M258SD3AE$Flash\M251_AP_64.FLM))</FlashDriverDll>
@@ -188,7 +188,7 @@
             <RvdsCdeCp>0</RvdsCdeCp>
             <nBranchProt>0</nBranchProt>
             <hadIRAM2>0</hadIRAM2>
-            <hadIROM2>0</hadIROM2>
+            <hadIROM2>1</hadIROM2>
             <StupSel>8</StupSel>
             <useUlib>1</useUlib>
             <EndSel>0</EndSel>
@@ -252,7 +252,7 @@
               <IROM>
                 <Type>1</Type>
                 <StartAddress>0x0</StartAddress>
-                <Size>0x10000</Size>
+                <Size>0x20000</Size>
               </IROM>
               <XRAM>
                 <Type>0</Type>
@@ -281,8 +281,8 @@
               </OCR_RVCT4>
               <OCR_RVCT5>
                 <Type>1</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
+                <StartAddress>0x100000</StartAddress>
+                <Size>0x1000</Size>
               </OCR_RVCT5>
               <OCR_RVCT6>
                 <Type>0</Type>
@@ -337,7 +337,7 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls></MiscControls>
+              <MiscControls>-Wconditional-uninitialized</MiscControls>
               <Define>DEMO_FREERUN</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\TouchKey;..\..\..\..\Library\Device\Nuvoton\M251\Include;..\..\..\..\Library\StdDriver\inc;..\..\..\..\Library\TkLib\Include;..\..\..\..\Library\CMSIS\Core\Include;..\..\..\..\Library\LCDLib\Include</IncludePath>
@@ -371,7 +371,7 @@
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase></pXoBase>
-            <ScatterFile>.\TK_FreeRun.sct</ScatterFile>
+            <ScatterFile>.\TK_FreeRun.scf</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
             <Misc></Misc>
@@ -693,9 +693,9 @@
         <TargetCommonOption>
           <Device>M258KE3AE</Device>
           <Vendor>Nuvoton</Vendor>
-          <PackID>Nuvoton.NuMicroM23_DFP.1.0.0</PackID>
+          <PackID>Nuvoton.NuMicroM23_DFP.1.0.4</PackID>
           <PackURL>https://github.com/OpenNuvoton/cmsis-packs/raw/master/Nuvoton_DFP/</PackURL>
-          <Cpu>IRAM(0x20000000,0x4000) IROM(0x00000000,0x20000) CPUTYPE("Cortex-M23") CLOCK(12000000)</Cpu>
+          <Cpu>IRAM(0x20000000,0x4000) IROM(0x00000000,0x20000) CPUTYPE("Cortex-M23") CLOCK(12000000) IROM2(0x00100000,0x1000)</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
           <FlashDriverDll>UL2V8M(-S0 -C0 -P0 -FD20000000 -FC1000 -FN1 -FF0M251_AP_128 -FS00 -FL020000 -FP0($$Device:M258KE3AE$Flash\M251_AP_128.FLM))</FlashDriverDll>
@@ -865,7 +865,7 @@
             <RvdsCdeCp>0</RvdsCdeCp>
             <nBranchProt>0</nBranchProt>
             <hadIRAM2>0</hadIRAM2>
-            <hadIROM2>0</hadIROM2>
+            <hadIROM2>1</hadIROM2>
             <StupSel>8</StupSel>
             <useUlib>1</useUlib>
             <EndSel>0</EndSel>
@@ -958,8 +958,8 @@
               </OCR_RVCT4>
               <OCR_RVCT5>
                 <Type>1</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
+                <StartAddress>0x100000</StartAddress>
+                <Size>0x1000</Size>
               </OCR_RVCT5>
               <OCR_RVCT6>
                 <Type>0</Type>
@@ -1014,7 +1014,7 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls></MiscControls>
+              <MiscControls>-Wconditional-uninitialized</MiscControls>
               <Define>DEMO_CALIBRATION,DEBUG_PORT=UART1</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\TouchKey;..\..\..\..\Library\Device\Nuvoton\M251\Include;..\..\..\..\Library\StdDriver\inc;..\..\..\..\Library\TkLib\Include;..\..\..\..\Library\CMSIS\Core\Include;..\..\..\..\Library\LCDLib\Include</IncludePath>
@@ -1048,7 +1048,7 @@
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase></pXoBase>
-            <ScatterFile>.\TK_Calibration.sct</ScatterFile>
+            <ScatterFile>.\TK_Calibration.scf</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
             <Misc></Misc>

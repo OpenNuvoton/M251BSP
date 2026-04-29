@@ -198,7 +198,7 @@ void AdjustCodecPll(RESAMPLE_STATE_T r)
         {0x01F, 0x076, 0x191}    // * .995 = 7.488
     };
     static RESAMPLE_STATE_T current = E_RS_NONE;
-    int i, s;
+    int i, s = 0;
 
     if (r == current)
         return;
@@ -511,7 +511,7 @@ void AdjustCodecPll(RESAMPLE_STATE_T r)
     static uint16_t tb1[3] = {0x86C2, 0x9062, 0x7D1B};
 
     static RESAMPLE_STATE_T current = E_RS_NONE;
-    int s;
+    int s = 0;
 
     if (r == current)
         return;

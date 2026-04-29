@@ -36,71 +36,71 @@ typedef struct
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
      * |[0]     |TK0SEN    |TK0 Scan Enable
-     * |        |          |This bit is ignored if TK0REN (TK_REFC[0]) is “1” except SCAN_ALL (TK_REFC[23]) is “1”.
+     * |        |          |This bit is ignored if TK0REN (TK_REFC[0]) is "1" except SCAN_ALL (TK_REFC[23]) is "1".
      * |        |          |0 = TKDAT0 (TK_DAT0[7:0])TK0_DATA is invalid.
      * |        |          |1 = TK0 is always enable for Touch Key scan. TKDAT0 (TK_DAT0[7:0])TK0_DATA is valid.
      * |[1]     |TK1SEN    |TK1 Scan Enable
-     * |        |          |This bit is ignored if TK1REN (TK_REFC[1]) is “1”.
+     * |        |          |This bit is ignored if TK1REN (TK_REFC[1]) is "1".
      * |        |          |0 = TKDAT1 (TK_DAT0[15:8])TK1_DATA is invalid.
      * |        |          |1 = TK1 is always enable for Touch Key scan. TKDAT1 (TK_DAT0[15:8])TK1_DATA is valid.
      * |[2]     |TK2SEN    |TK2 Scan Enable
-     * |        |          |This bit is ignored if TK2REN (TK_REFC[2]) is “1”.
+     * |        |          |This bit is ignored if TK2REN (TK_REFC[2]) is "1".
      * |        |          |0 = TKDAT2 (TK_DAT0[23:16])TK2_DATA is invalid.
      * |        |          |1 = TK2 is always enable for Touch Key scan. TKDAT2 (TK_DAT0[23:16])TK2_DATA is valid.
      * |[3]     |TK3SEN    |TK3 Scan Enable
      * |        |          |0 = TKDAT3 (TK_DAT0[31:24])TK3_DATA is invalid.
      * |        |          |1 = TK3 is always enable for Touch Key scan. TKDAT3 (TK_DAT0[31:24])TK3_DATA is valid.
-     * |        |          |This bit is ignored if TK3REN (TK_REFC[3]) is “1”.
+     * |        |          |This bit is ignored if TK3REN (TK_REFC[3]) is "1".
      * |[4]     |TK4SEN    |TK4 Scan Enable
-     * |        |          |This bit is ignored if TK4REN (TK_REFC[4]) is “1”.
+     * |        |          |This bit is ignored if TK4REN (TK_REFC[4]) is "1".
      * |        |          |0 = TKDAT4 (TK_DAT1[7:0])TK4_DATA is invalid.
      * |        |          |1 = TK4 is always enable for Touch Key scan. TKDAT4 (TK_DAT1[7:0])TK4_DATA is valid.
      * |[5]     |TK5SEN    |TK5 Scan Enable
-     * |        |          |This bit is ignored if TK5REN (TK_REFC[5]) is “1”.
+     * |        |          |This bit is ignored if TK5REN (TK_REFC[5]) is "1".
      * |        |          |0 = TKDAT5 (TK_DAT1[15:8])TK5_DATA is invalid.
      * |        |          |1 = TK5 is always enable for Touch Key scan. TKDAT5 (TK_DAT1[15:8])TK5_DATA is valid.
      * |[6]     |TK6SEN    |TK6 Scan Enable
-     * |        |          |This bit is ignored if TK6REN (TK_REFC[6]) is “1”.
+     * |        |          |This bit is ignored if TK6REN (TK_REFC[6]) is "1".
      * |        |          |0 = TKDAT6 (TK_DAT1[23:16])TK6_DATA is invalid.
      * |        |          |1 = TK6 is always enable for Touch Key scan. TKDAT6 (TK_DAT1[23:16])TK6_DATA is valid.
      * |[7]     |TK7SEN    |TK7 Scan Enable
-     * |        |          |This bit is ignored if TK7REN (TK_REFC[7]) is “1”.
+     * |        |          |This bit is ignored if TK7REN (TK_REFC[7]) is "1".
      * |        |          |0 = TKDAT7 (TK_DAT1[31:24])TK7_DATA is invalid.
      * |        |          |1 = TK7 is always enable for Touch Key scan. TKDAT7 (TK_DAT1[31:24])TK7_DATA is valid.
      * |[8]     |TK8SEN    |TK8 Scan Enable
-     * |        |          |This bit is ignored if TK8REN (TK_REFC[8]) is “1”.
+     * |        |          |This bit is ignored if TK8REN (TK_REFC[8]) is "1".
      * |        |          |0 = TKDAT8 (TK_DAT2[7:0])TK8_DATA is invalid.
      * |        |          |1 = TK8 is always enable for Touch Key scan. TKDAT8 (TK_DAT2[7:0])TK8_DATA is valid.
      * |[9]     |TK9SEN    |TK9 Scan Enable
-     * |        |          |This bit is ignored if TK9REN (TK_REFC[9]) is “1”.
+     * |        |          |This bit is ignored if TK9REN (TK_REFC[9]) is "1".
      * |        |          |0 = TKDAT9 (TK_DAT2[15:8])TK9_DATA is invalid.
      * |        |          |1 = TK9 is always enable for Touch Key scan. TKDAT9 (TK_DAT2[15:8])TK9_DATA is valid.
      * |[10]    |TK10SEN   |TK10 Scan Enable
-     * |        |          |This bit is ignored if TK10REN (TK_REFC[10]) is “1”.
+     * |        |          |This bit is ignored if TK10REN (TK_REFC[10]) is "1".
      * |        |          |0 = TKDAT10 (TK_DAT2[23:16])TK10_DATA is invalid.
      * |        |          |1 = TK10 is always enable for Touch Key scan. TKDAT10 (TK_DAT2[23:16])TK10_DATA is valid.
      * |[11]    |TK11SEN   |TK11 Scan Enable
-     * |        |          |This bit is ignored if TK11REN (TK_REFC[11]) is “1”.
+     * |        |          |This bit is ignored if TK11REN (TK_REFC[11]) is "1".
      * |        |          |0 = TKDAT11 (TK_DAT2[31:24])TK11_DATA is invalid.
      * |        |          |1 = TK11 is always enable for Touch Key scan. TKDAT11 (TK_DAT2[31:24])TK11_DATA is valid.
      * |[12]    |TK12SEN   |TK12 Scan Enable
-     * |        |          |This bit is ignored if TK12REN (TK_REFC[12]) is “1”.
+     * |        |          |This bit is ignored if TK12REN (TK_REFC[12]) is "1".
      * |        |          |0 = TKDAT12 (TK_DAT3[7:0])TK12_DATA is invalid.
      * |        |          |1 = TK12 is always enable for Touch Key scan. TKDAT12 (TK_DAT3[7:0])TK12_DATA is valid.
      * |[13]    |TK13SEN   |TK13 Scan Enable
-     * |        |          |This bit is ignored if TK13REN (TK_REFC[13]) is “1”.
+     * |        |          |This bit is ignored if TK13REN (TK_REFC[13]) is "1".
      * |        |          |0 = TKDAT13 (TK_DAT3[15:8])TK13_DATA is invalid.
      * |        |          |1 = TK13 is always enable for Touch key scan. TKDAT13 (TK_DAT3[15:8])TK13_DATA is valid.
      * |[14]    |TK14SEN   |TK14 Scan Enable
-     * |        |          |This bit is ignored if TK14REN (TK_REFC[14]) is “1”.
+     * |        |          |This bit is ignored if TK14REN (TK_REFC[14]) is "1".
      * |        |          |0 = TKDAT14 (TK_DAT3[23:16])TK14_DATA is invalid.
      * |        |          |1 = TK14 is always enabled for Touch key scan. TKDAT14 (TK_DAT3[23:16])TK14_DATA is valid.
      * |[15]    |TK15SEN   |TK15 Scan Enable
-     * |        |          |This bit is ignored if TK15REN (TK_REFC[15]) is “1”.
+     * |        |          |This bit is ignored if TK15REN (TK_REFC[15]) is "1".
      * |        |          |0 = TKDAT15 (TK_DAT3[31:24])TK15_DATA is invalid.
      * |        |          |1 = TK15 is always enabled for kTouch Key scan. TTKDAT15 (TK_DAT3[31:24])K15_DATA is valid.
      * |[16]    |TK16SEN   |TK16 Scan Enable
-     * |        |          |This bit is ignored if TK16REN (TK_REFC[16]) is “1”.
+     * |        |          |This bit is ignored if TK16REN (TK_REFC[16]) is "1".
      * |        |          |0 = TKDAT16 (TK_DAT4[7:0])16_DATA is invalid.
      * |        |          |1 = TK16 is always enabled for kTouch Key scan. TKDAT16 (TK_DAT4[7:0])TK16_DATA is valid.
      * |[23:20] |AVDDH_S   |AVCCHAVDDH Voltage Select
@@ -121,7 +121,7 @@ typedef struct
      * |        |          |1110 = 7/32 VDD.
      * |        |          |1111 = 1/4 VDD.
      * |[24]    |SCAN      |Scan
-     * |        |          |Write an “1’ to this bit will immediately initiate key scan on all channels which are enabled.
+     * |        |          |Write an "1' to this bit will immediately initiate key scan on all channels which are enabled.
      * |        |          |This bit will be self-cleared after key scan started.
      * |[25]    |TMRTRG_EN |Timer Trigger Enable
      * |        |          |0 = Disable timer to trigger key scan.
@@ -186,7 +186,7 @@ typedef struct
      * |[16]    |TK16REN   |TK16 Reference Enable
      * |        |          |0 = TK16 is not reference.
      * |        |          |1 = TK16 is set as reference, and TKDAT16 (TK_DAT4[7:0])TK16_DATA is invalid.
-     * |        |          |Note: This bit is forced to “1” automatically if none is set as reference.
+     * |        |          |Note: This bit is forced to "1" automatically if none is set as reference.
      * |[23]    |SCAN_ALL  |All Keys Scan Enable
      * |        |          |This function is used for low power key scanning operation
      * |        |          |TKDAT_ALL0 (TK_DAT40[157:80]) is the only one valid data when key scan is complete.
@@ -279,97 +279,97 @@ typedef struct
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
      * |[1:0]   |IDLS0     |TK0 Idle State Control
-     * |        |          |This register is ignored if both TK0SEN (TK_SCANC[0]) and POLEN0 (TK_POLC[8]) are “0” or TK0REN (TK_REFC[0]) is “1”.
+     * |        |          |This register is ignored if both TK0SEN (TK_SCANC[0]) and POLEN0 (TK_POLC[8]) are "0" or TK0REN (TK_REFC[0]) is "1".
      * |        |          |00 = TK0 connected to Gnd.
      * |        |          |01 = TK0 connected to AVCCHAVDDH.
      * |        |          |10 = TK0 connected to VDD.
      * |        |          |11 = TK0 connected to VDD.
      * |[3:2]   |IDLS1     |TK1 Idle State Control
-     * |        |          |This register is ignored if both TK1SEN (TK_SCANC[1]) and POLEN1 (TK_POLC[9]) are “0” or TK1REN (TK_REFC[1]) is “1”.
+     * |        |          |This register is ignored if both TK1SEN (TK_SCANC[1]) and POLEN1 (TK_POLC[9]) are "0" or TK1REN (TK_REFC[1]) is "1".
      * |        |          |00 = TK1 connected to Gnd.
      * |        |          |01 = TK1 connected to AVCCHAVDDH.
      * |        |          |10 = TK1 connected to VDD.
      * |        |          |11 = TK1 connected to VDD.
      * |[5:4]   |IDLS2     |TK2 Idle State Control
-     * |        |          |This register is ignored if both TK2SEN (TK_SCANC[2]) and POLEN2 (TK_POLC[10]) are “0” or TK2REN (TK_REFC[2]) is “1”.
+     * |        |          |This register is ignored if both TK2SEN (TK_SCANC[2]) and POLEN2 (TK_POLC[10]) are "0" or TK2REN (TK_REFC[2]) is "1".
      * |        |          |00 = TK2 connected to Gnd.
      * |        |          |01 = TK2 connected to AVCCHAVDDH.
      * |        |          |10 = TK2 connected to VDD.
      * |        |          |11 = TK2 connected to VDD.
      * |[7:6]   |IDLS3     |TK3 Idle State Control
-     * |        |          |This register is ignored if both TK3SEN (TK_SCANC[3]) and POLEN3 (TK_POLC[11]) are “0” or TK3REN (TK_REFC[3]) is “1”.
+     * |        |          |This register is ignored if both TK3SEN (TK_SCANC[3]) and POLEN3 (TK_POLC[11]) are "0" or TK3REN (TK_REFC[3]) is "1".
      * |        |          |00 = TK3 connected to Gnd.
      * |        |          |01 = TK3 connected to AVCCHAVDDH.
      * |        |          |10 = TK3 connected to VDD.
      * |        |          |11 = TK3 connected to VDD.
      * |[9:8]   |IDLS4     |TK4 Idle State Control
-     * |        |          |This register is ignored if both TK4SEN (TK_SCANC[4]) and POLEN4 (TK_POLC[12]) are “0” or TK4REN (TK_REFC[4]) is “1”.
+     * |        |          |This register is ignored if both TK4SEN (TK_SCANC[4]) and POLEN4 (TK_POLC[12]) are "0" or TK4REN (TK_REFC[4]) is "1".
      * |        |          |00 = TK4 connected to Gnd.
      * |        |          |01 = TK4 connected to AVCCHAVDDH.
      * |        |          |10 = TK4 connected to VDD.
      * |        |          |11 = TK4 connected to VDD.
      * |[11:10] |IDLS5     |TK5 Idle State Control
-     * |        |          |This register is ignored if both TK5SEN (TK_SCANC[5]) and POLEN5 (TK_POLC[13]) are “0” or TK5REN (TK_REFC[5]) is “1”.
+     * |        |          |This register is ignored if both TK5SEN (TK_SCANC[5]) and POLEN5 (TK_POLC[13]) are "0" or TK5REN (TK_REFC[5]) is "1".
      * |        |          |00 = TK5 connected to Gnd.
      * |        |          |01 = TK5 connected to AVCCHAVDDH.
      * |        |          |10 = TK5 connected to VDD.
      * |        |          |11 = TK5 connected to VDD.
      * |[13:12] |IDLS6     |TK6 Idle State Control
-     * |        |          |This register is ignored if both TK6SEN (TK_SCANC[6]) and POLEN6 (TK_POLC[14]) are “0” or TK6REN (TK_REFC[6]) is “1”.
+     * |        |          |This register is ignored if both TK6SEN (TK_SCANC[6]) and POLEN6 (TK_POLC[14]) are "0" or TK6REN (TK_REFC[6]) is "1".
      * |        |          |00 = TK6 connected to Gnd.
      * |        |          |01 = TK6 connected to AVCCHAVDDH.
      * |        |          |10 = TK6 connected to VDD.
      * |        |          |11 = TK6 connected to VDD.
      * |[15:14] |IDLS7     |TK7 Idle State Control
-     * |        |          |This register is ignored if both TK7SEN (TK_SCANC[7]) and POLEN7 (TK_POLC[15]) are “0” or TK7REN (TK_REFC[7]) is “1”.
+     * |        |          |This register is ignored if both TK7SEN (TK_SCANC[7]) and POLEN7 (TK_POLC[15]) are "0" or TK7REN (TK_REFC[7]) is "1".
      * |        |          |00 = TK7 connected to Gnd.
      * |        |          |01 = TK7 connected to AVCCHAVDDH.
      * |        |          |10 = TK7 connected to VDD.
      * |        |          |11 = TK7 connected to VDD.
      * |[17:16] |IDLS8     |TK8 Idle State Control
-     * |        |          |This register is ignored if both TK8SEN (TK_SCANC[8]) and POLEN8 (TK_POLC[16]) are “0” or TK8REN (TK_REFC[8]) is “1”.
+     * |        |          |This register is ignored if both TK8SEN (TK_SCANC[8]) and POLEN8 (TK_POLC[16]) are "0" or TK8REN (TK_REFC[8]) is "1".
      * |        |          |00 = TK8 connected to Gnd.
      * |        |          |01 = TK8 connected to AVCCHAVDDH.
      * |        |          |10 = TK8 connected to VDD.
      * |        |          |11 = TK8 connected to VDD.
      * |[19:18] |IDLS9     |TK9 Idle State Control
-     * |        |          |This register is ignored if both TK9SEN (TK_SCANC[9]) and POLEN9 (TK_POLC[17]) are “0” or TK9REN (TK_REFC[9]) is “1”.
+     * |        |          |This register is ignored if both TK9SEN (TK_SCANC[9]) and POLEN9 (TK_POLC[17]) are "0" or TK9REN (TK_REFC[9]) is "1".
      * |        |          |00 = TK9 connected to Gnd.
      * |        |          |01 = TK9 connected to AVCCHAVDDH.
      * |        |          |10 = TK9 connected to VDD.
      * |        |          |11 = TK9 connected to VDD.
      * |[21:20] |IDLS10    |TK10 Idle State Control
-     * |        |          |This register is ignored if both TK10SEN (TK_SCANC[10]) and POLEN10 (TK_POLC[18]) are “0” or TK10REN (TK_REFC[10]) is “1”.
+     * |        |          |This register is ignored if both TK10SEN (TK_SCANC[10]) and POLEN10 (TK_POLC[18]) are "0" or TK10REN (TK_REFC[10]) is "1".
      * |        |          |00 = TK10 connected to Gnd.
      * |        |          |01 = TK10 connected to AVCCHAVDDH.
      * |        |          |10 = TK10 connected to VDD.
      * |        |          |11 = TK10 connected to VDD.
      * |[23:22] |IDLS11    |TK11 Idle State Control
-     * |        |          |This register is ignored if both TK11SEN (TK_SCANC[11]) and POLEN11 (TK_POLC[19]) are “0” or TK11REN (TK_REFC[11]) is “1”.
+     * |        |          |This register is ignored if both TK11SEN (TK_SCANC[11]) and POLEN11 (TK_POLC[19]) are "0" or TK11REN (TK_REFC[11]) is "1".
      * |        |          |00 = TK11 connected to Gnd.
      * |        |          |01 = TK11 connected to AVCCHAVDDH.
      * |        |          |10 = TK11 connected to VDD.
      * |        |          |11 = TK11 connected to VDD.
      * |[25:24] |IDLS12    |TK12 Idle State Control
-     * |        |          |This register is ignored if both TK12SEN (TK_SCANC[12]) and POLEN12 (TK_POLC[20]) are “0” or TK12REN (TK_REFC[12]) is “1”.
+     * |        |          |This register is ignored if both TK12SEN (TK_SCANC[12]) and POLEN12 (TK_POLC[20]) are "0" or TK12REN (TK_REFC[12]) is "1".
      * |        |          |00 = TK12 connected to Gnd.
      * |        |          |01 = TK12 connected to AVCCHAVDDH.
      * |        |          |10 = TK12 connected to VDD.
      * |        |          |11 = TK12 connected to VDD.
      * |[27:26] |IDLS13    |TK13 Idle State Control
-     * |        |          |This register is ignored if both TK13SEN (TK_SCANC[13]) and POLEN13 (TK_POLC[21]) are “0” or TK13REN (TK_REFC[13]) is “1”.
+     * |        |          |This register is ignored if both TK13SEN (TK_SCANC[13]) and POLEN13 (TK_POLC[21]) are "0" or TK13REN (TK_REFC[13]) is "1".
      * |        |          |00 = TK13 connected to Gnd.
      * |        |          |01 = TK13 connected to AVCCHAVDDH.
      * |        |          |10 = TK13 connected to VDD.
      * |        |          |11 = TK13 connected to VDD.
      * |[29:28] |IDLS14    |TK14 Idle State Control
-     * |        |          |This register is ignored if both TK14SEN (TK_SCANC[14]) and POLEN14 (TK_POLC[22]) are “0” or TK14REN (TK_REFC[14]) is “1”.
+     * |        |          |This register is ignored if both TK14SEN (TK_SCANC[14]) and POLEN14 (TK_POLC[22]) are "0" or TK14REN (TK_REFC[14]) is "1".
      * |        |          |00 = TK14 connected to Gnd.
      * |        |          |01 = TK14 connected to AVCCHAVDDH.
      * |        |          |10 = TK14 connected to VDD.
      * |        |          |11 = TK14 connected to VDD.
      * |[31:30] |IDLS15    |TK15 Idle State Control
-     * |        |          |This register is ignored if both TK15SEN (TK_SCANC[15]) and POLEN15 (TK_POLC[23]) are “0” or TK15REN (TK_REFC[15]) is “1”.
+     * |        |          |This register is ignored if both TK15SEN (TK_SCANC[15]) and POLEN15 (TK_POLC[23]) are "0" or TK15REN (TK_REFC[15]) is "1".
      * |        |          |00 = TK15 connected to Gnd.
      * |        |          |01 = TK15 connected to AVCCHAVDDH.
      * |        |          |10 = TK15 connected to VDD.
@@ -380,97 +380,97 @@ typedef struct
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
      * |[1:0]   |POL0      |TK0 Polarity Select
-     * |        |          |This register is ignored if POLEN0 (TK_POLC[8]) is “0” or TK0REN (TK_REFC[0]) is “1”.
+     * |        |          |This register is ignored if POLEN0 (TK_POLC[8]) is "0" or TK0REN (TK_REFC[0]) is "1".
      * |        |          |00 = TK0 connected to Gnd.
      * |        |          |01 = TK0 connected to AVCCHAVDDH.
      * |        |          |10 = TK0 connected to VDD.
      * |        |          |11 = TK0 connected to VDD.
      * |[3:2]   |POL1      |TK1 Polarity Select
-     * |        |          |This register is ignored if POLEN1 (TK_POLC[9]) is “0” or TK1REN (TK_REFC[1]) is “1”.
+     * |        |          |This register is ignored if POLEN1 (TK_POLC[9]) is "0" or TK1REN (TK_REFC[1]) is "1".
      * |        |          |00 = TK1 connected to Gnd.
      * |        |          |01 = TK1 connected to AVCCHAVDDH.
      * |        |          |10 = TK1 connected to VDD.
      * |        |          |11 = TK1 connected to VDD.
      * |[5:4]   |POL2      |TK2 Polarity Select
-     * |        |          |This register is ignored if POLEN2 (TK_POLC[10]) is “0” or TK2REN (TK_REFC[2]) is “1”.
+     * |        |          |This register is ignored if POLEN2 (TK_POLC[10]) is "0" or TK2REN (TK_REFC[2]) is "1".
      * |        |          |00 = TK2 connected to Gnd.
      * |        |          |01 = TK2 connected to AVCCHAVDDH.
      * |        |          |10 = TK2 connected to VDD.
      * |        |          |11 = TK2 connected to VDD.
      * |[7:6]   |POL3      |TK3 Polarity Select
-     * |        |          |This register is ignored if POLEN3 (TK_POLC[11]) is “0” or TK3REN (TK_REFC[3]) is “1”.
+     * |        |          |This register is ignored if POLEN3 (TK_POLC[11]) is "0" or TK3REN (TK_REFC[3]) is "1".
      * |        |          |00 = TK3 connected to Gnd.
      * |        |          |01 = TK3 connected to AVCCHAVDDH.
      * |        |          |10 = TK3 connected to VDD.
      * |        |          |11 = TK3 connected to VDD.
      * |[9:8]   |POL4      |TK4 Polarity Select
-     * |        |          |This register is ignored if POLEN4 (TK_POLC[12]) is “0” or TK4REN (TK_REFC[4]) is “1”.
+     * |        |          |This register is ignored if POLEN4 (TK_POLC[12]) is "0" or TK4REN (TK_REFC[4]) is "1".
      * |        |          |00 = TK4 connected to Gnd.
      * |        |          |01 = TK4 connected to AVCCHAVDDH.
      * |        |          |10 = TK4 connected to VDD.
      * |        |          |11 = TK4 connected to VDD.
      * |[11:10] |POL5      |TK5 Polarity Select
-     * |        |          |This register is ignored if POLEN5 (TK_POLC[13]) is “0” or TK5REN (TK_REFC[5]) is “1”.
+     * |        |          |This register is ignored if POLEN5 (TK_POLC[13]) is "0" or TK5REN (TK_REFC[5]) is "1".
      * |        |          |00 = TK5 connected to Gnd.
      * |        |          |01 = TK5 connected to AVCCHAVDDH.
      * |        |          |10 = TK5 connected to VDD.
      * |        |          |11 = TK5 connected to VDD.
      * |[13:12] |POL6      |TK6 Polarity Select
-     * |        |          |This register is ignored if POLEN6 (TK_POLC[14]) is “0” or TK6REN (TK_REFC[6]) is “1”.
+     * |        |          |This register is ignored if POLEN6 (TK_POLC[14]) is "0" or TK6REN (TK_REFC[6]) is "1".
      * |        |          |00 = TK6 connected to Gnd.
      * |        |          |01 = TK6 connected to AVCCHAVDDH.
      * |        |          |10 = TK6 connected to VDD.
      * |        |          |11 = TK6 connected to VDD.
      * |[15:14] |POL7      |TK7 Polarity Select
-     * |        |          |This register is ignored if POLEN7 (TK_POLC[15]) is “0” or TK7REN (TK_REFC[7]) is “1”.
+     * |        |          |This register is ignored if POLEN7 (TK_POLC[15]) is "0" or TK7REN (TK_REFC[7]) is "1".
      * |        |          |00 = TK7 connected to Gnd.
      * |        |          |01 = TK7 connected to AVCCHAVDDH.
      * |        |          |10 = TK7 connected to VDD.
      * |        |          |11 = TK7 connected to VDD.
      * |[17:16] |POL8      |TK8 Polarity Select
-     * |        |          |This register is ignored if POLEN8 (TK_POLC[16]) is “0” or TK8REN (TK_REFC[8]) is “1”.
+     * |        |          |This register is ignored if POLEN8 (TK_POLC[16]) is "0" or TK8REN (TK_REFC[8]) is "1".
      * |        |          |00 = TK8 connected to Gnd.
      * |        |          |01 = TK8 connected to AVCCHAVDDH.
      * |        |          |10 = TK8 connected to VDD.
      * |        |          |11 = TK8 connected to VDD.
      * |[19:18] |POL9      |TK9 Polarity Select
-     * |        |          |This register is ignored if POLEN9 (TK_POLC[17]) is “0” or TK9REN (TK_REFC[9]) is “1”.
+     * |        |          |This register is ignored if POLEN9 (TK_POLC[17]) is "0" or TK9REN (TK_REFC[9]) is "1".
      * |        |          |00 = TK9 connected to Gnd.
      * |        |          |01 = TK9 connected to AVCCHAVDDH.
      * |        |          |10 = TK9 connected to VDD.
      * |        |          |11 = TK9 connected to VDD.
      * |[21:20] |POL10     |TK10 Polarity Select
-     * |        |          |This register is ignored if POLEN10 (TK_POLC[18]) is “0” or TK10REN (TK_REFC[10]) is “1”.
+     * |        |          |This register is ignored if POLEN10 (TK_POLC[18]) is "0" or TK10REN (TK_REFC[10]) is "1".
      * |        |          |00 = TK10 connected to Gnd.
      * |        |          |01 = TK10 connected to AVCCHAVDDH.
      * |        |          |10 = TK10 connected to VDD.
      * |        |          |11 = TK10 connected to VDD.
      * |[23:22] |POL11     |TK11 Polarity Select
-     * |        |          |This register is ignored if POLEN11 (TK_POLC[19]) is “0” or TK11REN (TK_REFC[11]) is “1”.
+     * |        |          |This register is ignored if POLEN11 (TK_POLC[19]) is "0" or TK11REN (TK_REFC[11]) is "1".
      * |        |          |00 = TK11 connected to Gnd.
      * |        |          |01 = TK11 connected to AVCCHAVDDH.
      * |        |          |10 = TK11 connected to VDD.
      * |        |          |11 = TK11 connected to VDD.
      * |[25:24] |POL12     |TK12 Polarity Select
-     * |        |          |This register is ignored if POLEN12 (TK_POLC[20]) is “0” or TK12REN (TK_REFC[12]) is “1”.
+     * |        |          |This register is ignored if POLEN12 (TK_POLC[20]) is "0" or TK12REN (TK_REFC[12]) is "1".
      * |        |          |00 = TK12 connected to Gnd.
      * |        |          |01 = TK12 connected to AVCCHAVDDH.
      * |        |          |10 = TK12 connected to VDD.
      * |        |          |11 = TK12 connected to VDD.
      * |[27:26] |POL13     |TK13 Polarity Select
-     * |        |          |This register is ignored if POLEN13 (TK_POLC[21]) is “0” or TK13REN (TK_REFC[13]) is “1”.
+     * |        |          |This register is ignored if POLEN13 (TK_POLC[21]) is "0" or TK13REN (TK_REFC[13]) is "1".
      * |        |          |00 = TK13 connected to Gnd.
      * |        |          |01 = TK13 connected to AVCCHAVDDH.
      * |        |          |10 = TK13 connected to VDD.
      * |        |          |11 = TK13 connected to VDD.
      * |[29:28] |POL14     |TK14 Polarity Select
-     * |        |          |This register is ignored if POLEN14 (TK_POLC[22]) is “0” or TK14REN (TK_REFC[14]) is “1”.
+     * |        |          |This register is ignored if POLEN14 (TK_POLC[22]) is "0" or TK14REN (TK_REFC[14]) is "1".
      * |        |          |00 = TK14 connected to Gnd.
      * |        |          |01 = TK14 connected to AVCCHAVDDH.
      * |        |          |10 = TK14 connected to VDD.
      * |        |          |11 = TK14 connected to VDD.
      * |[31:30] |POL15     |TK15 Polarity Select
-     * |        |          |This register is ignored if POLEN15 (TK_POLC[23]) is “0” or TK15REN (TK_REFC[15]) is “1”.
+     * |        |          |This register is ignored if POLEN15 (TK_POLC[23]) is "0" or TK15REN (TK_REFC[15]) is "1".
      * |        |          |00 = TK15 connected to Gnd.
      * |        |          |01 = TK15 connected to AVCCHAVDDH.
      * |        |          |10 = TK15 connected to VDD.
@@ -481,13 +481,13 @@ typedef struct
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
      * |[1:0]   |IDLS16    |TK16 Idle State Control
-     * |        |          |This register is ignored if both TK16SEN (TK_SCANC[16]) and POLEN16 (TK_POLC[24]) are “0” or TK16REN (TK_REFC[16]) is “1”.
+     * |        |          |This register is ignored if both TK16SEN (TK_SCANC[16]) and POLEN16 (TK_POLC[24]) are "0" or TK16REN (TK_REFC[16]) is "1".
      * |        |          |00 = TK16 connected to Gnd.
      * |        |          |01 = TK16 connected to AVCCHAVDDH.
      * |        |          |10 = TK16 connected to VDD.
      * |        |          |11 = TK16 connected to VDD.
      * |[3:2]   |POL16     |TK16 Polarity Control
-     * |        |          |This register is ignored if POLEN16 (TK_POLC[24]) is “0” or TK16REN (TK_REFC[16]) is “1”.
+     * |        |          |This register is ignored if POLEN16 (TK_POLC[24]) is "0" or TK16REN (TK_REFC[16]) is "1".
      * |        |          |00 = TK16 connected to Gnd.
      * |        |          |01 = TK16 connected to AVCCHAVDDH.
      * |        |          |10 = TK16 connected to VDD.
@@ -560,7 +560,7 @@ typedef struct
      * |        |          |0 = KTouch key sensing scan is complete or stopped.
      * |        |          |1 = KTouch key sensing scan is proceeding.
      * |[1]     |SCIF      |Touch Key Scan Complete Interrupt Flag (Read Only)
-     * |        |          |This bit will be cleared by writing a “1” to this bit.
+     * |        |          |This bit will be cleared by writing a "1" to this bit.
      * |        |          |0 = Touch Keys are being scan is proceeding and data is not ready for read.
      * |        |          |1 = Touch Keys scan is complete and data is ready for read in TKDATx registers.
      * |        |          |Note1: The Touch Key interrupt asserts if SCIE bit of TK_INTEN register is set.
@@ -570,75 +570,75 @@ typedef struct
      * |        |          |1 = Threshold control event occurs with each Keys Scan.
      * |        |          |This bit is 1 while any one of TKIF0~TKIF16 is 1.
      * |[7]     |TKIF_ALL  |All Keys Scan Interrupt Flag (Read Only)
-     * |        |          |This bit will be cleared by writing a “1” to this bit.
+     * |        |          |This bit will be cleared by writing a "1" to this bit.
      * |        |          |0 = No threshold control event with All Keys Scan.
      * |        |          |1 = Threshold control event occurs with All Keys Scan.
      * |[8]     |TKIF0     |TK0 Interrupt Flag (Read Only)
-     * |        |          |This bit will be cleared by writing a “1” to this bit.
+     * |        |          |This bit will be cleared by writing a "1" to this bit.
      * |        |          |0 = No threshold control event with TK0.
      * |        |          |1 = Threshold control event occurs with TK0.
      * |[9]     |TKIF1     |TK1 Interrupt Flag (Read Only)
-     * |        |          |This bit will be cleared by writing a “1” to this bit.
+     * |        |          |This bit will be cleared by writing a "1" to this bit.
      * |        |          |0 = No threshold control event with TK1.
      * |        |          |1 = Threshold control event occurs with TK1.
      * |[10]    |TKIF2     |TK2 Interrupt Flag (Read Only)
-     * |        |          |This bit will be cleared by writing a “1” to this bit.
+     * |        |          |This bit will be cleared by writing a "1" to this bit.
      * |        |          |0 = No threshold control event with TK2.
      * |        |          |1 = Threshold control event occurs with TK2.
      * |[11]    |TKIF3     |TK3 Interrupt Flag (Read Only)
-     * |        |          |This bit will be cleared by writing a “1” to this bit.
+     * |        |          |This bit will be cleared by writing a "1" to this bit.
      * |        |          |0 = No threshold control event with TK3.
      * |        |          |1 = Threshold control event occurs with TK3.
      * |[12]    |TKIF4     |TK4 Interrupt Flag (Read Only)
-     * |        |          |This bit will be cleared by writing a “1” to this bit.
+     * |        |          |This bit will be cleared by writing a "1" to this bit.
      * |        |          |0 = No threshold control event with TK4.
      * |        |          |1 = Threshold control event occurs with TK4.
      * |[13]    |TKIF5     |TK5 Interrupt Flag (Read Only)
-     * |        |          |This bit will be cleared by writing a “1” to this bit.
+     * |        |          |This bit will be cleared by writing a "1" to this bit.
      * |        |          |0 = No threshold control event with TK5.
      * |        |          |1 = Threshold control event occurs with TK5.
      * |[14]    |TKIF6     |TK6 Interrupt Flag (Read Only)
-     * |        |          |This bit will be cleared by writing a “1” to this bit.
+     * |        |          |This bit will be cleared by writing a "1" to this bit.
      * |        |          |0 = No threshold control event with TK6.
      * |        |          |1 = Threshold control event occurs with TK6.
      * |[15]    |TKIF7     |TK7 Interrupt Flag (Read Only)
-     * |        |          |This bit will be cleared by writing a “1” to this bit.
+     * |        |          |This bit will be cleared by writing a "1" to this bit.
      * |        |          |0 = No threshold control event with TK7.
      * |        |          |1 = Threshold control event occurs with TK7.
      * |[16]    |TKIF8     |TK8 Interrupt Flag (Read Only)
-     * |        |          |This bit will be cleared by writing a “1” to this bit.
+     * |        |          |This bit will be cleared by writing a "1" to this bit.
      * |        |          |0 = No threshold control event with TK8.
      * |        |          |1 = Threshold control event occurs with TK8.
      * |[17]    |TKIF9     |TK9 Interrupt Flag (Read Only)
-     * |        |          |This bit will be cleared by writing a “1” to this bit.
+     * |        |          |This bit will be cleared by writing a "1" to this bit.
      * |        |          |0 = No threshold control event with TK9.
      * |        |          |1 = Threshold control event occurs with TK9.
      * |[18]    |TKIF10    |TK10 Interrupt Flag (Read Only)
-     * |        |          |This bit will be cleared by writing a “1” to this bit.
+     * |        |          |This bit will be cleared by writing a "1" to this bit.
      * |        |          |0 = No threshold control event with TK10.
      * |        |          |1 = Threshold control event occurs with TK10.
      * |[19]    |TKIF11    |TK11 Interrupt Flag (Read Only)
-     * |        |          |This bit will be cleared by writing a “1” to this bit.
+     * |        |          |This bit will be cleared by writing a "1" to this bit.
      * |        |          |0 = No threshold control event with TK11.
      * |        |          |1 = Threshold control event occurs with TK11.
      * |[20]    |TKIF12    |TK12 Interrupt Flag (Read Only)
-     * |        |          |This bit will be cleared by writing a “1” to this bit.
+     * |        |          |This bit will be cleared by writing a "1" to this bit.
      * |        |          |0 = No threshold control event with TK12.
      * |        |          |1 = Threshold control event occurs with TK12.
      * |[21]    |TKIF13    |TK13 Interrupt Flag (Read Only)
-     * |        |          |This bit will be cleared by writing a “1” to this bit.
+     * |        |          |This bit will be cleared by writing a "1" to this bit.
      * |        |          |0 = No threshold control event with TK13.
      * |        |          |1 = Threshold control event occurs with TK13.
      * |[22]    |TKIF14    |TK14 Interrupt Flag (Read Only)
-     * |        |          |This bit will be cleared by writing a “1” to this bit.
+     * |        |          |This bit will be cleared by writing a "1" to this bit.
      * |        |          |0 = No threshold control event with TK14.
      * |        |          |1 = Threshold control event occurs with TK14.
      * |[23]    |TKIF15    |TK15 Interrupt Flag (Read Only)
-     * |        |          |This bit will be cleared by writing a “1” to this bit.
+     * |        |          |This bit will be cleared by writing a "1" to this bit.
      * |        |          |0 = No threshold control event with TK15.
      * |        |          |1 = Threshold control event occurs with TK15.
      * |[24]    |TKIF16    |TK16 Interrupt Flag (Read Only)
-     * |        |          |This bit will be cleared by writing a “1” to this bit.
+     * |        |          |This bit will be cleared by writing a "1" to this bit.
      * |        |          |0 = No threshold control event with TK16.
      * |        |          |1 = Threshold control event occurs with TK16.
      * @var TK_T::DAT0
@@ -647,61 +647,61 @@ typedef struct
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
      * |[7:0]   |TKDAT0    |TK0 Sensing Result Data (Read Only)
-     * |        |          |This data is invalid if TK0SEN (TK_SCANC[0]) is “0” or TK0REN (TK_REFC[0]) is “1” except SCAN_ALL (TK_REFC[23]) is “1”.
+     * |        |          |This data is invalid if TK0SEN (TK_SCANC[0]) is "0" or TK0REN (TK_REFC[0]) is "1" except SCAN_ALL (TK_REFC[23]) is "1".
      * |[15:8]  |TKDAT1    |TK1 Sensing Result Data (Read Only)
-     * |        |          |This data is invalid if TK1SEN (TK_SCANC[1]) is “0” or TK1REN (TK_REFC[1]) is “1”.
+     * |        |          |This data is invalid if TK1SEN (TK_SCANC[1]) is "0" or TK1REN (TK_REFC[1]) is "1".
      * |[23:16] |TKDAT2    |TK2 Sensing Result Data (Read Only)
-     * |        |          |This data is invalid if TK2SEN (TK_SCANC[2]) is “0” or TK2REN (TK_REFC[2]) is “1”.
+     * |        |          |This data is invalid if TK2SEN (TK_SCANC[2]) is "0" or TK2REN (TK_REFC[2]) is "1".
      * |[31:24] |TKDAT3    |TK3 Sensing Result Data (Read Only)
-     * |        |          |This data is invalid if TK3SEN (TK_SCANC[3]) is “0” or TK3REN (TK_REFC[3]) is “1”.
+     * |        |          |This data is invalid if TK3SEN (TK_SCANC[3]) is "0" or TK3REN (TK_REFC[3]) is "1".
      * @var TK_T::DAT1
      * Offset: 0x30  Touch Key Data Register 1
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
      * |[7:0]   |TKDAT4    |TK0 Sensing Result Data (Read Only)
-     * |        |          |This data is invalid if TK4SEN (TK_SCANC[4]) is “0” or TK4REN (TK_REFC[4]) is “1”.
+     * |        |          |This data is invalid if TK4SEN (TK_SCANC[4]) is "0" or TK4REN (TK_REFC[4]) is "1".
      * |[15:8]  |TKDAT5    |TK5 Sensing Result Data (Read Only)
-     * |        |          |This data is invalid if TK5SEN (TK_SCANC[5]) is “0” or TK5REN (TK_REFC[5]) is “1”.
+     * |        |          |This data is invalid if TK5SEN (TK_SCANC[5]) is "0" or TK5REN (TK_REFC[5]) is "1".
      * |[23:16] |TKDAT6    |TK6 Sensing Result Data (Read Only)
-     * |        |          |This data is invalid if TK6SEN (TK_SCANC[6]) is “0” or TK6REN (TK_REFC[6]) is “1”.
+     * |        |          |This data is invalid if TK6SEN (TK_SCANC[6]) is "0" or TK6REN (TK_REFC[6]) is "1".
      * |[31:24] |TKDAT7    |TK7 Sensing Result Data (Read Only)
-     * |        |          |This data is invalid if TK7SEN (TK_SCANC[7]) is “0” or TK7REN (TK_REFC[7]) is “1”.
+     * |        |          |This data is invalid if TK7SEN (TK_SCANC[7]) is "0" or TK7REN (TK_REFC[7]) is "1".
      * @var TK_T::DAT2
      * Offset: 0x34  Touch Key Data Register 2
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
      * |[7:0]   |TKDAT8    |TK8 Sensing Result Data (Read Only)
-     * |        |          |This data is invalid if TK8SEN (TK_SCANC[8]) is “0” or TK8REN (TK_REFC[8]) is “1”.
+     * |        |          |This data is invalid if TK8SEN (TK_SCANC[8]) is "0" or TK8REN (TK_REFC[8]) is "1".
      * |[15:8]  |TKDAT9    |TK9 Sensing Result Data (Read Only)
-     * |        |          |This data is invalid if TK9SEN (TK_SCANC[9]) is “0” or TK9REN (TK_REFC[9]) is “1”.
+     * |        |          |This data is invalid if TK9SEN (TK_SCANC[9]) is "0" or TK9REN (TK_REFC[9]) is "1".
      * |[23:16] |TKDAT10   |TK10 Sensing Result Data (Read Only)
-     * |        |          |This data is invalid if TK10SEN (TK_SCANC[10]) is “0” or TK10REN (TK_REFC[10]) is “1”.
+     * |        |          |This data is invalid if TK10SEN (TK_SCANC[10]) is "0" or TK10REN (TK_REFC[10]) is "1".
      * |[31:24] |TKDAT11   |TK11 Sensing Result Data (Read Only)
-     * |        |          |This data is invalid if TK11SEN (TK_SCANC[11]) is “0” or TK11REN (TK_REFC[11]) is “1”.
+     * |        |          |This data is invalid if TK11SEN (TK_SCANC[11]) is "0" or TK11REN (TK_REFC[11]) is "1".
      * @var TK_T::DAT3
      * Offset: 0x38  Touch Key Data Register 3
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
      * |[7:0]   |TKDAT12   |TK12 Sensing Result Data (Read Only)
-     * |        |          |This data is invalid if TK12SEN (TK_SCANC[12]) is “0” or TK12REN (TK_REFC[12]) is “1”.
+     * |        |          |This data is invalid if TK12SEN (TK_SCANC[12]) is "0" or TK12REN (TK_REFC[12]) is "1".
      * |[15:8]  |TKDAT13   |TK13 Sensing Result Data (Read Only)
-     * |        |          |This data is invalid if TK13SEN (TK_SCANC[13]) is “0” or TK13REN (TK_REFC[13]) is “1”.
+     * |        |          |This data is invalid if TK13SEN (TK_SCANC[13]) is "0" or TK13REN (TK_REFC[13]) is "1".
      * |[23:16] |TKDAT14   |TK14 Sensing Result Data (Read Only)
-     * |        |          |This data is invalid if TK14SEN (TK_SCANC[14]) is “0” or TK14REN (TK_REFC[14]) is “1”.
+     * |        |          |This data is invalid if TK14SEN (TK_SCANC[14]) is "0" or TK14REN (TK_REFC[14]) is "1".
      * |[31:24] |TKDAT15   |TK15 Sensing Result Data (Read Only)
-     * |        |          |This data is invalid if TK15SEN (TK_SCANC[15]) is “0” or TK15REN (TK_REFC[15]) is “1”.
+     * |        |          |This data is invalid if TK15SEN (TK_SCANC[15]) is "0" or TK15REN (TK_REFC[15]) is "1".
      * @var TK_T::DAT4
      * Offset: 0x3C  Touch Key Data Register 4
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
      * |[7:0]   |TKDAT16   |TK16 Sensing Result Data (Read Only)
-     * |        |          |This data is invalid if TK16SEN (TK_SCANC[16]) is “0” or TK16REN (TK_REFC[16]) is “1”.
+     * |        |          |This data is invalid if TK16SEN (TK_SCANC[16]) is "0" or TK16REN (TK_REFC[16]) is "1".
      * |[15:8]  |TKDAT_ALL |All Keys Scan Sensing Result Data (Read Only)
-     * |        |          |This data is invalid if SCAN_ALL (TK_REFC[23]) is “0”.
+     * |        |          |This data is invalid if SCAN_ALL (TK_REFC[23]) is "0".
      * @var TK_T::INTEN
      * Offset: 0x40  Touch Key Interrupt Enable Register
      * ---------------------------------------------------------------------------------------------------

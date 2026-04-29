@@ -20,6 +20,8 @@ project:
           Link:
             - --library_type=microlib --map --load_addr_map_info --symbols
             - --info sizes --info totals --strict --summary_stderr --info summarysizes
+          C-CPP:
+            - -Wconditional-uninitialized
         - for-compiler: GCC
           C:
             - -std=gnu11 -mthumb -masm-syntax-unified -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections
@@ -27,8 +29,10 @@ project:
             - -mthumb -fmessage-length=0 -fsigned-char --specs=nano.specs --specs=nosys.specs
             - -Wl,--gc-sections,-Map="$elf()$.map"
             - -Wl,--no-warn-rwx-segments
+          C-CPP:
+            - -Wmaybe-uninitialized
   linker:
-    - script: ../../../../Library/Device/Nuvoton/M251/Source/ARM/APROM.sct
+    - script: ../../../../Library/Device/Nuvoton/M251/Source/ARM/APROM.scf
       for-compiler: AC6
     - script: ../../../../Library/Device/Nuvoton/M251/Source/GCC/gcc_arm.ld
       for-compiler: GCC
@@ -45,7 +49,7 @@ project:
     - group: User
       files:
         - file: ../main.c
-        - file: ../ebi_sram.c        
+        - file: ../ebi_sram.c
     - group: Library
       files:
         - file: ../../../../Library/StdDriver/src/retarget.c
@@ -53,4 +57,4 @@ project:
         - file: ../../../../Library/StdDriver/src/clk.c
         - file: ../../../../Library/StdDriver/src/uart.c
         - file: ../../../../Library/StdDriver/src/ebi.c
-        - file: ../../../../Library/StdDriver/src/pdma.c        
+        - file: ../../../../Library/StdDriver/src/pdma.c

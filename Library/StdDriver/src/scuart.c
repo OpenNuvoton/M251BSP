@@ -7,7 +7,7 @@
 *****************************************************************************/
 #include "NuMicro.h"
 
-static uint32_t SCUART_GetClock(SC_T *sc);
+static uint32_t SCUART_GetClock(const SC_T *sc);
 
 /** @addtogroup Standard_Driver Standard Driver
   @{
@@ -41,9 +41,11 @@ void SCUART_Close(SC_T *sc)
   * @param[in] sc The base address of smartcard module.
   * @return Module clock of specified SC interface
   */
-static uint32_t SCUART_GetClock(SC_T *sc)
+static uint32_t SCUART_GetClock(const SC_T *sc)
 {
-    uint32_t u32ClkSrc, u32Num, u32Clk;
+    uint32_t u32ClkSrc;
+    uint32_t u32Num;
+    uint32_t u32Clk;
 
     if (sc == SC0)
     {
@@ -104,10 +106,11 @@ static uint32_t SCUART_GetClock(SC_T *sc)
   */
 uint32_t SCUART_Open(SC_T *sc, uint32_t u32baudrate)
 {
-    uint32_t u32Clk = SCUART_GetClock(sc), u32Div;
+    uint32_t u32Clk = SCUART_GetClock(sc);
+    uint32_t u32Div;
 
     /* Calculate divider for target baudrate */
-    u32Div = (u32Clk + (u32baudrate >> 1) - 1UL) / u32baudrate - 1UL;
+    u32Div = ((u32Clk + (u32baudrate >> 1UL) - 1UL) / u32baudrate) - 1UL;
 
     /* Enable smartcard interface and stop bit = 1 */
     sc->CTL = SC_CTL_SCEN_Msk | SC_CTL_NSB_Msk;
@@ -126,7 +129,7 @@ uint32_t SCUART_Open(SC_T *sc, uint32_t u32baudrate)
   * @return Actual character number reads to buffer
   * @note This function does not block and return immediately if there's no data available
   */
-uint32_t SCUART_Read(SC_T *sc, uint8_t pu8RxBuf[], uint32_t u32ReadBytes)
+uint32_t SCUART_Read(const SC_T *sc, uint8_t pu8RxBuf[], uint32_t u32ReadBytes)
 {
     uint32_t u32Count;
 
@@ -169,7 +172,8 @@ uint32_t SCUART_Read(SC_T *sc, uint8_t pu8RxBuf[], uint32_t u32ReadBytes)
 uint32_t SCUART_SetLineConfig(SC_T *sc, uint32_t u32Baudrate, uint32_t u32DataWidth, uint32_t u32Parity, uint32_t  u32StopBits)
 {
 
-    uint32_t u32Clk = SCUART_GetClock(sc), u32Div;
+    uint32_t u32Clk = SCUART_GetClock(sc);
+    uint32_t u32Div;
 
     if (u32Baudrate == 0UL)   /* keep original baudrate setting */
     {
@@ -178,7 +182,7 @@ uint32_t SCUART_SetLineConfig(SC_T *sc, uint32_t u32Baudrate, uint32_t u32DataWi
     else
     {
         /* Calculate divider for target baudrate */
-        u32Div = (u32Clk + (u32Baudrate >> 1) - 1UL) / u32Baudrate - 1UL;
+        u32Div = ((u32Clk + (u32Baudrate >> 1) - 1UL) / u32Baudrate) - 1UL;
         sc->ETUCTL = u32Div;
     }
 
@@ -214,17 +218,17 @@ void SCUART_SetTimeoutCnt(SC_T *sc, uint32_t u32TOC)
   * @note This function sets g_SCUART_i32ErrCode to SCUART_TIMEOUT_ERR if the Tx FIFO
     *       blocks longer than expected.
   */
-uint32_t SCUART_Write(SC_T *sc, uint8_t pu8TxBuf[], uint32_t u32WriteBytes)
+uint32_t SCUART_Write(SC_T *sc, const uint8_t pu8TxBuf[], uint32_t u32WriteBytes)
 {
     uint32_t u32Count;
     /* Baudrate * (start bit + 8-bit data + 1-bit parity + 2-bit stop) */
-    uint32_t u32Delay = (SystemCoreClock / SCUART_GetClock(sc)) * sc->ETUCTL * 12, i;
+    uint32_t u32Delay = (SystemCoreClock / SCUART_GetClock(sc)) * sc->ETUCTL * 12UL;
 
     g_SCUART_i32ErrCode = 0;
 
     for (u32Count = 0UL; u32Count != u32WriteBytes; u32Count++)
     {
-        i = 0;
+        uint32_t i = 0;
 
         /* Wait 'til FIFO not full */
         while (SCUART_GET_TX_FULL(sc))

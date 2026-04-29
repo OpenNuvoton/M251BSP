@@ -108,13 +108,13 @@ extern "C"
 
 
 #define RTC_TAMPER0_SELECT (0x1ul << 0)     /*!< Select Tamper 0 \hideinitializer */
-#define MAX_TAMPER_PIN_NUM 1ul              /*!< Tamper Pin number \hideinitializer */
+#define MAX_TAMPER_PIN_NUM 1UL              /*!< Tamper Pin number \hideinitializer */
 
-#define RTC_TAMPER_HIGH_LEVEL_DETECT  0ul    /*!< Tamper pin detect voltage level is High  \hideinitializer */
-#define RTC_TAMPER_LOW_LEVEL_DETECT   1ul    /*!< Tamper pin detect voltage level is low \hideinitializer */
+#define RTC_TAMPER_HIGH_LEVEL_DETECT  0UL    /*!< Tamper pin detect voltage level is High  \hideinitializer */
+#define RTC_TAMPER_LOW_LEVEL_DETECT   1UL    /*!< Tamper pin detect voltage level is low \hideinitializer */
 
-#define RTC_TAMPER_DEBOUNCE_ENABLE   1ul    /*!< Enable RTC tamper pin de-bounce function \hideinitializer */
-#define RTC_TAMPER_DEBOUNCE_DISABLE  0ul    /*!< Disable RTC tamper pin de-bounce function \hideinitializer */
+#define RTC_TAMPER_DEBOUNCE_ENABLE   1UL    /*!< Enable RTC tamper pin de-bounce function \hideinitializer */
+#define RTC_TAMPER_DEBOUNCE_DISABLE  0UL    /*!< Disable RTC tamper pin de-bounce function \hideinitializer */
 
 
 /** @} end of group RTC_EXPORTED_CONSTANTS */

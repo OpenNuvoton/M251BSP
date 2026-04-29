@@ -12,13 +12,13 @@ To experience the powerful features of M251/M252/M254/M256/M258 series in few mi
 	Document of CMSIS version 6.1.0.
 
 - NuMicro M251_252_254_256_258 Series CMSIS BSP Driver Reference Guide.chm<br>
-	This document describes the usage of drivers in M251/M252/M254/M256/M258 BSP.
+	This document describes the usage of drivers in M251/M252/M254/M256/M258 Series BSP.
 
 - NuMicro M251_252_254_256_258 Series CMSIS BSP Revision History.pdf<br>
-	This document shows the revision history of M251/M252/M254/M256/M258 BSP.
+	This document shows the revision history of M251/M252/M254/M256/M258 Series BSP.
 
-- VSCode Quick Start Guide
-	This documents guide to install, configure and use VS Code.
+- VS Code Quick Start Guide
+	This document guides to install, configure and use VS Code.
 
 
 ## .\Library\
@@ -27,7 +27,7 @@ To experience the powerful features of M251/M252/M254/M256/M258 series in few mi
 	Cortex® Microcontroller Software Interface Standard (CMSIS) V6.1.0 definitions by Arm® Corp.
 
 - Device<br>
-	CMSIS compliant device header file.
+	CMSIS compliant device header files.
 
 - LCDLib<br>
 	Library for controlling LCD module.
@@ -74,7 +74,7 @@ To experience the powerful features of M251/M252/M254/M256/M258 series in few mi
 	Sample code for NuMaker-M258KG board.
 
 - PowerManagement<br>
-	Power management sample code.
+	Sample code for power management.
 
 - Semihost<br>
 	Show how to print and get character through IDE console window.
@@ -83,7 +83,7 @@ To experience the powerful features of M251/M252/M254/M256/M258 series in few mi
 	Sample code to demonstrate the usage of M251/M252/M254/M256/M258 series MCU peripheral driver APIs.
 
 - Template<br>
-	A project template for M251/M252/M254/M256/M258 series MCU.
+	Project template for M251/M252/M254/M256/M258 series MCU.
 
 - XOM<br>
 	Demonstrate how to create XOM library and use it.
@@ -92,7 +92,7 @@ To experience the powerful features of M251/M252/M254/M256/M258 series in few mi
 ## .\ThirdParty\
 
 - FreeRTOS<br>
-	FreeRTOS porting for M251/M252/M254/M256/M258 series MCU.
+	Real-time operating system for microcontrollers.
 
 
 ## .\Tool\
@@ -107,4 +107,4 @@ To experience the powerful features of M251/M252/M254/M256/M258 series in few mi
 
 Copyright in some of the content available in this BSP belongs to third parties.
 Third parties license is specified in a file header or license file.<p>
-M251/M252/M254/M256/M258 BSP files are provided under the Apache-2.0 license.
+M251/M252/M254/M256/M258 Series BSP files are provided under the Apache-2.0 license.

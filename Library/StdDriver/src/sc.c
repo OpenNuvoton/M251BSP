@@ -36,7 +36,7 @@ static uint32_t u32CardStateIgnore[SC_INTERFACE_NUM] = {0UL};
   *
   * @details    This function is used to check if specified smartcard slot is presented.
   */
-uint32_t SC_IsCardInserted(SC_T *psSC)
+uint32_t SC_IsCardInserted(const SC_T *psSC)
 {
     uint32_t ret;
 
@@ -123,7 +123,8 @@ void SC_Close(SC_T *psSC)
   */
 void SC_Open(SC_T *psSC, uint32_t u32CardDet, uint32_t u32PWR)
 {
-    uint32_t u32Reg = 0UL, u32Intf;
+    uint32_t u32Reg = 0UL;
+    uint32_t u32Intf;
 
     if (psSC == SC0)
     {
@@ -255,9 +256,10 @@ void SC_SetBlockGuardTime(SC_T *psSC, uint32_t u32BGT)
   */
 void SC_SetCharGuardTime(SC_T *psSC, uint32_t u32CGT)
 {
+    uint32_t u32CGT_Tamp = u32CGT;
     /* CGT is "START bit" + "8-bits" + "Parity bit" + "STOP bit(s)" + "EGT counts" */
-    u32CGT -= (psSC->CTL & SC_CTL_NSB_Msk) ? 11UL : 12UL;
-    psSC->EGT = u32CGT;
+    u32CGT_Tamp -= (psSC->CTL & SC_CTL_NSB_Msk) ? 11UL : 12UL;
+    psSC->EGT = u32CGT_Tamp;
 }
 
 /**
@@ -308,7 +310,7 @@ void SC_StartTimer(SC_T *psSC, uint32_t u32TimerNum, uint32_t u32Mode, uint32_t 
     uint32_t reg = u32Mode | (SC_TMRCTL0_CNT_Msk & (u32ETUCount - 1UL));
 
     /* before to set CNTEN0/1/2 of reg. ALTCTL, SCEN bit must be enabled */
-    if (u32TimerNum <= 2)
+    if (u32TimerNum <= 2UL)
     {
         while (psSC->CTL & SC_CTL_SYNC_Msk) {};
 
@@ -390,9 +392,12 @@ void SC_StopTimer(SC_T *psSC, uint32_t u32TimerNum)
   *
   * @details    This function is used to get specified smartcard module clock frequency in kHz.
   */
-uint32_t SC_GetInterfaceClock(SC_T *psSC)
+uint32_t SC_GetInterfaceClock(const SC_T *psSC)
 {
-    uint32_t u32ClkSrc, u32Num, u32Clk = __HIRC, u32Div;
+    uint32_t u32ClkSrc = 0UL;
+    uint32_t u32Num = 0UL;
+    uint32_t u32Clk = __HIRC;
+    uint32_t u32Div = 0UL;
 
     /* Get smartcard module clock source and divider */
     if (psSC == SC0)
