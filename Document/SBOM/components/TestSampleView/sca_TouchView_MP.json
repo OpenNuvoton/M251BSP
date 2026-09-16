@@ -1,0 +1,35 @@
+{
+  "components": [
+    {
+      "type": "application",
+      "bom-ref": "pkg:generic/touchview-mp@1.0.0.1?file_path=Tool%2FTK%2FTouchView_MP.exe",
+      "name": "TouchView MP - Tool/TK/TouchView_MP.exe",
+      "version": "1.0.0.1",
+      "scope": "required",
+      "author": "Nuvoton Technology Corporation",
+      "publisher": "Nuvoton Technology Corporation",
+      "purl": "pkg:generic/touchview-mp@1.0.0.1?file_path=Tool%2FTK%2FTouchView_MP.exe",
+      "description": "TouchView MP - Windows host-side touch panel mass production utility.",
+      "licenses": [
+        {
+          "license": {
+            "name": "Nuvoton Software License Agreement"
+          }
+        }
+      ],
+      "properties": [
+        { "name": "bsp:file-path", "value": "Tool/TK" },
+        { "name": "bsp:binary-file", "value": "Tool/TK/TouchView_MP.exe" },
+        { "name": "bsp:license-file", "value": "Tool/TK/LICENSE.md" },
+
+        { "name": "integration", "value": "vendored_binary" },
+        { "name": "bsp:component-origin", "value": "first-party" },
+        { "name": "bsp:version-evidence", "value": "1.0.0.1" },
+        { "name": "bsp:copyright", "value": "Copyright (C) 2010-2026 Nuvoton Technology Corp. All rights reserved." },
+
+        { "name": "bsp:sha256:Tool/TK/TouchView_MP.exe", "value": "053a8a4646686f719cc6b149f0f8a945431f2ea62109355107b46a237b981a49" },
+        { "name": "bsp:sha256:Tool/TK/LICENSE.md",                "value": "aa736bbf56948b7e7b4cd667a1d277b828545cde427a27bc772c2598b8547f10" }
+      ]
+    }
+  ]
+}

@@ -238,7 +238,7 @@ typedef struct
   *
   * @details    This macro is used to set the LCD operarion frequency is (LCD source frequency / div).
   */
-#define LCD_SET_FREQDIV(div)        (LCD->PSET = (LCD->PSET & ~LCD_PSET_FREQDIV_Msk) | (((div)-1) << LCD_PSET_FREQDIV_Pos))
+#define LCD_SET_FREQDIV(div)        (LCD->PSET = (LCD->PSET & ~LCD_PSET_FREQDIV_Msk) | (((uint32_t)(div) - 1UL) << LCD_PSET_FREQDIV_Pos))
 
 /**
   * @brief      Set Charge Pump Voltage
@@ -282,7 +282,7 @@ typedef struct
   *
   * @details    This macro is used to increase charge pump voltage by specific units.
   */
-#define LCD_CP_VOLTAGE_INCREASE(unit)   (LCD->PSET = (LCD->PSET & ~LCD_PSET_VTUNE_Msk) | (16-(unit)) << LCD_PSET_VTUNE_Pos)
+#define LCD_CP_VOLTAGE_INCREASE(unit)   (LCD->PSET = (LCD->PSET & ~LCD_PSET_VTUNE_Msk) | (16UL - (uint32_t)(unit)) << LCD_PSET_VTUNE_Pos)
 
 /**
   * @brief      Set LCD Blinking ON
@@ -311,7 +311,7 @@ typedef struct
   * @details    This macro is used to set the LCD frame counting value to configure the blink interval.
   * @note       For type-B waveform, the frame counter increases at the end of odd frames, not even frames.
   */
-#define LCD_SET_FRAME_COUNTING_VALUE(value)     (LCD->FSET = (LCD->FSET & ~LCD_FSET_FCV_Msk) | (((value)-1) << LCD_FSET_FCV_Pos))
+#define LCD_SET_FRAME_COUNTING_VALUE(value)     (LCD->FSET = (LCD->FSET & ~LCD_FSET_FCV_Msk) | (((uint32_t)(value) - 1UL) << LCD_FSET_FCV_Pos))
 
 /**
   * @brief      Set Pause Type
@@ -385,7 +385,7 @@ typedef struct
   *
   * @details    This macro is used to configure the T1 (Enable Time) period of power saving.
   */
-#define LCD_PWR_SAVING_T1_PERIOD(t1)    (LCD->DSET = (LCD->DSET & ~LCD_DSET_PSVT1_Msk) | (((t1)-1) << LCD_DSET_PSVT1_Pos))
+#define LCD_PWR_SAVING_T1_PERIOD(t1)    (LCD->DSET = (LCD->DSET & ~LCD_DSET_PSVT1_Msk) | (((uint32_t)(t1) - 1UL) << LCD_DSET_PSVT1_Pos))
 
 /**
   * @brief      Set Power Saving T2 Period
@@ -396,7 +396,7 @@ typedef struct
   *
   * @details    This macro is used to configure the T2 (On Time) period of power saving.
   */
-#define LCD_PWR_SAVING_T2_PERIOD(t2)    (LCD->DSET = (LCD->DSET & ~LCD_DSET_PSVT2_Msk) | (((t2)-1) << LCD_DSET_PSVT2_Pos))
+#define LCD_PWR_SAVING_T2_PERIOD(t2)    (LCD->DSET = (LCD->DSET & ~LCD_DSET_PSVT2_Msk) | (((uint32_t)(t2) - 1UL) << LCD_DSET_PSVT2_Pos))
 
 /**
   * @brief      Set Charging Timeout Time
@@ -407,7 +407,7 @@ typedef struct
   *
   * @details    This macro is used to set maximum timeout time of charge pump charging timer.
   */
-#define LCD_SET_CHARGE_TIMEOUT_TIME(value)  (LCD->DSET = (LCD->DSET & ~LCD_DSET_CTOUT_Msk) | (((value)-1) << LCD_DSET_CTOUT_Pos))
+#define LCD_SET_CHARGE_TIMEOUT_TIME(value)  (LCD->DSET = (LCD->DSET & ~LCD_DSET_CTOUT_Msk) | (((uint32_t)(value) - 1UL) << LCD_DSET_CTOUT_Pos))
 
 /**
   * @brief      Enable LCD Frame Counting End Interrupt
@@ -553,7 +553,7 @@ typedef struct
   */
 #define LCD_OUTPUT_RST(sel)              (LCD->OSET &= (~(sel)))
 
-uint32_t LCD_Open(S_LCD_CFG_T *pLCDCfg);
+uint32_t LCD_Open(const S_LCD_CFG_T *pLCDCfg);
 void LCD_Close(void);
 void LCD_SetPixel(uint32_t u32Com, uint32_t u32Seg, uint32_t u32OnFlag);
 void LCD_SetAllPixels(uint32_t u32OnOff);

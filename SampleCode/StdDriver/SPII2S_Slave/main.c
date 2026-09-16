@@ -1,9 +1,8 @@
-/**************************************************************************//**
- * @file     main.c
- * @version  V0.10
- * @brief
- *           Configure SPI0 as I2S Slave mode and demonstrate how I2S works in Slave mode.
- *           This sample code needs to work with SPII2S_Master.
+/***************************************************************************//**
+ * @file    main.c
+ * @version V0.10
+ * @brief   Configure SPI0 as I2S Slave mode and demonstrate how I2S works in Slave mode.
+ *          This sample code needs to work with SPII2S_Master.
  *
  * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.

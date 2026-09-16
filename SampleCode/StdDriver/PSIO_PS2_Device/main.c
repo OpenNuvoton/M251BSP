@@ -1,7 +1,7 @@
-/**************************************************************************//**
- * @file     main.c
- * @version  V3.00
- * @brief    Demonstrate how to implement PS/2 slave protocol by PSIO.
+/***************************************************************************//**
+ * @file    main.c
+ * @version V3.00
+ * @brief   Demonstrate how to implement PS/2 slave protocol by PSIO.
  *
  * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
@@ -11,12 +11,12 @@
 #include "NuMicro.h"
 #include "PS2_Device_driver.h"
 
-
 /*---------------------------------------------------------------------------------------------------------*/
 /* Global variables                                                                                        */
 /*---------------------------------------------------------------------------------------------------------*/
 S_PSIO_PS2 g_sConfig;
 uint8_t g_u8Stop = 0;
+volatile uint32_t g_u32Ps2DeviceTimeout = 0;
 
 void PSIO_IRQHandler(void)
 {
@@ -40,9 +40,20 @@ void PSIO_IRQHandler(void)
     if (PSIO_PS2_GET_STATUS() == eDEVICE_READ)
     {
         uint32_t u32Data;
+        uint32_t u32TimeOutCnt;
 
         /* Wait input buffer full */
-        while (!PSIO_GET_TRANSFER_STATUS(PSIO, PSIO_TRANSTS_INFULL0_Msk << (g_sConfig.u8DataPin * 4)));
+        u32TimeOutCnt = PSIO_PS2_DEVICE_TRANSFER_TIMEOUT;
+
+        while (!PSIO_GET_TRANSFER_STATUS(PSIO, PSIO_TRANSTS_INFULL0_Msk << (g_sConfig.u8DataPin * 4)))
+        {
+            if (u32TimeOutCnt-- == 0U)
+            {
+                g_u32Ps2DeviceTimeout = 1U;
+                PSIO_PS2_SET_STATUS(eDEVICE_IDLE);
+                return;
+            }
+        }
 
         /* Recieve data */
         u32Data = PSIO_GET_INPUT_DATA(PSIO, g_sConfig.u8DataPin);
@@ -52,7 +63,17 @@ void PSIO_IRQHandler(void)
         g_u8Stop = (u32Data >> 9) & 0x1;
 
         /* Wait slot controller is not busy */
-        while (PSIO_GET_BUSY_FLAG(PSIO, g_sConfig.u8DataSC));
+        u32TimeOutCnt = PSIO_PS2_DEVICE_TRANSFER_TIMEOUT;
+
+        while (PSIO_GET_BUSY_FLAG(PSIO, g_sConfig.u8DataSC))
+        {
+            if (u32TimeOutCnt-- == 0U)
+            {
+                g_u32Ps2DeviceTimeout = 1U;
+                PSIO_PS2_SET_STATUS(eDEVICE_IDLE);
+                return;
+            }
+        }
 
         /* Update status */
         PSIO_PS2_SET_STATUS(eDEVICE_IDLE);
@@ -62,8 +83,18 @@ void PSIO_IRQHandler(void)
     {
         if (u8BitNumber == 10)
         {
+            uint32_t u32TimeOutCnt = PSIO_PS2_DEVICE_TRANSFER_TIMEOUT;
+
             /* Wait slot controller is not busy */
-            while (PSIO_GET_BUSY_FLAG(PSIO, g_sConfig.u8DataSC));
+            while (PSIO_GET_BUSY_FLAG(PSIO, g_sConfig.u8DataSC))
+            {
+                if (u32TimeOutCnt-- == 0U)
+                {
+                    g_u32Ps2DeviceTimeout = 1U;
+                    PSIO_PS2_SET_STATUS(eDEVICE_IDLE);
+                    return;
+                }
+            }
 
             /* Update status */
             PSIO_PS2_SET_STATUS(eDEVICE_IDLE);
@@ -146,6 +177,8 @@ void UART0_Init()
 int main()
 {
     uint8_t u8RxData = 0x0, u8Parity = 0;
+    uint32_t u32ReadState;
+    uint32_t u32TimeOutCnt = PSIO_PS2_DEVICE_TRANSFER_TIMEOUT;
 
     /* Unlock protected registers */
     SYS_UnlockReg();
@@ -164,15 +197,18 @@ int main()
     printf("|               PS/2 Slave Sample Code               |\n");
     printf("|      Please connected PSIO_CH0(PB.15)(Clock)       |\n");
     printf("|      and PSIO_CH1(PC.4)(Data).                     |\n");
+    printf("| Demo sample keeps bounded transfer and host-start  |\n");
+    printf("| timeout guards; production code should still       |\n");
+    printf("| define peer-loss supervision and recovery policy.  |\n");
     printf("******************************************************\n");
 
     /* Use slot controller 0 and pin 0/1 */
-    g_sConfig.u8ClockSC        = PSIO_SC0;
-    g_sConfig.u8DataSC         = PSIO_SC0;
-    g_sConfig.u8ClockPin       = PSIO_PIN0;
-    g_sConfig.u8DataPin        = PSIO_PIN1;
-    g_sConfig.p32ClockMFP      = &PB15;
-    g_sConfig.p32DataMFP       = &PC4;
+    g_sConfig.u8ClockSC = PSIO_SC0;
+    g_sConfig.u8DataSC = PSIO_SC0;
+    g_sConfig.u8ClockPin = PSIO_PIN0;
+    g_sConfig.u8DataPin = PSIO_PIN1;
+    g_sConfig.p32ClockMFP = &PB15;
+    g_sConfig.p32DataMFP = &PC4;
 
     /* Initialize PSIO setting for PS/2 slave protocol */
     PSIO_PS2_Open(&g_sConfig);
@@ -182,12 +218,38 @@ int main()
 
     while (1)
     {
+        if (g_u32Ps2DeviceTimeout != 0U)
+        {
+            printf("Wait for PS/2 device transfer timeout. Keep bounded timeout protection in production code.\n");
+            PSIO_PS2_Close(&g_sConfig);
+
+            while (1)
+            {
+            }
+        }
 
         /* Set PSIO on read signal state */
-        PSIO_PS2_DeviceRead(&g_sConfig, &u8RxData, &u8Parity);
+        u32ReadState = PSIO_PS2_DeviceRead(&g_sConfig, &u8RxData, &u8Parity);
+
+        if (u32ReadState == PSIO_PS2_DEVICE_READ_TIMEOUT)
+        {
+            g_u32Ps2DeviceTimeout = 1U;
+            continue;
+        }
 
         /* Receiving data */
-        while (PSIO_PS2_GET_STATUS() == eDEVICE_READ);
+
+        u32TimeOutCnt = PSIO_PS2_DEVICE_TRANSFER_TIMEOUT;
+
+        while (PSIO_PS2_GET_STATUS() == eDEVICE_READ)
+        {
+            if (u32TimeOutCnt-- == 0U)
+            {
+                g_u32Ps2DeviceTimeout = 1U;
+                PSIO_PS2_SET_STATUS(eDEVICE_IDLE);
+                break;
+            }
+        }
 
         /* Data was received */
         if (g_u8Stop == 1)
@@ -205,7 +267,19 @@ int main()
             printf("Send[0x%x]\n", u8TxData);
             PSIO_PS2_DeviceSend(&g_sConfig, &u8TxData);
 
-            while (PSIO_PS2_GET_STATUS() == eDEVICE_WRITE);
+            {
+                u32TimeOutCnt = PSIO_PS2_DEVICE_TRANSFER_TIMEOUT;
+
+                while (PSIO_PS2_GET_STATUS() == eDEVICE_WRITE)
+                {
+                    if (u32TimeOutCnt-- == 0U)
+                    {
+                        g_u32Ps2DeviceTimeout = 1U;
+                        PSIO_PS2_SET_STATUS(eDEVICE_IDLE);
+                        break;
+                    }
+                }
+            }
         }
     }
 
@@ -214,6 +288,5 @@ int main()
 
     while (1);
 }
-
 
 /*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/

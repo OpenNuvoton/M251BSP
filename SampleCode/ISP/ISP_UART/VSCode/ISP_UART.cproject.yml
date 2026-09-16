@@ -39,7 +39,7 @@ project:
   groups:
     - group: CMSIS
       files:
-        - file: ../../../../Library/Device/Nuvoton/M251/Source/ARM/startup_M251_isp.c
+        - file: ../../startup_M251_isp.c
           for-compiler: AC6
         - file: ../../../../Library/Device/Nuvoton/M251/Source/GCC/startup_M251.S
           for-compiler: GCC

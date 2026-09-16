@@ -251,8 +251,10 @@ void UART1_TEST_HANDLE(void)
         /* Get all the input characters */
         while (UART_IS_RX_READY(UART1))
         {
+            uint8_t u8InChar;
             /* Get the character from UART Buffer */
-            g_au8RecData[g_u32RecLen] = UART_READ(UART1);
+            u8InChar = (uint8_t)UART_READ(UART1);
+            g_au8RecData[g_u32RecLen] = u8InChar;
 
             if (g_u32RecLen == BUFSIZE - 1)
             {
@@ -295,8 +297,10 @@ void UART0_TEST_HANDLE(void)
         /* Get all the input characters */
         while (UART_IS_RX_READY(UART0))
         {
+            uint8_t u8InChar;
             /* Get the character from UART Buffer */
-            g_au8RecData[g_u32RecLen] = UART_READ(UART0);
+            u8InChar = (uint8_t)UART_READ(UART0);
+            g_au8RecData[g_u32RecLen] = u8InChar;
 
             if (g_u32RecLen == BUFSIZE - 1)
             {

@@ -190,15 +190,17 @@ void UART_TEST_HANDLE(void)
     /* Rx Ready or Time-out INT */
     if (UART_GET_INT_FLAG(UART1, UART_INTSTS_RDAINT_Msk) ||  UART_GET_INT_FLAG(UART1, UART_INTSTS_RXTOINT_Msk))
     {
+        uint8_t u8InChar;
+
         /* Handle received data */
-        g_au8RecData[g_i32pointer] = UART_READ(UART1);
-        g_i32pointer++;
-        g_au8RecData[g_i32pointer] = UART_READ(UART1);
-        g_i32pointer++;
-        g_au8RecData[g_i32pointer] = UART_READ(UART1);
-        g_i32pointer++;
-        g_au8RecData[g_i32pointer] = UART_READ(UART1);
-        g_i32pointer++;
+        u8InChar = (uint8_t)UART_READ(UART1);
+        g_au8RecData[g_i32pointer++] = u8InChar;
+        u8InChar = (uint8_t)UART_READ(UART1);
+        g_au8RecData[g_i32pointer++] = u8InChar;
+        u8InChar = (uint8_t)UART_READ(UART1);
+        g_au8RecData[g_i32pointer++] = u8InChar;
+        u8InChar = (uint8_t)UART_READ(UART1);
+        g_au8RecData[g_i32pointer++] = u8InChar;
     }
 }
 

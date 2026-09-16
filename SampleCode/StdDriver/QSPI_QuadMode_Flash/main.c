@@ -1,7 +1,7 @@
-/**************************************************************************//**
- * @file     main.c
- * @version  V0.10
- * @brief    Access SPI flash using QSPI quad mode
+/***************************************************************************//**
+ * @file    main.c
+ * @version V0.10
+ * @brief   Access SPI flash using QSPI quad mode
  *
  * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
@@ -89,7 +89,7 @@ static void QSPI_PDMA_Rx_Polling(void)
 
 void B0B1_SwitchToNormalMode(void)
 {
-    SYS->GPB_MFPL =  SYS->GPB_MFPL & ~(SYS_GPB_MFPL_PB0MFP_Msk | SYS_GPB_MFPL_PB1MFP_Msk);
+    SYS->GPB_MFPL = SYS->GPB_MFPL & ~(SYS_GPB_MFPL_PB0MFP_Msk | SYS_GPB_MFPL_PB1MFP_Msk);
     GPIO_SetMode(PB, BIT0, GPIO_MODE_OUTPUT);
     GPIO_SetMode(PB, BIT1, GPIO_MODE_OUTPUT);
     PB0 = 1;
@@ -127,7 +127,7 @@ uint16_t SpiFlash_ReadMidDid(void)
     QSPI_SET_SS_HIGH(SPI_FLASH_PORT);
 
     while (!QSPI_GET_RX_FIFO_EMPTY_FLAG(SPI_FLASH_PORT))
-        u8RxData[u8IDCnt ++] = QSPI_READ_RX(SPI_FLASH_PORT);
+        u8RxData[u8IDCnt++] = QSPI_READ_RX(SPI_FLASH_PORT);
 
     return ((u8RxData[4] << 8) | u8RxData[5]);
 }
@@ -595,7 +595,7 @@ int main(void)
         for (u32ByteCount = 0; u32ByteCount < TEST_LENGTH; u32ByteCount++)
         {
             if (g_au8DestArray[u32ByteCount] != g_au8SrcArray[u32ByteCount])
-                u32Error ++;
+                u32Error++;
         }
     }
 
@@ -607,7 +607,4 @@ int main(void)
     while (1);
 }
 
-
 /*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/
-
-

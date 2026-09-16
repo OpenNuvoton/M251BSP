@@ -5,8 +5,8 @@
  *           Codec is used in this sample code to play the audio data from Host.
  *           It also supports to record data from codec to Host.
  *
- * @copyright SPDX-License-Identifier: Apache-2.0
- * @copyright Copyright (C) 2021 Nuvoton Technology Corp. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ * @copyright (C) 2021 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>
 #include "NuMicro.h"

@@ -1,7 +1,7 @@
-/**************************************************************************//**
- * @file     main.c
- * @version  V0.10
- * @brief    This is a I2S demo for recording data and demonstrate how I2S works with PDMA.
+/***************************************************************************//**
+ * @file    main.c
+ * @version V0.10
+ * @brief   This is a I2S demo for recording data and demonstrate how I2S works with PDMA.
  *
  * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
@@ -109,19 +109,19 @@ void PDMA_IRQHandler(void)
 {
     uint32_t u32Status = PDMA_GET_INT_STATUS(PDMA);
 
-    if (u32Status & 0x1)   /* abort */
+    if (u32Status & 0x1) /* abort */
     {
         if (PDMA_GET_ABORT_STS(PDMA) & 0x4)
             PDMA_CLR_ABORT_FLAG(PDMA, PDMA_ABTSTS_ABTIF2_Msk);
     }
     else if (u32Status & 0x2)
     {
-        if (PDMA_GET_TD_STS(PDMA) & 0x2)            /* channel 1 done */
+        if (PDMA_GET_TD_STS(PDMA) & 0x2) /* channel 1 done */
         {
             PDMA_CLR_TD_FLAG(PDMA, PDMA_TDSTS_TDIF1_Msk);
         }
 
-        if (PDMA_GET_TD_STS(PDMA) & 0x4)            /* channel 2 done */
+        if (PDMA_GET_TD_STS(PDMA) & 0x4) /* channel 2 done */
         {
             g_u8TransDone = 0;
             PDMA_CLR_TD_FLAG(PDMA, PDMA_TDSTS_TDIF2_Msk);
@@ -227,7 +227,5 @@ int32_t main(void)
     while (1);
 
 }
-
-
 
 /*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/

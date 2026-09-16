@@ -233,7 +233,7 @@ void main_full(void)
 
     /* Create that is given from the tick hook function, and the task that
     toggles an LED each time the semaphore is given. */
-    vSemaphoreCreateBinary(xLEDSemaphore)
+    vSemaphoreCreateBinary(xLEDSemaphore);
     xTaskCreate(prvSemaphoreTakeTask,         /* Function that implements the task. */
                 "Sem",                      /* Text name of the task. */
                 configMINIMAL_STACK_SIZE,   /* Stack allocated to the task (in words). */

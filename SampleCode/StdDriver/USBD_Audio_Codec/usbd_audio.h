@@ -2,8 +2,8 @@
  * @file     usbd_audio.h
  * @brief    NuMicro series USB driver header file
  *
- * @copyright SPDX-License-Identifier: Apache-2.0
- * @copyright Copyright (C) 2020 Nuvoton Technology Corp. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ * @copyright (C) 2020 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #ifndef __USBD_UAC_H__
 #define __USBD_UAC_H__

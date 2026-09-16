@@ -1,19 +1,19 @@
-/**************************************************************************//**
- * @file     main.c
- * @version  V3.0
- * @brief    Configure QSPI0 as Slave 3 wire mode and demonstrate how to
- *           communicate with an off-chip SPI Master device with FIFO mode.
- *           This sample code needs to work with SPI_MasterFifoMode sample code.
- *
+/***************************************************************************//**
+ * @file    main.c
+ * @version V3.0
+ * @brief   Configure QSPI0 as Slave 3 wire mode and demonstrate how to
+ *          communicate with an off-chip SPI Master device with FIFO mode.
+ *          This sample code needs to work with a compatible external QSPI
+ *          master peer configured for FIFO-mode transfers.
  *
  * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
- *
  ******************************************************************************/
 #include <stdio.h>
 #include "NuMicro.h"
 
 #define TEST_COUNT 16
+#define QSPI_SLAVE3WIRE_TIMEOUT  (SystemCoreClock)
 
 uint32_t g_au32SourceData[TEST_COUNT];
 uint32_t g_au32DestinationData[TEST_COUNT];
@@ -74,7 +74,7 @@ void QSPI_Init(void)
     QSPI0->CTL &= ~QSPI_CTL_QSPIEN_Msk;
 
     /* Enable slave 3 wire mode */
-    QSPI0->SSCTL |= QSPI_SSCTL_SLV3WIRE_Msk;
+    QSPI_ENABLE_3WIRE_MODE(QSPI0);
 
     /* Enable QSPI Transfer control */
     QSPI0->CTL |= QSPI_CTL_QSPIEN_Msk;
@@ -84,6 +84,7 @@ void QSPI_Init(void)
 int main(void)
 {
     volatile uint32_t u32TxDataCount, u32RxDataCount;
+    uint32_t u32TimeOutCount, u32MadeProgress, u32Err;
 
     /* Unlock protected registers */
     SYS_UnlockReg();
@@ -109,6 +110,8 @@ int main(void)
     printf("QSPI controller will enable FIFO mode and transfer %d data to a off-chip master device.\n", TEST_COUNT);
     printf("In the meanwhile the QSPI controller will receive %d data from the off-chip master device.\n", TEST_COUNT);
     printf("After the transfer is done, the %d received data will be printed out.\n", TEST_COUNT);
+    printf("Demo only: this sample requires an external master device and manual synchronization.\n");
+    printf("Production code should add bounded timeout, peer-state checks, and recovery handling.\n");
 
     for (u32TxDataCount = 0; u32TxDataCount < TEST_COUNT; u32TxDataCount++)
     {
@@ -120,6 +123,7 @@ int main(void)
 
     u32TxDataCount = 0;
     u32RxDataCount = 0;
+    u32Err = 0UL;
     printf("Press any key if the master device configuration is ready.\n");
     getchar();
     printf("\n");
@@ -128,26 +132,53 @@ int main(void)
     QSPI_SetFIFO(QSPI0, 4, 4);
 
     /* Access TX and RX FIFO */
+    u32TimeOutCount = QSPI_SLAVE3WIRE_TIMEOUT;
+
     while (u32RxDataCount < TEST_COUNT)
     {
+        u32MadeProgress = 0UL;
+
         /* Check TX FULL flag and TX data count */
         if ((QSPI_GET_TX_FIFO_FULL_FLAG(QSPI0) == 0) && (u32TxDataCount < TEST_COUNT))
+        {
             QSPI_WRITE_TX(QSPI0, g_au32SourceData[u32TxDataCount++]); /* Write to TX FIFO */
+            u32MadeProgress = 1UL;
+        }
 
         /* Check RX EMPTY flag */
         if (QSPI_GET_RX_FIFO_EMPTY_FLAG(QSPI0) == 0)
+        {
             g_au32DestinationData[u32RxDataCount++] = QSPI_READ_RX(QSPI0); /* Read RX FIFO */
+            u32MadeProgress = 1UL;
+        }
+
+        if (u32MadeProgress != 0UL)
+        {
+            u32TimeOutCount = QSPI_SLAVE3WIRE_TIMEOUT;
+        }
+        else if (u32TimeOutCount-- == 0UL)
+        {
+            u32Err = 1UL;
+            break;
+        }
     }
 
-    /* Print the received data */
-    printf("Received data:\n");
-
-    for (u32RxDataCount = 0; u32RxDataCount < TEST_COUNT; u32RxDataCount++)
+    if (u32Err != 0UL)
     {
-        printf("%u:\t0x%X\n", u32RxDataCount, g_au32DestinationData[u32RxDataCount]);
+        printf("The data transfer timed out.\n");
     }
+    else
+    {
+        /* Print the received data */
+        printf("Received data:\n");
 
-    printf("The data transfer was done.\n");
+        for (u32RxDataCount = 0; u32RxDataCount < TEST_COUNT; u32RxDataCount++)
+        {
+            printf("%u:\t0x%X\n", u32RxDataCount, g_au32DestinationData[u32RxDataCount]);
+        }
+
+        printf("The data transfer was done.\n");
+    }
 
     printf("\n\nExit QSPI driver sample code.\n");
 

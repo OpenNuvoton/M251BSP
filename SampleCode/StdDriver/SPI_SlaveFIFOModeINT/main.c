@@ -1,10 +1,10 @@
-/**************************************************************************//**
- * @file     main.c
- * @version  V0.10
- * @brief    Configure SPI0 as Slave mode, demonstrate how to communicate
- *           with an off-chip SPI Master device with FIFO mode and to transmit
- *           and to receive data in the interrupt handler. This sample
- *           code needs to work with SPI_MasterFifoMode sample code.
+/***************************************************************************//**
+ * @file    main.c
+ * @version V0.10
+ * @brief   Configure SPI0 as Slave mode, demonstrate how to communicate
+ *          with an off-chip SPI Master device with FIFO mode and to transmit
+ *          and to receive data in the interrupt handler. This sample
+ *          code needs to work with SPI_MasterFifoMode sample code.
  *
  * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2021 Nuvoton Technology Corp. All rights reserved.
@@ -131,6 +131,8 @@ int main(void)
     printf("SPI controller will enable FIFO mode and transfer %d data to a off-chip master device.\n", TEST_COUNT);
     printf("In the meanwhile the SPI controller will receive %d data from the off-chip master device.\n", TEST_COUNT);
     printf("After the transfer is done, the %d received data will be printed out.\n", TEST_COUNT);
+    printf("Demo only: this sample requires a paired master device, lab wiring, and manual start coordination.\n");
+    printf("Production code should add bounded wait handling, peer-loss recovery, and explicit startup sequencing.\n");
 
     for (u32TxDataCount = 0; u32TxDataCount < TEST_COUNT; u32TxDataCount++)
     {

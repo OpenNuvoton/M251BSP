@@ -79,8 +79,8 @@ typedef struct
 {
     unsigned char   u8LCDDispTableNum;          /*!< LCD Display Table Number */
     unsigned char   u8GetLCDComSegNum;          /*!< LCD Com Seg Table Number */
-    unsigned short  *pu16LCDDispTable;          /*!< LCD Display Table Pointer */
-    unsigned char   *pu8GetLCDComSeg;           /*!< LCD Com Seg Table Pointer */
+    const unsigned short  *pu16LCDDispTable;          /*!< LCD Display Table Pointer */
+    const unsigned char   *pu8GetLCDComSeg;           /*!< LCD Com Seg Table Pointer */
 
 } LCD_ZONE_INFO_T;
 
@@ -145,7 +145,7 @@ typedef struct
 *
 *****************************************************************************/
 
-static const char acMAINDigitRawData[ZONE_MAIN_DIG_CNT][ZONE_MAIN_SEG_NUM][2] =
+static const unsigned char acMAINDigitRawData[ZONE_MAIN_DIG_CNT][ZONE_MAIN_SEG_NUM][2] =
 {
     {
         {3, 38},        {3, 39},        {0, 39},        {0, 38},        {1, 12},        {3, 12},        {3, 5},         {2, 38},        {2, 39},        {2, 5},         {1, 39},        {0, 5},         {1, 5},         {1, 38},
@@ -195,7 +195,7 @@ static const char acMAINDigitRawData[ZONE_MAIN_DIG_CNT][ZONE_MAIN_SEG_NUM][2] =
 *
 *****************************************************************************/
 
-static const char acPPMDigitRawData[ZONE_PPM_DIG_CNT][ZONE_PPM_SEG_NUM][2] =
+static const unsigned char acPPMDigitRawData[ZONE_PPM_DIG_CNT][ZONE_PPM_SEG_NUM][2] =
 {
     {
         {7, 12},        {6, 5},         {4, 5},         {4, 12},        {5, 12},        {6, 12},        {5, 5},
@@ -207,7 +207,7 @@ static const char acPPMDigitRawData[ZONE_PPM_DIG_CNT][ZONE_PPM_SEG_NUM][2] =
         {7, 0},         {6, 1},         {4, 1},         {4, 0},         {5, 0},         {6, 0},         {5, 1},
     },
 };
-static const char acTEMPDigitRawData[ZONE_TEMP_DIG_CNT][ZONE_TEMP_SEG_NUM][2] =
+static const unsigned char acTEMPDigitRawData[ZONE_TEMP_DIG_CNT][ZONE_TEMP_SEG_NUM][2] =
 {
     {
         {7, 7},         {6, 8},         {4, 8},         {4, 7},         {5, 7},         {6, 7},         {5, 8},
@@ -219,7 +219,7 @@ static const char acTEMPDigitRawData[ZONE_TEMP_DIG_CNT][ZONE_TEMP_SEG_NUM][2] =
         {7, 6},         {6, 36},        {4, 36},        {4, 6},         {5, 6},         {6, 6},         {5, 36},
     },
 };
-static const char acVERDigitRawData[ZONE_VER_DIG_CNT][ZONE_VER_SEG_NUM][2] =
+static const unsigned char acVERDigitRawData[ZONE_VER_DIG_CNT][ZONE_VER_SEG_NUM][2] =
 {
     {
         {7, 13},        {6, 14},        {4, 14},        {4, 13},        {5, 13},        {6, 13},        {5, 14},
@@ -396,11 +396,10 @@ static const unsigned short auVERDigitMap[] =
 
 static const LCD_ZONE_INFO_T g_LCDZoneInfo[] =
 {
-    {ZONE_MAIN_DIG_CNT,         ZONE_MAIN_SEG_NUM, (unsigned short *)auMAINDigitMap, (unsigned char *)acMAINDigitRawData},
-    {ZONE_PPM_DIG_CNT,          ZONE_PPM_SEG_NUM, (unsigned short *)auPPMDigitMap, (unsigned char *)acPPMDigitRawData},
-    {ZONE_TEMP_DIG_CNT,         ZONE_TEMP_SEG_NUM, (unsigned short *)auTEMPDigitMap, (unsigned char *)acTEMPDigitRawData},
-    {ZONE_VER_DIG_CNT,          ZONE_VER_SEG_NUM, (unsigned short *)auVERDigitMap, (unsigned char *)acVERDigitRawData},
-
+    {ZONE_MAIN_DIG_CNT,         ZONE_MAIN_SEG_NUM,      auMAINDigitMap, (const unsigned char *)acMAINDigitRawData},
+    {ZONE_PPM_DIG_CNT,          ZONE_PPM_SEG_NUM,       auPPMDigitMap, (const unsigned char *)acPPMDigitRawData},
+    {ZONE_TEMP_DIG_CNT,         ZONE_TEMP_SEG_NUM,      auTEMPDigitMap, (const unsigned char *)acTEMPDigitRawData},
+    {ZONE_VER_DIG_CNT,          ZONE_VER_SEG_NUM,       auVERDigitMap, (const unsigned char *)acVERDigitRawData},
 };
 
 /** @} end of group M256D_LCDLIB_EXPORTED_STRUCTS */

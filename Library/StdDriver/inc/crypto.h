@@ -120,8 +120,8 @@ extern "C"
 
 void AES_Open(CRPT_T *crpt, uint32_t u32Channel, uint32_t u32EncDec, uint32_t u32OpMode, uint32_t u32KeySize, uint32_t u32SwapType);
 void AES_Start(CRPT_T *crpt, uint32_t u32Channel, uint32_t u32DMAMode);
-void AES_SetKey(CRPT_T *crpt, uint32_t u32Channel, uint32_t au32Keys[], uint32_t u32KeySize);
-void AES_SetInitVect(CRPT_T *crpt, uint32_t u32Channel, uint32_t au32IV[]);
+void AES_SetKey(CRPT_T *crpt, uint32_t u32Channel, const uint32_t au32Keys[], uint32_t u32KeySize);
+void AES_SetInitVect(CRPT_T *crpt, uint32_t u32Channel, const uint32_t au32IV[]);
 void AES_SetDMATransfer(CRPT_T *crpt, uint32_t u32Channel, uint32_t u32SrcAddr, uint32_t u32DstAddr, uint32_t u32TransCnt);
 
 

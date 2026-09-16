@@ -387,7 +387,7 @@
             <File>
               <FileName>startup_M251_isp.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\Device\Nuvoton\M251\Source\ARM\startup_M251_isp.c</FilePath>
+              <FilePath>..\..\startup_M251_isp.c</FilePath>
             </File>
             <File>
               <FileName>system_M251.c</FileName>

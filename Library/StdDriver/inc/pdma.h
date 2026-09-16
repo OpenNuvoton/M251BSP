@@ -141,7 +141,7 @@ extern "C"
  * @details     This macro gets the interrupt status.
  * \hideinitializer
  */
-#define PDMA_GET_INT_STATUS(pdma) ((uint32_t)(pdma->INTSTS))
+#define PDMA_GET_INT_STATUS(pdma) ((uint32_t)((pdma)->INTSTS))
 
 /**
  * @brief       Get Transfer Done Interrupt Status
@@ -152,7 +152,7 @@ extern "C"
  * @details     Get the transfer done Interrupt status.
  * \hideinitializer
  */
-#define PDMA_GET_TD_STS(pdma) ((uint32_t)(pdma->TDSTS))
+#define PDMA_GET_TD_STS(pdma) ((uint32_t)((pdma)->TDSTS))
 
 /**
  * @brief       Clear Transfer Done Interrupt Status
@@ -164,7 +164,7 @@ extern "C"
  * @details     Clear the transfer done Interrupt status.
  * \hideinitializer
  */
-#define PDMA_CLR_TD_FLAG(pdma, u32Mask) ((uint32_t)(pdma->TDSTS = (u32Mask)))
+#define PDMA_CLR_TD_FLAG(pdma, u32Mask) ((uint32_t)((pdma)->TDSTS = (u32Mask)))
 
 /**
  * @brief       Get Target Abort Interrupt Status
@@ -175,7 +175,7 @@ extern "C"
  * @details     Get the target abort Interrupt status.
  * \hideinitializer
  */
-#define PDMA_GET_ABORT_STS(pdma) ((uint32_t)(pdma->ABTSTS))
+#define PDMA_GET_ABORT_STS(pdma) ((uint32_t)((pdma)->ABTSTS))
 
 /**
  * @brief       Clear Target Abort Interrupt Status
@@ -187,7 +187,7 @@ extern "C"
  * @details     Clear the target abort Interrupt status.
  * \hideinitializer
  */
-#define PDMA_CLR_ABORT_FLAG(pdma, u32Mask) ((uint32_t)(pdma->ABTSTS = (u32Mask)))
+#define PDMA_CLR_ABORT_FLAG(pdma, u32Mask) ((uint32_t)((pdma)->ABTSTS = (u32Mask)))
 
 /**
  * @brief       Get Alignment Interrupt Status
@@ -210,7 +210,7 @@ extern "C"
  * @details     Clear the Alignment Interrupt status.
  * \hideinitializer
  */
-#define PDMA_CLR_ALIGN_FLAG(pdma,u32Mask) ((uint32_t)(pdma->ALIGN = (u32Mask)))
+#define PDMA_CLR_ALIGN_FLAG(pdma,u32Mask) ((uint32_t)((pdma)->ALIGN = (u32Mask)))
 
 /**
  * @brief       Clear Timeout Interrupt Status
@@ -222,7 +222,7 @@ extern "C"
  * @details     Clear the selected channel timeout interrupt status.
  * \hideinitializer
  */
-#define PDMA_CLR_TMOUT_FLAG(pdma, u32Ch) ((uint32_t)(pdma->INTSTS = (1 << ((u32Ch) + 8))))
+#define PDMA_CLR_TMOUT_FLAG(pdma, u32Ch) ((uint32_t)((pdma)->INTSTS = (1 << ((u32Ch) + 8))))
 
 /**
  * @brief       Check Channel Status
@@ -236,7 +236,7 @@ extern "C"
  * @details     Check the selected channel is busy or not.
  * \hideinitializer
  */
-#define PDMA_IS_CH_BUSY(pdma, u32Ch) ((uint32_t)(pdma->TRGSTS & (1 << (u32Ch)))? 1 : 0)
+#define PDMA_IS_CH_BUSY(pdma, u32Ch) ((uint32_t)((pdma)->TRGSTS & (1 << (u32Ch)))? 1 : 0)
 
 /**
  * @brief       Set Source Address
@@ -249,7 +249,7 @@ extern "C"
  * @details     This macro set the selected channel source address.
  * \hideinitializer
  */
-#define PDMA_SET_SRC_ADDR(pdma, u32Ch, u32Addr) ((uint32_t)(pdma->DSCT[(u32Ch)].SA = (u32Addr)))
+#define PDMA_SET_SRC_ADDR(pdma, u32Ch, u32Addr) ((uint32_t)((pdma)->DSCT[(u32Ch)].SA = (u32Addr)))
 
 /**
  * @brief       Set Destination Address
@@ -262,7 +262,7 @@ extern "C"
  * @details     This macro set the selected channel destination address.
  * \hideinitializer
  */
-#define PDMA_SET_DST_ADDR(pdma, u32Ch, u32Addr) ((uint32_t)(pdma->DSCT[(u32Ch)].DA = (u32Addr)))
+#define PDMA_SET_DST_ADDR(pdma, u32Ch, u32Addr) ((uint32_t)((pdma)->DSCT[(u32Ch)].DA = (u32Addr)))
 
 /**
  * @brief       Set Transfer Count
@@ -275,7 +275,7 @@ extern "C"
  * @details     This macro set the selected channel transfer count.
  * \hideinitializer
  */
-#define PDMA_SET_TRANS_CNT(pdma, u32Ch, u32TransCount) ((uint32_t)(pdma->DSCT[(u32Ch)].CTL=(pdma->DSCT[(u32Ch)].CTL&~PDMA_DSCT_CTL_TXCNT_Msk)|(((u32TransCount)-1) << PDMA_DSCT_CTL_TXCNT_Pos)))
+#define PDMA_SET_TRANS_CNT(pdma, u32Ch, u32TransCount) ((uint32_t)((pdma)->DSCT[(u32Ch)].CTL=((pdma)->DSCT[(u32Ch)].CTL&~PDMA_DSCT_CTL_TXCNT_Msk)|(((u32TransCount)-1) << PDMA_DSCT_CTL_TXCNT_Pos)))
 
 /**
  * @brief       Set Scatter-gather descriptor Address
@@ -288,7 +288,7 @@ extern "C"
  * @details     This macro set the selected channel scatter-gather descriptor address.
  * \hideinitializer
  */
-#define PDMA_SET_SCATTER_DESC(pdma, u32Ch, u32Addr) ((uint32_t)(pdma->DSCT[(u32Ch)].NEXT = (u32Addr) - (pdma->SCATBA)))
+#define PDMA_SET_SCATTER_DESC(pdma, u32Ch, u32Addr) ((uint32_t)((pdma)->DSCT[(u32Ch)].NEXT = (u32Addr) - ((pdma)->SCATBA)))
 
 /**
  * @brief       Stop the channel
@@ -300,7 +300,7 @@ extern "C"
  * @details     This macro stop the selected channel.
  * \hideinitializer
  */
-#define PDMA_STOP(pdma, u32Ch) ((uint32_t)(pdma->PAUSE = (1 << (u32Ch))))
+#define PDMA_STOP(pdma, u32Ch) ((uint32_t)((pdma)->PAUSE = (1 << (u32Ch))))
 
 /**
  * @brief       Pause the channel
@@ -312,7 +312,7 @@ extern "C"
  * @details     This macro pause the selected channel.
  * \hideinitializer
  */
-#define PDMA_PAUSE(pdma, u32Ch) ((uint32_t)(pdma->PAUSE = (1 << (u32Ch))))
+#define PDMA_PAUSE(pdma, u32Ch) ((uint32_t)((pdma)->PAUSE = (1 << (u32Ch))))
 
 /*---------------------------------------------------------------------------------------------------------*/
 /* Define PDMA functions prototype                                                                          */

@@ -35,6 +35,6 @@ project:
         - file: ../usbd_User.c
     - group: CMSIS
       files:
-        - file: ../../../../Library/Device/Nuvoton/M251/Source/ARM/startup_M251_isp.c
+        - file: ../../startup_M251_isp.c
           for-compiler: AC6
         - file: ../../../../Library/Device/Nuvoton/M251/Source/system_M251.c

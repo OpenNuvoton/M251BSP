@@ -1,0 +1,67 @@
+{
+  "components": [
+    {
+      "type": "library",
+      "bom-ref": "pkg:github/arm-software/CMSIS-Compiler@2.2.0?source=vendored&path=Library/CMSIS/Compiler",
+      "name": "CMSIS-Compiler",
+      "version": "2.2.0",
+      "scope": "optional",
+      "author": "Arm Limited",
+      "purl": "pkg:github/arm-software/CMSIS-Compiler@2.2.0",
+      "description": "Arm CMSIS-Compiler software components vendored in Library/CMSIS/Compiler for standard I/O, file-operation, and RTOS interface retargeting.",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "properties": [
+        {
+          "name": "src_path",
+          "value": "Library/CMSIS/Compiler"
+        },
+        {
+          "name": "integration",
+          "value": "vendored_source"
+        },
+        {
+          "name": "bsp:upstream-repository",
+          "value": "https://github.com/ARM-software/CMSIS-Compiler"
+        },
+        {
+          "name": "bsp:upstream-tag",
+          "value": "v2.2.0"
+        },
+        {
+          "name": "bsp:upstream-commit",
+          "value": "218fffe5bcd4da3594d411437b1b773f52f6ca36"
+        },
+        {
+          "name": "bsp:component-origin",
+          "value": "third-party"
+        },
+        {
+          "name": "bsp:component-source",
+          "value": "Arm CMSIS-Compiler"
+        },
+        {
+          "name": "bsp:evidence-file",
+          "value": "Document/SBOM/cmsis/sca_cmsis-compiler.json"
+        },
+        {
+          "name": "bsp:evidence-path",
+          "value": "Library/CMSIS/Compiler"
+        },
+        {
+          "name": "bsp:version-evidence",
+          "value": "Library/CMSIS/Compiler/ARM.CMSIS-Compiler.pdsc"
+        },
+        {
+          "name": "bsp:license-evidence",
+          "value": "Library/CMSIS/Compiler/LICENSE; Library/CMSIS/Compiler/README.md"
+        }
+      ]
+    }
+  ]
+}

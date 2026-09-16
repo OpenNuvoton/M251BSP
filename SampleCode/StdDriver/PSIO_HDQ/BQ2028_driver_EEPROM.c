@@ -1,11 +1,11 @@
-/****************************************************************************//**
- * @file        main.c
- * @version     V3.00
- * @brief       TI HDQ BQ2028
+/***************************************************************************//**
+ * @file    BQ2028_driver_EEPROM.c
+ * @version V3.00
+ * @brief   TI HDQ BQ2028
  *
  * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
-*****************************************************************************/
+ ******************************************************************************/
 
 #include <stdio.h>
 #include "NuMicro.h"
@@ -20,7 +20,7 @@ extern PSIO_FUNC s_pfnPSIOHandler;
 /*---------------------------------------------------------------------------------------------------------*/
 typedef enum
 {
-    PSIO_HDQ_IDLE           = 0,     /* The HDQ bus is in idle state */
+    PSIO_HDQ_IDLE = 0,     /* The HDQ bus is in idle state */
     PSIO_HDQ_BREAK,                  /* The HDQ bus is in break state */
     PSIO_HDQ_WRITE_CMD,              /* The HDQ bus is in write state */
     PSIO_HDQ_WRITE_DATA,             /* The HDQ bus is in write data state */
@@ -161,7 +161,7 @@ void PSIO_BQ2028_Read_OneByte(PSIO_BQ2028_CFG_T *pConfig, uint8_t u8CMD, uint8_t
 void PSIO_BQ2028_Break(PSIO_BQ2028_CFG_T *pConfig)
 {
     const S_PSIO_CP_CONFIG sData0Config
-    =  /* Check Point0     Check Point1        Check Point2        Check Point3        Check Point4        Check Point5        Check Point6        Check Point7 */
+    = /* Check Point0     Check Point1        Check Point2        Check Point3        Check Point4        Check Point5        Check Point6        Check Point7 */
     {
         /* Slot */        PSIO_SLOT0,         PSIO_SLOT1,         PSIO_SLOT2,         PSIO_SLOT_DISABLE,  PSIO_SLOT_DISABLE,  PSIO_SLOT_DISABLE,  PSIO_SLOT_DISABLE,  PSIO_SLOT_DISABLE,
         /* Action */      PSIO_OUT_LOW,       PSIO_OUT_LOW,       PSIO_OUT_HIGH,      PSIO_NO_ACTION,     PSIO_NO_ACTION,     PSIO_NO_ACTION,     PSIO_NO_ACTION,     PSIO_NO_ACTION
@@ -192,7 +192,7 @@ void PSIO_BQ2028_Break(PSIO_BQ2028_CFG_T *pConfig)
 void PSIO_BQ2028_Write(PSIO_BQ2028_CFG_T *pConfig, uint8_t u8CMD)
 {
     const S_PSIO_CP_CONFIG sData0Config
-    =  /* Check Point0     Check Point1        Check Point2        Check Point3        Check Point4        Check Point5        Check Point6        Check Point7 */
+    = /* Check Point0     Check Point1        Check Point2        Check Point3        Check Point4        Check Point5        Check Point6        Check Point7 */
     {
         /* Slot */        PSIO_SLOT0,         PSIO_SLOT1,         PSIO_SLOT2,         PSIO_SLOT_DISABLE,  PSIO_SLOT_DISABLE,  PSIO_SLOT_DISABLE,  PSIO_SLOT_DISABLE,  PSIO_SLOT_DISABLE,
         /* Action */      PSIO_OUT_LOW,       PSIO_OUT_BUFFER,    PSIO_OUT_HIGH,      PSIO_NO_ACTION,     PSIO_NO_ACTION,     PSIO_NO_ACTION,     PSIO_NO_ACTION,     PSIO_NO_ACTION
@@ -223,7 +223,7 @@ void PSIO_BQ2028_Write(PSIO_BQ2028_CFG_T *pConfig, uint8_t u8CMD)
 void PSIO_BQ2028_Read(PSIO_BQ2028_CFG_T *pConfig)
 {
     const S_PSIO_CP_CONFIG sData0Config
-    =  /* Check Point0     Check Point1        Check Point2        Check Point3        Check Point4        Check Point5        Check Point6        Check Point7 */
+    = /* Check Point0     Check Point1        Check Point2        Check Point3        Check Point4        Check Point5        Check Point6        Check Point7 */
     {
         /* Slot */        PSIO_SLOT0,         PSIO_SLOT1,         PSIO_SLOT2,         PSIO_SLOT_DISABLE,  PSIO_SLOT_DISABLE,  PSIO_SLOT_DISABLE,  PSIO_SLOT_DISABLE,  PSIO_SLOT_DISABLE,
         /* Action */      PSIO_IN_BUFFER,     PSIO_NO_ACTION,     PSIO_NO_ACTION,     PSIO_NO_ACTION,     PSIO_NO_ACTION,     PSIO_NO_ACTION,     PSIO_NO_ACTION,     PSIO_NO_ACTION
@@ -280,7 +280,7 @@ uint8_t PSIO_BQ2028_CRC8(uint8_t u8Data)
 
     u8CRC ^= 0xFF;
 
-    for (iBitIndex = 0; iBitIndex <= 7; iBitIndex ++)
+    for (iBitIndex = 0; iBitIndex <= 7; iBitIndex++)
     {
         if (u8CRC & 0x80)
             u8CRC = ((u8CRC << 1 & 0xff)) ^ 0x31;
@@ -303,6 +303,5 @@ bool PSIO_BQ2028_BUSY(void)
         return TRUE;
     }
 }
-
 
 /*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/

@@ -7,6 +7,7 @@
  * @copyright (C) 2020 Nuvoton Technology Corp. All rights reserved.
  ****************************************************************************/
 
+#include <math.h>
 #include <stdio.h>
 #include "NuMicro.h"
 
@@ -37,9 +38,12 @@
 /*---------------------------------------------------------------------------------------------------------*/
 #if !(defined(__ICCARM__) && (__VER__ >= 6010000))
 #if (__ARMCC_VERSION < 6040000)
+
+#define RETARGET_HAS_FILE_STRUCT
 struct __FILE
 {
-    int handle; /* Add whatever you need here */
+    int handle;
+    /* Add whatever you need here */
 };
 
 #else
@@ -51,18 +55,30 @@ struct __FILE
 #endif /* (__ARMCC_VERSION < 6040000) */
 
 #elif(__VER__ >= 8000000)
+
+#define RETARGET_HAS_FILE_STRUCT
 struct __FILE
 {
-    int handle; /* Add whatever you need here */
+    int handle;
+    /* Add whatever you need here */
 };
 
 #endif /* !(defined(__ICCARM__) && (__VER__ >= 6010000)) */
 
+/**
+  * @static_deviation
+  * <b>Rule:</b> MISRA C:2012 Rule 8.4<br>
+    * <b>Justification:</b> Standard I/O device names are defined with external linkage as
+    * required by the ARM C library low-level I/O retargeting interface. Their linkage is
+    * part of the toolchain C runtime convention and cannot be made static.
+  */
+/* cppcheck-suppress misra-c2012-8.4 */
 FILE __stdout;
+/* cppcheck-suppress misra-c2012-8.4 */
 FILE __stdin;
 
 #if defined (__ARMCC_VERSION) || defined (__ICCARM__)
-    extern int32_t SH_DoCommand(int32_t n32In_R0, int32_t n32In_R1, int32_t *pn32Out_R0);
+    int32_t SH_DoCommand(int32_t n32In_R0, int32_t n32In_R1, int32_t *pn32Out_R0);
 
     #if defined( __ICCARM__ )
         __WEAK
@@ -70,12 +86,29 @@ FILE __stdin;
         __attribute__((weak))
     #endif
 
+    /**
+    * @static_deviation
+    * <b>Rule:</b> MISRA C:2012 Rule 8.2<br>
+    * <b>Justification:</b> This weak external hook is declared for the ARM C library
+    * HardFault handling convention. Its prototype is kept compatible with the startup
+    * assembly interface, which passes the exception return value and stack pointers.
+    */
+    /* cppcheck-suppress misra-c2012-8.2 */
     uint32_t ProcessHardFault(uint32_t lr, uint32_t msp, uint32_t psp);
 #endif
 
 int kbhit(void);
 int IsDebugFifoEmpty(void);
 void _ttywrch(int ch);
+
+/**
+  * @static_deviation
+  * <b>Rule:</b> MISRA C:2012 Rule 21.2<br>
+    * <b>Justification:</b> Standard I/O retargeting functions use reserved names required
+    * by the ARM C library low-level I/O interface. These externally linked function names
+    * are defined by the toolchain runtime convention and cannot be renamed.
+  */
+/* cppcheck-suppress misra-c2012-21.2 */
 int fputc(int ch, FILE *stream);
 
 #if defined ( __GNUC__ ) && !defined (__ARMCC_VERSION)
@@ -87,14 +120,15 @@ int fputc(int ch, FILE *stream);
 #endif
 
 #if defined (__ARMCC_VERSION) || defined (__ICCARM__)
+    /* cppcheck-suppress misra-c2012-21.2 */
     int fgetc(FILE *stream);
+    /* cppcheck-suppress misra-c2012-21.2 */
     int ferror(FILE *stream);
 #endif
 
 char GetChar(void);
 void SendChar_ToUART(int ch);
 void SendChar(int ch);
-static volatile int32_t g_ICE_Connected = 1;
 enum { r0, r1, r2, r3, r12, lr, pc, psr};
 
 
@@ -105,21 +139,28 @@ enum { r0, r1, r2, r3, r12, lr, pc, psr};
  */
 static void DumpStack(uint32_t stack[])
 {
+#if defined (RETARGET_HAS_FILE_STRUCT)
+    /* Just to avoid cppcheck unusedStructMember warning */
+    const struct __FILE sDummyFile = { 0 };
+    (void)sDummyFile.handle;
+#endif
+
     (void)stack;
-    /*
-        printf("r0 =0x%x\n", stack[r0]);
-        printf("r1 =0x%x\n", stack[r1]);
-        printf("r2 =0x%x\n", stack[r2]);
-        printf("r3 =0x%x\n", stack[r3]);
-        printf("r12=0x%x\n", stack[r12]);
-        printf("lr =0x%x\n", stack[lr]);
-        printf("pc =0x%x\n", stack[pc]);
-        printf("psr=0x%x\n", stack[psr]);
-    */
+#if 0   // Uncomment to dump the stack content
+    printf("r0 =0x%x\n", stack[r0]);
+    printf("r1 =0x%x\n", stack[r1]);
+    printf("r2 =0x%x\n", stack[r2]);
+    printf("r3 =0x%x\n", stack[r3]);
+    printf("r12=0x%x\n", stack[r12]);
+    printf("lr =0x%x\n", stack[lr]);
+    printf("pc =0x%x\n", stack[pc]);
+    printf("psr=0x%x\n", stack[psr]);
+#endif
 }
 
 #if defined(DEBUG_ENABLE_SEMIHOST)
 
+static volatile int32_t g_ICE_Connected = 1;
 /* The static buffer is used to speed up the semihost */
 static char g_buf[16];
 static uint8_t g_buf_len = 0;
@@ -141,7 +182,9 @@ int32_t SH_Return(int32_t n32In_R0, int32_t n32In_R1, int32_t *pn32Out_R0)
     if (g_ICE_Connected)
     {
         if (pn32Out_R0)
+        {
             *pn32Out_R0 = n32In_R0;
+        }
 
         return 1;
     }
@@ -224,9 +267,13 @@ uint32_t ProcessHardFault(uint32_t lr, uint32_t msp, uint32_t psp)
     {
         /* Non-secure stack used */
         if (lr & 4)
+        {
             sp = (uint32_t *)__TZ_get_PSP_NS();
+        }
         else
+        {
             sp = (uint32_t *)__TZ_get_MSP_NS();
+        }
     }
 
 #endif
@@ -234,18 +281,21 @@ uint32_t ProcessHardFault(uint32_t lr, uint32_t msp, uint32_t psp)
     /* Get the instruction caused the hardfault */
     inst = M16(sp[6]);
 
-    if (inst == 0xBEAB)
+    if (inst == 0xBEABU)
     {
         /*
             If the instruction is 0xBEAB, it means it is caused by BKPT without ICE connected.
             We still return for output/input message to UART.
         */
-        g_ICE_Connected = 0; // Set a flag for ICE offline
-        sp[6] += 2;          // Return to next instruction
-        return lr;           // Keep lr in R0
+#if defined(DEBUG_ENABLE_SEMIHOST)
+        g_ICE_Connected = 0;    // Set a flag for ICE offline
+#endif
+        sp[6] += 2U;            // Return to next instruction
+        return lr;              // Keep lr in R0
     }
 
-    printf("  HardFault!\n\n");
+    // Uncomment to print the hardfault message
+    //printf("  HardFault!\n\n");
     DumpStack(sp);
 
     // Halt here
@@ -294,7 +344,10 @@ void SendChar_ToUART(int ch)
         {
             i32Tmp = i32Head + 1;
 
-            if (i32Tmp > BUF_SIZE) i32Tmp = 0;
+            if (i32Tmp > BUF_SIZE)
+            {
+                i32Tmp = 0;
+            }
 
             if (i32Tmp != i32Tail)
             {
@@ -305,7 +358,10 @@ void SendChar_ToUART(int ch)
 
         i32Tmp = i32Head + 1;
 
-        if (i32Tmp > BUF_SIZE) i32Tmp = 0;
+        if (i32Tmp > BUF_SIZE)
+        {
+            i32Tmp = 0;
+        }
 
         if (i32Tmp != i32Tail)
         {
@@ -316,7 +372,9 @@ void SendChar_ToUART(int ch)
     else
     {
         if (i32Tail == i32Head)
+        {
             return;
+        }
     }
 
     // Pop char
@@ -324,7 +382,10 @@ void SendChar_ToUART(int ch)
     {
         i32Tmp = i32Tail + 1;
 
-        if (i32Tmp > BUF_SIZE) i32Tmp = 0;
+        if (i32Tmp > BUF_SIZE)
+        {
+            i32Tmp = 0;
+        }
 
         if ((DEBUG_PORT->FIFOSTS & UART_FIFOSTS_TXFULL_Msk) == 0)
         {
@@ -332,7 +393,9 @@ void SendChar_ToUART(int ch)
             i32Tail = i32Tmp;
         }
         else
+        {
             break; // FIFO full
+        }
     } while (i32Tail != i32Head);
 }
 
@@ -377,7 +440,9 @@ __WEAK void SendChar(int ch)
             int i;
 
             for (i = 0; i < g_buf_len; i++)
+            {
                 SendChar_ToUART(g_buf[i]);
+            }
 
 #endif
             g_buf_len = 0;
@@ -409,7 +474,9 @@ char GetChar(void)
         while (SH_DoCommand(0x7, 0, &nRet) != 0)
         {
             if (nRet != 0)
+            {
                 return (char)nRet;
+            }
         }
 
 #else
@@ -573,13 +640,13 @@ int _write(int fd, char *ptr, int len)
 
     while (i--)
     {
-        while (DEBUG_PORT->FIFOSTS & UART_FIFOSTS_TXFULL_Msk);
+        while (DEBUG_PORT->FIFOSTS & UART_FIFOSTS_TXFULL_Msk) {}
 
         if (*ptr == '\n')
         {
             DEBUG_PORT->DAT = '\r';
 
-            while (DEBUG_PORT->FIFOSTS & UART_FIFOSTS_TXFULL_Msk);
+            while (DEBUG_PORT->FIFOSTS & UART_FIFOSTS_TXFULL_Msk)  {}
         }
 
         DEBUG_PORT->DAT = *ptr++;
@@ -591,7 +658,7 @@ int _write(int fd, char *ptr, int len)
 
 int _read(int fd, char *ptr, int len)
 {
-    while ((DEBUG_PORT->FIFOSTS & UART_FIFOSTS_RXEMPTY_Msk) != 0);
+    while ((DEBUG_PORT->FIFOSTS & UART_FIFOSTS_RXEMPTY_Msk) != 0) {}
 
     *ptr = DEBUG_PORT->DAT;
     return 1;
@@ -629,7 +696,9 @@ size_t __read(int handle, unsigned char *buffer, size_t size)
         int c = GetChar();
 
         if (c < 0)
+        {
             break;
+        }
 
 #if (STDIN_ECHO != 0)
         SendChar(c);
@@ -687,7 +756,7 @@ void __exit(int return_code)
     if (SH_DoCommand(0x18, 0x20026, NULL) == 0)
     {
         /* Make sure all message is print out */
-        while (IsDebugFifoEmpty() == 0);
+        while (IsDebugFifoEmpty() == 0) {}
     }
 
 label:
@@ -704,7 +773,7 @@ void _sys_exit(int return_code)
     if (SH_DoCommand(0x18, 0x20026, NULL) == 0)
     {
         /* Make sure all message is print out */
-        while (IsDebugFifoEmpty() == 0);
+        while (IsDebugFifoEmpty() == 0) {}
     }
 
 label:

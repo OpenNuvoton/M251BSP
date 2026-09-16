@@ -1,21 +1,21 @@
-/**************************************************************************//**
- * @file     main.c
- * @version  V0.10
- * @brief
- *           Demonstrate QSPI slave mode data transfer with PDMA and Quad mode.
- *           Configure QSPI as Slave mode and demonstrate how to communicate
- *           with an off-chip SPI Master device with FIFO mode. This sample
- *           code needs to work with QSPI_PDMA_Master sample code.
+/***************************************************************************//**
+ * @file    main.c
+ * @version V0.10
+ * @brief   Demonstrate QSPI slave mode data transfer with PDMA and Quad mode.
+ *          Configure QSPI as Slave mode and demonstrate how to communicate
+ *          with an off-chip SPI Master device with FIFO mode. This sample
+ *          code needs to work with QSPI_PDMA_Master sample code.
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2024 Nuvoton Technology Corp. All rights reserved.
- *
  ******************************************************************************/
 #include <stdio.h>
 #include "NuMicro.h"
 
 //------------------------------------------------------------------------------
 #define QSPI_SLAVE_RX_DMA_CH    3
-#define TEST_COUNT              64
+#define TEST_COUNT              (64)
+#define QSPI_PDMA_TIMEOUT       (2UL * SystemCoreClock)
 
 //------------------------------------------------------------------------------
 /* Function prototype declaration */
@@ -96,7 +96,7 @@ void QSPI_Init(void)
 void QSPI_Slave_Receive(void)
 {
     uint32_t u32DataCount;
-    uint32_t u32RegValue, u32Abort;
+    uint32_t u32RegValue, u32Abort, u32TimeOutCount;
     int32_t i32Err;
 
     printf("\nQSPI0 Quad mode test with PDMA ");
@@ -130,6 +130,7 @@ void QSPI_Slave_Receive(void)
     QSPI_TRIGGER_RX_PDMA(QSPI0);
 
     i32Err = 0;
+    u32TimeOutCount = QSPI_PDMA_TIMEOUT;
 
     while (1)
     {
@@ -178,6 +179,12 @@ void QSPI_Slave_Receive(void)
             i32Err = 1;
             break;
         }
+
+        if (u32TimeOutCount-- == 0UL)
+        {
+            i32Err = 1;
+            break;
+        }
     }
 
     /* Disable all PDMA channels */
@@ -222,6 +229,8 @@ int main(void)
     printf("    QSPI0_MISO0(PA1) <--> QSPI0_MISO0(PA1)\n    QSPI0_MOSI0(PA0) <--> QSPI0_MOSI0(PA0)\n\n");
     printf("    QSPI0_MISO1(PA5) <--> QSPI0_MISO1(PA5)\n    QSPI0_MOSI1(PA4) <--> QSPI0_MOSI1(PA4)\n\n");
     printf("After the transfer is done, the received data will be printed out.\n");
+    printf("Demo only: this sample requires a paired QSPI_PDMA_Master peer and lab wiring.\n");
+    printf("Production code should add bounded timeout, recovery handling, and peer-loss handling.\n");
     printf("\n");
 
     QSPI_Slave_Receive();

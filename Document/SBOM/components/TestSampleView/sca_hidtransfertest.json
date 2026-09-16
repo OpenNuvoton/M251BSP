@@ -1,0 +1,41 @@
+{
+  "components": [
+    {
+      "type": "application",
+      "bom-ref": "pkg:generic/hidtransfertest@1.1.0?source=vendored&path=Tool/HIDTransferTest",
+      "name": "HIDTransferTest",
+      "version": "1.1.0",
+      "scope": "optional",
+      "author": "Nuvoton Technology Corporation",
+      "publisher": "Nuvoton Technology Corporation",
+      "purl": "pkg:generic/hidtransfertest@1.1.0",
+      "description": "HID Transfer Test Tool - Windows host-side command-line utility for exercising the NuMicro USB HID Transfer device sample. Fixed VID 0x0416, configurable PID (default 0x5020).",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0"
+          }
+        }
+      ],
+      "properties": [
+        { "name": "bsp:file-path", "value": "Tool/HIDTransferTest" },
+        { "name": "bsp:binary-file", "value": "Tool/HIDTransferTest/Debug/HIDTransferTest.exe" },
+        { "name": "bsp:license-file", "value": "Tool/HIDTransferTest/LICENSE.md" },
+        { "name": "bsp:readme-file", "value": "Tool/HIDTransferTest/README.txt" },
+
+        { "name": "integration", "value": "vendored_source_and_binary" },
+        { "name": "bsp:component-origin", "value": "first-party" },
+        { "name": "bsp:platform", "value": "Windows (Win32, x86/x64)" },
+        { "name": "bsp:toolchain", "value": "Microsoft Visual C++ (MSBuild / Visual Studio)" },
+        { "name": "bsp:usb-vid", "value": "0x0416 (Nuvoton Technology Corp.)" },
+        { "name": "bsp:usb-pid-default", "value": "0x5020" },
+        { "name": "bsp:version-evidence", "value": "Tool/HIDTransferTest/HIDTransferTest/version.h (1.1.0); Tool/HIDTransferTest/README.txt (Tool Version: 1.1.0)" },
+        { "name": "bsp:copyright", "value": "Copyright (C) 2010-2026 Nuvoton Technology Corp. All rights reserved." },
+
+        { "name": "bsp:sha256:Tool/HIDTransferTest/Debug/HIDTransferTest.exe", "value": "26f2fda0e6389e4d2cc2fe98bf989a84f1689f040530fb97af0c293222e99406" },
+        { "name": "bsp:sha256:Tool/HIDTransferTest/LICENSE.md",                "value": "0f768967a2d912d44f609abdc0e01bd8d5771174a944da02a29b94d5cfedba77" }
+      ]
+    }
+  ]
+}

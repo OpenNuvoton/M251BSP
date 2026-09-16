@@ -1,11 +1,11 @@
-/**************************************************************************//**
- * @file        main.c
- * @version     V3.00
- * @brief       BQ2028 device driver
+/***************************************************************************//**
+ * @file    BQ2028_driver_EEPROM.h
+ * @version V3.00
+ * @brief   BQ2028 device driver
  *
  * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
-*****************************************************************************/
+ ******************************************************************************/
 
 #ifndef __BQ2028_DRIVER_EEPROM_H__
 #define __BQ2028_DRIVER_EEPROM_H__

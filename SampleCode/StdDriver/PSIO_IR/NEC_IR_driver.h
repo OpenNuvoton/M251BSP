@@ -1,11 +1,11 @@
-/**************************************************************************//**
- * @file        NEC_IR_driver.h
- * @version     V3.00
- * @brief       NEC IR device driver
+/***************************************************************************//**
+ * @file    NEC_IR_driver.h
+ * @version V3.00
+ * @brief   NEC IR device driver
  *
  * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
-*****************************************************************************/
+ ******************************************************************************/
 
 #ifndef __NEC_IR_DRIVER_H__
 #define __NEC_IR_DRIVER_H__

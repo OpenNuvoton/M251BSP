@@ -204,8 +204,10 @@ void EP2_Handler(void)
 
 void EP3_Handler(void)
 {
+    uint32_t u32EpSts3 = USBD->EPSTS0 & USBD_EPSTS0_EPSTS3_Msk;
+
     /* Bulk OUT */
-    if (g_u32OutToggle == (USBD->EPSTS0 & USBD_EPSTS0_EPSTS3_Msk))
+    if (g_u32OutToggle == u32EpSts3)
     {
         USBD_SET_PAYLOAD_LEN(EP3, EP3_MAX_PKT_SIZE);
     }
@@ -214,7 +216,7 @@ void EP3_Handler(void)
         g_u32RxSize = USBD_GET_PAYLOAD_LEN(EP3);
         g_pu8RxBuf = (uint8_t *)(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP3));
 
-        g_u32OutToggle = USBD->EPSTS0 & USBD_EPSTS0_EPSTS3_Msk;
+        g_u32OutToggle = u32EpSts3;
         /* Set a flag to indicate bulk out ready */
         g_i8BulkOutReady = 1;
     }

@@ -209,8 +209,10 @@ void EP2_Handler(void)
 
 void EP3_Handler(void)
 {
+    uint32_t u32EpSts = USBD->EPSTS0 & USBD_EPSTS0_EPSTS3_Msk;
+
     /* Bulk OUT */
-    if (g_u32OutToggle0 == (USBD->EPSTS0 & USBD_EPSTS0_EPSTS3_Msk))
+    if (g_u32OutToggle0 == u32EpSts)
     {
         USBD_SET_PAYLOAD_LEN(EP3, EP3_MAX_PKT_SIZE);
     }
@@ -219,7 +221,7 @@ void EP3_Handler(void)
         g_u32RxSize0 = USBD_GET_PAYLOAD_LEN(EP3);
         g_pu8RxBuf0 = (uint8_t *)(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP3));
 
-        g_u32OutToggle0 = USBD->EPSTS0 & USBD_EPSTS0_EPSTS3_Msk;
+        g_u32OutToggle0 = u32EpSts;
         /* Set a flag to indicate bulk out ready */
         g_i8BulkOutReady0 = 1;
     }
@@ -227,8 +229,10 @@ void EP3_Handler(void)
 
 void EP6_Handler(void)
 {
+    uint32_t u32EpSts = USBD->EPSTS0 & USBD_EPSTS0_EPSTS6_Msk;
+
     /* Bulk OUT */
-    if (g_u32OutToggle1 == (USBD->EPSTS0 & USBD_EPSTS0_EPSTS6_Msk))
+    if (g_u32OutToggle1 == u32EpSts)
     {
         USBD_SET_PAYLOAD_LEN(EP6, EP6_MAX_PKT_SIZE);
     }
@@ -237,7 +241,7 @@ void EP6_Handler(void)
         g_u32RxSize1 = USBD_GET_PAYLOAD_LEN(EP6);
         g_pu8RxBuf1 = (uint8_t *)(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP6));
 
-        g_u32OutToggle1 = USBD->EPSTS0 & USBD_EPSTS0_EPSTS6_Msk;
+        g_u32OutToggle1 = u32EpSts;
         /* Set a flag to indicate bulk out ready */
         g_i8BulkOutReady1 = 1;
     }

@@ -1,7 +1,7 @@
-/**************************************************************************//**
- * @file     main.c
- * @version  V0.10
- * @brief    Access SPI flash through SPI interface.
+/***************************************************************************//**
+ * @file    main.c
+ * @version V0.10
+ * @brief   Access SPI flash through SPI interface.
  *
  * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
@@ -43,7 +43,7 @@ uint16_t SpiFlash_ReadMidDid(void)
     SPI_SET_SS_HIGH(SPI_FLASH_PORT);
 
     while (!SPI_GET_RX_FIFO_EMPTY_FLAG(SPI_FLASH_PORT))
-        u8RxData[u8IDCnt ++] = SPI_READ_RX(SPI_FLASH_PORT);
+        u8RxData[u8IDCnt++] = SPI_READ_RX(SPI_FLASH_PORT);
 
     return ((u8RxData[4] << 8) | u8RxData[5]);
 }
@@ -361,7 +361,7 @@ int main(void)
         for (u32ByteCount = 0; u32ByteCount < TEST_LENGTH; u32ByteCount++)
         {
             if (g_au8DestArray[u32ByteCount] != g_au8SrcArray[u32ByteCount])
-                u32Error ++;
+                u32Error++;
         }
     }
 
@@ -373,7 +373,4 @@ int main(void)
     while (1);
 }
 
-
 /*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/
-
-

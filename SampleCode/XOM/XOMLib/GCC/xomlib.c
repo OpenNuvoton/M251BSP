@@ -3,7 +3,7 @@
  * @version V3.00
  * @brief   Function pointer for XOM APIs.
  *
- * @copyright SPDX-License-Identifier: Apache-2.0
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2024 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 

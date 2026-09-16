@@ -521,91 +521,15 @@ extern const S_USBD_INFO_T gsInfo;
   */
 __STATIC_INLINE void USBD_MemCopy(uint8_t *dest, const uint8_t *src, uint32_t size)
 {
+    volatile uint8_t *pu8MemCpyDst = (volatile uint8_t *)dest;
+    volatile const uint8_t *pu8MemCpySrc = (volatile const uint8_t *)src;
+
     for (uint32_t i = 0ul; i < size; i++)
     {
-        dest[i] = src[i];
+        *pu8MemCpyDst = *pu8MemCpySrc;
+        pu8MemCpyDst++;
+        pu8MemCpySrc++;
     }
-}
-
-
-/**
-  * @brief       Set USB endpoint stall state
-  *
-  * @param[in]   epnum  USB endpoint number
-  *
-  *
-  * @details     Set USB endpoint stall state. Endpoint will respond STALL token automatically.
-  *
-  */
-__STATIC_INLINE void USBD_SetStall(uint8_t epnum)
-{
-    for (uint32_t i = 0ul; i < USBD_MAX_EP; i++)
-    {
-        uint32_t u32CfgAddr = (uint32_t)(i << 4) + (uint32_t)&USBD->EP[0].CFG; /* USBD_CFG0 */
-        uint32_t u32Cfg = *((__IO uint32_t *)(u32CfgAddr));
-
-        if ((u32Cfg & 0xful) == epnum)
-        {
-            u32CfgAddr = (uint32_t)(i << 4) + (uint32_t)&USBD->EP[0].CFGP; /* USBD_CFGP0 */
-            u32Cfg = *((__IO uint32_t *)(u32CfgAddr));
-
-            *((__IO uint32_t *)(u32CfgAddr)) = (u32Cfg | USBD_CFGP_SSTALL);
-            break;
-        }
-    }
-}
-
-/**
-  * @brief       Clear USB endpoint stall state
-  *
-  * @param[in]   epnum  USB endpoint number
-  *
-  *
-  * @details     Clear USB endpoint stall state. Endpoint will respond ACK/NAK token.
-  */
-__STATIC_INLINE void USBD_ClearStall(uint8_t epnum)
-{
-    for (uint32_t i = 0ul; i < USBD_MAX_EP; i++)
-    {
-        uint32_t u32CfgAddr = (uint32_t)(i << 4) + (uint32_t)&USBD->EP[0].CFG; /* USBD_CFG0 */
-        uint32_t u32Cfg = *((__IO uint32_t *)(u32CfgAddr));
-
-        if ((u32Cfg & 0xful) == epnum)
-        {
-            u32CfgAddr = (uint32_t)(i << 4) + (uint32_t)&USBD->EP[0].CFGP; /* USBD_CFGP0 */
-            u32Cfg = *((__IO uint32_t *)(u32CfgAddr));
-
-            *((__IO uint32_t *)(u32CfgAddr)) = (u32Cfg & ~USBD_CFGP_SSTALL);
-            break;
-        }
-    }
-}
-
-/**
-  * @brief       Get USB endpoint stall state
-  *
-  * @param[in]   epnum  USB endpoint number
-  *
-  * @retval      0      USB endpoint is not stalled.
-  * @retval      1      USB endpoint is stalled.
-  * @retval      0xFF   Endpoint number not found.
-  *
-  * @details     Find the configuration for the specified endpoint number and return its stall state.
-  *
-  */
-__STATIC_INLINE uint32_t USBD_GetStall(uint8_t epnum)
-{
-    uint32_t i;
-
-    for (i = 0ul; i < USBD_MAX_EP; i++)
-    {
-        if ((USBD->EP[i].CFG & 0xFul) == (uint32_t)epnum)
-        {
-            return (USBD->EP[i].CFGP & USBD_CFGP_SSTALL) ? 1ul : 0ul;
-        }
-    }
-
-    return 0xFFul;
 }
 
 typedef void (*VENDOR_REQ)(void);                               /*!< Functional pointer type definition for Vendor class                                    */
@@ -637,6 +561,9 @@ void USBD_SwReset(void);
 void USBD_SetVendorRequest(VENDOR_REQ pfnVendorReq);
 void USBD_SetConfigCallback(SET_CONFIG_CB pfnSetConfigCallback);
 void USBD_LockEpStall(uint32_t u32EpBitmap);
+void USBD_SetStall(uint8_t epnum);
+void USBD_ClearStall(uint8_t epnum);
+uint32_t USBD_GetStall(uint8_t epnum);
 
 /** @} end of group USBD_EXPORTED_FUNCTIONS */
 

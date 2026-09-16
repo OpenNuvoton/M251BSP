@@ -1,0 +1,13 @@
+sbomType: Product SBOM
+include:
+  - path: Library/CMSIS
+  - path: Library/Device
+  - path: Library/LCDLib
+  - path: Library/SmartcardLib
+  - path: Library/StdDriver
+  - path: Library/TKLib
+exclude:
+  - path: Document/
+  - path: SampleCode/
+  - path: ThirdParty/
+  - path: Tool/

@@ -6,12 +6,8 @@
  * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
-
 #ifndef __GPIO_H__
 #define __GPIO_H__
-
-
-
 
 #ifdef __cplusplus
 extern "C"
@@ -363,7 +359,7 @@ extern "C"
  *
  * @details     Set the I/O pins edge detection circuit always active after reset for specified port.
  */
-#define GPIO_SET_DEBOUNCE_ICLKON(port)  (GPIO->DBCTL |= ((0x1UL << ((((uint32_t)port - (uint32_t)GPIO_BASE) / 0x40) + 16))))
+#define GPIO_SET_DEBOUNCE_ICLKON(port)  (GPIO->DBCTL |= ((0x1UL << ((((uint32_t)(port) - (uint32_t)GPIO_BASE) / 0x40) + 16))))
 
 /**
  * @brief       Clear GPIO Interrupt Clock on bit
@@ -373,7 +369,7 @@ extern "C"
  *
  * @details     Set edge detection circuit active only if I/O pin edge interrupt enabled for specified port
  */
-#define GPIO_CLR_DEBOUNCE_ICLKON(port)  (GPIO->DBCTL &= ~((0x1UL << ((((uint32_t)port - (uint32_t)GPIO_BASE) / 0x40) + 16))))
+#define GPIO_CLR_DEBOUNCE_ICLKON(port)  (GPIO->DBCTL &= ~((0x1UL << ((((uint32_t)(port) - (uint32_t)GPIO_BASE) / 0x40) + 16))))
 
 /**
  * @brief       Get GPIO Port IN Data
@@ -448,14 +444,11 @@ void GPIO_DisableInt(GPIO_T *port, uint32_t u32Pin);
 void GPIO_SetSlewCtl(GPIO_T *port, uint32_t u32PinMask, uint32_t u32Mode);
 void GPIO_SetPullCtl(GPIO_T *port, uint32_t u32PinMask, uint32_t u32Mode);
 /** @} end of group GPIO_EXPORTED_FUNCTIONS */
-
 /** @} end of group GPIO_Driver */
-
 /** @} end of group Standard_Driver */
 
 #ifdef __cplusplus
 }
-
 #endif
 
 #endif  /* __GPIO_H__ */

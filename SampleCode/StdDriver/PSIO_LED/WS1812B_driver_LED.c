@@ -1,7 +1,7 @@
-/**************************************************************************//**
- * @file        WS1812B_driver_LED.c
- * @version     V3.00
- * @brief       Worldsemi WS2812B LED Driver
+/***************************************************************************//**
+ * @file    WS1812B_driver_LED.c
+ * @version V3.00
+ * @brief   Worldsemi WS2812B LED Driver
  *
  * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
@@ -31,11 +31,11 @@ static int PSIO_EncodePattern(uint32_t *pu32SourceAddress, uint32_t *pu32Destina
         {
             if (((*(pu32SourceAddress + i)) >> j) & 0x1)
             {
-                (*(pu32DestinationAddress + (((i / u8PinNum)*u8PinNum * 3) + ((((23 - j) / 8)*u8PinNum) + (i % u8PinNum))))) |= (0x6 << ((j % 8) * 3));
+                (*(pu32DestinationAddress + (((i / u8PinNum) * u8PinNum * 3) + ((((23 - j) / 8) * u8PinNum) + (i % u8PinNum))))) |= (0x6 << ((j % 8) * 3));
             }
             else
             {
-                (*(pu32DestinationAddress + (((i / u8PinNum)*u8PinNum * 3) + ((((23 - j) / 8)*u8PinNum) + (i % u8PinNum))))) |= (0x4 << ((j % 8) * 3));
+                (*(pu32DestinationAddress + (((i / u8PinNum) * u8PinNum * 3) + ((((23 - j) / 8) * u8PinNum) + (i % u8PinNum))))) |= (0x4 << ((j % 8) * 3));
             }
         }
     }
@@ -70,9 +70,9 @@ int PSIO_WS2812B_Send_Pattern(S_PSIO_WS2812B_LED_CFG *psConfig)
     PDMA->DSCT[psConfig->u8PDMAChannel].CTL =
         PDMA_OP_BASIC |
         PDMA_REQ_SINGLE |
-        PDMA_SAR_INC |                /* source address -> incremented */
-        PDMA_DAR_FIX |                /* destination address -> fixed(PSIO) */
-        PDMA_WIDTH_32 |               /* transfer width -> 32-bit */
+        PDMA_SAR_INC |  /* source address -> incremented */
+        PDMA_DAR_FIX |  /* destination address -> fixed(PSIO) */
+        PDMA_WIDTH_32 | /* transfer width -> 32-bit */
         (((psConfig->u32DataLength * 3) - 1) << PDMA_DSCT_CTL_TXCNT_Pos);
     PDMA->DSCT[psConfig->u8PDMAChannel].SA = (uint32_t)psConfig->pu32InternalMemory;
     PDMA->DSCT[psConfig->u8PDMAChannel].DA = (uint32_t)(&(PSIO->PODAT));
@@ -95,11 +95,13 @@ int PSIO_WS2812B_Send_Pattern(S_PSIO_WS2812B_LED_CFG *psConfig)
 /*---------------------------------------------------------------------------------------------------------*/
 int PSIO_WS2812B_Open(S_PSIO_WS2812B_LED_CFG *psConfig)
 {
-    const S_PSIO_CP_CONFIG sCheckPointConfig 
-                     = {/* Check Point0     Check Point1        Check Point2        Check Point3        Check Point4        Check Point5        Check Point6        Check Point7 */
-      /* Slot */        PSIO_SLOT0,         PSIO_SLOT1,         PSIO_SLOT2,         PSIO_SLOT3,         PSIO_SLOT4,         PSIO_SLOT5,         PSIO_SLOT6,         PSIO_SLOT7,
-      /* Action */      PSIO_OUT_BUFFER,    PSIO_OUT_BUFFER,    PSIO_OUT_BUFFER,    PSIO_OUT_BUFFER,    PSIO_OUT_BUFFER,    PSIO_OUT_BUFFER,    PSIO_OUT_BUFFER,    PSIO_OUT_BUFFER};
-                     
+    const S_PSIO_CP_CONFIG sCheckPointConfig
+    = /* Check Point0     Check Point1        Check Point2        Check Point3        Check Point4        Check Point5        Check Point6        Check Point7 */
+    {
+        /* Slot */        PSIO_SLOT0,         PSIO_SLOT1,         PSIO_SLOT2,         PSIO_SLOT3,         PSIO_SLOT4,         PSIO_SLOT5,         PSIO_SLOT6,         PSIO_SLOT7,
+        /* Action */      PSIO_OUT_BUFFER,    PSIO_OUT_BUFFER,    PSIO_OUT_BUFFER,    PSIO_OUT_BUFFER,    PSIO_OUT_BUFFER,    PSIO_OUT_BUFFER,    PSIO_OUT_BUFFER,    PSIO_OUT_BUFFER
+    };
+
     uint8_t u8PinNum = 0;
 
     /* Setting all pin configure */
@@ -119,7 +121,7 @@ int PSIO_WS2812B_Open(S_PSIO_WS2812B_LED_CFG *psConfig)
         PSIO_SET_ORDER(PSIO, psConfig->pu8PinCFG[u8PinNum], PSIO_MSB);
 
         /* Set check point configuration */
-        PSIO_SET_CP_CONFIG(PSIO, psConfig->pu8PinCFG[u8PinNum], &sCheckPointConfig);        
+        PSIO_SET_CP_CONFIG(PSIO, psConfig->pu8PinCFG[u8PinNum], &sCheckPointConfig);
 
         /* Set output data width as 24 bit */
         PSIO_SET_WIDTH(PSIO, psConfig->pu8PinCFG[u8PinNum], 0, 24);
@@ -129,7 +131,7 @@ int PSIO_WS2812B_Open(S_PSIO_WS2812B_LED_CFG *psConfig)
 
         /* Counting pin number */
         u8PinNum++;
-    };  /* Loop until last pin */
+    }; /* Loop until last pin */
 
     /* Set PDMA output pin enable */
     if (psConfig->u8PinNumber == 1)
@@ -210,6 +212,5 @@ void PSIO_WS2812B_Close(S_PSIO_WS2812B_LED_CFG *psConfig)
     SYS->IPRST2 |= SYS_IPRST2_PSIORST_Msk;
     SYS->IPRST2 &= ~SYS_IPRST2_PSIORST_Msk;
 }
-
 
 /*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/

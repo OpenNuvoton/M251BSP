@@ -136,8 +136,8 @@ typedef struct
 {
     unsigned char   u8LCDDispTableNum;          /*!< LCD Display Table Number */
     unsigned char   u8GetLCDComSegNum;          /*!< LCD Com Seg Table Number */
-    unsigned short  *pu16LCDDispTable;          /*!< LCD Display Table Pointer */
-    unsigned char   *pu8GetLCDComSeg;           /*!< LCD Com Seg Table Pointer */
+    const unsigned short  *pu16LCDDispTable;    /*!< LCD Display Table Pointer */
+    const unsigned char   *pu8GetLCDComSeg;     /*!< LCD Com Seg Table Pointer */
 
 } LCD_ZONE_INFO_T;
 
@@ -208,7 +208,7 @@ typedef struct
 *
 *****************************************************************************/
 
-static const char acMAINDigitRawData[ZONE_MAIN_DIG_CNT][ZONE_MAIN_SEG_NUM][2] =
+static const unsigned char acMAINDigitRawData[ZONE_MAIN_DIG_CNT][ZONE_MAIN_SEG_NUM][2] =
 {
     {
         {0, 1},         {0, 0},         {3, 0},         {3, 1},         {2, 3},         {0, 3},         {0, 2},         {1, 1},         {1, 0},         {1, 2},         {2, 0},         {3, 2},         {2, 2},         {2, 1},
@@ -261,7 +261,7 @@ static const char acMAINDigitRawData[ZONE_MAIN_DIG_CNT][ZONE_MAIN_SEG_NUM][2] =
 *
 *****************************************************************************/
 
-static const char acTIMEDigitRawData[ZONE_TIME_DIG_CNT][ZONE_TIME_SEG_NUM][2] =
+static const unsigned char acTIMEDigitRawData[ZONE_TIME_DIG_CNT][ZONE_TIME_SEG_NUM][2] =
 {
     {
         {7, 2},         {6, 3},         {4, 3},         {4, 2},         {5, 2},         {6, 2},         {5, 3},
@@ -276,7 +276,7 @@ static const char acTIMEDigitRawData[ZONE_TIME_DIG_CNT][ZONE_TIME_SEG_NUM][2] =
         {7, 8},         {6, 9},         {4, 9},         {4, 8},         {5, 8},         {6, 8},         {5, 9},
     },
 };
-static const char acNUMICRODigitRawData[ZONE_NUMICRO_DIG_CNT][ZONE_NUMICRO_SEG_NUM][2] =
+static const unsigned char acNUMICRODigitRawData[ZONE_NUMICRO_DIG_CNT][ZONE_NUMICRO_SEG_NUM][2] =
 {
     {
         {3, 4},         {2, 5},         {0, 5},         {0, 4},         {1, 4},         {2, 4},         {1, 5},
@@ -288,7 +288,7 @@ static const char acNUMICRODigitRawData[ZONE_NUMICRO_DIG_CNT][ZONE_NUMICRO_SEG_N
         {3, 8},         {2, 9},         {0, 9},         {0, 8},         {1, 8},         {2, 8},         {1, 9},
     },
 };
-static const char acPPMDigitRawData[ZONE_PPM_DIG_CNT][ZONE_PPM_SEG_NUM][2] =
+static const unsigned char acPPMDigitRawData[ZONE_PPM_DIG_CNT][ZONE_PPM_SEG_NUM][2] =
 {
     {
         {4, 16},        {5, 17},        {7, 17},        {7, 16},        {6, 16},        {5, 16},        {6, 17},
@@ -300,7 +300,7 @@ static const char acPPMDigitRawData[ZONE_PPM_DIG_CNT][ZONE_PPM_SEG_NUM][2] =
         {4, 20},        {5, 21},        {7, 21},        {7, 20},        {6, 20},        {5, 20},        {6, 21},
     },
 };
-static const char acTEMPDigitRawData[ZONE_TEMP_DIG_CNT][ZONE_TEMP_SEG_NUM][2] =
+static const unsigned char acTEMPDigitRawData[ZONE_TEMP_DIG_CNT][ZONE_TEMP_SEG_NUM][2] =
 {
     {
         {4, 22},        {5, 23},        {7, 23},        {7, 22},        {6, 22},        {5, 22},        {6, 23},
@@ -312,7 +312,7 @@ static const char acTEMPDigitRawData[ZONE_TEMP_DIG_CNT][ZONE_TEMP_SEG_NUM][2] =
         {4, 26},        {5, 27},        {7, 27},        {7, 26},        {6, 26},        {5, 26},        {6, 27},
     },
 };
-static const char acVERDigitRawData[ZONE_VER_DIG_CNT][ZONE_VER_SEG_NUM][2] =
+static const unsigned char acVERDigitRawData[ZONE_VER_DIG_CNT][ZONE_VER_SEG_NUM][2] =
 {
     {
         {4, 28},        {5, 29},        {7, 29},        {7, 28},        {6, 28},        {5, 28},        {6, 29},
@@ -515,12 +515,12 @@ static const unsigned short auVERDigitMap[] =
 
 static const LCD_ZONE_INFO_T g_LCDZoneInfo[] =
 {
-    {ZONE_MAIN_DIG_CNT,         ZONE_MAIN_SEG_NUM, (unsigned short *)auMAINDigitMap, (unsigned char *)acMAINDigitRawData},
-    {ZONE_TIME_DIG_CNT,         ZONE_TIME_SEG_NUM, (unsigned short *)auTIMEDigitMap, (unsigned char *)acTIMEDigitRawData},
-    {ZONE_NUMICRO_DIG_CNT,      ZONE_NUMICRO_SEG_NUM, (unsigned short *)auNUMICRODigitMap, (unsigned char *)acNUMICRODigitRawData},
-    {ZONE_PPM_DIG_CNT,          ZONE_PPM_SEG_NUM, (unsigned short *)auPPMDigitMap, (unsigned char *)acPPMDigitRawData},
-    {ZONE_TEMP_DIG_CNT,         ZONE_TEMP_SEG_NUM, (unsigned short *)auTEMPDigitMap, (unsigned char *)acTEMPDigitRawData},
-    {ZONE_VER_DIG_CNT,          ZONE_VER_SEG_NUM, (unsigned short *)auVERDigitMap, (unsigned char *)acVERDigitRawData},
+    {ZONE_MAIN_DIG_CNT,         ZONE_MAIN_SEG_NUM,      auMAINDigitMap, (const unsigned char *)acMAINDigitRawData},
+    {ZONE_TIME_DIG_CNT,         ZONE_TIME_SEG_NUM,      auTIMEDigitMap, (const unsigned char *)acTIMEDigitRawData},
+    {ZONE_NUMICRO_DIG_CNT,      ZONE_NUMICRO_SEG_NUM,   auNUMICRODigitMap, (const unsigned char *)acNUMICRODigitRawData},
+    {ZONE_PPM_DIG_CNT,          ZONE_PPM_SEG_NUM,       auPPMDigitMap, (const unsigned char *)acPPMDigitRawData},
+    {ZONE_TEMP_DIG_CNT,         ZONE_TEMP_SEG_NUM,      auTEMPDigitMap, (const unsigned char *)acTEMPDigitRawData},
+    {ZONE_VER_DIG_CNT,          ZONE_VER_SEG_NUM,       auVERDigitMap, (const unsigned char *)acVERDigitRawData},
 
 };
 

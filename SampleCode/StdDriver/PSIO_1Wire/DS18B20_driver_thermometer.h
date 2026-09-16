@@ -1,11 +1,11 @@
-/**************************************************************************//**
- * @file        main.c
- * @version     V3.00
- * @brief       DS18B20 device driver
+/***************************************************************************//**
+ * @file    DS18B20_driver_thermometer.h
+ * @version V3.00
+ * @brief   DS18B20 device driver
  *
  * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
-*****************************************************************************/
+ ******************************************************************************/
 
 #ifndef __DS18B20_DRIVER_THERMOMETER_H__
 #define __DS18B20_DRIVER_THERMOMETER_H__

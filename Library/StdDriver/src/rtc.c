@@ -139,7 +139,7 @@ void RTC_32KCalibration(int32_t i32FrequencyX10000)
     u32Compensate = (uint32_t)((uint32_t)i32FrequencyX10000 % 10000U);
     /*Fraction Part: (6512 X 64)/10000 = 41.6768(0x2A) => RTC_FREQADJ[5:0]=0x2A*/
     u32Compensate = ((u32Compensate * 64U) / 10000U);
-    u32Compensate &= 0x3F;
+    u32Compensate &= 0x3FUL;
     /*
          Formula for 32K compensation is
            FREQADJ = 0~0x00001F00 (Frequency range : 32752Hz ~ 32783Hz)

@@ -3,8 +3,8 @@
  * @version  V3.00
  * @brief    Define the device setting.
  *
- * @copyright SPDX-License-Identifier: Apache-2.0
- * @copyright Copyright (C) 2021 Nuvoton Technology Corp. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ * @copyright (C) 2021 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 
 /* Just select one */

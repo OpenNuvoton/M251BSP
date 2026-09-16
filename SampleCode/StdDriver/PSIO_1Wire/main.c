@@ -1,7 +1,7 @@
-/**************************************************************************//**
- * @file     main.c
- * @version  V3.00
- * @brief    Demonstrate how to implement 1-Wire protocol by PSIO.
+/***************************************************************************//**
+ * @file    main.c
+ * @version V3.00
+ * @brief   Demonstrate how to implement 1-Wire protocol by PSIO.
  *
  * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
@@ -110,11 +110,14 @@ int main(void)
     printf("+------------------------------------------------------+ \n");
     printf("|      DS18B20 ONE WIRE Thermometer  Test Code         | \n");
     printf("|      Please connected PSIO_CH0(PB.15) to device      | \n");
+    printf("| Demo only: this lab sample assumes a compatible      | \n");
+    printf("| device and stable line timing; production code       | \n");
+    printf("| should add supervision and fault recovery.           | \n");
     printf("+------------------------------------------------------+ \n");
 
     /* Use slot controller 0 and pin 0 */
-    sConfig.u8SlotCtrl   = PSIO_SC0;
-    sConfig.u8DataPin    = PSIO_PIN0;
+    sConfig.u8SlotCtrl = PSIO_SC0;
+    sConfig.u8DataPin = PSIO_PIN0;
 
 
     /* Reset PSIO */
@@ -153,6 +156,5 @@ int main(void)
         CLK_SysTickDelay(50000);
     } while (1);
 }
-
 
 /*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/

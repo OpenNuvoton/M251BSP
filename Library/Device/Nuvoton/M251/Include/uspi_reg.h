@@ -1,16 +1,16 @@
-/**************************************************************************//**
- * @file     uspi_reg.h
- * @version  V1.00
- * @brief    USPI register definition header file
+/***************************************************************************//**
+ * @file    uspi_reg.h
+ * @version V1.00
+ * @brief   USPI register definition header file
  *
  * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
- *****************************************************************************/
+ ******************************************************************************/
 
 #ifndef __USPI_REG_H__
 #define __USPI_REG_H__
 
-#if defined ( __CC_ARM   )
+#if defined (__CC_ARM)
     #pragma anon_unions
 #endif
 
@@ -676,7 +676,7 @@ typedef struct
 /** @} end of USPI register group */
 /** @} end of REGISTER group */
 
-#if defined ( __CC_ARM   )
+#if defined (__CC_ARM)
     #pragma no_anon_unions
 #endif
 

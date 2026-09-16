@@ -1,7 +1,7 @@
 /**************************************************************************//**
  * @file     gpio.c
  * @version  V0.10
- * @brief   M251 GPIO driver source file
+ * @brief    GPIO driver source file
  *
  * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
@@ -33,18 +33,17 @@
  * @param[in]   u32Mode     Operation mode.  It could be \n
  *                          GPIO_MODE_INPUT, GPIO_MODE_OUTPUT, GPIO_MODE_OPEN_DRAIN, GPIO_MODE_QUASI.
  *
- *
  * @details     This function is used to set specified GPIO operation mode.
  */
 void GPIO_SetMode(GPIO_T *port, uint32_t u32PinMask, uint32_t u32Mode)
 {
     uint32_t i;
 
-    for (i = 0ul; i < GPIO_PIN_MAX; i++)
+    for (i = 0UL; i < GPIO_PIN_MAX; i++)
     {
-        if (u32PinMask & (1ul << i))
+        if ((u32PinMask & (1UL << i)) != 0UL)
         {
-            port->MODE = (port->MODE & ~(0x3ul << (i << 1ul))) | (u32Mode << (i << 1ul));
+            port->MODE = (port->MODE & ~(0x3UL << (i << 1))) | (u32Mode << (i << 1));
         }
     }
 }
@@ -60,7 +59,6 @@ void GPIO_SetMode(GPIO_T *port, uint32_t u32PinMask, uint32_t u32Mode)
  *                              It could be 0 ~ 7, 14, 15 for PF. \n
  * @param[in]   u32IntAttribs   The interrupt attribute of specified GPIO pin. It could be \n
  *                              GPIO_INT_RISING, GPIO_INT_FALLING, GPIO_INT_BOTH_EDGE, GPIO_INT_HIGH, GPIO_INT_LOW.
- *
  *
  * @details     This function is used to enable specified GPIO pin interrupt.
  */
@@ -110,11 +108,11 @@ void GPIO_SetSlewCtl(GPIO_T *port, uint32_t u32PinMask, uint32_t u32Mode)
 {
     uint32_t i;
 
-    for (i = 0ul; i < GPIO_PIN_MAX; i++)
+    for (i = 0UL; i < GPIO_PIN_MAX; i++)
     {
-        if (u32PinMask & (1ul << i))
+        if ((u32PinMask & (1UL << i)) != 0UL)
         {
-            port->SLEWCTL = (port->SLEWCTL & ~(0x3ul << (i << 1ul))) | (u32Mode << (i << 1ul));
+            port->SLEWCTL = (port->SLEWCTL & ~(0x3UL << (i << 1))) | (u32Mode << (i << 1));
         }
     }
 }
@@ -134,26 +132,23 @@ void GPIO_SetSlewCtl(GPIO_T *port, uint32_t u32PinMask, uint32_t u32Mode)
  *                          - \ref GPIO_PUSEL_PULL_UP
  *                          - \ref GPIO_PUSEL_PULL_DOWN
  *
- *
  * @details     Set the pin mode of specified GPIO pin.
  */
 void GPIO_SetPullCtl(GPIO_T *port, uint32_t u32PinMask, uint32_t u32Mode)
 {
     uint32_t i;
 
-    for (i = 0ul; i < GPIO_PIN_MAX; i++)
+    for (i = 0UL; i < GPIO_PIN_MAX; i++)
     {
-        if (u32PinMask & (1ul << i))
+        if ((u32PinMask & (1UL << i)) != 0UL)
         {
-            port->PUSEL = (port->PUSEL & ~(0x3ul << (i << 1ul))) | (u32Mode << (i << 1ul));
+            port->PUSEL = (port->PUSEL & ~(0x3UL << (i << 1))) | (u32Mode << (i << 1));
         }
     }
 }
 
 /** @} end of group GPIO_EXPORTED_FUNCTIONS */
-
 /** @} end of group GPIO_Driver */
-
 /** @} end of group Standard_Driver */
 
 /*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/

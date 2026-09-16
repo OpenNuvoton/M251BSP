@@ -17,6 +17,9 @@
 #define FLASH_PAGE_SIZE           512
 #define BUFFER_PAGE_SIZE          512
 
+void DataFlashWrite(uint32_t addr, uint32_t size, uint32_t buffer);
+void DataFlashRead(uint32_t addr, uint32_t size, uint32_t buffer);
+
 #endif  /* __DATA_FLASH_PROG_H__ */
 
 /*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/

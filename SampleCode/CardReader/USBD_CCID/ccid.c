@@ -162,12 +162,16 @@ void EP2_Handler(void)
             USBD_SET_PAYLOAD_LEN(EP2, EP2_MAX_PKT_SIZE);
 
             pUsbMessageBuffer += EP2_MAX_PKT_SIZE;
-            gi32UsbdMessageLength -= EP2_MAX_PKT_SIZE;
+            {
+                int32_t i32Tmp = gi32UsbdMessageLength;
+                gi32UsbdMessageLength = i32Tmp - EP2_MAX_PKT_SIZE;
+            }
         }
         else
         {
-            USBD_MemCopy((uint8_t *)(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP2)), pUsbMessageBuffer, gi32UsbdMessageLength);
-            USBD_SET_PAYLOAD_LEN(EP2, gi32UsbdMessageLength);
+            int32_t i32Len = gi32UsbdMessageLength;
+            USBD_MemCopy((uint8_t *)(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP2)), pUsbMessageBuffer, i32Len);
+            USBD_SET_PAYLOAD_LEN(EP2, i32Len);
             gi32UsbdMessageLength = 0;
             gu8IsBulkInReady = 0;
         }
@@ -183,14 +187,17 @@ void EP3_Handler(void)
     /* BULK OUT */
     static int offset = 0;
     uint32_t len;
+    uint32_t u32EpSts3;
 
-    if (g_u32OutToggle == (USBD->EPSTS0 & USBD_EPSTS0_EPSTS3_Msk))
+    u32EpSts3 = USBD->EPSTS0 & USBD_EPSTS0_EPSTS3_Msk;
+
+    if (g_u32OutToggle == u32EpSts3)
     {
         USBD_SET_PAYLOAD_LEN(EP3, EP3_MAX_PKT_SIZE);
     }
     else
     {
-        g_u32OutToggle = USBD->EPSTS0 & USBD_EPSTS0_EPSTS3_Msk;
+        g_u32OutToggle = u32EpSts3;
         len = USBD_GET_PAYLOAD_LEN(EP3);
 
         USBD_MemCopy(&UsbMessageBuffer[offset], (uint8_t *)(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP3)), len);
@@ -203,7 +210,10 @@ void EP3_Handler(void)
                 gi32UsbdMessageLength = USB_MESSAGE_HEADER_SIZE + make32(&UsbMessageBuffer[OFFSET_DWLENGTH]);
             }
 
-            gi32UsbdMessageLength -= (int) len;
+            {
+                int32_t i32Tmp = gi32UsbdMessageLength;
+                gi32UsbdMessageLength = i32Tmp - (int32_t)len;
+            }
 
             /* Prepare next reception if whole message not received */
             if (gi32UsbdMessageLength > 0)
@@ -374,12 +384,16 @@ void CCID_BulkInMessage(void)
             USBD_SET_PAYLOAD_LEN(EP2, EP2_MAX_PKT_SIZE);
 
             pUsbMessageBuffer += EP2_MAX_PKT_SIZE;
-            gi32UsbdMessageLength -= EP2_MAX_PKT_SIZE;
+            {
+                int32_t i32Tmp = gi32UsbdMessageLength;
+                gi32UsbdMessageLength = i32Tmp - EP2_MAX_PKT_SIZE;
+            }
         }
         else
         {
-            USBD_MemCopy((uint8_t *)(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP2)), pUsbMessageBuffer, gi32UsbdMessageLength);
-            USBD_SET_PAYLOAD_LEN(EP2, gi32UsbdMessageLength);
+            int32_t i32Len = gi32UsbdMessageLength;
+            USBD_MemCopy((uint8_t *)(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP2)), pUsbMessageBuffer, i32Len);
+            USBD_SET_PAYLOAD_LEN(EP2, i32Len);
             gi32UsbdMessageLength = 0;
             gu8IsBulkInReady = 0;
         }

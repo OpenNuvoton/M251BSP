@@ -1,7 +1,7 @@
-/**************************************************************************//**
- * @file     main.c
- * @version  V3.00
- * @brief    Demonstrate how to implement Wiegand26 protocol by PSIO.
+/***************************************************************************//**
+ * @file    main.c
+ * @version V3.00
+ * @brief   Demonstrate how to implement Wiegand26 protocol by PSIO.
  *
  * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
@@ -104,12 +104,15 @@ int main(void)
     printf("|          HZ1050 WIEGAND26 RFID Test Code             | \n");
     printf("| Please connected PSIO_CH0(PB.15) and PSIO_CH1(PC.4)  | \n");
     printf("| to device.                                           | \n");
+    printf("| Demo only: reader wiring and card timing are         | \n");
+    printf("| board-specific; production code should validate      | \n");
+    printf("| peer behavior and add recovery handling.             | \n");
     printf("+------------------------------------------------------+ \n");
 
     /* Use slot controller 0 and pin 0 */
-    sConfig.u8SlotCtrl   = PSIO_SC0;
-    sConfig.u8Data0Pin   = PSIO_PIN0;
-    sConfig.u8Data1Pin   = PSIO_PIN1;
+    sConfig.u8SlotCtrl = PSIO_SC0;
+    sConfig.u8Data0Pin = PSIO_PIN0;
+    sConfig.u8Data1Pin = PSIO_PIN1;
 
     /* Reset PSIO */
     SYS->IPRST2 |= SYS_IPRST2_PSIORST_Msk;
@@ -128,6 +131,5 @@ int main(void)
                , (u32Data & FACILITY_CODE_MSK) >> FACILITY_CODE_POS, (u32Data & CARD_CODE_MSK) >> CARD_CODE_POS);
     } while (1);
 }
-
 
 /*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/

@@ -1,7 +1,7 @@
-/**************************************************************************//**
- * @file     main.c
- * @version  V3.00
- * @brief    Demonstrate how to implement PS/2 host protocol by PSIO.
+/***************************************************************************//**
+ * @file    main.c
+ * @version V3.00
+ * @brief   Demonstrate how to implement PS/2 host protocol by PSIO.
  *
  * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
@@ -11,6 +11,8 @@
 #include "NuMicro.h"
 #include "PS2_Host_driver.h"
 
+#define PSIO_PS2_HOST_TRANSFER_TIMEOUT    (SystemCoreClock)
+
 
 /*---------------------------------------------------------------------------------------------------------*/
 /* Global variables                                                                                        */
@@ -19,12 +21,14 @@
 S_PSIO_PS2 g_sConfig;
 volatile uint32_t g_u32TxData = 0, g_u32RxData = 0;
 volatile uint32_t g_u32RxACK = 1;
+volatile uint32_t g_u32Ps2HostTimeout = 0;
 
 
 void PSIO_IRQHandler(void)
 {
     static uint8_t u8BitNumber = 0;
     uint8_t u8INT0Flag;
+    uint32_t u32TimeOutCnt;
 
     /* Get INT0 interrupt flag */
     u8INT0Flag = PSIO_GET_INT_FLAG(PSIO, PSIO_INTSTS_CON0IF_Msk);
@@ -47,7 +51,17 @@ void PSIO_IRQHandler(void)
         PSIO_START_SC(PSIO, g_sConfig.u8DataSC);
 
         /* Wait input buffer full */
-        while (!PSIO_GET_TRANSFER_STATUS(PSIO, PSIO_TRANSTS_INFULL0_Msk << (g_sConfig.u8DataPin * 4)));
+        u32TimeOutCnt = PSIO_PS2_HOST_TRANSFER_TIMEOUT;
+
+        while (!PSIO_GET_TRANSFER_STATUS(PSIO, PSIO_TRANSTS_INFULL0_Msk << (g_sConfig.u8DataPin * 4)))
+        {
+            if (u32TimeOutCnt-- == 0U)
+            {
+                g_u32Ps2HostTimeout = 1U;
+                PSIO_PS2_SET_STATUS(eHOST_IDLE);
+                return;
+            }
+        }
 
         /* Receive 11 bit */
         u32RxBuffer |= (PSIO_GET_INPUT_DATA(PSIO, g_sConfig.u8DataPin) << u8BitNumber);
@@ -73,7 +87,17 @@ void PSIO_IRQHandler(void)
             PSIO_START_SC(PSIO, g_sConfig.u8DataSC);
 
             /* Wait slot controller is not busy */
-            while (PSIO_GET_BUSY_FLAG(PSIO, g_sConfig.u8DataSC));
+            u32TimeOutCnt = PSIO_PS2_HOST_TRANSFER_TIMEOUT;
+
+            while (PSIO_GET_BUSY_FLAG(PSIO, g_sConfig.u8DataSC))
+            {
+                if (u32TimeOutCnt-- == 0U)
+                {
+                    g_u32Ps2HostTimeout = 1U;
+                    PSIO_PS2_SET_STATUS(eHOST_IDLE);
+                    return;
+                }
+            }
 
             /* Read data from buffer */
             g_u32RxACK = PSIO_GET_INPUT_DATA(PSIO, g_sConfig.u8DataPin);
@@ -93,11 +117,21 @@ void PSIO_IRQHandler(void)
             PSIO_START_SC(PSIO, g_sConfig.u8DataSC);
 
             /* Wait slot controller is not busy */
-            while (PSIO_GET_BUSY_FLAG(PSIO, g_sConfig.u8DataSC));
+            u32TimeOutCnt = PSIO_PS2_HOST_TRANSFER_TIMEOUT;
+
+            while (PSIO_GET_BUSY_FLAG(PSIO, g_sConfig.u8DataSC))
+            {
+                if (u32TimeOutCnt-- == 0U)
+                {
+                    g_u32Ps2HostTimeout = 1U;
+                    PSIO_PS2_SET_STATUS(eHOST_IDLE);
+                    return;
+                }
+            }
 
             /* Set check point action */
             /* For more efficient, accessing register directly */
-            PSIO->GNCT[g_sConfig.u8DataPin].CPCTL1   = PSIO_IN_BUFFER;     //input buffer
+            PSIO->GNCT[g_sConfig.u8DataPin].CPCTL1 = PSIO_IN_BUFFER; //input buffer
             u8BitNumber++;
         }
         else
@@ -183,6 +217,8 @@ void UART0_Init()
 
 int main()
 {
+    uint32_t u32TimeOutCnt = PSIO_PS2_HOST_TRANSFER_TIMEOUT;
+
     /* Unlock protected registers */
     SYS_UnlockReg();
 
@@ -200,21 +236,32 @@ int main()
     printf("|               PS/2 Host Sample Code                |\n");
     printf("|      Please connected PSIO_CH0(PB.15)(Clock)       |\n");
     printf("|      and PSIO_CH1(PC.4)(Data).                     |\n");
+    printf("| Demo sample keeps bounded transfer timeout guard   |\n");
     printf("******************************************************\n");
 
     /* Use slot controller 0/1 and pin 0/1 */
-    g_sConfig.u8ClockSC        = PSIO_SC0;
-    g_sConfig.u8DataSC         = PSIO_SC1;
-    g_sConfig.u8ClockPin       = PSIO_PIN0;
-    g_sConfig.u8DataPin        = PSIO_PIN1;
-    g_sConfig.p32ClockMFP      = &PB15;
-    g_sConfig.p32DataMFP       = &PC4;
+    g_sConfig.u8ClockSC = PSIO_SC0;
+    g_sConfig.u8DataSC = PSIO_SC1;
+    g_sConfig.u8ClockPin = PSIO_PIN0;
+    g_sConfig.u8DataPin = PSIO_PIN1;
+    g_sConfig.p32ClockMFP = &PB15;
+    g_sConfig.p32DataMFP = &PC4;
 
     /* Initialize PSIO setting for PS/2 host protocol */
     PSIO_PS2_Open(&g_sConfig);
 
     while (1)
     {
+        if (g_u32Ps2HostTimeout != 0U)
+        {
+            printf("Wait for PS/2 host transfer timeout. Keep bounded timeout protection in production code.\n");
+            PSIO_PS2_Close(&g_sConfig);
+
+            while (1)
+            {
+            }
+        }
+
         /* Set PSIO on read signal state */
         if (PSIO_PS2_GET_STATUS() != eHOST_READY_TO_READ)
         {
@@ -222,7 +269,17 @@ int main()
         }
 
         /* Receiving data */
-        while (PSIO_PS2_GET_STATUS() == eHOST_READ);
+        u32TimeOutCnt = PSIO_PS2_HOST_TRANSFER_TIMEOUT;
+
+        while (PSIO_PS2_GET_STATUS() == eHOST_READ)
+        {
+            if (u32TimeOutCnt-- == 0U)
+            {
+                g_u32Ps2HostTimeout = 1U;
+                PSIO_PS2_SET_STATUS(eHOST_IDLE);
+                break;
+            }
+        }
 
         /* Data was received */
         if (PSIO_PS2_GET_STATUS() == eHOST_IDLE)
@@ -242,7 +299,17 @@ int main()
             printf("[Host send to device]0x%x, 0x%x\n", u32Data, g_u32TxData);
             PSIO_PS2_HostSend(&g_sConfig);
 
-            while (PSIO_PS2_GET_STATUS() == eHOST_WRITE);
+            u32TimeOutCnt = PSIO_PS2_HOST_TRANSFER_TIMEOUT;
+
+            while (PSIO_PS2_GET_STATUS() == eHOST_WRITE)
+            {
+                if (u32TimeOutCnt-- == 0U)
+                {
+                    g_u32Ps2HostTimeout = 1U;
+                    PSIO_PS2_SET_STATUS(eHOST_IDLE);
+                    break;
+                }
+            }
         }
     }
 
@@ -251,6 +318,5 @@ int main()
 
     while (1);
 }
-
 
 /*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/

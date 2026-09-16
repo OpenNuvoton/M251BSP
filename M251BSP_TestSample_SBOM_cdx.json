@@ -1,0 +1,3135 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6",
+  "serialNumber": "urn:uuid:e894ef88-8e6e-4c19-aa1f-0e2973da28de",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-09-16T06:00:00Z",
+    "tools": {
+      "components": [
+        {
+          "type": "application",
+          "author": "anchore",
+          "name": "syft",
+          "version": "1.51.1"
+        }
+      ]
+    },
+    "authors": [
+      {
+        "name": "Nuvoton Technology Corp."
+      }
+    ],
+    "component": {
+      "type": "application",
+      "bom-ref": "047537cb01143a83",
+      "supplier": {
+        "name": "Nuvoton Technology Corp.",
+        "url": [
+          "https://www.nuvoton.com"
+        ]
+      },
+      "name": "MCU Test Sample",
+      "version": "V3.02.010",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:generic/nuvoton/mcu-test-sample@V3.02.010",
+      "properties": [
+        {
+          "name": "bsp:sbom-category",
+          "value": "test-sample"
+        },
+        {
+          "name": "bsp:scope",
+          "value": "Components used only for examples, demonstrations, validation, host-side utilities, or testing; not included in product runtime unless explicitly integrated by the user."
+        },
+        {
+          "name": "bsp:scope-policy-file",
+          "value": "test-sample-scope.yaml"
+        },
+        {
+          "name": "bsp:runtime-scope",
+          "value": "false"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "false"
+        },
+        {
+          "name": "bsp:test-sample-scope-include-path",
+          "value": "SampleCode/"
+        },
+        {
+          "name": "bsp:test-sample-scope-include-path",
+          "value": "ThirdParty/"
+        },
+        {
+          "name": "bsp:test-sample-scope-include-path",
+          "value": "Tool/"
+        },
+        {
+          "name": "bsp:test-sample-scope-exclude-path",
+          "value": "Document/"
+        },
+        {
+          "name": "bsp:test-sample-scope-exclude-path",
+          "value": "Library/"
+        },
+        {
+          "name": "bsp:test-sample-scope-exclude-path",
+          "value": "Tool/HIDTransferTest/Debug/HIDTransferTest.exe"
+        },
+        {
+          "name": "bsp:test-sample-scope-exclude-path",
+          "value": "Tool/TK/TouchView.exe"
+        },
+        {
+          "name": "bsp:test-sample-scope-exclude-path",
+          "value": "Tool/TK/TouchView_MP.exe"
+        }
+      ]
+    },
+    "supplier": {
+      "name": "Nuvoton Technology Corp.",
+      "url": [
+        "https://www.nuvoton.com"
+      ]
+    }
+  },
+  "components": [
+    {
+      "type": "library",
+      "bom-ref": "085a17eaa7fe8c16",
+      "name": "Lua - The Programming Language",
+      "version": "5.1.4",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "26384c6ee7d50863e3fb65fdc1bad452d9311f34d782390401de9bb130eecc4a"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "91d52c619c561db7f678b43456a2bd500064bfb1"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "cpe": "cpe:2.3:a:Lua_-_The_Programming_Language:Lua_-_The_Programming_Language:5.1.4:*:*:*:*:*:*:*",
+      "purl": "pkg:generic/lua---the-programming-language@5.1.4",
+      "properties": [
+        {
+          "name": "syft:package:foundBy",
+          "value": "pe-binary-package-cataloger"
+        },
+        {
+          "name": "syft:package:type",
+          "value": "binary"
+        },
+        {
+          "name": "syft:package:metadataType",
+          "value": "pe-binary"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:Lua_-_The_Programming_Language:Lua___The_Programming_Language:5.1.4:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:Lua___The_Programming_Language:Lua_-_The_Programming_Language:5.1.4:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:Lua___The_Programming_Language:Lua___The_Programming_Language:5.1.4:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:Lua_:Lua_-_The_Programming_Language:5.1.4:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:Lua_:Lua___The_Programming_Language:5.1.4:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:location:0:path",
+          "value": "/SampleCode/XOM/XOMLib/lua5.1.dll"
+        },
+        {
+          "name": "bsp:component-origin",
+          "value": "third-party"
+        },
+        {
+          "name": "bsp:license-status",
+          "value": "identified"
+        },
+        {
+          "name": "bsp:license-source",
+          "value": "manual-binary-license-mapping"
+        },
+        {
+          "name": "bsp:license-match-method",
+          "value": "sha256"
+        },
+        {
+          "name": "bsp:license-evidence-id",
+          "value": "samplecode-xom-xomlib-lua5.1-dll.md-15b240a83ea4efc8db8ee7276663690fca44d89e00872ea63197f906b9938913"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "false"
+        },
+        {
+          "name": "bsp:runtime-dependency",
+          "value": "false"
+        },
+        {
+          "name": "bsp:usage",
+          "value": "host-side Windows Lua runtime library bundled with the XOM sample code"
+        },
+        {
+          "name": "bsp:file-path",
+          "value": "SampleCode/XOM/XOMLib/lua5.1.dll"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "5cbcc843666d4114",
+      "name": "NUVPOS58",
+      "version": "1.01",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "ce0ed66a5db0a0c061fd92975939f48e93affad15f3f6e806d44b3e82078b3db"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "806369cd56fe410d0e0ef8d05b1cf5d57a673636"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "name": "Nuvoton Software License Agreement"
+          }
+        }
+      ],
+      "cpe": "cpe:2.3:a:NUVPOS58:NUVPOS58:1.01:*:*:*:*:*:*:*",
+      "purl": "pkg:generic/nuvpos58@1.01",
+      "properties": [
+        {
+          "name": "syft:package:foundBy",
+          "value": "pe-binary-package-cataloger"
+        },
+        {
+          "name": "syft:package:type",
+          "value": "binary"
+        },
+        {
+          "name": "syft:package:metadataType",
+          "value": "pe-binary"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:NUVPOS58:NUVPOS:1.01:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:NUVPOS:NUVPOS58:1.01:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:NUVPOS:NUVPOS:1.01:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:location:0:path",
+          "value": "/SampleCode/StdDriver/USBD_Printer_And_HID_Transfer/Windows driver/NUVPOS58_X64.exe"
+        },
+        {
+          "name": "bsp:component-origin",
+          "value": "first-party"
+        },
+        {
+          "name": "bsp:license-status",
+          "value": "proprietary"
+        },
+        {
+          "name": "bsp:license-source",
+          "value": "manual-binary-license-mapping"
+        },
+        {
+          "name": "bsp:license-match-method",
+          "value": "sha256"
+        },
+        {
+          "name": "bsp:license-evidence-id",
+          "value": "samplecode-usbd-printer-and-hid-transfer-nuvpos58-x64-exe.md-996a40a474efa07e48d4ba025137e24e21674f87eac2515af16bbef84cb73620"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "false"
+        },
+        {
+          "name": "bsp:runtime-dependency",
+          "value": "false"
+        },
+        {
+          "name": "bsp:usage",
+          "value": "host-side Windows printer driver installer"
+        },
+        {
+          "name": "bsp:file-path",
+          "value": "SampleCode/StdDriver/USBD_Printer_And_HID_Transfer/Windows driver/NUVPOS58_X64.exe"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "8ae8d398a2c06365",
+      "name": "NUVPOS58",
+      "version": "1.01",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "76e4d01dbf17ca7525e3a9156bd7e6274c5db0fff88a25943c25c8d2bdd38d92"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "f0fd2d0946f1d4632a963c9344439c93c5765b97"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "name": "Nuvoton Software License Agreement"
+          }
+        }
+      ],
+      "cpe": "cpe:2.3:a:NUVPOS58:NUVPOS58:1.01:*:*:*:*:*:*:*",
+      "purl": "pkg:generic/nuvpos58@1.01",
+      "properties": [
+        {
+          "name": "syft:package:foundBy",
+          "value": "pe-binary-package-cataloger"
+        },
+        {
+          "name": "syft:package:type",
+          "value": "binary"
+        },
+        {
+          "name": "syft:package:metadataType",
+          "value": "pe-binary"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:NUVPOS58:NUVPOS:1.01:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:NUVPOS:NUVPOS58:1.01:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:NUVPOS:NUVPOS:1.01:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:location:0:path",
+          "value": "/SampleCode/StdDriver/USBD_Printer_And_HID_Transfer/Windows driver/NUVPOS58_X86.exe"
+        },
+        {
+          "name": "bsp:component-origin",
+          "value": "first-party"
+        },
+        {
+          "name": "bsp:license-status",
+          "value": "proprietary"
+        },
+        {
+          "name": "bsp:license-source",
+          "value": "manual-binary-license-mapping"
+        },
+        {
+          "name": "bsp:license-match-method",
+          "value": "sha256"
+        },
+        {
+          "name": "bsp:license-evidence-id",
+          "value": "samplecode-usbd-printer-and-hid-transfer-nuvpos58-x86-exe.md-65aa0409908b7d0dcdc203f499118241bae430f92b2108337010cb95a9b516a6"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "false"
+        },
+        {
+          "name": "bsp:runtime-dependency",
+          "value": "false"
+        },
+        {
+          "name": "bsp:usage",
+          "value": "host-side Windows printer driver installer"
+        },
+        {
+          "name": "bsp:file-path",
+          "value": "SampleCode/StdDriver/USBD_Printer_And_HID_Transfer/Windows driver/NUVPOS58_X86.exe"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "10c8cf1bd12ee4f8",
+      "name": "NuvPos58 Driver",
+      "version": "1.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "911e4c166fe9b06c8e2e31ab46b56ef662c43cba208d2088ca1d41c6d584e183"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "ba09b88a8ffa9b06bcd30ad7b45f6acb880b4cb9"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "name": "Nuvoton Software License Agreement"
+          }
+        }
+      ],
+      "cpe": "cpe:2.3:a:NuvPos58_Driver:NuvPos58_Driver:1.0:*:*:*:*:*:*:*",
+      "purl": "pkg:generic/nuvpos58-driver@1.0",
+      "properties": [
+        {
+          "name": "syft:package:foundBy",
+          "value": "pe-binary-package-cataloger"
+        },
+        {
+          "name": "syft:package:type",
+          "value": "binary"
+        },
+        {
+          "name": "syft:package:metadataType",
+          "value": "pe-binary"
+        },
+        {
+          "name": "syft:location:0:path",
+          "value": "/SampleCode/StdDriver/USBD_Micro_Printer/Windows driver/NuvPos58_Driver.exe"
+        },
+        {
+          "name": "bsp:component-origin",
+          "value": "first-party"
+        },
+        {
+          "name": "bsp:license-status",
+          "value": "proprietary"
+        },
+        {
+          "name": "bsp:license-source",
+          "value": "manual-binary-license-mapping"
+        },
+        {
+          "name": "bsp:license-match-method",
+          "value": "sha256"
+        },
+        {
+          "name": "bsp:license-evidence-id",
+          "value": "samplecode-usbd-micro-printer-nuvpos58-driver-exe.md-023496b951b5c7043f995e01ca891e6662a71dfcd9cc148f067314ae146e2222"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "false"
+        },
+        {
+          "name": "bsp:runtime-dependency",
+          "value": "false"
+        },
+        {
+          "name": "bsp:usage",
+          "value": "host-side Windows printer driver installer"
+        },
+        {
+          "name": "bsp:file-path",
+          "value": "SampleCode/StdDriver/USBD_Micro_Printer/Windows driver/NuvPos58_Driver.exe"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "68c37d2906de8bf3",
+      "name": "WDF Coinstaller",
+      "version": "1.11.9200.16384",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "c7649879a10c9332fc0f9744c7e3224647aee9e7e62c7e21cf9e987462e3dd06"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "dee0ddc820cd0da546dff8bcf2bc490326da90a2"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "name": "Microsoft Software License Terms"
+          }
+        }
+      ],
+      "cpe": "cpe:2.3:a:WDF_Coinstaller:WDF_Coinstaller:1.11.9200.16384:*:*:*:*:*:*:*",
+      "purl": "pkg:generic/wdf-coinstaller@1.11.9200.16384",
+      "properties": [
+        {
+          "name": "syft:package:foundBy",
+          "value": "pe-binary-package-cataloger"
+        },
+        {
+          "name": "syft:package:type",
+          "value": "binary"
+        },
+        {
+          "name": "syft:package:metadataType",
+          "value": "pe-binary"
+        },
+        {
+          "name": "syft:location:0:path",
+          "value": "/SampleCode/ISP/ISP_DFU/WindowsDriver/amd64/WdfCoInstaller01011.dll"
+        },
+        {
+          "name": "bsp:component-origin",
+          "value": "third-party"
+        },
+        {
+          "name": "bsp:license-status",
+          "value": "vendor-license"
+        },
+        {
+          "name": "bsp:license-source",
+          "value": "manual-binary-license-mapping"
+        },
+        {
+          "name": "bsp:license-match-method",
+          "value": "sha256"
+        },
+        {
+          "name": "bsp:license-evidence-id",
+          "value": "windowsdriver-x86-wdfcoinstaller01011-dll.md-3b9d7d32b21ed617a344095018bd1efce8c8968a28bf69fb6f55902a1e54999a"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "false"
+        },
+        {
+          "name": "bsp:runtime-dependency",
+          "value": "false"
+        },
+        {
+          "name": "bsp:usage",
+          "value": "host-side Windows driver co-installer"
+        },
+        {
+          "name": "bsp:file-path",
+          "value": "SampleCode/ISP/ISP_DFU/WindowsDriver/amd64/WdfCoInstaller01011.dll"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "7b04c424b503306a",
+      "name": "WDF Coinstaller",
+      "version": "1.11.9200.16384",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "c7649879a10c9332fc0f9744c7e3224647aee9e7e62c7e21cf9e987462e3dd06"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "dee0ddc820cd0da546dff8bcf2bc490326da90a2"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "name": "Microsoft Software License Terms"
+          }
+        }
+      ],
+      "cpe": "cpe:2.3:a:WDF_Coinstaller:WDF_Coinstaller:1.11.9200.16384:*:*:*:*:*:*:*",
+      "purl": "pkg:generic/wdf-coinstaller@1.11.9200.16384",
+      "properties": [
+        {
+          "name": "syft:package:foundBy",
+          "value": "pe-binary-package-cataloger"
+        },
+        {
+          "name": "syft:package:type",
+          "value": "binary"
+        },
+        {
+          "name": "syft:package:metadataType",
+          "value": "pe-binary"
+        },
+        {
+          "name": "syft:location:0:path",
+          "value": "/SampleCode/ISP/ISP_DFU/WindowsDriver/x86/WdfCoInstaller01011.dll"
+        },
+        {
+          "name": "bsp:component-origin",
+          "value": "third-party"
+        },
+        {
+          "name": "bsp:license-status",
+          "value": "vendor-license"
+        },
+        {
+          "name": "bsp:license-source",
+          "value": "manual-binary-license-mapping"
+        },
+        {
+          "name": "bsp:license-match-method",
+          "value": "sha256"
+        },
+        {
+          "name": "bsp:license-evidence-id",
+          "value": "windowsdriver-x86-wdfcoinstaller01011-dll.md-3b9d7d32b21ed617a344095018bd1efce8c8968a28bf69fb6f55902a1e54999a"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "false"
+        },
+        {
+          "name": "bsp:runtime-dependency",
+          "value": "false"
+        },
+        {
+          "name": "bsp:usage",
+          "value": "host-side Windows driver co-installer"
+        },
+        {
+          "name": "bsp:file-path",
+          "value": "SampleCode/ISP/ISP_DFU/WindowsDriver/x86/WdfCoInstaller01011.dll"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "bf71cac99c5dbe91",
+      "name": "Windows Driver Foundation - User-mode Platform Device Update Co-Installer",
+      "version": "6.1.7600.16385",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "ebe3b7708dd974ee87efed3113028d266af87ca8dbae77c47c6f7612824d3d6c"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "1633b3715014c90d1c552cd757ef5de33c161dee"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "name": "Microsoft Software License Terms"
+          }
+        }
+      ],
+      "cpe": "cpe:2.3:a:Windows_Driver_Foundation_-_User-mode_Platform_Device_Update_Co-Installer:Windows_Driver_Foundation_-_User-mode_Platform_Device_Update_Co-Installer:6.1.7600.16385:*:*:*:*:*:*:*",
+      "purl": "pkg:generic/windows-driver-foundation---user-mode-platform-device-update-co-installer@6.1.7600.16385",
+      "properties": [
+        {
+          "name": "syft:package:foundBy",
+          "value": "pe-binary-package-cataloger"
+        },
+        {
+          "name": "syft:package:type",
+          "value": "binary"
+        },
+        {
+          "name": "syft:package:metadataType",
+          "value": "pe-binary"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:Windows_Driver_Foundation_-_User-mode_Platform_Device_Update_Co-Installer:Windows_Driver_Foundation___User_mode_Platform_Device_Update_Co_Installer:6.1.7600.16385:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:Windows_Driver_Foundation___User_mode_Platform_Device_Update_Co_Installer:Windows_Driver_Foundation_-_User-mode_Platform_Device_Update_Co-Installer:6.1.7600.16385:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:Windows_Driver_Foundation___User_mode_Platform_Device_Update_Co_Installer:Windows_Driver_Foundation___User_mode_Platform_Device_Update_Co_Installer:6.1.7600.16385:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:Windows_Driver_Foundation_-_User-mode_Platform_Device_Update_Co:Windows_Driver_Foundation_-_User-mode_Platform_Device_Update_Co-Installer:6.1.7600.16385:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:Windows_Driver_Foundation_-_User-mode_Platform_Device_Update_Co:Windows_Driver_Foundation___User_mode_Platform_Device_Update_Co_Installer:6.1.7600.16385:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:Windows_Driver_Foundation___User_mode_Platform_Device_Update_Co:Windows_Driver_Foundation_-_User-mode_Platform_Device_Update_Co-Installer:6.1.7600.16385:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:Windows_Driver_Foundation___User_mode_Platform_Device_Update_Co:Windows_Driver_Foundation___User_mode_Platform_Device_Update_Co_Installer:6.1.7600.16385:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:Windows_Driver_Foundation_-_User:Windows_Driver_Foundation_-_User-mode_Platform_Device_Update_Co-Installer:6.1.7600.16385:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:Windows_Driver_Foundation_-_User:Windows_Driver_Foundation___User_mode_Platform_Device_Update_Co_Installer:6.1.7600.16385:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:Windows_Driver_Foundation___User:Windows_Driver_Foundation_-_User-mode_Platform_Device_Update_Co-Installer:6.1.7600.16385:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:Windows_Driver_Foundation___User:Windows_Driver_Foundation___User_mode_Platform_Device_Update_Co_Installer:6.1.7600.16385:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:Windows_Driver_Foundation_:Windows_Driver_Foundation_-_User-mode_Platform_Device_Update_Co-Installer:6.1.7600.16385:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:Windows_Driver_Foundation_:Windows_Driver_Foundation___User_mode_Platform_Device_Update_Co_Installer:6.1.7600.16385:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:location:0:path",
+          "value": "/SampleCode/ISP/ISP_DFU/WindowsDriver/x86/winusbcoinstaller2.dll"
+        },
+        {
+          "name": "bsp:component-origin",
+          "value": "third-party"
+        },
+        {
+          "name": "bsp:license-status",
+          "value": "vendor-license"
+        },
+        {
+          "name": "bsp:license-source",
+          "value": "manual-binary-license-mapping"
+        },
+        {
+          "name": "bsp:license-match-method",
+          "value": "sha256"
+        },
+        {
+          "name": "bsp:license-evidence-id",
+          "value": "windowsdriver-x86-winusbcoinstaller2-dll.md-b0d19ae82d7ce187b97ecde1336006a2eb0cec3f10039884814149bd0a7f5c66"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "false"
+        },
+        {
+          "name": "bsp:runtime-dependency",
+          "value": "false"
+        },
+        {
+          "name": "bsp:usage",
+          "value": "host-side Windows driver co-installer"
+        },
+        {
+          "name": "bsp:file-path",
+          "value": "SampleCode/ISP/ISP_DFU/WindowsDriver/x86/winusbcoinstaller2.dll"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "7714612e35fdeff1",
+      "name": "XOMAddr",
+      "version": "1.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "10d3cf6d50b65b6adc13efd4c782ec7b09fd5894381e437c63517ccf7d7dfb6a"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "0367ea0b955ac74dfb957d91c75b3fa81889c7b5"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "name": "Nuvoton Software License Agreement"
+          }
+        }
+      ],
+      "cpe": "cpe:2.3:a:XOMAddr:XOMAddr:*:*:*:*:*:*:*:*",
+      "purl": "pkg:generic/xomaddr@1.0",
+      "properties": [
+        {
+          "name": "syft:package:foundBy",
+          "value": "pe-binary-package-cataloger"
+        },
+        {
+          "name": "syft:package:type",
+          "value": "binary"
+        },
+        {
+          "name": "syft:package:metadataType",
+          "value": "pe-binary"
+        },
+        {
+          "name": "syft:location:0:path",
+          "value": "/SampleCode/XOM/XOMLib/XOMAddr.exe"
+        },
+        {
+          "name": "bsp:component-origin",
+          "value": "first-party"
+        },
+        {
+          "name": "bsp:license-status",
+          "value": "proprietary"
+        },
+        {
+          "name": "bsp:license-source",
+          "value": "manual-binary-license-mapping"
+        },
+        {
+          "name": "bsp:license-match-method",
+          "value": "sha256"
+        },
+        {
+          "name": "bsp:license-evidence-id",
+          "value": "samplecode-xom-xomlib-xomaddr-exe.md-0e350c41db213eaea3b6f7aecfd6b40d9b65a55fc250221833784a211ff8b4ba"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "false"
+        },
+        {
+          "name": "bsp:runtime-dependency",
+          "value": "false"
+        },
+        {
+          "name": "bsp:usage",
+          "value": "host-side Windows XOM sample code post-build utility"
+        },
+        {
+          "name": "bsp:file-path",
+          "value": "SampleCode/XOM/XOMLib/XOMAddr.exe"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "b8389e2abd44a30e",
+      "name": "libusb-win32 - DLL",
+      "version": "1.2.6.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "4f18b5d2c28aa66b648c8683c6d09b52b92cbbee85984bbefad5f38a64bc2a14"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "bab236f840f1521c43bcbaa2a7b92f14f329bc70"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "LGPL-2.1-or-later"
+          }
+        }
+      ],
+      "cpe": "cpe:2.3:a:libusb-win32_-_DLL:libusb-win32_-_DLL:1.2.6.0:*:*:*:*:*:*:*",
+      "purl": "pkg:generic/libusb-win32---dll@1.2.6.0",
+      "properties": [
+        {
+          "name": "syft:package:foundBy",
+          "value": "pe-binary-package-cataloger"
+        },
+        {
+          "name": "syft:package:type",
+          "value": "binary"
+        },
+        {
+          "name": "syft:package:metadataType",
+          "value": "pe-binary"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb-win32_-_DLL:libusb_win32___DLL:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb_win32___DLL:libusb-win32_-_DLL:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb_win32___DLL:libusb_win32___DLL:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb-win32_:libusb-win32_-_DLL:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb-win32_:libusb_win32___DLL:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb_win32_:libusb-win32_-_DLL:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb_win32_:libusb_win32___DLL:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb:libusb-win32_-_DLL:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb:libusb_win32___DLL:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:location:0:path",
+          "value": "/SampleCode/ISP/ISP_DFU/WindowsDriver/amd64/libusb0.dll"
+        },
+        {
+          "name": "bsp:component-origin",
+          "value": "third-party"
+        },
+        {
+          "name": "bsp:license-status",
+          "value": "identified"
+        },
+        {
+          "name": "bsp:license-source",
+          "value": "manual-binary-license-mapping"
+        },
+        {
+          "name": "bsp:license-match-method",
+          "value": "sha256"
+        },
+        {
+          "name": "bsp:license-evidence-id",
+          "value": "windowsdriver-amd64-libusb0-dll.md-fc3448c9b865f92f8a6af9c43482a77afdb4489b221d56fb0ab7d5d8083242d0"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "false"
+        },
+        {
+          "name": "bsp:runtime-dependency",
+          "value": "false"
+        },
+        {
+          "name": "bsp:usage",
+          "value": "host-side Windows USB user-space library/tool dependency"
+        },
+        {
+          "name": "bsp:file-path",
+          "value": "SampleCode/ISP/ISP_DFU/WindowsDriver/amd64/libusb0.dll"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "86da19749c6dc703",
+      "name": "libusb-win32 - DLL",
+      "version": "1.2.6.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "00caca07869b19d10b370552ac7cc2f6f2ee246fc15db11650f6cd3f4ef9b666"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "3a238468009a6dea3e4f70821339185e56ea3b69"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "LGPL-2.1-or-later"
+          }
+        }
+      ],
+      "cpe": "cpe:2.3:a:libusb-win32_-_DLL:libusb-win32_-_DLL:1.2.6.0:*:*:*:*:*:*:*",
+      "purl": "pkg:generic/libusb-win32---dll@1.2.6.0",
+      "properties": [
+        {
+          "name": "syft:package:foundBy",
+          "value": "pe-binary-package-cataloger"
+        },
+        {
+          "name": "syft:package:type",
+          "value": "binary"
+        },
+        {
+          "name": "syft:package:metadataType",
+          "value": "pe-binary"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb-win32_-_DLL:libusb_win32___DLL:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb_win32___DLL:libusb-win32_-_DLL:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb_win32___DLL:libusb_win32___DLL:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb-win32_:libusb-win32_-_DLL:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb-win32_:libusb_win32___DLL:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb_win32_:libusb-win32_-_DLL:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb_win32_:libusb_win32___DLL:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb:libusb-win32_-_DLL:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb:libusb_win32___DLL:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:location:0:path",
+          "value": "/SampleCode/ISP/ISP_DFU/WindowsDriver/x86/libusb0_x86.dll"
+        },
+        {
+          "name": "bsp:component-origin",
+          "value": "third-party"
+        },
+        {
+          "name": "bsp:license-status",
+          "value": "identified"
+        },
+        {
+          "name": "bsp:license-source",
+          "value": "manual-binary-license-mapping"
+        },
+        {
+          "name": "bsp:license-match-method",
+          "value": "sha256"
+        },
+        {
+          "name": "bsp:license-evidence-id",
+          "value": "windowsdriver-x86-libusb0-x86-dll.md-389d1248eec5ee111213a9acb023d1b9827a729fa9123d2b1e9fe3c143954bfc"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "false"
+        },
+        {
+          "name": "bsp:runtime-dependency",
+          "value": "false"
+        },
+        {
+          "name": "bsp:usage",
+          "value": "host-side Windows USB user-space library/tool dependency"
+        },
+        {
+          "name": "bsp:file-path",
+          "value": "SampleCode/ISP/ISP_DFU/WindowsDriver/x86/libusb0_x86.dll"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "c43e2cae2400373c",
+      "name": "libusb-win32 - Install-Filter",
+      "version": "1.2.6.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "5e84d13636fbce7869cddc8b20c7d83fa0063e98c319e8e5ab751edc9ee1da76"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "7dd82b6d52a840c4979a7515fc7a9ca3725363c4"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "LGPL-2.1-or-later"
+          }
+        }
+      ],
+      "cpe": "cpe:2.3:a:libusb-win32_-_Install-Filter:libusb-win32_-_Install-Filter:1.2.6.0:*:*:*:*:*:*:*",
+      "purl": "pkg:generic/libusb-win32---install-filter@1.2.6.0",
+      "properties": [
+        {
+          "name": "syft:package:foundBy",
+          "value": "pe-binary-package-cataloger"
+        },
+        {
+          "name": "syft:package:type",
+          "value": "binary"
+        },
+        {
+          "name": "syft:package:metadataType",
+          "value": "pe-binary"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb-win32_-_Install-Filter:libusb_win32___Install_Filter:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb_win32___Install_Filter:libusb-win32_-_Install-Filter:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb_win32___Install_Filter:libusb_win32___Install_Filter:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb-win32_-_Install:libusb-win32_-_Install-Filter:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb-win32_-_Install:libusb_win32___Install_Filter:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb_win32___Install:libusb-win32_-_Install-Filter:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb_win32___Install:libusb_win32___Install_Filter:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb-win32_:libusb-win32_-_Install-Filter:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb-win32_:libusb_win32___Install_Filter:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb_win32_:libusb-win32_-_Install-Filter:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb_win32_:libusb_win32___Install_Filter:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb:libusb-win32_-_Install-Filter:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb:libusb_win32___Install_Filter:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:location:0:path",
+          "value": "/SampleCode/ISP/ISP_DFU/WindowsDriver/amd64/libusb0_x86.dll"
+        },
+        {
+          "name": "bsp:component-origin",
+          "value": "third-party"
+        },
+        {
+          "name": "bsp:license-status",
+          "value": "identified"
+        },
+        {
+          "name": "bsp:license-source",
+          "value": "manual-binary-license-mapping"
+        },
+        {
+          "name": "bsp:license-match-method",
+          "value": "sha256"
+        },
+        {
+          "name": "bsp:license-evidence-id",
+          "value": "windowsdriver-x86-libusb0-dll.md-b58e95b36bc02292609bab19fa63717f05a8fb38fb582161d471289c2e93fa6c"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "false"
+        },
+        {
+          "name": "bsp:runtime-dependency",
+          "value": "false"
+        },
+        {
+          "name": "bsp:usage",
+          "value": "host-side Windows USB user-space library/tool dependency"
+        },
+        {
+          "name": "bsp:file-path",
+          "value": "SampleCode/ISP/ISP_DFU/WindowsDriver/amd64/libusb0_x86.dll"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "ff1204fa159e3d67",
+      "name": "libusb-win32 - Install-Filter",
+      "version": "1.2.6.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "5e84d13636fbce7869cddc8b20c7d83fa0063e98c319e8e5ab751edc9ee1da76"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "7dd82b6d52a840c4979a7515fc7a9ca3725363c4"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "LGPL-2.1-or-later"
+          }
+        }
+      ],
+      "cpe": "cpe:2.3:a:libusb-win32_-_Install-Filter:libusb-win32_-_Install-Filter:1.2.6.0:*:*:*:*:*:*:*",
+      "purl": "pkg:generic/libusb-win32---install-filter@1.2.6.0",
+      "properties": [
+        {
+          "name": "syft:package:foundBy",
+          "value": "pe-binary-package-cataloger"
+        },
+        {
+          "name": "syft:package:type",
+          "value": "binary"
+        },
+        {
+          "name": "syft:package:metadataType",
+          "value": "pe-binary"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb-win32_-_Install-Filter:libusb_win32___Install_Filter:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb_win32___Install_Filter:libusb-win32_-_Install-Filter:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb_win32___Install_Filter:libusb_win32___Install_Filter:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb-win32_-_Install:libusb-win32_-_Install-Filter:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb-win32_-_Install:libusb_win32___Install_Filter:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb_win32___Install:libusb-win32_-_Install-Filter:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb_win32___Install:libusb_win32___Install_Filter:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb-win32_:libusb-win32_-_Install-Filter:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb-win32_:libusb_win32___Install_Filter:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb_win32_:libusb-win32_-_Install-Filter:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb_win32_:libusb_win32___Install_Filter:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb:libusb-win32_-_Install-Filter:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb:libusb_win32___Install_Filter:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:location:0:path",
+          "value": "/SampleCode/ISP/ISP_DFU/WindowsDriver/x86/install-filter.exe"
+        },
+        {
+          "name": "bsp:component-origin",
+          "value": "third-party"
+        },
+        {
+          "name": "bsp:license-status",
+          "value": "identified"
+        },
+        {
+          "name": "bsp:license-source",
+          "value": "manual-binary-license-mapping"
+        },
+        {
+          "name": "bsp:license-match-method",
+          "value": "sha256"
+        },
+        {
+          "name": "bsp:license-evidence-id",
+          "value": "windowsdriver-x86-libusb0-dll.md-b58e95b36bc02292609bab19fa63717f05a8fb38fb582161d471289c2e93fa6c"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "false"
+        },
+        {
+          "name": "bsp:runtime-dependency",
+          "value": "false"
+        },
+        {
+          "name": "bsp:usage",
+          "value": "host-side Windows USB user-space library/tool dependency"
+        },
+        {
+          "name": "bsp:file-path",
+          "value": "SampleCode/ISP/ISP_DFU/WindowsDriver/x86/install-filter.exe"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "b816c3bf0b89a4c7",
+      "name": "libusb-win32 - Install-Filter",
+      "version": "1.2.6.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "5e84d13636fbce7869cddc8b20c7d83fa0063e98c319e8e5ab751edc9ee1da76"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "7dd82b6d52a840c4979a7515fc7a9ca3725363c4"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "LGPL-2.1-or-later"
+          }
+        }
+      ],
+      "cpe": "cpe:2.3:a:libusb-win32_-_Install-Filter:libusb-win32_-_Install-Filter:1.2.6.0:*:*:*:*:*:*:*",
+      "purl": "pkg:generic/libusb-win32---install-filter@1.2.6.0",
+      "properties": [
+        {
+          "name": "syft:package:foundBy",
+          "value": "pe-binary-package-cataloger"
+        },
+        {
+          "name": "syft:package:type",
+          "value": "binary"
+        },
+        {
+          "name": "syft:package:metadataType",
+          "value": "pe-binary"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb-win32_-_Install-Filter:libusb_win32___Install_Filter:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb_win32___Install_Filter:libusb-win32_-_Install-Filter:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb_win32___Install_Filter:libusb_win32___Install_Filter:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb-win32_-_Install:libusb-win32_-_Install-Filter:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb-win32_-_Install:libusb_win32___Install_Filter:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb_win32___Install:libusb-win32_-_Install-Filter:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb_win32___Install:libusb_win32___Install_Filter:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb-win32_:libusb-win32_-_Install-Filter:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb-win32_:libusb_win32___Install_Filter:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb_win32_:libusb-win32_-_Install-Filter:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb_win32_:libusb_win32___Install_Filter:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb:libusb-win32_-_Install-Filter:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:libusb:libusb_win32___Install_Filter:1.2.6.0:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:location:0:path",
+          "value": "/SampleCode/ISP/ISP_DFU/WindowsDriver/x86/libusb0.dll"
+        },
+        {
+          "name": "bsp:component-origin",
+          "value": "third-party"
+        },
+        {
+          "name": "bsp:license-status",
+          "value": "identified"
+        },
+        {
+          "name": "bsp:license-source",
+          "value": "manual-binary-license-mapping"
+        },
+        {
+          "name": "bsp:license-match-method",
+          "value": "sha256"
+        },
+        {
+          "name": "bsp:license-evidence-id",
+          "value": "windowsdriver-x86-libusb0-dll.md-b58e95b36bc02292609bab19fa63717f05a8fb38fb582161d471289c2e93fa6c"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "false"
+        },
+        {
+          "name": "bsp:runtime-dependency",
+          "value": "false"
+        },
+        {
+          "name": "bsp:usage",
+          "value": "host-side Windows USB user-space library/tool dependency"
+        },
+        {
+          "name": "bsp:file-path",
+          "value": "SampleCode/ISP/ISP_DFU/WindowsDriver/x86/libusb0.dll"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "dfd339558d9de869",
+      "name": "libusbK.dll",
+      "version": "3.0.7.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "592cd24bae321f1cb6cbe2f6e1bc5c05e279328e1c86814eb64ea1e89fdea188"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "fa8489441ac82d22567b5c3d5b494576df54f37d"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "BSD-3-Clause OR GPL-3.0-only"
+        }
+      ],
+      "cpe": "cpe:2.3:a:libusbK.dll:libusbK.dll:3.0.7.0:*:*:*:*:*:*:*",
+      "purl": "pkg:generic/libusbk.dll@3.0.7.0",
+      "properties": [
+        {
+          "name": "syft:package:foundBy",
+          "value": "pe-binary-package-cataloger"
+        },
+        {
+          "name": "syft:package:type",
+          "value": "binary"
+        },
+        {
+          "name": "syft:package:metadataType",
+          "value": "pe-binary"
+        },
+        {
+          "name": "syft:location:0:path",
+          "value": "/SampleCode/ISP/ISP_DFU/WindowsDriver/amd64/libusbK.dll"
+        },
+        {
+          "name": "bsp:component-origin",
+          "value": "third-party"
+        },
+        {
+          "name": "bsp:license-status",
+          "value": "identified"
+        },
+        {
+          "name": "bsp:license-source",
+          "value": "manual-binary-license-mapping"
+        },
+        {
+          "name": "bsp:license-match-method",
+          "value": "sha256"
+        },
+        {
+          "name": "bsp:license-evidence-id",
+          "value": "windowsdriver-amd64-libusbk-dll.md-4139d0df4c69e1ce49eaae328920bfab26e45e3c90a77059988870c357ce7eb5"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "false"
+        },
+        {
+          "name": "bsp:runtime-dependency",
+          "value": "false"
+        },
+        {
+          "name": "bsp:usage",
+          "value": "host-side Windows USB driver/library dependency"
+        },
+        {
+          "name": "bsp:file-path",
+          "value": "SampleCode/ISP/ISP_DFU/WindowsDriver/amd64/libusbK.dll"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "2ece3c745f6fb48d",
+      "name": "libusbK.dll",
+      "version": "3.0.7.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "22803c719494f193d22519bfaff9484fecdcf1fadd6f082efd024fcee0b97ba4"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "fc2350e45b0c7bdac7ac35f42b65f5fdfd622464"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "BSD-3-Clause OR GPL-3.0-only"
+        }
+      ],
+      "cpe": "cpe:2.3:a:libusbK.dll:libusbK.dll:3.0.7.0:*:*:*:*:*:*:*",
+      "purl": "pkg:generic/libusbk.dll@3.0.7.0",
+      "properties": [
+        {
+          "name": "syft:package:foundBy",
+          "value": "pe-binary-package-cataloger"
+        },
+        {
+          "name": "syft:package:type",
+          "value": "binary"
+        },
+        {
+          "name": "syft:package:metadataType",
+          "value": "pe-binary"
+        },
+        {
+          "name": "syft:location:0:path",
+          "value": "/SampleCode/ISP/ISP_DFU/WindowsDriver/amd64/libusbK_x86.dll"
+        },
+        {
+          "name": "bsp:component-origin",
+          "value": "third-party"
+        },
+        {
+          "name": "bsp:license-status",
+          "value": "identified"
+        },
+        {
+          "name": "bsp:license-source",
+          "value": "manual-binary-license-mapping"
+        },
+        {
+          "name": "bsp:license-match-method",
+          "value": "sha256"
+        },
+        {
+          "name": "bsp:license-evidence-id",
+          "value": "windowsdriver-x86-libusbk-dll.md-ed1e70d0d6dbd31b41d9aa95e27121f4c9dd53267c941ee3edd0cfc2ca59580f"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "false"
+        },
+        {
+          "name": "bsp:runtime-dependency",
+          "value": "false"
+        },
+        {
+          "name": "bsp:usage",
+          "value": "host-side Windows USB driver/library dependency"
+        },
+        {
+          "name": "bsp:file-path",
+          "value": "SampleCode/ISP/ISP_DFU/WindowsDriver/amd64/libusbK_x86.dll"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "fe96b57fa413e90e",
+      "name": "libusbK.dll",
+      "version": "3.0.7.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "22803c719494f193d22519bfaff9484fecdcf1fadd6f082efd024fcee0b97ba4"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "fc2350e45b0c7bdac7ac35f42b65f5fdfd622464"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "BSD-3-Clause OR GPL-3.0-only"
+        }
+      ],
+      "cpe": "cpe:2.3:a:libusbK.dll:libusbK.dll:3.0.7.0:*:*:*:*:*:*:*",
+      "purl": "pkg:generic/libusbk.dll@3.0.7.0",
+      "properties": [
+        {
+          "name": "syft:package:foundBy",
+          "value": "pe-binary-package-cataloger"
+        },
+        {
+          "name": "syft:package:type",
+          "value": "binary"
+        },
+        {
+          "name": "syft:package:metadataType",
+          "value": "pe-binary"
+        },
+        {
+          "name": "syft:location:0:path",
+          "value": "/SampleCode/ISP/ISP_DFU/WindowsDriver/x86/libusbK.dll"
+        },
+        {
+          "name": "bsp:component-origin",
+          "value": "third-party"
+        },
+        {
+          "name": "bsp:license-status",
+          "value": "identified"
+        },
+        {
+          "name": "bsp:license-source",
+          "value": "manual-binary-license-mapping"
+        },
+        {
+          "name": "bsp:license-match-method",
+          "value": "sha256"
+        },
+        {
+          "name": "bsp:license-evidence-id",
+          "value": "windowsdriver-x86-libusbk-dll.md-ed1e70d0d6dbd31b41d9aa95e27121f4c9dd53267c941ee3edd0cfc2ca59580f"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "false"
+        },
+        {
+          "name": "bsp:runtime-dependency",
+          "value": "false"
+        },
+        {
+          "name": "bsp:usage",
+          "value": "host-side Windows USB driver/library dependency"
+        },
+        {
+          "name": "bsp:file-path",
+          "value": "SampleCode/ISP/ISP_DFU/WindowsDriver/x86/libusbK.dll"
+        }
+      ]
+    },
+    {
+      "type": "file",
+      "bom-ref": "fa54aa801e5956bd",
+      "name": "SampleCode/ISP/ISP_DFU/WindowsDriver/amd64/WdfCoInstaller01011.dll",
+      "version": "1.11.9200.16384",
+      "hashes": [
+        {
+          "alg": "SHA-1",
+          "content": "dee0ddc820cd0da546dff8bcf2bc490326da90a2"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "c7649879a10c9332fc0f9744c7e3224647aee9e7e62c7e21cf9e987462e3dd06"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "name": "Microsoft Software License Terms"
+          }
+        }
+      ],
+      "purl": "pkg:generic/samplecode-isp-isp_dfu-windowsdriver-amd64-wdfcoinstaller01011.dll@1.11.9200.16384",
+      "properties": [
+        {
+          "name": "bsp:component-origin",
+          "value": "third-party"
+        },
+        {
+          "name": "bsp:license-status",
+          "value": "vendor-license"
+        },
+        {
+          "name": "bsp:license-source",
+          "value": "manual-binary-license-mapping"
+        },
+        {
+          "name": "bsp:license-match-method",
+          "value": "sha256"
+        },
+        {
+          "name": "bsp:license-evidence-id",
+          "value": "windowsdriver-x86-wdfcoinstaller01011-dll.md-3b9d7d32b21ed617a344095018bd1efce8c8968a28bf69fb6f55902a1e54999a"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "false"
+        },
+        {
+          "name": "bsp:runtime-dependency",
+          "value": "false"
+        },
+        {
+          "name": "bsp:usage",
+          "value": "host-side Windows driver co-installer"
+        }
+      ]
+    },
+    {
+      "type": "file",
+      "bom-ref": "5ca95c995a8baa06",
+      "name": "SampleCode/ISP/ISP_DFU/WindowsDriver/amd64/libusb0.dll",
+      "version": "1.2.6.0",
+      "hashes": [
+        {
+          "alg": "SHA-1",
+          "content": "bab236f840f1521c43bcbaa2a7b92f14f329bc70"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "4f18b5d2c28aa66b648c8683c6d09b52b92cbbee85984bbefad5f38a64bc2a14"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "LGPL-2.1-or-later"
+          }
+        }
+      ],
+      "purl": "pkg:generic/samplecode-isp-isp_dfu-windowsdriver-amd64-libusb0.dll@1.2.6.0",
+      "properties": [
+        {
+          "name": "bsp:component-origin",
+          "value": "third-party"
+        },
+        {
+          "name": "bsp:license-status",
+          "value": "identified"
+        },
+        {
+          "name": "bsp:license-source",
+          "value": "manual-binary-license-mapping"
+        },
+        {
+          "name": "bsp:license-match-method",
+          "value": "sha256"
+        },
+        {
+          "name": "bsp:license-evidence-id",
+          "value": "windowsdriver-amd64-libusb0-dll.md-fc3448c9b865f92f8a6af9c43482a77afdb4489b221d56fb0ab7d5d8083242d0"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "false"
+        },
+        {
+          "name": "bsp:runtime-dependency",
+          "value": "false"
+        },
+        {
+          "name": "bsp:usage",
+          "value": "host-side Windows USB user-space library/tool dependency"
+        }
+      ]
+    },
+    {
+      "type": "file",
+      "bom-ref": "61d24f04e410616e",
+      "name": "SampleCode/ISP/ISP_DFU/WindowsDriver/amd64/libusb0_x86.dll",
+      "version": "1.2.6.0",
+      "hashes": [
+        {
+          "alg": "SHA-1",
+          "content": "7dd82b6d52a840c4979a7515fc7a9ca3725363c4"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "5e84d13636fbce7869cddc8b20c7d83fa0063e98c319e8e5ab751edc9ee1da76"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "LGPL-2.1-or-later"
+          }
+        }
+      ],
+      "purl": "pkg:generic/samplecode-isp-isp_dfu-windowsdriver-amd64-libusb0_x86.dll@1.2.6.0",
+      "properties": [
+        {
+          "name": "bsp:component-origin",
+          "value": "third-party"
+        },
+        {
+          "name": "bsp:license-status",
+          "value": "identified"
+        },
+        {
+          "name": "bsp:license-source",
+          "value": "manual-binary-license-mapping"
+        },
+        {
+          "name": "bsp:license-match-method",
+          "value": "sha256"
+        },
+        {
+          "name": "bsp:license-evidence-id",
+          "value": "windowsdriver-x86-libusb0-dll.md-b58e95b36bc02292609bab19fa63717f05a8fb38fb582161d471289c2e93fa6c"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "false"
+        },
+        {
+          "name": "bsp:runtime-dependency",
+          "value": "false"
+        },
+        {
+          "name": "bsp:usage",
+          "value": "host-side Windows USB user-space library/tool dependency"
+        }
+      ]
+    },
+    {
+      "type": "file",
+      "bom-ref": "4c6b8e3b6a5c39bb",
+      "name": "SampleCode/ISP/ISP_DFU/WindowsDriver/amd64/libusbK.dll",
+      "version": "3.0.7.0",
+      "hashes": [
+        {
+          "alg": "SHA-1",
+          "content": "fa8489441ac82d22567b5c3d5b494576df54f37d"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "592cd24bae321f1cb6cbe2f6e1bc5c05e279328e1c86814eb64ea1e89fdea188"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "BSD-3-Clause OR GPL-3.0-only"
+        }
+      ],
+      "purl": "pkg:generic/samplecode-isp-isp_dfu-windowsdriver-amd64-libusbk.dll@3.0.7.0",
+      "properties": [
+        {
+          "name": "bsp:component-origin",
+          "value": "third-party"
+        },
+        {
+          "name": "bsp:license-status",
+          "value": "identified"
+        },
+        {
+          "name": "bsp:license-source",
+          "value": "manual-binary-license-mapping"
+        },
+        {
+          "name": "bsp:license-match-method",
+          "value": "sha256"
+        },
+        {
+          "name": "bsp:license-evidence-id",
+          "value": "windowsdriver-amd64-libusbk-dll.md-4139d0df4c69e1ce49eaae328920bfab26e45e3c90a77059988870c357ce7eb5"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "false"
+        },
+        {
+          "name": "bsp:runtime-dependency",
+          "value": "false"
+        },
+        {
+          "name": "bsp:usage",
+          "value": "host-side Windows USB driver/library dependency"
+        }
+      ]
+    },
+    {
+      "type": "file",
+      "bom-ref": "081a41e9e7d4fe80",
+      "name": "SampleCode/ISP/ISP_DFU/WindowsDriver/amd64/libusbK_x86.dll",
+      "version": "3.0.7.0",
+      "hashes": [
+        {
+          "alg": "SHA-1",
+          "content": "fc2350e45b0c7bdac7ac35f42b65f5fdfd622464"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "22803c719494f193d22519bfaff9484fecdcf1fadd6f082efd024fcee0b97ba4"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "BSD-3-Clause OR GPL-3.0-only"
+        }
+      ],
+      "purl": "pkg:generic/samplecode-isp-isp_dfu-windowsdriver-amd64-libusbk_x86.dll@3.0.7.0",
+      "properties": [
+        {
+          "name": "bsp:component-origin",
+          "value": "third-party"
+        },
+        {
+          "name": "bsp:license-status",
+          "value": "identified"
+        },
+        {
+          "name": "bsp:license-source",
+          "value": "manual-binary-license-mapping"
+        },
+        {
+          "name": "bsp:license-match-method",
+          "value": "sha256"
+        },
+        {
+          "name": "bsp:license-evidence-id",
+          "value": "windowsdriver-x86-libusbk-dll.md-ed1e70d0d6dbd31b41d9aa95e27121f4c9dd53267c941ee3edd0cfc2ca59580f"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "false"
+        },
+        {
+          "name": "bsp:runtime-dependency",
+          "value": "false"
+        },
+        {
+          "name": "bsp:usage",
+          "value": "host-side Windows USB driver/library dependency"
+        }
+      ]
+    },
+    {
+      "type": "file",
+      "bom-ref": "f8bbc17e9ea529e5",
+      "name": "SampleCode/ISP/ISP_DFU/WindowsDriver/x86/WdfCoInstaller01011.dll",
+      "version": "1.11.9200.16384",
+      "hashes": [
+        {
+          "alg": "SHA-1",
+          "content": "dee0ddc820cd0da546dff8bcf2bc490326da90a2"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "c7649879a10c9332fc0f9744c7e3224647aee9e7e62c7e21cf9e987462e3dd06"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "name": "Microsoft Software License Terms"
+          }
+        }
+      ],
+      "purl": "pkg:generic/samplecode-isp-isp_dfu-windowsdriver-x86-wdfcoinstaller01011.dll@1.11.9200.16384",
+      "properties": [
+        {
+          "name": "bsp:component-origin",
+          "value": "third-party"
+        },
+        {
+          "name": "bsp:license-status",
+          "value": "vendor-license"
+        },
+        {
+          "name": "bsp:license-source",
+          "value": "manual-binary-license-mapping"
+        },
+        {
+          "name": "bsp:license-match-method",
+          "value": "sha256"
+        },
+        {
+          "name": "bsp:license-evidence-id",
+          "value": "windowsdriver-x86-wdfcoinstaller01011-dll.md-3b9d7d32b21ed617a344095018bd1efce8c8968a28bf69fb6f55902a1e54999a"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "false"
+        },
+        {
+          "name": "bsp:runtime-dependency",
+          "value": "false"
+        },
+        {
+          "name": "bsp:usage",
+          "value": "host-side Windows driver co-installer"
+        }
+      ]
+    },
+    {
+      "type": "file",
+      "bom-ref": "7ac17bbe7440dac9",
+      "name": "SampleCode/ISP/ISP_DFU/WindowsDriver/x86/install-filter.exe",
+      "version": "1.2.6.0",
+      "hashes": [
+        {
+          "alg": "SHA-1",
+          "content": "7dd82b6d52a840c4979a7515fc7a9ca3725363c4"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "5e84d13636fbce7869cddc8b20c7d83fa0063e98c319e8e5ab751edc9ee1da76"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "LGPL-2.1-or-later"
+          }
+        }
+      ],
+      "purl": "pkg:generic/samplecode-isp-isp_dfu-windowsdriver-x86-install-filter.exe@1.2.6.0",
+      "properties": [
+        {
+          "name": "bsp:component-origin",
+          "value": "third-party"
+        },
+        {
+          "name": "bsp:license-status",
+          "value": "identified"
+        },
+        {
+          "name": "bsp:license-source",
+          "value": "manual-binary-license-mapping"
+        },
+        {
+          "name": "bsp:license-match-method",
+          "value": "sha256"
+        },
+        {
+          "name": "bsp:license-evidence-id",
+          "value": "windowsdriver-x86-libusb0-dll.md-b58e95b36bc02292609bab19fa63717f05a8fb38fb582161d471289c2e93fa6c"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "false"
+        },
+        {
+          "name": "bsp:runtime-dependency",
+          "value": "false"
+        },
+        {
+          "name": "bsp:usage",
+          "value": "host-side Windows USB user-space library/tool dependency"
+        }
+      ]
+    },
+    {
+      "type": "file",
+      "bom-ref": "ef19ac8cdf5e28b7",
+      "name": "SampleCode/ISP/ISP_DFU/WindowsDriver/x86/libusb0.dll",
+      "version": "1.2.6.0",
+      "hashes": [
+        {
+          "alg": "SHA-1",
+          "content": "7dd82b6d52a840c4979a7515fc7a9ca3725363c4"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "5e84d13636fbce7869cddc8b20c7d83fa0063e98c319e8e5ab751edc9ee1da76"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "LGPL-2.1-or-later"
+          }
+        }
+      ],
+      "purl": "pkg:generic/samplecode-isp-isp_dfu-windowsdriver-x86-libusb0.dll@1.2.6.0",
+      "properties": [
+        {
+          "name": "bsp:component-origin",
+          "value": "third-party"
+        },
+        {
+          "name": "bsp:license-status",
+          "value": "identified"
+        },
+        {
+          "name": "bsp:license-source",
+          "value": "manual-binary-license-mapping"
+        },
+        {
+          "name": "bsp:license-match-method",
+          "value": "sha256"
+        },
+        {
+          "name": "bsp:license-evidence-id",
+          "value": "windowsdriver-x86-libusb0-dll.md-b58e95b36bc02292609bab19fa63717f05a8fb38fb582161d471289c2e93fa6c"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "false"
+        },
+        {
+          "name": "bsp:runtime-dependency",
+          "value": "false"
+        },
+        {
+          "name": "bsp:usage",
+          "value": "host-side Windows USB user-space library/tool dependency"
+        }
+      ]
+    },
+    {
+      "type": "file",
+      "bom-ref": "68f3b1df45f1bbf4",
+      "name": "SampleCode/ISP/ISP_DFU/WindowsDriver/x86/libusb0_x86.dll",
+      "version": "1.2.6.0",
+      "hashes": [
+        {
+          "alg": "SHA-1",
+          "content": "3a238468009a6dea3e4f70821339185e56ea3b69"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "00caca07869b19d10b370552ac7cc2f6f2ee246fc15db11650f6cd3f4ef9b666"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "LGPL-2.1-or-later"
+          }
+        }
+      ],
+      "purl": "pkg:generic/samplecode-isp-isp_dfu-windowsdriver-x86-libusb0_x86.dll@1.2.6.0",
+      "properties": [
+        {
+          "name": "bsp:component-origin",
+          "value": "third-party"
+        },
+        {
+          "name": "bsp:license-status",
+          "value": "identified"
+        },
+        {
+          "name": "bsp:license-source",
+          "value": "manual-binary-license-mapping"
+        },
+        {
+          "name": "bsp:license-match-method",
+          "value": "sha256"
+        },
+        {
+          "name": "bsp:license-evidence-id",
+          "value": "windowsdriver-x86-libusb0-x86-dll.md-389d1248eec5ee111213a9acb023d1b9827a729fa9123d2b1e9fe3c143954bfc"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "false"
+        },
+        {
+          "name": "bsp:runtime-dependency",
+          "value": "false"
+        },
+        {
+          "name": "bsp:usage",
+          "value": "host-side Windows USB user-space library/tool dependency"
+        }
+      ]
+    },
+    {
+      "type": "file",
+      "bom-ref": "2dc42974bf4115a3",
+      "name": "SampleCode/ISP/ISP_DFU/WindowsDriver/x86/libusbK.dll",
+      "version": "3.0.7.0",
+      "hashes": [
+        {
+          "alg": "SHA-1",
+          "content": "fc2350e45b0c7bdac7ac35f42b65f5fdfd622464"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "22803c719494f193d22519bfaff9484fecdcf1fadd6f082efd024fcee0b97ba4"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "BSD-3-Clause OR GPL-3.0-only"
+        }
+      ],
+      "purl": "pkg:generic/samplecode-isp-isp_dfu-windowsdriver-x86-libusbk.dll@3.0.7.0",
+      "properties": [
+        {
+          "name": "bsp:component-origin",
+          "value": "third-party"
+        },
+        {
+          "name": "bsp:license-status",
+          "value": "identified"
+        },
+        {
+          "name": "bsp:license-source",
+          "value": "manual-binary-license-mapping"
+        },
+        {
+          "name": "bsp:license-match-method",
+          "value": "sha256"
+        },
+        {
+          "name": "bsp:license-evidence-id",
+          "value": "windowsdriver-x86-libusbk-dll.md-ed1e70d0d6dbd31b41d9aa95e27121f4c9dd53267c941ee3edd0cfc2ca59580f"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "false"
+        },
+        {
+          "name": "bsp:runtime-dependency",
+          "value": "false"
+        },
+        {
+          "name": "bsp:usage",
+          "value": "host-side Windows USB driver/library dependency"
+        }
+      ]
+    },
+    {
+      "type": "file",
+      "bom-ref": "69135bd6db3acfc6",
+      "name": "SampleCode/ISP/ISP_DFU/WindowsDriver/x86/winusbcoinstaller2.dll",
+      "version": "6.1.7600.16385",
+      "hashes": [
+        {
+          "alg": "SHA-1",
+          "content": "1633b3715014c90d1c552cd757ef5de33c161dee"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "ebe3b7708dd974ee87efed3113028d266af87ca8dbae77c47c6f7612824d3d6c"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "name": "Microsoft Software License Terms"
+          }
+        }
+      ],
+      "purl": "pkg:generic/samplecode-isp-isp_dfu-windowsdriver-x86-winusbcoinstaller2.dll@6.1.7600.16385",
+      "properties": [
+        {
+          "name": "bsp:component-origin",
+          "value": "third-party"
+        },
+        {
+          "name": "bsp:license-status",
+          "value": "vendor-license"
+        },
+        {
+          "name": "bsp:license-source",
+          "value": "manual-binary-license-mapping"
+        },
+        {
+          "name": "bsp:license-match-method",
+          "value": "sha256"
+        },
+        {
+          "name": "bsp:license-evidence-id",
+          "value": "windowsdriver-x86-winusbcoinstaller2-dll.md-b0d19ae82d7ce187b97ecde1336006a2eb0cec3f10039884814149bd0a7f5c66"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "false"
+        },
+        {
+          "name": "bsp:runtime-dependency",
+          "value": "false"
+        },
+        {
+          "name": "bsp:usage",
+          "value": "host-side Windows driver co-installer"
+        }
+      ]
+    },
+    {
+      "type": "file",
+      "bom-ref": "0daf557541a8a1ae",
+      "name": "SampleCode/StdDriver/USBD_Micro_Printer/Windows driver/NuvPos58_Driver.exe",
+      "version": "1.0",
+      "hashes": [
+        {
+          "alg": "SHA-1",
+          "content": "ba09b88a8ffa9b06bcd30ad7b45f6acb880b4cb9"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "911e4c166fe9b06c8e2e31ab46b56ef662c43cba208d2088ca1d41c6d584e183"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "name": "Nuvoton Software License Agreement"
+          }
+        }
+      ],
+      "purl": "pkg:generic/samplecode-stddriver-usbd_micro_printer-windows-driver-nuvpos58_driver.exe@1.0",
+      "properties": [
+        {
+          "name": "bsp:component-origin",
+          "value": "first-party"
+        },
+        {
+          "name": "bsp:license-status",
+          "value": "proprietary"
+        },
+        {
+          "name": "bsp:license-source",
+          "value": "manual-binary-license-mapping"
+        },
+        {
+          "name": "bsp:license-match-method",
+          "value": "sha256"
+        },
+        {
+          "name": "bsp:license-evidence-id",
+          "value": "samplecode-usbd-micro-printer-nuvpos58-driver-exe.md-023496b951b5c7043f995e01ca891e6662a71dfcd9cc148f067314ae146e2222"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "false"
+        },
+        {
+          "name": "bsp:runtime-dependency",
+          "value": "false"
+        },
+        {
+          "name": "bsp:usage",
+          "value": "host-side Windows printer driver installer"
+        }
+      ]
+    },
+    {
+      "type": "file",
+      "bom-ref": "f5beaec3704620bb",
+      "name": "SampleCode/StdDriver/USBD_Printer_And_HID_Transfer/Windows driver/NUVPOS58_X64.exe",
+      "version": "1.01",
+      "hashes": [
+        {
+          "alg": "SHA-1",
+          "content": "806369cd56fe410d0e0ef8d05b1cf5d57a673636"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "ce0ed66a5db0a0c061fd92975939f48e93affad15f3f6e806d44b3e82078b3db"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "name": "Nuvoton Software License Agreement"
+          }
+        }
+      ],
+      "purl": "pkg:generic/samplecode-stddriver-usbd_printer_and_hid_transfer-windows-driver-nuvpos58_x64.exe@1.01",
+      "properties": [
+        {
+          "name": "bsp:component-origin",
+          "value": "first-party"
+        },
+        {
+          "name": "bsp:license-status",
+          "value": "proprietary"
+        },
+        {
+          "name": "bsp:license-source",
+          "value": "manual-binary-license-mapping"
+        },
+        {
+          "name": "bsp:license-match-method",
+          "value": "sha256"
+        },
+        {
+          "name": "bsp:license-evidence-id",
+          "value": "samplecode-usbd-printer-and-hid-transfer-nuvpos58-x64-exe.md-996a40a474efa07e48d4ba025137e24e21674f87eac2515af16bbef84cb73620"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "false"
+        },
+        {
+          "name": "bsp:runtime-dependency",
+          "value": "false"
+        },
+        {
+          "name": "bsp:usage",
+          "value": "host-side Windows printer driver installer"
+        }
+      ]
+    },
+    {
+      "type": "file",
+      "bom-ref": "c7b7b28c7f710698",
+      "name": "SampleCode/StdDriver/USBD_Printer_And_HID_Transfer/Windows driver/NUVPOS58_X86.exe",
+      "version": "1.01",
+      "hashes": [
+        {
+          "alg": "SHA-1",
+          "content": "f0fd2d0946f1d4632a963c9344439c93c5765b97"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "76e4d01dbf17ca7525e3a9156bd7e6274c5db0fff88a25943c25c8d2bdd38d92"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "name": "Nuvoton Software License Agreement"
+          }
+        }
+      ],
+      "purl": "pkg:generic/samplecode-stddriver-usbd_printer_and_hid_transfer-windows-driver-nuvpos58_x86.exe@1.01",
+      "properties": [
+        {
+          "name": "bsp:component-origin",
+          "value": "first-party"
+        },
+        {
+          "name": "bsp:license-status",
+          "value": "proprietary"
+        },
+        {
+          "name": "bsp:license-source",
+          "value": "manual-binary-license-mapping"
+        },
+        {
+          "name": "bsp:license-match-method",
+          "value": "sha256"
+        },
+        {
+          "name": "bsp:license-evidence-id",
+          "value": "samplecode-usbd-printer-and-hid-transfer-nuvpos58-x86-exe.md-65aa0409908b7d0dcdc203f499118241bae430f92b2108337010cb95a9b516a6"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "false"
+        },
+        {
+          "name": "bsp:runtime-dependency",
+          "value": "false"
+        },
+        {
+          "name": "bsp:usage",
+          "value": "host-side Windows printer driver installer"
+        }
+      ]
+    },
+    {
+      "type": "file",
+      "bom-ref": "973974eb7c9340f2",
+      "name": "SampleCode/XOM/XOMLib/XOMAddr.exe",
+      "version": "1.0",
+      "hashes": [
+        {
+          "alg": "SHA-1",
+          "content": "0367ea0b955ac74dfb957d91c75b3fa81889c7b5"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "10d3cf6d50b65b6adc13efd4c782ec7b09fd5894381e437c63517ccf7d7dfb6a"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "name": "Nuvoton Software License Agreement"
+          }
+        }
+      ],
+      "purl": "pkg:generic/samplecode-xom-xomlib-xomaddr.exe@1.0",
+      "properties": [
+        {
+          "name": "bsp:component-origin",
+          "value": "first-party"
+        },
+        {
+          "name": "bsp:license-status",
+          "value": "proprietary"
+        },
+        {
+          "name": "bsp:license-source",
+          "value": "manual-binary-license-mapping"
+        },
+        {
+          "name": "bsp:license-match-method",
+          "value": "sha256"
+        },
+        {
+          "name": "bsp:license-evidence-id",
+          "value": "samplecode-xom-xomlib-xomaddr-exe.md-0e350c41db213eaea3b6f7aecfd6b40d9b65a55fc250221833784a211ff8b4ba"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "false"
+        },
+        {
+          "name": "bsp:runtime-dependency",
+          "value": "false"
+        },
+        {
+          "name": "bsp:usage",
+          "value": "host-side Windows XOM sample code post-build utility"
+        }
+      ]
+    },
+    {
+      "type": "file",
+      "bom-ref": "6621f75a9340e5d0",
+      "name": "SampleCode/XOM/XOMLib/lua5.1.dll",
+      "version": "5.1",
+      "hashes": [
+        {
+          "alg": "SHA-1",
+          "content": "91d52c619c561db7f678b43456a2bd500064bfb1"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "26384c6ee7d50863e3fb65fdc1bad452d9311f34d782390401de9bb130eecc4a"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:generic/samplecode-xom-xomlib-lua5.1.dll@5.1",
+      "properties": [
+        {
+          "name": "bsp:component-origin",
+          "value": "third-party"
+        },
+        {
+          "name": "bsp:license-status",
+          "value": "identified"
+        },
+        {
+          "name": "bsp:license-source",
+          "value": "manual-binary-license-mapping"
+        },
+        {
+          "name": "bsp:license-match-method",
+          "value": "sha256"
+        },
+        {
+          "name": "bsp:license-evidence-id",
+          "value": "samplecode-xom-xomlib-lua5.1-dll.md-15b240a83ea4efc8db8ee7276663690fca44d89e00872ea63197f906b9938913"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "false"
+        },
+        {
+          "name": "bsp:runtime-dependency",
+          "value": "false"
+        },
+        {
+          "name": "bsp:usage",
+          "value": "host-side Windows Lua runtime library bundled with the XOM sample code"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "bsp:test-sample-component:samplecode",
+      "supplier": {
+        "name": "Nuvoton Technology Corp.",
+        "url": [
+          "https://www.nuvoton.com"
+        ]
+      },
+      "name": " SampleCode",
+      "version": "V3.02.010",
+      "description": "Directory-level first-party BSP test-sample component included from test-sample scope path SampleCode/",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "fdc446d4c107a4c3214aad5e6b5a98ecd720be9189427c2186377f344568bc4c"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:generic/nuvoton/samplecode@V3.02.010",
+      "properties": [
+        {
+          "name": "bsp:sbom-category",
+          "value": "test-sample"
+        },
+        {
+          "name": "bsp:path",
+          "value": "SampleCode/"
+        },
+        {
+          "name": "bsp:component-origin",
+          "value": "first-party"
+        },
+        {
+          "name": "bsp:component-granularity",
+          "value": "directory"
+        },
+        {
+          "name": "bsp:scope-policy-file",
+          "value": "test-sample-scope.yaml"
+        },
+        {
+          "name": "bsp:runtime-scope",
+          "value": "false"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "false"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "pkg:generic/touchview@1.0.0.1?file_path=Tool%2FTK%2FTouchView.exe",
+      "author": "Nuvoton Technology Corporation",
+      "publisher": "Nuvoton Technology Corporation",
+      "name": "TouchView - Tool/TK/TouchView.exe",
+      "version": "1.0.0.1",
+      "description": "TouchView - Windows host-side touch panel view utility.",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "9d18b5e6a97db6c6cfc3b4120290e65e2546f913b303a8b619a376a3abee0863"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "name": "Nuvoton Proprietary"
+          }
+        }
+      ],
+      "purl": "pkg:generic/touchview@1.0.0.1?file_path=Tool%2FTK%2FTouchView.exe",
+      "properties": [
+        {
+          "name": "bsp:file-path",
+          "value": "Tool/TK"
+        },
+        {
+          "name": "bsp:binary-file",
+          "value": "Tool/TK/TouchView.exe"
+        },
+        {
+          "name": "bsp:license-file",
+          "value": "Tool/TK/LICENSE.md"
+        },
+        {
+          "name": "integration",
+          "value": "vendored_binary"
+        },
+        {
+          "name": "bsp:component-origin",
+          "value": "first-party"
+        },
+        {
+          "name": "bsp:version-evidence",
+          "value": "1.0.0.1"
+        },
+        {
+          "name": "bsp:copyright",
+          "value": "Copyright (C) 2010-2026 Nuvoton Technology Corp. All rights reserved."
+        },
+        {
+          "name": "bsp:sha256:Tool/TK/TouchView.exe",
+          "value": "2ec72ad2e7ebd1345017df7a405fc36c4a22d114bc709d98ace3924ccc9e506b"
+        },
+        {
+          "name": "bsp:sha256:Tool/TK/LICENSE.md",
+          "value": "aa736bbf56948b7e7b4cd667a1d277b828545cde427a27bc772c2598b8547f10"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "pkg:generic/touchview-mp@1.0.0.1?file_path=Tool%2FTK%2FTouchView_MP.exe",
+      "author": "Nuvoton Technology Corporation",
+      "publisher": "Nuvoton Technology Corporation",
+      "name": "TouchView MP - Tool/TK/TouchView_MP.exe",
+      "version": "1.0.0.1",
+      "description": "TouchView MP - Windows host-side touch panel mass production utility.",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "8181b70da387fc3219d6973382ad7b2d0cd27e4b154ed4da73f2c00833db210a"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "name": "Nuvoton Proprietary"
+          }
+        }
+      ],
+      "purl": "pkg:generic/touchview-mp@1.0.0.1?file_path=Tool%2FTK%2FTouchView_MP.exe",
+      "properties": [
+        {
+          "name": "bsp:file-path",
+          "value": "Tool/TK"
+        },
+        {
+          "name": "bsp:binary-file",
+          "value": "Tool/TK/TouchView_MP.exe"
+        },
+        {
+          "name": "bsp:license-file",
+          "value": "Tool/TK/LICENSE.md"
+        },
+        {
+          "name": "integration",
+          "value": "vendored_binary"
+        },
+        {
+          "name": "bsp:component-origin",
+          "value": "first-party"
+        },
+        {
+          "name": "bsp:version-evidence",
+          "value": "1.0.0.1"
+        },
+        {
+          "name": "bsp:copyright",
+          "value": "Copyright (C) 2010-2026 Nuvoton Technology Corp. All rights reserved."
+        },
+        {
+          "name": "bsp:sha256:Tool/TK/TouchView_MP.exe",
+          "value": "053a8a4646686f719cc6b149f0f8a945431f2ea62109355107b46a237b981a49"
+        },
+        {
+          "name": "bsp:sha256:Tool/TK/LICENSE.md",
+          "value": "aa736bbf56948b7e7b4cd667a1d277b828545cde427a27bc772c2598b8547f10"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:generic/freertos-kernel@11.3.0?source=vendored\u0026path=ThirdParty/FreeRTOS",
+      "author": "Amazon.com, Inc. (FreeRTOS project)",
+      "name": "FreeRTOS-Kernel",
+      "version": "11.3.0",
+      "description": "FreeRTOS Kernel vendored in ThirdParty/FreeRTOS.",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "b02096cc7d9e6d89da794e53789325288f2bf655295e40f8111b2b2230fcc395"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "cpe": "cpe:2.3:a:amazon:amazon_web_services_freertos:11.3.0:*:*:*:*:*:*:*",
+      "purl": "pkg:generic/freertos-kernel@11.3.0",
+      "properties": [
+        {
+          "name": "src_path",
+          "value": "ThirdParty/FreeRTOS"
+        },
+        {
+          "name": "integration",
+          "value": "vendored_source"
+        },
+        {
+          "name": "upstream_manifest",
+          "value": "ThirdParty/FreeRTOS/Source/manifest.yml"
+        },
+        {
+          "name": "bsp:component-origin",
+          "value": "third-party"
+        },
+        {
+          "name": "bsp:component-source",
+          "value": "FreeRTOS Kernel (Amazon FreeRTOS project)"
+        },
+        {
+          "name": "bsp:evidence-file",
+          "value": "Document/SBOM/components/sca_freertos.json"
+        },
+        {
+          "name": "bsp:evidence-path",
+          "value": "ThirdParty/FreeRTOS"
+        },
+        {
+          "name": "bsp:version-evidence",
+          "value": "ThirdParty/FreeRTOS/Source/manifest.yml; ThirdParty/FreeRTOS/Source/include/FreeRTOS.h; ThirdParty/FreeRTOS/Source/tasks.c; ThirdParty/FreeRTOS/Source/sbom.spdx"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "pkg:generic/hidtransfertest@1.1.0?source=vendored\u0026path=Tool/HIDTransferTest",
+      "author": "Nuvoton Technology Corporation",
+      "publisher": "Nuvoton Technology Corporation",
+      "name": "HIDTransferTest",
+      "version": "1.1.0",
+      "description": "HID Transfer Test Tool - Windows host-side command-line utility for exercising the NuMicro USB HID Transfer device sample. Fixed VID 0x0416, configurable PID (default 0x5020).",
+      "scope": "optional",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "344a570844611a3bf290520ea057d0d53624c8bc1fcda52f9915d5fbc829cdf5"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:generic/hidtransfertest@1.1.0",
+      "properties": [
+        {
+          "name": "bsp:file-path",
+          "value": "Tool/HIDTransferTest"
+        },
+        {
+          "name": "bsp:binary-file",
+          "value": "Tool/HIDTransferTest/Debug/HIDTransferTest.exe"
+        },
+        {
+          "name": "bsp:license-file",
+          "value": "Tool/HIDTransferTest/LICENSE.md"
+        },
+        {
+          "name": "bsp:readme-file",
+          "value": "Tool/HIDTransferTest/README.txt"
+        },
+        {
+          "name": "integration",
+          "value": "vendored_source_and_binary"
+        },
+        {
+          "name": "bsp:component-origin",
+          "value": "first-party"
+        },
+        {
+          "name": "bsp:platform",
+          "value": "Windows (Win32, x86/x64)"
+        },
+        {
+          "name": "bsp:toolchain",
+          "value": "Microsoft Visual C\u002B\u002B (MSBuild / Visual Studio)"
+        },
+        {
+          "name": "bsp:usb-vid",
+          "value": "0x0416 (Nuvoton Technology Corp.)"
+        },
+        {
+          "name": "bsp:usb-pid-default",
+          "value": "0x5020"
+        },
+        {
+          "name": "bsp:version-evidence",
+          "value": "Tool/HIDTransferTest/HIDTransferTest/version.h (1.1.0); Tool/HIDTransferTest/README.txt (Tool Version: 1.1.0)"
+        },
+        {
+          "name": "bsp:copyright",
+          "value": "Copyright (C) 2010-2026 Nuvoton Technology Corp. All rights reserved."
+        },
+        {
+          "name": "bsp:sha256:Tool/HIDTransferTest/Debug/HIDTransferTest.exe",
+          "value": "26f2fda0e6389e4d2cc2fe98bf989a84f1689f040530fb97af0c293222e99406"
+        },
+        {
+          "name": "bsp:sha256:Tool/HIDTransferTest/LICENSE.md",
+          "value": "0f768967a2d912d44f609abdc0e01bd8d5771174a944da02a29b94d5cfedba77"
+        }
+      ]
+    },
+    {
+      "type": "device-driver",
+      "bom-ref": "binary-db:windowsdriver-amd64-libusbk-sys-sha256-1df66ff2",
+      "supplier": {
+        "name": "libusbK project"
+      },
+      "name": "libusbK",
+      "version": "3.0.7.0 built by: WinDDK",
+      "description": "host-side Windows USB driver/library dependency",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "1df66ff22e2eaec27180756d90926ca5b07e8bcf6b0e4e3c56471e63a3a05fa6"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "b966ad29d209c64b3f0d879703086df1f6121e6b"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "BSD-3-Clause OR GPL-3.0-only"
+        }
+      ],
+      "purl": "pkg:generic/libusbk@3.0.7.0 built by: WinDDK",
+      "properties": [
+        {
+          "name": "bsp:component-origin",
+          "value": "third-party"
+        },
+        {
+          "name": "bsp:license-status",
+          "value": "identified"
+        },
+        {
+          "name": "bsp:license-source",
+          "value": "manual-binary-license-mapping"
+        },
+        {
+          "name": "bsp:license-match-method",
+          "value": "sha256"
+        },
+        {
+          "name": "bsp:license-evidence-id",
+          "value": "windowsdriver-amd64-libusbk-sys.md-9939bc188b08c3fdd9e571101c36c1a1a1ba177ebc0d4a59007da213c10dcbdb"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "false"
+        },
+        {
+          "name": "bsp:runtime-dependency",
+          "value": "false"
+        },
+        {
+          "name": "bsp:usage",
+          "value": "host-side Windows USB driver/library dependency"
+        },
+        {
+          "name": "bsp:file-path",
+          "value": "SampleCode/ISP/ISP_DFU/WindowsDriver/amd64/libusbK.sys"
+        }
+      ]
+    },
+    {
+      "type": "device-driver",
+      "bom-ref": "binary-db:windowsdriver-x86-libusb0-sys-sha256-aa7d75a4",
+      "supplier": {
+        "name": "libusb-win32 project"
+      },
+      "name": "libusb-win32 kernel driver",
+      "version": "1.2.6.0",
+      "description": "host-side Windows USB kernel driver dependency",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "aa7d75a4d01b405aab7c848674bbed392b64c6e374e20fd72adc3c96294e2f00"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "9438573aee178c68f49bfa5ad71132d06c4dfa9b"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "GPL-2.0-or-later"
+          }
+        }
+      ],
+      "purl": "pkg:generic/libusb-win32-kernel-driver@1.2.6.0",
+      "properties": [
+        {
+          "name": "bsp:component-origin",
+          "value": "third-party"
+        },
+        {
+          "name": "bsp:license-status",
+          "value": "identified"
+        },
+        {
+          "name": "bsp:license-source",
+          "value": "manual-binary-license-mapping"
+        },
+        {
+          "name": "bsp:license-match-method",
+          "value": "sha256"
+        },
+        {
+          "name": "bsp:license-evidence-id",
+          "value": "windowsdriver-x86-libusb0-sys.md-4c89d593d4d27a62b3af200b823fb954020a86284673421173bbf6032332e355"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "false"
+        },
+        {
+          "name": "bsp:runtime-dependency",
+          "value": "false"
+        },
+        {
+          "name": "bsp:usage",
+          "value": "host-side Windows USB kernel driver dependency"
+        },
+        {
+          "name": "bsp:file-path",
+          "value": "SampleCode/ISP/ISP_DFU/WindowsDriver/x86/libusb0.sys"
+        }
+      ]
+    },
+    {
+      "type": "device-driver",
+      "bom-ref": "binary-db:windowsdriver-x86-libusbk-sys-sha256-6265ae9a",
+      "supplier": {
+        "name": "libusbK project"
+      },
+      "name": "libusbK",
+      "version": "3.0.7.0 built by: WinDDK",
+      "description": "host-side Windows USB driver/library dependency",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "6265ae9ae5c49f515613f0b749ad8390a1b34ca326203318bffeb6c2c281d2d0"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "4ca41a2dc9cb5679c917035b64616333f09e1be4"
+        }
+      ],
+      "licenses": [
+        {
+          "expression": "BSD-3-Clause OR GPL-3.0-only"
+        }
+      ],
+      "purl": "pkg:generic/libusbk@3.0.7.0 built by: WinDDK",
+      "properties": [
+        {
+          "name": "bsp:component-origin",
+          "value": "third-party"
+        },
+        {
+          "name": "bsp:license-status",
+          "value": "identified"
+        },
+        {
+          "name": "bsp:license-source",
+          "value": "manual-binary-license-mapping"
+        },
+        {
+          "name": "bsp:license-match-method",
+          "value": "sha256"
+        },
+        {
+          "name": "bsp:license-evidence-id",
+          "value": "windowsdriver-x86-libusbk-sys.md-1d0f48b3f33d09875957cc8dde9e2669ced2616948e526588ceb6eaaa04eb8c1"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "false"
+        },
+        {
+          "name": "bsp:runtime-dependency",
+          "value": "false"
+        },
+        {
+          "name": "bsp:usage",
+          "value": "host-side Windows USB driver/library dependency"
+        },
+        {
+          "name": "bsp:file-path",
+          "value": "SampleCode/ISP/ISP_DFU/WindowsDriver/x86/libusbK.sys"
+        }
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "047537cb01143a83",
+      "dependsOn": [
+        "bsp:test-sample-component:samplecode"
+      ]
+    }
+  ]
+}

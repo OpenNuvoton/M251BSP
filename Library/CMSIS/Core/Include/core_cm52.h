@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2024 Arm Limited. Copyright (c) 2024 Arm Technology (China) Co., Ltd. All rights reserved.
+ * Copyright (c) 2018-2025 Arm Limited. Copyright (c) 2024 Arm Technology (China) Co., Ltd. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -1075,6 +1075,19 @@ typedef struct
   __IOM uint32_t CPPWR;                  /*!< Offset: 0x00C (R/W)  Coprocessor Power Control  Register */
 } ICB_Type;
 
+/** \brief ICB Coprocessor Power Control Register Definitions */
+#define ICB_CPPWR_SUS11_Pos             23U                                               /*!< CPPWR: SUS11 Position */
+#define ICB_CPPWR_SUS11_Msk             (1UL << ICB_CPPWR_SUS11_Pos)                      /*!< CPPWR: SUS11 Mask */
+
+#define ICB_CPPWR_SU11_Pos              22U                                               /*!< CPPWR: SU11 Position */
+#define ICB_CPPWR_SU11_Msk              (1UL << ICB_CPPWR_SU11_Pos)                       /*!< CPPWR: SU11 Mask */
+
+#define ICB_CPPWR_SUS10_Pos             21U                                               /*!< CPPWR: SUS10 Position */
+#define ICB_CPPWR_SUS10_Msk             (1UL << ICB_CPPWR_SUS10_Pos)                      /*!< CPPWR: SUS10 Mask */
+
+#define ICB_CPPWR_SU10_Pos              20U                                               /*!< CPPWR: SU10 Position */
+#define ICB_CPPWR_SU10_Msk              (1UL << ICB_CPPWR_SU10_Pos)                       /*!< CPPWR: SU10 Mask */
+
 /** \brief ICB Auxiliary Control Register Definitions */
 #define ICB_ACTLR_DISCRITAXIRUW_Pos     27U                                               /*!< ACTLR: DISCRITAXIRUW Position */
 #define ICB_ACTLR_DISCRITAXIRUW_Msk     (1UL << ICB_ACTLR_DISCRITAXIRUW_Pos)              /*!< ACTLR: DISCRITAXIRUW Mask */
@@ -1556,7 +1569,7 @@ typedef struct
 {
   __IM  uint32_t DCADCRR;               /*!< Offset: 0x000 (R/W)  Direct Cache Access Data Cache Read Register */
   __IM  uint32_t DCAICRR;               /*!< Offset: 0x004 (R/W)  Direct Cache Access Instruction Cache Read Register */
-        uint32_t RESERVED1[2];          
+        uint32_t RESERVED1[2];
   __IOM uint32_t DCADCLR;               /*!< Offset: 0x010 (R/W)  Direct Cache Access Data Cache Location Registers */
   __IOM uint32_t DCAICLR;               /*!< Offset: 0x014 (R/W)  Direct Cache Access Instruction Cache Location Registers */
 } DCAR_Type;
@@ -1737,7 +1750,7 @@ typedef struct
   __IOM uint32_t DEBR1;                  /*!< Offset: 0x014 (R/W)  Data Cache Error Bank Register 1 */
         uint32_t RESERVED1[2U];
   __IOM uint32_t TEBR0;                  /*!< Offset: 0x020 (R/W)  TCM Error Bank Register 0 */
-  __IM  uint32_t TEBRDATA0;              /*!< Offset: 0x024 (RO)   Storage for corrected data that is associated with an error.*/        
+  __IM  uint32_t TEBRDATA0;              /*!< Offset: 0x024 (RO)   Storage for corrected data that is associated with an error.*/
   __IOM uint32_t TEBR1;                  /*!< Offset: 0x028 (R/W)  TCM Error Bank Register 1 */
   __IM  uint32_t TEBRDATA1;              /*!< Offset: 0x02c (RO)   Storage for corrected data that is associated with an error.*/
 } ErrBnk_Type;
@@ -1900,7 +1913,7 @@ typedef struct
   __IOM uint32_t STLIDMPUSR;             /*!< Offset: 0x010 ( /W)  MPU Sample Register */
   __IM  uint32_t STLIMPUOR;              /*!< Offset: 0x014 (R/ )  MPU Region Hit Register */
   __IM  uint32_t STLDMPUOR;              /*!< Offset: 0x018 (R/ )  MPU Memory Attributes Register */
- 
+
 } STL_Type;
 
 /** \brief STL NVIC Pending Priority Tree Register Definitions */
@@ -1942,17 +1955,17 @@ typedef struct
 /** \brief STL MPU Region Hit Register Definitions */
 #define STL_STLIMPUOR_HITREGION_Pos         9U                                         /*!< STL STLIMPUOR: HITREGION Position */
 #define STL_STLIMPUOR_HITREGION_Msk        (0xFFUL << STL_STLIMPUOR_HITREGION_Pos)     /*!< STL STLIMPUOR: HITREGION Mask */
- 
+
 #define STL_STLIMPUOR_ATTR_Pos              0U                                         /*!< STL STLIMPUOR: ATTR Position */
 #define STL_STLIMPUOR_ATTR_Msk             (0x1FFUL /*<< STL_STLIMPUOR_ATTR_Pos*/)     /*!< STL STLIMPUOR: ATTR Mask */
- 
+
 /** \brief STL MPU Memory Attributes Register Definitions */
 #define STL_STLDMPUOR_HITREGION_Pos        9U                                         /*!< STL STLDMPUOR: HITREGION Position */
 #define STL_STLDMPUOR_HITREGION_Msk       (0xFFUL << STL_STLDMPUOR_HITREGION_Pos)     /*!< STL STLDMPUOR: HITREGION Mask */
- 
+
 #define STL_STLDMPUOR_ATTR_Pos             0U                                         /*!< STL STLDMPUOR: ATTR Position */
 #define STL_STLDMPUOR_ATTR_Msk            (0x1FFUL /*<< STL_STLDMPUOR_ATTR_Pos*/)     /*!< STL STLDMPUOR: ATTR Mask */
- 
+
 /*@}*/ /* end of group STL_Type */
 
 
@@ -3557,7 +3570,7 @@ typedef struct
 #define _VAL2FLD(field, value)    (((uint32_t)(value) << field ## _Pos) & field ## _Msk)
 
 /**
-  \brief     Mask and shift a register value to extract a bit filed value.
+  \brief     Mask and shift a register value to extract a bit field value.
   \param[in] field  Name of the register bit field.
   \param[in] value  Value of register. This parameter is interpreted as an uint32_t type.
   \return           Masked and shifted bit field value.
@@ -4112,16 +4125,18 @@ __STATIC_INLINE uint32_t __NVIC_GetVector(IRQn_Type IRQn)
  */
 __NO_RETURN __STATIC_INLINE void __NVIC_SystemReset(void)
 {
-  __DSB();                                                          /* Ensure all outstanding memory accesses included
-                                                                       buffered write are completed before reset */
-  SCB->AIRCR  = (uint32_t)((0x5FAUL << SCB_AIRCR_VECTKEY_Pos)    |
-                           (SCB->AIRCR & SCB_AIRCR_PRIGROUP_Msk) |
-                            SCB_AIRCR_SYSRESETREQ_Msk    );         /* Keep priority group unchanged */
-  __DSB();                                                          /* Ensure completion of memory access */
-
-  for(;;)                                                           /* wait until reset */
+  /* SYSRESETREQ needs to be set repeatedly as it is cleared as soon as the CPU's P-channel
+   * enters WARM_RST state, but another device can deny the transition preventing the
+   * actual reset. Such denials are usually transient - we need to re-assert SYSRESETREQ
+   * to retry.
+   */
+  for(;;)
   {
-    __NOP();
+    __DSB();                                                        /* Ensure all outstanding memory accesses included
+                                                                       buffered write are completed before reset */
+    SCB->AIRCR  = (uint32_t)((0x5FAUL << SCB_AIRCR_VECTKEY_Pos)    |
+                             (SCB->AIRCR & SCB_AIRCR_PRIGROUP_Msk) |
+                              SCB_AIRCR_SYSRESETREQ_Msk    );       /* Keep priority group unchanged */
   }
 }
 
@@ -4525,7 +4540,7 @@ __STATIC_INLINE void TZ_SAU_Disable(void)
 /**
   \brief   Set Debug Authentication Control Register
   \details writes to Debug Authentication Control register.
-  \param [in]  value  value to be writen.
+  \param [in]  value  value to be written.
  */
 __STATIC_INLINE void DCB_SetAuthCtrl(uint32_t value)
 {
@@ -4552,7 +4567,7 @@ __STATIC_INLINE uint32_t DCB_GetAuthCtrl(void)
 /**
   \brief   Set Debug Authentication Control Register (non-secure)
   \details writes to non-secure Debug Authentication Control register when in secure state.
-  \param [in]  value  value to be writen
+  \param [in]  value  value to be written
  */
 __STATIC_INLINE void TZ_DCB_SetAuthCtrl_NS(uint32_t value)
 {

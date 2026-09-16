@@ -1,20 +1,20 @@
-/**************************************************************************//**
- * @file     main.c
- * @version  V0.10
- * @brief
- *           Configure QSPI0 as Master mode and demonstrate how to communicate
- *           with an off-chip QSPI Slave device with FIFO mode. This sample
- *           code needs to work with QSPI_PDMA_Slave sample code.
+/***************************************************************************//**
+ * @file    main.c
+ * @version V0.10
+ * @brief   Configure QSPI0 as Master mode and demonstrate how to communicate
+ *          with an off-chip QSPI Slave device with FIFO mode. This sample
+ *          code needs to work with QSPI_PDMA_Slave sample code.
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2024 Nuvoton Technology Corp. All rights reserved.
- *
  ******************************************************************************/
 #include <stdio.h>
 #include "NuMicro.h"
 
 //------------------------------------------------------------------------------
 #define QSPI_MASTER_TX_DMA_CH   0
-#define TEST_COUNT              64
+#define TEST_COUNT              (64)
+#define QSPI_PDMA_TIMEOUT       (2UL * SystemCoreClock)
 
 //------------------------------------------------------------------------------
 /* Function prototype declaration */
@@ -88,7 +88,7 @@ void QSPI_Init(void)
     QSPI_ENABLE_QUAD_OUTPUT_MODE(QSPI0);
     /* Configure QSPI0 as a master, SPI clock rate 1MHz,
        clock idle low, 32-bit transaction, drive output on falling clock edge and latch input on rising edge. */
-    QSPI_Open(QSPI0, SPI_MASTER, QSPI_MODE_0, 32, 1000000);
+    QSPI_Open(QSPI0, QSPI_MASTER, QSPI_MODE_0, 32, 1000000);
     /* Enable the automatic hardware slave selection function. Select the QSPI0_SS pin and configure as low-active. */
     QSPI_EnableAutoSS(QSPI0, QSPI_SS, QSPI_SS_ACTIVE_LOW);
 }
@@ -96,7 +96,7 @@ void QSPI_Init(void)
 void QSPI_Master_Send(void)
 {
     uint32_t u32DataCount;
-    uint32_t u32RegValue, u32Abort;
+    uint32_t u32RegValue, u32Abort, u32TimeOutCount;
     int32_t i32Err;
 
     printf("\nQSPI0 Master Quad mode with PDMA ");
@@ -136,6 +136,7 @@ void QSPI_Master_Send(void)
     QSPI_TRIGGER_TX_PDMA(QSPI0);
 
     i32Err = 0;
+    u32TimeOutCount = QSPI_PDMA_TIMEOUT;
 
     while (1)
     {
@@ -175,6 +176,12 @@ void QSPI_Master_Send(void)
         {
             /* Clear the time-out flag */
             PDMA->INTSTS = u32RegValue & (PDMA_INTSTS_REQTOF0_Msk | PDMA_INTSTS_REQTOF1_Msk);
+            i32Err = 1;
+            break;
+        }
+
+        if (u32TimeOutCount-- == 0UL)
+        {
             i32Err = 1;
             break;
         }
@@ -221,6 +228,8 @@ int main(void)
     printf("    QSPI0_SS  (PA3)  <--> QSPI0_SS  (PA3)\n    QSPI0_CLK(PA2)  <--> QSPI0_CLK(PA2)\n");
     printf("    QSPI0_MISO0(PA1) <--> QSPI0_MISO0(PA1)\n    QSPI0_MOSI0(PA0) <--> QSPI0_MOSI0(PA0)\n\n");
     printf("    QSPI0_MISO1(PA5) <--> QSPI0_MISO1(PA5)\n    QSPI0_MOSI1(PA4) <--> QSPI0_MOSI1(PA4)\n\n");
+    printf("Demo only: this sample requires a paired QSPI_PDMA_Slave peer and manual start coordination.\n");
+    printf("Production code should add bounded timeout, recovery handling, and non-interactive startup.\n");
     printf("Press any key to start transmission after QSPI_PDMA_Slave is running...");
     getchar();
     printf("\n");

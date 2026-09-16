@@ -35,11 +35,15 @@
   */
 uint32_t TPWM_ConfigOutputFreqAndDuty(TIMER_T *timer, uint32_t u32Frequency, uint32_t u32DutyCycle)
 {
-    uint32_t u32PWMClockFreq, u32TargetFreq;
-    uint32_t u32Prescaler = 0x100UL, u32Period = 1UL;
+    uint32_t u32PWMClockFreq;
+    uint32_t u32TargetFreq;
+    uint32_t u32Prescaler = 0x100UL;
+    uint32_t u32Period = 1UL;
 
-    if (u32Frequency == 0)
+    if (u32Frequency == 0UL)
+    {
         return u32Frequency;
+    }
 
     if ((timer == TIMER0) || (timer == TIMER1))
     {
@@ -51,16 +55,20 @@ uint32_t TPWM_ConfigOutputFreqAndDuty(TIMER_T *timer, uint32_t u32Frequency, uin
     }
 
     if (u32Frequency > u32PWMClockFreq)
-        return 0;
+    {
+        return 0UL;
+    }
 
     /* Calculate u32Period and u32Prescaler */
-    for (u32Prescaler = 1; u32Prescaler <= 0x100UL; u32Prescaler++)
+    for (u32Prescaler = 1UL; u32Prescaler <= 0x100UL; u32Prescaler++)
     {
         u32Period = (u32PWMClockFreq / u32Prescaler) / u32Frequency;
 
         /* If target u32Period is larger than 0x10000, need to use a larger prescaler */
         if (u32Period > 0x10000UL)
+        {
             continue;
+        }
 
         break;
     }
@@ -131,7 +139,7 @@ void TPWM_DisableCounter(TIMER_T *timer)
 void TPWM_EnableTrigger(TIMER_T *timer, uint32_t u32TargetMask, uint32_t u32Condition)
 {
     timer->PWMTRGCTL &= ~(TIMER_PWMTRGCTL_PWMTRGDAC_Msk | TIMER_PWMTRGCTL_PWMTRGEADC_Msk | TIMER_PWMTRGCTL_PWMTRGPDMA_Msk | TIMER_PWMTRGCTL_TRGSEL_Msk);
-    timer->PWMTRGCTL |= (u32TargetMask) | (u32Condition);
+    timer->PWMTRGCTL |= (u32TargetMask) | (u32Condition & TIMER_PWMTRGCTL_TRGSEL_Msk);
 }
 
 /**

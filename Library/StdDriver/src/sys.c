@@ -142,7 +142,7 @@ void SYS_ResetModule(uint32_t u32ModuleIndex)
 
 /**
   * @brief      Enable and configure Brown-out detector function
-  * @param[in]  i32Mode is reset or interrupt mode. Including :
+  * @param[in]  u32Mode is reset or interrupt mode. Including :
   *             - \ref SYS_BODCTL_BOD_RST_EN
   *             - \ref SYS_BODCTL_BOD_INTERRUPT_EN
   * @param[in]  u32BODLevel is Brown-out voltage level. Including :
@@ -156,13 +156,13 @@ void SYS_ResetModule(uint32_t u32ModuleIndex)
   * @details    This function configure Brown-out detector reset or interrupt mode, enable Brown-out function and set Brown-out voltage level.
   *             The register write-protection function should be disabled before using this function.
   */
-void SYS_EnableBOD(int32_t i32Mode, uint32_t u32BODLevel)
+void SYS_EnableBOD(uint32_t u32Mode, uint32_t u32BODLevel)
 {
     /* Enable Brown-out Detector function */
     SYS->BODCTL |= SYS_BODCTL_BODEN_Msk;
 
     /* Enable Brown-out interrupt or reset function */
-    SYS->BODCTL = (SYS->BODCTL & ~SYS_BODCTL_BODRSTEN_Msk) | i32Mode;
+    SYS->BODCTL = (SYS->BODCTL & ~SYS_BODCTL_BODRSTEN_Msk) | u32Mode;
 
     /* Select Brown-out Detector threshold voltage */
     SYS->BODCTL = (SYS->BODCTL & ~SYS_BODCTL_BODVL_Msk) | u32BODLevel;
@@ -191,7 +191,10 @@ void SYS_SetPowerLevel(uint32_t u32PowerLevel)
     /* Set power voltage level */
     SYS->PLCTL = (SYS->PLCTL & (~SYS_PLCTL_PLSEL_Msk)) | (u32PowerLevel);
 
-    while (SYS->PLSTS & SYS_PLSTS_PLCBUSY_Msk);
+    while (SYS->PLSTS & SYS_PLSTS_PLCBUSY_Msk)
+    {
+        /* wait */
+    }
 }
 
 /** @} end of group SYS_EXPORTED_FUNCTIONS */

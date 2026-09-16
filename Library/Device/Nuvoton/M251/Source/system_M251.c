@@ -16,17 +16,14 @@
     #include "partition_M251.h"
 #endif
 
-
-extern void *__Vectors;                   /* see startup file */
+extern const VECTOR_TABLE_Type __VECTOR_TABLE[FMC_VECMAP_SIZE / 4UL];
 
 /*----------------------------------------------------------------------------
   Clock Variable definitions
  *----------------------------------------------------------------------------*/
-uint32_t SystemCoreClock  = __HSI;              /*!< System Clock Frequency (Core Clock) */
-uint32_t CyclesPerUs      = (__HSI / 1000000);  /*!< Cycles per micro second             */
-uint32_t PllClock         = __HSI;              /*!< PLL Output Clock Frequency          */
-const uint32_t gau32ClkSrcTbl[8] = {__HXT, __LXT, 0UL, __LIRC, 0UL, __MIRC, 0UL, __HIRC};
-
+uint32_t SystemCoreClock = __HSI;               /*!< System Clock Frequency (Core Clock) */
+uint32_t CyclesPerUs     = (__HSI / 1000000UL); /*!< Cycles per micro second             */
+uint32_t PllClock        = __HSI;               /*!< PLL Output Clock Frequency          */
 
 /**
  * @brief    Update the Variable SystemCoreClock
@@ -36,7 +33,9 @@ const uint32_t gau32ClkSrcTbl[8] = {__HXT, __LXT, 0UL, __LIRC, 0UL, __MIRC, 0UL,
  */
 void SystemCoreClockUpdate(void)
 {
-    uint32_t u32Freq, u32ClkSrc;
+    const uint32_t au32ClkSrcTbl[8] = { __HXT, __LXT, 0UL, __LIRC, 0UL, __MIRC, 0UL, __HIRC };
+    uint32_t u32Freq;
+    uint32_t u32ClkSrc;
     uint32_t u32HclkDiv;
 
     u32ClkSrc = CLK->CLKSEL0 & CLK_CLKSEL0_HCLKSEL_Msk;
@@ -47,7 +46,7 @@ void SystemCoreClockUpdate(void)
     if (u32ClkSrc != CLK_CLKSEL0_HCLKSEL_PLL)
     {
         /* Use the clock sources directly */
-        u32Freq = gau32ClkSrcTbl[u32ClkSrc];
+        u32Freq = au32ClkSrcTbl[u32ClkSrc];
     }
     else
     {
@@ -55,12 +54,12 @@ void SystemCoreClockUpdate(void)
         u32Freq = PllClock;
     }
 
-    u32HclkDiv = (CLK->CLKDIV0 & CLK_CLKDIV0_HCLKDIV_Msk) + 1;
+    u32HclkDiv = (CLK->CLKDIV0 & CLK_CLKDIV0_HCLKDIV_Msk) + 1UL;
 
     /* Update System Core Clock */
     SystemCoreClock = u32Freq / u32HclkDiv;
 
-    CyclesPerUs = (SystemCoreClock + 500000) / 1000000;
+    CyclesPerUs = (SystemCoreClock + 500000UL) / 1000000UL;
 }
 
 
@@ -73,10 +72,10 @@ void SystemCoreClockUpdate(void)
 void SystemInit(void)
 {
     /* Set access cycle for CPU @ 48MHz */
-    FMC->CYCCTL = (FMC->CYCCTL & ~FMC_CYCCTL_CYCLE_Msk) | (3 << FMC_CYCCTL_CYCLE_Pos) | 0x100;
+    FMC->CYCCTL = (FMC->CYCCTL & ~FMC_CYCCTL_CYCLE_Msk) | (3UL << FMC_CYCCTL_CYCLE_Pos) | 0x100UL;
 
 #if defined (__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
-    SCB->VTOR = (uint32_t) &__Vectors;
+    SCB->VTOR = (uint32_t) &__VECTOR_TABLE;
 #endif
 
 #if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
@@ -109,7 +108,7 @@ void AssertError(uint8_t *file, uint32_t line)
     printf("[%s] line %u : wrong parameters.\r\n", file, line);
 
     /* Infinite loop */
-    while (1) ;
+    while (1) {}
 }
 
 #endif
@@ -126,9 +125,7 @@ void AssertError(uint8_t *file, uint32_t line)
 #endif
 void Uart0DefaultMPF(void)
 {
-
     /* Set GPB multi-function pins for UART0 RXD and TXD */
     SYS->GPB_MFPH = (SYS->GPB_MFPH & ~SYS_GPB_MFPH_PB12MFP_Msk) | SYS_GPB_MFPH_PB12MFP_UART0_RXD;
     SYS->GPB_MFPH = (SYS->GPB_MFPH & ~SYS_GPB_MFPH_PB13MFP_Msk) | SYS_GPB_MFPH_PB13MFP_UART0_TXD;
-
 }

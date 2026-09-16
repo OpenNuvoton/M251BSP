@@ -1,7 +1,7 @@
-/**************************************************************************//**
- * @file     main.c
- * @version  V3.00
- * @brief    Demonstrate how to implement Microwire protocol by PSIO.
+/***************************************************************************//**
+ * @file    main.c
+ * @version V3.00
+ * @brief   Demonstrate how to implement Microwire protocol by PSIO.
  *
  * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
@@ -116,18 +116,21 @@ int main(void)
     printf("|      AT93C46D Microwire EEPROM  Test Code            | \n");
     printf("| Please connected PSIO_CH0(PB.15), PSIO_CH1(PC.4)     | \n");
     printf("| ,PSIO_CH2(PC.3), PSIO_CH4(PC.2)to device.            | \n");
+    printf("| Demo only: external EEPROM wiring and timing are     | \n");
+    printf("| board-specific; production code should validate      | \n");
+    printf("| peer presence and add recovery handling.             | \n");
     printf("+------------------------------------------------------+ \n");
 
     /* Use slot controller 0, pin 0, pin1, pin 2, pin 3 */
-    sConfig.u8SlotCtrl      = PSIO_SC0;
+    sConfig.u8SlotCtrl = PSIO_SC0;
     sConfig.u8ChipSelectPin = PSIO_PIN0;
-    sConfig.u8ClockPin      = PSIO_PIN1;
-    sConfig.u8DO            = PSIO_PIN2;
-    sConfig.u8DI            = PSIO_PIN3;
+    sConfig.u8ClockPin = PSIO_PIN1;
+    sConfig.u8DO = PSIO_PIN2;
+    sConfig.u8DI = PSIO_PIN3;
 
     /* Initialize PIN config */
-    pu32ChipSelectPin   = &PB15;
-    pu32InputPin        = &PC3;
+    pu32ChipSelectPin = &PB15;
+    pu32InputPin = &PC3;
 
     /* Set CS pin output mode when GPIO function */
     GPIO_SetMode(PB, BIT15, GPIO_MODE_OUTPUT);
@@ -168,6 +171,5 @@ int main(void)
 
     while (1);
 }
-
 
 /*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/

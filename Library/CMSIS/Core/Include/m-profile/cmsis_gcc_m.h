@@ -29,6 +29,10 @@
 
 #include <arm_acle.h>
 
+#if defined(__PICOLIBC__) && !defined(__PROGRAM_START)
+#define __PROGRAM_START _start
+#endif
+
 /* #########################  Startup and Lowlevel Init  ######################## */
 #ifndef __PROGRAM_START
 
@@ -106,8 +110,8 @@ __STATIC_FORCEINLINE __NO_RETURN void __cmsis_start(void)
 #define __TZ_STACK_SEAL_VALUE     0xFEF5EDA5FEF5EDA5ULL
 #endif
 
-
-__STATIC_FORCEINLINE void __TZ_set_STACKSEAL_S (uint32_t* stackTop) {
+__STATIC_FORCEINLINE void __TZ_set_STACKSEAL_S (uint32_t* stackTop)
+{
   *((uint64_t *)stackTop) = __TZ_STACK_SEAL_VALUE;
 }
 #endif
@@ -542,8 +546,8 @@ __STATIC_FORCEINLINE void __TZ_set_FAULTMASK_NS(uint32_t faultMask)
 __STATIC_FORCEINLINE uint32_t __get_PSPLIM(void)
 {
 #if (!(defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)) && \
-      !(defined (__ARM_ARCH_8_1M_MAIN__ ) && (__ARM_ARCH_8_1M_MAIN__ == 1)) && \
-       (!defined (__ARM_FEATURE_CMSE  ) || (__ARM_FEATURE_CMSE   < 3)))
+     !(defined (__ARM_ARCH_8_1M_MAIN__ ) && (__ARM_ARCH_8_1M_MAIN__ == 1)) && \
+     (!defined (__ARM_FEATURE_CMSE  ) || (__ARM_FEATURE_CMSE   < 3)))
   /* without main extensions, the non-secure PSPLIM is RAZ/WI */
   return (0U);
 #else
@@ -565,7 +569,7 @@ __STATIC_FORCEINLINE uint32_t __get_PSPLIM(void)
 __STATIC_FORCEINLINE uint32_t __TZ_get_PSPLIM_NS(void)
 {
 #if (!(defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)) && \
-      !(defined (__ARM_ARCH_8_1M_MAIN__ ) && (__ARM_ARCH_8_1M_MAIN__ == 1)))
+     !(defined (__ARM_ARCH_8_1M_MAIN__ ) && (__ARM_ARCH_8_1M_MAIN__ == 1)))
   /* without main extensions, the non-secure PSPLIM is RAZ/WI */
   return (0U);
 #else
@@ -589,8 +593,8 @@ __STATIC_FORCEINLINE uint32_t __TZ_get_PSPLIM_NS(void)
 __STATIC_FORCEINLINE void __set_PSPLIM(uint32_t ProcStackPtrLimit)
 {
 #if (!(defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)) && \
-      !(defined (__ARM_ARCH_8_1M_MAIN__ ) && (__ARM_ARCH_8_1M_MAIN__ == 1)) && \
-       (!defined (__ARM_FEATURE_CMSE  ) || (__ARM_FEATURE_CMSE   < 3)))
+     !(defined (__ARM_ARCH_8_1M_MAIN__ ) && (__ARM_ARCH_8_1M_MAIN__ == 1)) && \
+     (!defined (__ARM_FEATURE_CMSE  ) || (__ARM_FEATURE_CMSE   < 3)))
   /* without main extensions, the non-secure PSPLIM is RAZ/WI */
   (void)ProcStackPtrLimit;
 #else
@@ -611,7 +615,7 @@ __STATIC_FORCEINLINE void __set_PSPLIM(uint32_t ProcStackPtrLimit)
 __STATIC_FORCEINLINE void __TZ_set_PSPLIM_NS(uint32_t ProcStackPtrLimit)
 {
 #if (!(defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)) && \
-      !(defined (__ARM_ARCH_8_1M_MAIN__ ) && (__ARM_ARCH_8_1M_MAIN__ == 1)))
+     !(defined (__ARM_ARCH_8_1M_MAIN__ ) && (__ARM_ARCH_8_1M_MAIN__ == 1)))
   /* without main extensions, the non-secure PSPLIM is RAZ/WI */
   (void)ProcStackPtrLimit;
 #else
@@ -632,8 +636,8 @@ __STATIC_FORCEINLINE void __TZ_set_PSPLIM_NS(uint32_t ProcStackPtrLimit)
 __STATIC_FORCEINLINE uint32_t __get_MSPLIM(void)
 {
 #if (!(defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)) && \
-      !(defined (__ARM_ARCH_8_1M_MAIN__ ) && (__ARM_ARCH_8_1M_MAIN__ == 1)) && \
-       (!defined (__ARM_FEATURE_CMSE  ) || (__ARM_FEATURE_CMSE   < 3)))
+     !(defined (__ARM_ARCH_8_1M_MAIN__ ) && (__ARM_ARCH_8_1M_MAIN__ == 1)) && \
+     (!defined (__ARM_FEATURE_CMSE  ) || (__ARM_FEATURE_CMSE   < 3)))
   /* without main extensions, the non-secure MSPLIM is RAZ/WI */
   return (0U);
 #else
@@ -656,7 +660,7 @@ __STATIC_FORCEINLINE uint32_t __get_MSPLIM(void)
 __STATIC_FORCEINLINE uint32_t __TZ_get_MSPLIM_NS(void)
 {
 #if (!(defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)) && \
-      !(defined (__ARM_ARCH_8_1M_MAIN__ ) && (__ARM_ARCH_8_1M_MAIN__ == 1)))
+     !(defined (__ARM_ARCH_8_1M_MAIN__ ) && (__ARM_ARCH_8_1M_MAIN__ == 1)))
   /* without main extensions, the non-secure MSPLIM is RAZ/WI */
   return (0U);
 #else
@@ -679,8 +683,8 @@ __STATIC_FORCEINLINE uint32_t __TZ_get_MSPLIM_NS(void)
 __STATIC_FORCEINLINE void __set_MSPLIM(uint32_t MainStackPtrLimit)
 {
 #if (!(defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)) && \
-      !(defined (__ARM_ARCH_8_1M_MAIN__ ) && (__ARM_ARCH_8_1M_MAIN__ == 1)) && \
-       (!defined (__ARM_FEATURE_CMSE  ) || (__ARM_FEATURE_CMSE   < 3)))
+     !(defined (__ARM_ARCH_8_1M_MAIN__ ) && (__ARM_ARCH_8_1M_MAIN__ == 1)) && \
+     (!defined (__ARM_FEATURE_CMSE  ) || (__ARM_FEATURE_CMSE   < 3)))
   /* without main extensions, the non-secure MSPLIM is RAZ/WI */
   (void)MainStackPtrLimit;
 #else
@@ -701,7 +705,7 @@ __STATIC_FORCEINLINE void __set_MSPLIM(uint32_t MainStackPtrLimit)
 __STATIC_FORCEINLINE void __TZ_set_MSPLIM_NS(uint32_t MainStackPtrLimit)
 {
 #if (!(defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)) && \
-      !(defined (__ARM_ARCH_8_1M_MAIN__ ) && (__ARM_ARCH_8_1M_MAIN__ == 1)))
+     !(defined (__ARM_ARCH_8_1M_MAIN__ ) && (__ARM_ARCH_8_1M_MAIN__ == 1)))
   /* without main extensions, the non-secure MSPLIM is RAZ/WI */
   (void)MainStackPtrLimit;
 #else
@@ -711,7 +715,6 @@ __STATIC_FORCEINLINE void __TZ_set_MSPLIM_NS(uint32_t MainStackPtrLimit)
 #endif
 
 #endif /* (__ARM_ARCH >= 8) */
-
-/*@} end of CMSIS_Core_RegAccFunctions */
+/** @} end of CMSIS_Core_RegAccFunctions */
 
 #endif /* __CMSIS_GCC_M_H */

@@ -777,7 +777,7 @@ void MSC_Write(void)
             /* Buffer full. Writer it to storage first. */
             if (g_u32Address >= (STORAGE_DATA_BUF + STORAGE_BUFFER_SIZE))
             {
-                DataFlashWrite(g_u32DataFlashStartAddr, STORAGE_BUFFER_SIZE, (uint32_t)STORAGE_DATA_BUF);
+                MSC_WriteMedia(g_u32DataFlashStartAddr, STORAGE_BUFFER_SIZE, (uint8_t *)STORAGE_DATA_BUF);
 
                 g_u32Address = STORAGE_DATA_BUF;
                 g_u32DataFlashStartAddr += STORAGE_BUFFER_SIZE;
@@ -803,7 +803,7 @@ void MSC_Write(void)
 
                 if (len)
                 {
-                    DataFlashWrite(g_u32DataFlashStartAddr, len, (uint32_t)STORAGE_DATA_BUF);
+                    MSC_WriteMedia(g_u32DataFlashStartAddr, len, (uint8_t *)STORAGE_DATA_BUF);
                 }
             }
 
@@ -1430,6 +1430,11 @@ void MSC_AckCmd(void)
 void MSC_ReadMedia(uint32_t addr, uint32_t size, uint8_t *buffer)
 {
     DataFlashRead(addr, size, (uint32_t)buffer);
+}
+
+void MSC_WriteMedia(uint32_t addr, uint32_t size, uint8_t *buffer)
+{
+    DataFlashWrite(addr, size, (uint32_t)buffer);
 }
 
 void MSC_SetConfig(void)

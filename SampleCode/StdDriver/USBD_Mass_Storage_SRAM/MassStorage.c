@@ -280,8 +280,12 @@ void EP2_Handler(void)
 
 void EP3_Handler(void)
 {
+    uint32_t u32EpSts3    = USBD->EPSTS0 & USBD_EPSTS0_EPSTS3_Msk;
+    uint32_t u32OutToggle = g_u32OutToggle;
+    uint32_t u32CbwStall  = g_u32CbwStall;
+
     /* Bulk OUT */
-    if ((g_u32OutToggle == (USBD->EPSTS0 & USBD_EPSTS0_EPSTS3_Msk)) && !g_u32CbwStall)
+    if ((u32OutToggle == u32EpSts3) && !u32CbwStall)
     {
         g_u32OutSkip = 1;
         USBD_SET_PAYLOAD_LEN(EP3, EP3_MAX_PKT_SIZE);
@@ -289,7 +293,7 @@ void EP3_Handler(void)
     else
     {
         g_u8EP3Ready    = 1;
-        g_u32OutToggle  = USBD->EPSTS0 & USBD_EPSTS0_EPSTS3_Msk;
+        g_u32OutToggle  = u32EpSts3;
         g_u32OutSkip    = 0;
 
         g_u32CbwStall   = 0;
@@ -780,7 +784,7 @@ void MSC_Write(void)
             /* Buffer full. Writer it to storage first. */
             if (g_u32Address >= (STORAGE_DATA_BUF + STORAGE_BUFFER_SIZE))
             {
-                DataFlashWrite(g_u32DataFlashStartAddr, STORAGE_BUFFER_SIZE, (uint32_t)STORAGE_DATA_BUF);
+                MSC_WriteMedia(g_u32DataFlashStartAddr, STORAGE_BUFFER_SIZE, (uint8_t *)STORAGE_DATA_BUF);
 
                 g_u32Address = STORAGE_DATA_BUF;
                 g_u32DataFlashStartAddr += STORAGE_BUFFER_SIZE;
@@ -807,7 +811,7 @@ void MSC_Write(void)
 
                 if (len)
                 {
-                    DataFlashWrite(g_u32DataFlashStartAddr, len, (uint32_t)STORAGE_DATA_BUF);
+                    MSC_WriteMedia(g_u32DataFlashStartAddr, len, (uint8_t *)STORAGE_DATA_BUF);
                 }
             }
 
@@ -1453,7 +1457,12 @@ void MSC_AckCmd(void)
 
 void MSC_ReadMedia(uint32_t addr, uint32_t size, uint8_t *buffer)
 {
-    DataFlashRead(addr, size, (uint32_t)buffer);
+    memcpy((uint8_t *)buffer, (uint8_t *)(addr + STORAGE_BASE), size);
+}
+
+void MSC_WriteMedia(uint32_t addr, uint32_t size, uint8_t *buffer)
+{
+    memcpy((uint8_t *)(addr + STORAGE_BASE), (uint8_t *)buffer, size);
 }
 
 void MSC_SetConfig(void)
@@ -1483,15 +1492,4 @@ void MSC_SetConfig(void)
 
     DBG_PRINTF("Set config\n");
 
-}
-
-void DataFlashRead(uint32_t addr, uint32_t size, uint32_t buffer)
-{
-    USBD_MemCopy((uint8_t *)buffer, (uint8_t *)(addr + STORAGE_BASE), size);
-}
-
-
-void DataFlashWrite(uint32_t addr, uint32_t size, uint32_t buffer)
-{
-    USBD_MemCopy((uint8_t *)(addr + STORAGE_BASE), (uint8_t *)buffer, size);
 }

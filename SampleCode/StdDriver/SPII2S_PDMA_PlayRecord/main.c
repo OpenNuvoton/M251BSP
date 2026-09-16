@@ -1,11 +1,10 @@
-/**************************************************************************//**
+/***************************************************************************//**
  * @file    main.c
  * @version V1.00
  * @brief   An I2S demo for playing and recording data with PDMA function.
  *
- * @note
  * SPDX-License-Identifier: Apache-2.0
- * Copyright (C) 2023 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2023 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>
 #include <string.h>
@@ -55,7 +54,7 @@ void PDMA_IRQHandler(void)
     uint32_t u32DataCount = 0;
     volatile uint32_t u32Status = PDMA_GET_INT_STATUS(PDMA);
 
-    if (u32Status & 0x1)   /* abort */
+    if (u32Status & 0x1) /* abort */
     {
         if (PDMA_GET_ABORT_STS(PDMA) & 0x4)
             PDMA_CLR_ABORT_FLAG(PDMA, PDMA_ABTSTS_ABTIF1_Msk);
@@ -64,7 +63,7 @@ void PDMA_IRQHandler(void)
     }
     else if (u32Status & 0x2)
     {
-        if (PDMA_GET_TD_STS(PDMA) & (1 << I2S_TX_DMA_CH))            /* channel 1 done */
+        if (PDMA_GET_TD_STS(PDMA) & (1 << I2S_TX_DMA_CH)) /* channel 1 done */
         {
             /* Reset PDMA Scater-Gatter table */
             PDMA_ResetTxSGTable(gu8TxIdx);
@@ -73,7 +72,7 @@ void PDMA_IRQHandler(void)
             PDMA_CLR_TD_FLAG(PDMA, PDMA_TDSTS_TDIF0_Msk);
         }
 
-        if (PDMA_GET_TD_STS(PDMA) & (1 << I2S_RX_DMA_CH))            /* channel 2 done */
+        if (PDMA_GET_TD_STS(PDMA) & (1 << I2S_RX_DMA_CH)) /* channel 2 done */
         {
             if (gu8Count == 0)
             {
@@ -222,7 +221,7 @@ int32_t main(void)
     g_asDescTable_TX[1].CTL = ((BUFF_LEN - 1) << PDMA_DSCT_CTL_TXCNT_Pos) | PDMA_WIDTH_32 | PDMA_SAR_INC | PDMA_DAR_FIX | PDMA_REQ_SINGLE | PDMA_OP_SCATTER;
     g_asDescTable_TX[1].SA = (uint32_t)&PcmTxBuff[1];
     g_asDescTable_TX[1].DA = (uint32_t)&SPI0->TX;
-    g_asDescTable_TX[1].NEXT = (uint32_t)&g_asDescTable_TX[0];   //link to first description
+    g_asDescTable_TX[1].NEXT = (uint32_t)&g_asDescTable_TX[0]; //link to first description
 
     /* Rx(Record) description */
     g_asDescTable_RX[0].CTL = ((BUFF_LEN - 1) << PDMA_DSCT_CTL_TXCNT_Pos) | PDMA_WIDTH_32 | PDMA_SAR_FIX | PDMA_DAR_INC | PDMA_REQ_SINGLE | PDMA_OP_SCATTER;
@@ -233,7 +232,7 @@ int32_t main(void)
     g_asDescTable_RX[1].CTL = ((BUFF_LEN - 1) << PDMA_DSCT_CTL_TXCNT_Pos) | PDMA_WIDTH_32 | PDMA_SAR_FIX | PDMA_DAR_INC | PDMA_REQ_SINGLE | PDMA_OP_SCATTER;
     g_asDescTable_RX[1].SA = (uint32_t)&SPI0->RX;
     g_asDescTable_RX[1].DA = (uint32_t)&PcmRxBuff[1];
-    g_asDescTable_RX[1].NEXT = (uint32_t)&g_asDescTable_RX[0];   //link to first description
+    g_asDescTable_RX[1].NEXT = (uint32_t)&g_asDescTable_RX[0]; //link to first description
 
     PDMA_SetTransferMode(PDMA, 0, PDMA_SPI0_TX, 1, (uint32_t)&g_asDescTable_TX[0]);
     PDMA_SetTransferMode(PDMA, 1, PDMA_SPI0_RX, 1, (uint32_t)&g_asDescTable_RX[0]);

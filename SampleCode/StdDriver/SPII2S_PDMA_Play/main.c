@@ -1,7 +1,7 @@
-/**************************************************************************//**
- * @file     main.c
- * @version  V0.10
- * @brief    This is a I2S demo for playing data and demonstrate how I2S works with PDMA.
+/***************************************************************************//**
+ * @file    main.c
+ * @version V0.10
+ * @brief   This is a I2S demo for playing data and demonstrate how I2S works with PDMA.
  *
  * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
@@ -41,14 +41,14 @@ void PDMA_IRQHandler(void)
 {
     uint32_t u32Status = PDMA_GET_INT_STATUS(PDMA);
 
-    if (u32Status & 0x1)   /* abort */
+    if (u32Status & 0x1) /* abort */
     {
         if (PDMA_GET_ABORT_STS(PDMA) & 0x4)
             PDMA_CLR_ABORT_FLAG(PDMA, PDMA_ABTSTS_ABTIF1_Msk);
     }
     else if (u32Status & 0x2)
     {
-        if (PDMA_GET_TD_STS(PDMA) & 0x2)            /* channel 1 done */
+        if (PDMA_GET_TD_STS(PDMA) & 0x2) /* channel 1 done */
         {
             /* Reset PDMA Scatter-Gather table */
             PDMA_ResetTxSGTable(u8TxIdx);
@@ -56,7 +56,7 @@ void PDMA_IRQHandler(void)
             PDMA_CLR_TD_FLAG(PDMA, PDMA_TDSTS_TDIF1_Msk);
         }
 
-        if (PDMA_GET_TD_STS(PDMA) & 0x4)            /* channel 2 done */
+        if (PDMA_GET_TD_STS(PDMA) & 0x4) /* channel 2 done */
         {
             /* Reset PDMA Scatter-Gather table */
             g_u8TransDone = 0;
@@ -127,7 +127,7 @@ void PDMA_Init(void)
     g_asDescTable_TX[1].CTL = ((BUFF_LEN - 1) << PDMA_DSCT_CTL_TXCNT_Pos) | PDMA_WIDTH_32 | PDMA_SAR_INC | PDMA_DAR_FIX | PDMA_REQ_SINGLE | PDMA_OP_SCATTER;
     g_asDescTable_TX[1].SA = (uint32_t)&g_au32PcmTxBuff[1];
     g_asDescTable_TX[1].DA = (uint32_t)&SPI0->TX;
-    g_asDescTable_TX[1].NEXT = (uint32_t)&g_asDescTable_TX[0] - (PDMA->SCATBA);   //link to first description
+    g_asDescTable_TX[1].NEXT = (uint32_t)&g_asDescTable_TX[0] - (PDMA->SCATBA); //link to first description
 
     /* Rx description */
     g_asDescTable_DataRX[0].CTL = ((CHECK_BUFF_LEN - 1) << PDMA_DSCT_CTL_TXCNT_Pos) | PDMA_WIDTH_32 | PDMA_SAR_FIX | PDMA_DAR_INC | PDMA_REQ_SINGLE | PDMA_OP_BASIC;

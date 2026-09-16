@@ -1,7 +1,7 @@
-/**************************************************************************//**
- * @file     main.c
- * @version  V3.00
- * @brief    Demonstrate how to implement NEC IR protocol by PSIO.
+/***************************************************************************//**
+ * @file    main.c
+ * @version V3.00
+ * @brief   Demonstrate how to implement NEC IR protocol by PSIO.
  *
  * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
@@ -10,6 +10,8 @@
 #include <stdio.h>
 #include "NuMicro.h"
 #include "NEC_IR_driver.h"
+
+#define PSIO_IR_TRANSFER_TIMEOUT    (SystemCoreClock)
 
 
 void SYS_Init(void)
@@ -83,6 +85,7 @@ void UART0_Init()
 int main(void)
 {
     S_PSIO_NEC_CFG sConfig;
+    uint32_t u32TimeOutCnt = PSIO_IR_TRANSFER_TIMEOUT;
 
     /* Unlock protected registers */
     SYS_UnlockReg();
@@ -101,11 +104,12 @@ int main(void)
     printf("+------------------------------------------------------+ \n");
     printf("|               NEC IR sample code                     | \n");
     printf("|      Please check waveform on PSIO_CH0(PB.15)        | \n");
+    printf("|   Demo sample keeps bounded transfer timeout         | \n");
     printf("+------------------------------------------------------+ \n");
 
     /* Use slot controller 0 and pin 0 */
-    sConfig.u8SlotCtrl   = PSIO_SC0;
-    sConfig.u8TxPin      = PSIO_PIN0;
+    sConfig.u8SlotCtrl = PSIO_SC0;
+    sConfig.u8TxPin = PSIO_PIN0;
 
     /* Initialize PSIO setting for NEC IR protocol */
     PSIO_NEC_Open(&sConfig);
@@ -114,13 +118,39 @@ int main(void)
     PSIO_NEC_Send(&sConfig, 0x1, ~0x1, 0x2, ~0x2);
 
     /* Wait transfer done */
-    while (PSIO_NEC_TransferDone(&sConfig));
+    u32TimeOutCnt = PSIO_IR_TRANSFER_TIMEOUT;
+
+    while (PSIO_NEC_TransferDone(&sConfig))
+    {
+        if (u32TimeOutCnt-- == 0U)
+        {
+            printf("Wait for NEC transfer timeout. Keep bounded timeout protection in production code.\n");
+            PSIO_NEC_Close(&sConfig);
+
+            while (1)
+            {
+            }
+        }
+    }
 
     /* Send  Repeat signal */
     PSIO_NEC_Repeat(&sConfig);
 
     /* Wait transfer done */
-    while (PSIO_NEC_TransferDone(&sConfig));
+    u32TimeOutCnt = PSIO_IR_TRANSFER_TIMEOUT;
+
+    while (PSIO_NEC_TransferDone(&sConfig))
+    {
+        if (u32TimeOutCnt-- == 0U)
+        {
+            printf("Wait for NEC repeat timeout. Keep bounded timeout protection in production code.\n");
+            PSIO_NEC_Close(&sConfig);
+
+            while (1)
+            {
+            }
+        }
+    }
 
     /* Release PSIO setting */
     PSIO_NEC_Close(&sConfig);
@@ -129,6 +159,5 @@ int main(void)
 
     while (1);
 }
-
 
 /*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/

@@ -1,6 +1,6 @@
 /*
- * FreeRTOS V202112.00
- * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * FreeRTOS V202212.00
+ * Copyright (C) 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -20,7 +20,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
  * https://www.FreeRTOS.org
- * https://aws.amazon.com/freertos
+ * https://github.com/FreeRTOS
  *
  */
 
@@ -182,7 +182,8 @@ static void prvReceivingTask( void * pvParameters )
 void vBasicStreamBufferSendFromISR( void )
 {
     static size_t xNextByteToSend = 0;
-    const BaseType_t xCallsBetweenSends = 100, xBytesToSend = 4;
+    const size_t xBytesToSend = 4;
+    const BaseType_t xCallsBetweenSends = 100;
     static BaseType_t xCallCount = 0;
 
     /* Is it time to write to the stream buffer again? */
@@ -212,7 +213,7 @@ void vBasicStreamBufferSendFromISR( void )
 
 BaseType_t xIsInterruptStreamBufferDemoStillRunning( void )
 {
-    uint32_t ulLastCycleCount = 0;
+    static uint32_t ulLastCycleCount = 0;
 
     /* Check the demo is still running. */
     if( ulLastCycleCount == ulCycleCount )

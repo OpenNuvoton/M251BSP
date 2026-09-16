@@ -518,11 +518,11 @@ __STATIC_INLINE void UART_SET_RTS(UART_T *uart)
  */
 __STATIC_INLINE void UART_RESET_RXFIFO(UART_T *uart)
 {
-    volatile int32_t i32Timeout = SystemCoreClock;
+    volatile uint32_t u32Timeout = SystemCoreClock;
 
-    while (!UART_RX_IDLE(uart))
+    while (UART_RX_IDLE(uart) == 0U)
     {
-        if (--i32Timeout <= 0)
+        if (--u32Timeout == 0U)
         {
             break;
         }
@@ -530,11 +530,11 @@ __STATIC_INLINE void UART_RESET_RXFIFO(UART_T *uart)
 
     (uart)->FIFO |= UART_FIFO_RXRST_Msk;
 
-    i32Timeout = SystemCoreClock;
+    u32Timeout = SystemCoreClock;
 
     while (((uart)->FIFO & UART_FIFO_RXRST_Msk) == UART_FIFO_RXRST_Msk)
     {
-        if (--i32Timeout <= 0)
+        if (--u32Timeout == 0U)
         {
             break;
         }
@@ -552,11 +552,11 @@ __STATIC_INLINE void UART_RESET_RXFIFO(UART_T *uart)
  */
 __STATIC_INLINE void UART_RESET_TXFIFO(UART_T *uart)
 {
-    volatile int32_t i32Timeout = SystemCoreClock;
+    volatile uint32_t u32Timeout = SystemCoreClock;
 
-    while (!UART_IS_TX_EMPTY(uart))
+    while (UART_IS_TX_EMPTY(uart) == 0U)
     {
-        if (--i32Timeout <= 0)
+        if (--u32Timeout == 0U)
         {
             break;
         }
@@ -564,11 +564,11 @@ __STATIC_INLINE void UART_RESET_TXFIFO(UART_T *uart)
 
     (uart)->FIFO |= UART_FIFO_TXRST_Msk;
 
-    i32Timeout = SystemCoreClock;
+    u32Timeout = SystemCoreClock;
 
     while (((uart)->FIFO & UART_FIFO_TXRST_Msk) == UART_FIFO_TXRST_Msk)
     {
-        if (--i32Timeout <= 0)
+        if (--u32Timeout == 0U)
         {
             break;
         }

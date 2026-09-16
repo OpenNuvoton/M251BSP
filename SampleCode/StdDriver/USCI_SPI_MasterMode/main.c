@@ -1,8 +1,7 @@
-/**************************************************************************//**
- * @file     main.c
- * @version  V0.10
- * @brief
- *          Configure USCI_SPI0 as Master mode and demonstrate how to communicate with an off-chip SPI Slave device.
+/***************************************************************************//**
+ * @file    main.c
+ * @version V0.10
+ * @brief   Configure USCI_SPI0 as Master mode and demonstrate how to communicate with an off-chip SPI Slave device.
  *          This sample code needs to work with USCI_SPI_SlaveMode sample code.
  *
  * SPDX-License-Identifier: Apache-2.0
@@ -203,7 +202,7 @@ void USCI0_IRQHandler(void)
     /* Waiting for RX is not empty */
     while (USPI_GET_RX_EMPTY_FLAG(USPI0));
 
-    u32TempIndx =  g_u32RxDataCount++;
+    u32TempIndx = g_u32RxDataCount++;
     g_au32DestinationData[u32TempIndx] = USPI_READ_RX(USPI0);
 
     /* Check TX data count */

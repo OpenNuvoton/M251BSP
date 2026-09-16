@@ -8,8 +8,11 @@ To experience the powerful features of M251/M252/M254/M256/M258 series in few mi
 
 ## .\Document\
 
+- SBOM<br>
+	Scopes and component evidence of Product SBOM and Test Sample SBOM.
+
 - CMSIS.html<br>
-	Document of CMSIS version 6.1.0.
+	Document of CMSIS.
 
 - NuMicro M251_252_254_256_258 Series CMSIS BSP Driver Reference Guide.chm<br>
 	This document describes the usage of drivers in M251/M252/M254/M256/M258 Series BSP.
@@ -24,7 +27,7 @@ To experience the powerful features of M251/M252/M254/M256/M258 series in few mi
 ## .\Library\
 
 - CMSIS<br>
-	Cortex® Microcontroller Software Interface Standard (CMSIS) V6.1.0 definitions by Arm® Corp.
+	Cortex® Microcontroller Software Interface Standard (CMSIS) definitions  and CMSIS-Compiler software components by Arm® Corp.
 
 - Device<br>
 	CMSIS compliant device header files.

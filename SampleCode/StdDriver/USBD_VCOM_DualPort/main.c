@@ -388,46 +388,68 @@ void VCOM_TransferData(void)
     }
 
     /* Process the Bulk out data when bulk out data is ready. */
-    if (g_i8BulkOutReady0 && (g_u32RxSize0 <= TXBUFSIZE - g_u16ComTbytes0))
     {
-        for (i = 0; i < g_u32RxSize0; i++)
+        int8_t   i8BulkOutReady = g_i8BulkOutReady0;
+        uint32_t u32RxSize      = g_u32RxSize0;
+        uint16_t u16ComTbytes   = g_u16ComTbytes0;
+
+        if (i8BulkOutReady && (u32RxSize <= (uint32_t)(TXBUFSIZE - u16ComTbytes)))
         {
-            g_au8ComTbuf0[g_u16ComTtail0++] = g_pu8RxBuf0[i];
+            uint16_t u16ComTtail = g_u16ComTtail0;
+            uint8_t *pu8RxBuf    = (uint8_t *)g_pu8RxBuf0;
 
-            if (g_u16ComTtail0 >= TXBUFSIZE)
-                g_u16ComTtail0 = 0;
+            for (i = 0; i < u32RxSize; i++)
+            {
+                g_au8ComTbuf0[u16ComTtail++] = pu8RxBuf[i];
+
+                if (u16ComTtail >= TXBUFSIZE)
+                    u16ComTtail = 0;
+            }
+
+            g_u16ComTtail0 = u16ComTtail;
+
+            __set_PRIMASK(1);
+            g_u16ComTbytes0 = (uint16_t)(u16ComTbytes + u32RxSize);
+            __set_PRIMASK(0);
+
+            g_u32RxSize0 = 0;
+            g_i8BulkOutReady0 = 0; /* Clear bulk out ready flag */
+
+            /* Ready to get next BULK out */
+            USBD_SET_PAYLOAD_LEN(EP3, EP3_MAX_PKT_SIZE);
         }
-
-        __set_PRIMASK(1);
-        g_u16ComTbytes0 += g_u32RxSize0;
-        __set_PRIMASK(0);
-
-        g_u32RxSize0 = 0;
-        g_i8BulkOutReady0 = 0; /* Clear bulk out ready flag */
-
-        /* Ready to get next BULK out */
-        USBD_SET_PAYLOAD_LEN(EP3, EP3_MAX_PKT_SIZE);
     }
 
-    if (g_i8BulkOutReady1 && (g_u32RxSize1 <= TXBUFSIZE - g_u16ComTbytes1))
     {
-        for (i = 0; i < g_u32RxSize1; i++)
+        int8_t   i8BulkOutReady = g_i8BulkOutReady1;
+        uint32_t u32RxSize      = g_u32RxSize1;
+        uint16_t u16ComTbytes   = g_u16ComTbytes1;
+
+        if (i8BulkOutReady && (u32RxSize <= (uint32_t)(TXBUFSIZE - u16ComTbytes)))
         {
-            g_au8ComTbuf1[g_u16ComTtail1++] = g_pu8RxBuf1[i];
+            uint16_t u16ComTtail = g_u16ComTtail1;
+            uint8_t *pu8RxBuf    = (uint8_t *)g_pu8RxBuf1;
 
-            if (g_u16ComTtail1 >= TXBUFSIZE)
-                g_u16ComTtail1 = 0;
+            for (i = 0; i < u32RxSize; i++)
+            {
+                g_au8ComTbuf1[u16ComTtail++] = pu8RxBuf[i];
+
+                if (u16ComTtail >= TXBUFSIZE)
+                    u16ComTtail = 0;
+            }
+
+            g_u16ComTtail1 = u16ComTtail;
+
+            __set_PRIMASK(1);
+            g_u16ComTbytes1 = (uint16_t)(u16ComTbytes + u32RxSize);
+            __set_PRIMASK(0);
+
+            g_u32RxSize1 = 0;
+            g_i8BulkOutReady1 = 0; /* Clear bulk out ready flag */
+
+            /* Ready to get next BULK out */
+            USBD_SET_PAYLOAD_LEN(EP6, EP6_MAX_PKT_SIZE);
         }
-
-        __set_PRIMASK(1);
-        g_u16ComTbytes1 += g_u32RxSize1;
-        __set_PRIMASK(0);
-
-        g_u32RxSize1 = 0;
-        g_i8BulkOutReady1 = 0; /* Clear bulk out ready flag */
-
-        /* Ready to get next BULK out */
-        USBD_SET_PAYLOAD_LEN(EP6, EP6_MAX_PKT_SIZE);
     }
 
     /* Process the software Tx FIFO */

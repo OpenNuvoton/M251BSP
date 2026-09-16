@@ -37,11 +37,11 @@
   @{
 */
 
-/* // @cond HIDDEN_SYMBOLS */
+/* @cond HIDDEN_SYMBOLS */
 
 static uint32_t g_AES_au32CTL[1];
 
-/* // @endcond HIDDEN_SYMBOLS */
+/* @endcond HIDDEN_SYMBOLS */
 
 /**
   * @brief  Open AES encrypt/decrypt function.
@@ -103,12 +103,14 @@ void AES_Start(CRPT_T *crpt, uint32_t u32Channel, uint32_t u32DMAMode)
   *         - \ref AES_KEY_SIZE_192
   *         - \ref AES_KEY_SIZE_256
   */
-void AES_SetKey(CRPT_T *crpt, uint32_t u32Channel, uint32_t au32Keys[], uint32_t u32KeySize)
+void AES_SetKey(CRPT_T *crpt, uint32_t u32Channel, const uint32_t au32Keys[], uint32_t u32KeySize)
 {
-    uint32_t  u32Idx, u32Wcnt, u32KeyRegAddr;
+    uint32_t  u32Idx;
+    uint32_t  u32Wcnt;
+    uint32_t  u32KeyRegAddr;
 
     u32KeyRegAddr = (uint32_t)&crpt->AES_KEY[0] + (u32Channel * 0x3CUL);
-    u32Wcnt = 4UL + u32KeySize * 2UL;
+    u32Wcnt = 4UL + (u32KeySize * 2UL);
 
     for (u32Idx = 0U; u32Idx < u32Wcnt; u32Idx++)
     {
@@ -123,9 +125,10 @@ void AES_SetKey(CRPT_T *crpt, uint32_t u32Channel, uint32_t au32Keys[], uint32_t
   * @param[in]  u32Channel  AES channel. Must be 0.
   * @param[in]  au32IV      A four entry word array contains AES initial vectors.
   */
-void AES_SetInitVect(CRPT_T *crpt, uint32_t u32Channel, uint32_t au32IV[])
+void AES_SetInitVect(CRPT_T *crpt, uint32_t u32Channel, const uint32_t au32IV[])
 {
-    uint32_t  u32Idx, u32KeyRegAddr;
+    uint32_t  u32Idx;
+    uint32_t  u32KeyRegAddr;
 
     u32KeyRegAddr = (uint32_t)&crpt->AES_IV[0] + (u32Channel * 0x3CUL);
 

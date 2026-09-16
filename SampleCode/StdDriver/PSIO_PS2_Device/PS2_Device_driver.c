@@ -1,11 +1,11 @@
-/**************************************************************************//**
- * @file        PS2_Slave_driver.c
- * @version     V3.00
- * @brief       PS/2 Slave device driver
+/***************************************************************************//**
+ * @file    PS2_Device_driver.c
+ * @version V3.00
+ * @brief   PS/2 Slave device driver
  *
  * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
-*****************************************************************************/
+ ******************************************************************************/
 
 #include "NuMicro.h"
 #include "PS2_Device_driver.h"
@@ -16,23 +16,27 @@ uint8_t *g_pu8RxData, *g_pu8Parity;
 
 static void PSIO_PS2_D2H_ReadData_Config(S_PSIO_PS2 *psConfig)
 {
-    const S_PSIO_CP_CONFIG sClockConfig 
-                     = {/* Check Point0     Check Point1        Check Point2        Check Point3        Check Point4        Check Point5        Check Point6        Check Point7 */
-      /* Slot */        PSIO_SLOT0,         PSIO_SLOT1,         PSIO_SLOT2,         PSIO_SLOT3,         PSIO_SLOT4,         PSIO_SLOT5,         PSIO_SLOT6,         PSIO_SLOT7,
-      /* Action */      PSIO_OUT_LOW,       PSIO_OUT_LOW,       PSIO_OUT_HIGH,      PSIO_OUT_HIGH,      PSIO_OUT_LOW,       PSIO_OUT_LOW,       PSIO_OUT_HIGH,      PSIO_OUT_HIGH};   
-    const S_PSIO_CP_CONFIG sDataConfig 
-                     = {/* Check Point0     Check Point1        Check Point2        Check Point3        Check Point4        Check Point5        Check Point6        Check Point7 */
-      /* Slot */        PSIO_SLOT2,         PSIO_SLOT5,         PSIO_SLOT_DISABLE,  PSIO_SLOT_DISABLE,  PSIO_SLOT_DISABLE,  PSIO_SLOT_DISABLE,  PSIO_SLOT_DISABLE,  PSIO_SLOT_DISABLE,
-      /* Action */      PSIO_IN_BUFFER,     PSIO_OUT_LOW,       PSIO_NO_ACTION,     PSIO_NO_ACTION,     PSIO_NO_ACTION,     PSIO_NO_ACTION,     PSIO_NO_ACTION,     PSIO_NO_ACTION};
-        
+    const S_PSIO_CP_CONFIG sClockConfig
+    = /* Check Point0     Check Point1        Check Point2        Check Point3        Check Point4        Check Point5        Check Point6        Check Point7 */
+    {
+        /* Slot */        PSIO_SLOT0,         PSIO_SLOT1,         PSIO_SLOT2,         PSIO_SLOT3,         PSIO_SLOT4,         PSIO_SLOT5,         PSIO_SLOT6,         PSIO_SLOT7,
+        /* Action */      PSIO_OUT_LOW,       PSIO_OUT_LOW,       PSIO_OUT_HIGH,      PSIO_OUT_HIGH,      PSIO_OUT_LOW,       PSIO_OUT_LOW,       PSIO_OUT_HIGH,      PSIO_OUT_HIGH
+    };
+    const S_PSIO_CP_CONFIG sDataConfig
+    = /* Check Point0     Check Point1        Check Point2        Check Point3        Check Point4        Check Point5        Check Point6        Check Point7 */
+    {
+        /* Slot */        PSIO_SLOT2,         PSIO_SLOT5,         PSIO_SLOT_DISABLE,  PSIO_SLOT_DISABLE,  PSIO_SLOT_DISABLE,  PSIO_SLOT_DISABLE,  PSIO_SLOT_DISABLE,  PSIO_SLOT_DISABLE,
+        /* Action */      PSIO_IN_BUFFER,     PSIO_OUT_LOW,       PSIO_NO_ACTION,     PSIO_NO_ACTION,     PSIO_NO_ACTION,     PSIO_NO_ACTION,     PSIO_NO_ACTION,     PSIO_NO_ACTION
+    };
+
     /* Set clock slot controller slot0~7 tick count as 8 */
     /* For more efficient, accessing register directly */
-    PSIO->SCCT[psConfig->u8ClockSC].SCSLOT   = (0x8 << 28) | (0x8 << 24) | (0x8 << 20) | (0x8 << 16) | (0x8 << 12) | (0x8 << 8) | (0x8 << 4) | (0x8);
-      
+    PSIO->SCCT[psConfig->u8ClockSC].SCSLOT = (0x8 << 28) | (0x8 << 24) | (0x8 << 20) | (0x8 << 16) | (0x8 << 12) | (0x8 << 8) | (0x8 << 4) | (0x8);
+
     /* Set check point configuration */
     PSIO_SET_CP_CONFIG(PSIO, psConfig->u8ClockPin, &sClockConfig);
     PSIO_SET_CP_CONFIG(PSIO, psConfig->u8DataPin, &sDataConfig);
-      
+
     /* Loop slot0~slot3 9 times */
     PSIO_SET_SCCTL(PSIO, psConfig->u8ClockSC, PSIO_SLOT0, PSIO_SLOT3, 9, PSIO_REPEAT_DISABLE);
 
@@ -53,7 +57,7 @@ static void PSIO_PS2_D2H_ReadData_Config(S_PSIO_PS2 *psConfig)
 static uint32_t Encode_TxData(uint8_t *pu8TxData)
 {
     uint8_t u8Parity = 1;
-    uint8_t i   = 0;
+    uint8_t i = 0;
 
     for (i = 0; i < 8; i++)
     {
@@ -67,23 +71,27 @@ static uint32_t Encode_TxData(uint8_t *pu8TxData)
 
 static void PSIO_PS2_D2H_SendData_Config(S_PSIO_PS2 *psConfig)
 {
-    const S_PSIO_CP_CONFIG sClockConfig 
-                     = {/* Check Point0     Check Point1        Check Point2        Check Point3        Check Point4        Check Point5        Check Point6        Check Point7 */
-      /* Slot */        PSIO_SLOT0,         PSIO_SLOT1,         PSIO_SLOT2,         PSIO_SLOT3,         PSIO_SLOT_DISABLE,  PSIO_SLOT_DISABLE,  PSIO_SLOT_DISABLE,  PSIO_SLOT_DISABLE,
-      /* Action */      PSIO_OUT_HIGH,      PSIO_OUT_LOW,       PSIO_OUT_LOW,       PSIO_OUT_HIGH,      PSIO_NO_ACTION,     PSIO_NO_ACTION,     PSIO_NO_ACTION,     PSIO_NO_ACTION};   
-    const S_PSIO_CP_CONFIG sDataConfig 
-                     = {/* Check Point0     Check Point1        Check Point2        Check Point3        Check Point4        Check Point5        Check Point6        Check Point7 */
-      /* Slot */        PSIO_SLOT0,         PSIO_SLOT_DISABLE,  PSIO_SLOT_DISABLE,  PSIO_SLOT_DISABLE,  PSIO_SLOT_DISABLE,  PSIO_SLOT_DISABLE,  PSIO_SLOT_DISABLE,  PSIO_SLOT_DISABLE,
-      /* Action */      PSIO_OUT_BUFFER,    PSIO_NO_ACTION,     PSIO_NO_ACTION,     PSIO_NO_ACTION,     PSIO_NO_ACTION,     PSIO_NO_ACTION,     PSIO_NO_ACTION,     PSIO_NO_ACTION};
-                     
+    const S_PSIO_CP_CONFIG sClockConfig
+    = /* Check Point0     Check Point1        Check Point2        Check Point3        Check Point4        Check Point5        Check Point6        Check Point7 */
+    {
+        /* Slot */        PSIO_SLOT0,         PSIO_SLOT1,         PSIO_SLOT2,         PSIO_SLOT3,         PSIO_SLOT_DISABLE,  PSIO_SLOT_DISABLE,  PSIO_SLOT_DISABLE,  PSIO_SLOT_DISABLE,
+        /* Action */      PSIO_OUT_HIGH,      PSIO_OUT_LOW,       PSIO_OUT_LOW,       PSIO_OUT_HIGH,      PSIO_NO_ACTION,     PSIO_NO_ACTION,     PSIO_NO_ACTION,     PSIO_NO_ACTION
+    };
+    const S_PSIO_CP_CONFIG sDataConfig
+    = /* Check Point0     Check Point1        Check Point2        Check Point3        Check Point4        Check Point5        Check Point6        Check Point7 */
+    {
+        /* Slot */        PSIO_SLOT0,         PSIO_SLOT_DISABLE,  PSIO_SLOT_DISABLE,  PSIO_SLOT_DISABLE,  PSIO_SLOT_DISABLE,  PSIO_SLOT_DISABLE,  PSIO_SLOT_DISABLE,  PSIO_SLOT_DISABLE,
+        /* Action */      PSIO_OUT_BUFFER,    PSIO_NO_ACTION,     PSIO_NO_ACTION,     PSIO_NO_ACTION,     PSIO_NO_ACTION,     PSIO_NO_ACTION,     PSIO_NO_ACTION,     PSIO_NO_ACTION
+    };
+
     /* Set clock slot controller slot0~7 tick count as 8 */
     /* For more efficient, accessing register directly */
-    PSIO->SCCT[psConfig->u8ClockSC].SCSLOT   = (0x8 << 12) | (0x8 << 8) | (0x8 << 4) | (0x8);
+    PSIO->SCCT[psConfig->u8ClockSC].SCSLOT = (0x8 << 12) | (0x8 << 8) | (0x8 << 4) | (0x8);
 
     /* Set check point configuration */
     PSIO_SET_CP_CONFIG(PSIO, psConfig->u8ClockPin, &sClockConfig);
     PSIO_SET_CP_CONFIG(PSIO, psConfig->u8DataPin, &sDataConfig);
-      
+
     /* Loop slot0~slot3 10 times */
     PSIO_SET_SCCTL(PSIO, psConfig->u8ClockSC, PSIO_SLOT0, PSIO_SLOT3, 10, PSIO_REPEAT_DISABLE);
 
@@ -98,16 +106,34 @@ static void PSIO_PS2_D2H_SendData_Config(S_PSIO_PS2 *psConfig)
 }
 
 
-void PSIO_PS2_DeviceRead(S_PSIO_PS2 *psConfig, uint8_t *pu8RxData, uint8_t *pu8Parity)
+uint32_t PSIO_PS2_DeviceRead(S_PSIO_PS2 *psConfig, uint8_t *pu8RxData, uint8_t *pu8Parity)
 {
+    uint32_t u32TimeOutCnt;
+
     if (*(psConfig->p32ClockMFP))
     {
-        return;
+        return PSIO_PS2_DEVICE_READ_IDLE;
     }
 
-    while (*(psConfig->p32DataMFP));
+    u32TimeOutCnt = PSIO_PS2_DEVICE_TRANSFER_TIMEOUT;
 
-    while (!(*(psConfig->p32ClockMFP)));
+    while (*(psConfig->p32DataMFP))
+    {
+        if (u32TimeOutCnt-- == 0U)
+        {
+            return PSIO_PS2_DEVICE_READ_TIMEOUT;
+        }
+    }
+
+    u32TimeOutCnt = PSIO_PS2_DEVICE_TRANSFER_TIMEOUT;
+
+    while (!(*(psConfig->p32ClockMFP)))
+    {
+        if (u32TimeOutCnt-- == 0U)
+        {
+            return PSIO_PS2_DEVICE_READ_TIMEOUT;
+        }
+    }
 
     /* Update status */
     PSIO_PS2_SET_STATUS(eDEVICE_READ);
@@ -118,6 +144,8 @@ void PSIO_PS2_DeviceRead(S_PSIO_PS2 *psConfig, uint8_t *pu8RxData, uint8_t *pu8P
 
     /* Trigger slot controller */
     PSIO_START_SC(PSIO, psConfig->u8ClockSC);
+
+    return PSIO_PS2_DEVICE_READ_TRIGGERED;
 }
 
 
@@ -157,14 +185,13 @@ void PSIO_PS2_Open(S_PSIO_PS2 *psConfig)
 
 void PSIO_PS2_Close(S_PSIO_PS2 *psConfig)
 {
-		(void)psConfig;
-	
+    (void)psConfig;
+
     /* Disable interrupt 0 */
     PSIO_DISABLE_INT(PSIO, PSIO_INTEN_CON0IE_Msk);
 
     /* Disable PSIO corresponding NVIC bit */
     NVIC_DisableIRQ(PSIO_IRQn);
 }
-
 
 /*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/

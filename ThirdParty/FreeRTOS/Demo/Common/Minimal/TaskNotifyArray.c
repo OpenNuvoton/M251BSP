@@ -1,6 +1,6 @@
 /*
- * FreeRTOS V202112.00
- * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * FreeRTOS V202212.00
+ * Copyright (C) 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -137,7 +137,7 @@ static TimerHandle_t xIncrementingIndexTimer = NULL;
 static TimerHandle_t xNotifyWhileSuspendedTimer = NULL;
 
 /* Used by the pseudo random number generating function. */
-static size_t uxNextRand = 0;
+static uint32_t uxNextRand = 0;
 
 /* Used to communicate when to send a task notification to the tick hook tests. */
 static volatile BaseType_t xSendNotificationFromISR = pdFALSE;
@@ -159,14 +159,14 @@ void vStartTaskNotifyArrayTask( void )
     /* Create the task that performs some tests by itself, then loops around
      * being notified by both a software timer and an interrupt. */
     xTaskCreate( prvNotifiedTask,                    /* Function that implements the task. */
-                 "ArrayNotifed",                     /* Text name for the task - for debugging only - not used by the kernel. */
+                 "ArrayNotified",                    /* Text name for the task - for debugging only - not used by the kernel. */
                  notifyNOTIFY_ARRAY_TASK_STACK_SIZE, /* Task's stack size in words, not bytes!. */
                  NULL,                               /* Task parameter, not used in this case. */
                  notifyTASK_PRIORITY,                /* Task priority, 0 is the lowest. */
                  &xTaskToNotify );                   /* Used to pass a handle to the task out if needed, otherwise set to NULL. */
 
     /* Pseudo seed the random number generator. */
-    uxNextRand = ( size_t ) prvRand;
+    uxNextRand = ( uint32_t ) prvRand;
 }
 /*-----------------------------------------------------------*/
 
@@ -783,7 +783,7 @@ static void prvSuspendedTaskTimerTestCallback( TimerHandle_t xExpiredTimer )
 
 static void prvNotifyingTimerCallback( TimerHandle_t xNotUsed )
 {
-    static BaseType_t uxIndexToNotify = 0;
+    static UBaseType_t uxIndexToNotify = 0;
 
     ( void ) xNotUsed;
 
@@ -917,7 +917,7 @@ static void prvBlockOnTheNotifiedIndexed( void )
         xTaskNotifyStateClearIndexed( xTaskToNotify, uxIndex );
     }
 
-    /* Peform the test on each task notification within the array of task
+    /* Perform the test on each task notification within the array of task
      * notifications. */
     for( uxIndexToNotify = 0; uxIndexToNotify < configTASK_NOTIFICATION_ARRAY_ENTRIES; uxIndexToNotify++ )
     {
@@ -1209,10 +1209,10 @@ BaseType_t xAreTaskNotificationArrayTasksStillRunning( void )
 
 static UBaseType_t prvRand( void )
 {
-    const size_t uxMultiplier = ( size_t ) 0x015a4e35, uxIncrement = ( size_t ) 1;
+    const uint32_t uxMultiplier = ( uint32_t ) 0x015a4e35, uxIncrement = ( uint32_t ) 1;
 
     /* Utility function to generate a pseudo random number. */
     uxNextRand = ( uxMultiplier * uxNextRand ) + uxIncrement;
-    return( ( uxNextRand >> 16 ) & ( ( size_t ) 0x7fff ) );
+    return( ( uxNextRand >> 16 ) & ( ( uint32_t ) 0x7fff ) );
 }
 /*-----------------------------------------------------------*/

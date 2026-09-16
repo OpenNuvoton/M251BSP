@@ -1,24 +1,24 @@
-/**************************************************************************//**
- * @file        main.c
- * @version     V3.00
- * @brief       HZ1050 device driver
+/***************************************************************************//**
+ * @file    HZ1050_driver_RFID.h
+ * @version V3.00
+ * @brief   HZ1050 device driver
  *
  * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
-*****************************************************************************/
+ ******************************************************************************/
 
 #ifndef __HZ1050_DRIVER_RFID_H__
 #define __HZ1050_DRIVER_RFID_H__
 
 #define WEIGAND_LENGTH      26
 #define EVEN_PARITY_POS     25
-#define EVEN_PARITY_MSK     (0x1<<EVEN_PARITY_POS)
+#define EVEN_PARITY_MSK     (0x1 << EVEN_PARITY_POS)
 #define ODD_PARITY_POS      0
-#define ODD_PARITY_MSK      (0x1<<ODD_PARITY_POS)
+#define ODD_PARITY_MSK      (0x1 << ODD_PARITY_POS)
 #define FACILITY_CODE_POS   17
-#define FACILITY_CODE_MSK   (0xFF<<FACILITY_CODE_POS)
+#define FACILITY_CODE_MSK   (0xFF << FACILITY_CODE_POS)
 #define CARD_CODE_POS       1
-#define CARD_CODE_MSK       (0xFFFF<<CARD_CODE_POS)
+#define CARD_CODE_MSK       (0xFFFF << CARD_CODE_POS)
 
 typedef struct
 {

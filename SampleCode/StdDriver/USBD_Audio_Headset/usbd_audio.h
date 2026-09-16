@@ -3,8 +3,8 @@
  * @version  V3.00
  * @brief    USBD audio codec header file.
  *
- * @copyright SPDX-License-Identifier: Apache-2.0
- * @copyright Copyright (C) 2021 Nuvoton Technology Corp. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ * @copyright (C) 2021 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #ifndef __USBD_UAC_H__
 #define __USBD_UAC_H__

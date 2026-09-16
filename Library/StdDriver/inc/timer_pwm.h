@@ -196,7 +196,7 @@ extern "C"
   *
   * @param[in]  timer       The pointer of the specified Timer module. It could be TIMER0, TIMER1, TIMER2, TIMER3.
   *
-  * @param[in]  u32Channel  Enable specified channel output function. Valid values are:
+  * @param[in]  u32ChMask   Enable specified channel output function. Valid values are:
   *                             - \ref TPWM_CH0
   *
   *
@@ -204,7 +204,7 @@ extern "C"
   * @note       If the corresponding bit in u32ChMask parameter is 0, then output function will be disabled in this channel.
   * \hideinitializer
   */
-#define TPWM_ENABLE_OUTPUT(timer, u32Channel)  ((timer)->PWMPOCTL = (u32Channel))
+#define TPWM_ENABLE_OUTPUT(timer, u32ChMask)  ((timer)->PWMPOCTL = ((timer)->PWMPOCTL & ~TIMER_PWMPOCTL_POEN_Msk) | (u32ChMask & TIMER_PWMPOCTL_POEN_Msk))
 
 /**
   * @brief      Select Toggle-output Pin
@@ -217,7 +217,7 @@ extern "C"
   *
   * @details    This macro is used to select TPWM toggle-output pin is output on Tx or Tx_EXT pin.
   */
-#define TPWM_SELECT_TOUT_PIN(timer, u32ToutSel)    ((timer)->PWMPOCTL = ((timer)->PWMPOCTL & ~TIMER_PWMPOCTL_POSEL_Msk) | (u32ToutSel))
+#define TPWM_SELECT_TOUT_PIN(timer, u32ToutSel)    ((timer)->PWMPOCTL = ((timer)->PWMPOCTL & ~TIMER_PWMPOCTL_POSEL_Msk) | (u32ToutSel & TIMER_PWMPOCTL_POSEL_Msk))
 
 /**
   * @brief      Set Output Inverse
@@ -500,7 +500,7 @@ void TPWM_DisableTrigger(TIMER_T *timer, uint32_t u32TargetMask);
 /* Declare these inline functions here to avoid MISRA C 2004 rule 8.1 error */
 __STATIC_INLINE void TPWM_EnableWakeup(TIMER_T *timer);
 __STATIC_INLINE void TPWM_DisableWakeup(TIMER_T *timer);
-__STATIC_INLINE uint32_t TPWM_GetWakeupFlag(TIMER_T *timer);
+__STATIC_INLINE uint32_t TPWM_GetWakeupFlag(const TIMER_T *timer);
 __STATIC_INLINE void TPWM_ClearWakeupFlag(TIMER_T *timer);
 
 /**
@@ -544,7 +544,7 @@ __STATIC_INLINE void TPWM_DisableWakeup(TIMER_T *timer)
   * @details    This function indicates TPWM interrupt event has waked up system or not.
   * \hideinitializer
   */
-__STATIC_INLINE uint32_t TPWM_GetWakeupFlag(TIMER_T *timer)
+__STATIC_INLINE uint32_t TPWM_GetWakeupFlag(const TIMER_T *timer)
 {
     return ((timer->PWMSTATUS & TIMER_PWMSTATUS_PWMINTWKF_Msk) ? 1 : 0);
 }

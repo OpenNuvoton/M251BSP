@@ -66,6 +66,7 @@ extern int32_t  g_FMC_i32ErrCode; /*!< FMC global error code */
 #define FMC_LDROM_SIZE          ((FMC_LDROM_END) - (FMC_LDROM_BASE))    /*!< LDROM Size             */
 
 #define FMC_FLASH_PAGE_SIZE     0x200UL                         /*!< Flash Page Size (512 Bytes)    */
+#define FMC_VECMAP_SIZE         0x200UL                         /*!< VECMAP Size (512 bytes)        */
 #define FMC_PAGE_ADDR_MASK      ((~(FMC_FLASH_PAGE_SIZE) - 1))  /*!< Flash page address mask        */
 #define FMC_MULTI_WORD_PROG_LEN 128UL                           /*!< Length of multi-word program.  */
 /*---------------------------------------------------------------------------------------------------------*/
@@ -94,11 +95,11 @@ extern int32_t  g_FMC_i32ErrCode; /*!< FMC global error code */
 #define READ_ALLONE_NOT         0xA1100000UL    /*!< Check-all-one result is not all one. */
 #define READ_ALLONE_CMD_FAIL    0xFFFFFFFFUL    /*!< Check-all-one command failed.        */
 
-#define FMC_TIMEOUT_READ        ((SystemCoreClock/10)*2) /*!< Read command time-out 200 ms         \hideinitializer */
-#define FMC_TIMEOUT_WRITE       ((SystemCoreClock/10)*2) /*!< Write command time-out 200 ms        \hideinitializer */
-#define FMC_TIMEOUT_ERASE       ((SystemCoreClock/10)*4) /*!< Erase command time-out 400 ms        \hideinitializer */
-#define FMC_TIMEOUT_CHKSUM      (SystemCoreClock*2)      /*!< Get checksum command time-out 2 s    \hideinitializer */
-#define FMC_TIMEOUT_CHKALLONE   (SystemCoreClock*2)      /*!< Check-all-one command time-out 2 s   \hideinitializer */
+#define FMC_TIMEOUT_READ        (((int32_t)SystemCoreClock / 10) * 2)    /*!< Read command time-out 200 ms         \hideinitializer */
+#define FMC_TIMEOUT_WRITE       (((int32_t)SystemCoreClock / 10) * 2)    /*!< Write command time-out 200 ms        \hideinitializer */
+#define FMC_TIMEOUT_ERASE       (((int32_t)SystemCoreClock / 10) * 4)    /*!< Erase command time-out 400 ms        \hideinitializer */
+#define FMC_TIMEOUT_CHKSUM      ((int32_t)SystemCoreClock * 2)           /*!< Get checksum command time-out 2 s    \hideinitializer */
+#define FMC_TIMEOUT_CHKALLONE   ((int32_t)SystemCoreClock * 2)           /*!< Check-all-one command time-out 2 s   \hideinitializer */
 
 /** @} end of group FMC_EXPORTED_CONSTANTS */
 
@@ -300,19 +301,8 @@ extern int32_t  g_FMC_i32ErrCode; /*!< FMC global error code */
 
 
 /*---------------------------------------------------------------------------------------------------------*/
-/* inline functions                                                                                        */
+/* Inline functions                                                                                        */
 /*---------------------------------------------------------------------------------------------------------*/
-static __INLINE uint32_t FMC_ReadUID(uint8_t u8Index);
-static __INLINE uint32_t FMC_ReadCID(void);
-static __INLINE uint32_t FMC_ReadPID(void);
-static __INLINE uint32_t FMC_ReadUCID(uint32_t u32Index);
-static __INLINE uint32_t FMC_ReadVBGCode(void);
-static __INLINE uint32_t FMC_ReadVTEMPCode(void);
-static __INLINE uint32_t FMC_ReadADCOffset(void);
-static __INLINE void FMC_SetVectorPageAddr(uint32_t u32PageAddr);
-static __INLINE uint32_t FMC_GetVECMAP(void);
-static __INLINE uint32_t FMC_GetCheckSum(uint32_t u32Addr, int32_t i32Size);
-
 
 /**
  * @brief       Read Unique ID
@@ -328,7 +318,7 @@ static __INLINE uint32_t FMC_GetCheckSum(uint32_t u32Addr, int32_t i32Size);
  *              g_FMC_i32ErrCode will be set to eFMC_ERRCODE_CMD_TIMEOUT if command timeout.
  *
  */
-static __INLINE uint32_t FMC_ReadUID(uint8_t u8Index)
+__STATIC_INLINE uint32_t FMC_ReadUID(uint8_t u8Index)
 {
     int32_t  tout = FMC_TIMEOUT_READ;
 
@@ -346,7 +336,7 @@ static __INLINE uint32_t FMC_ReadUID(uint8_t u8Index)
     if (tout <= 0)
     {
         g_FMC_i32ErrCode = eFMC_ERRCODE_CMD_TIMEOUT;
-        return 0xFFFFFFFF;
+        return 0xFFFFFFFFU;
     }
 
     return FMC->ISPDAT;
@@ -365,7 +355,7 @@ static __INLINE uint32_t FMC_ReadUID(uint8_t u8Index)
   *           g_FMC_i32ErrCode will be set to eFMC_ERRCODE_CMD_TIMEOUT if command timeout.
   *
   */
-static __INLINE uint32_t FMC_ReadCID(void)
+__STATIC_INLINE uint32_t FMC_ReadCID(void)
 {
     int32_t  tout = FMC_TIMEOUT_READ;
 
@@ -383,7 +373,7 @@ static __INLINE uint32_t FMC_ReadCID(void)
     if (tout <= 0)
     {
         g_FMC_i32ErrCode = eFMC_ERRCODE_CMD_TIMEOUT;
-        return 0xFFFFFFFF;
+        return 0xFFFFFFFFU;
     }
 
     return FMC->ISPDAT;
@@ -402,7 +392,7 @@ static __INLINE uint32_t FMC_ReadCID(void)
   *           g_FMC_i32ErrCode will be set to eFMC_ERRCODE_CMD_TIMEOUT if command timeout.
   *
   */
-static __INLINE uint32_t FMC_ReadPID(void)
+__STATIC_INLINE uint32_t FMC_ReadPID(void)
 {
     int32_t  tout = FMC_TIMEOUT_READ;
 
@@ -420,7 +410,7 @@ static __INLINE uint32_t FMC_ReadPID(void)
     if (tout <= 0)
     {
         g_FMC_i32ErrCode = eFMC_ERRCODE_CMD_TIMEOUT;
-        return 0xFFFFFFFF;
+        return 0xFFFFFFFFU;
     }
 
     return FMC->ISPDAT;
@@ -440,7 +430,7 @@ static __INLINE uint32_t FMC_ReadPID(void)
   *             g_FMC_i32ErrCode will be set to eFMC_ERRCODE_CMD_TIMEOUT if command timeout.
   *
   */
-static __INLINE uint32_t FMC_ReadUCID(uint32_t u32Index)
+__STATIC_INLINE uint32_t FMC_ReadUCID(uint32_t u32Index)
 {
     int32_t  tout = FMC_TIMEOUT_READ;
 
@@ -458,7 +448,7 @@ static __INLINE uint32_t FMC_ReadUCID(uint32_t u32Index)
     if (tout <= 0)
     {
         g_FMC_i32ErrCode = eFMC_ERRCODE_CMD_TIMEOUT;
-        return 0xFFFFFFFF;
+        return 0xFFFFFFFFU;
     }
 
     return FMC->ISPDAT;
@@ -476,7 +466,7 @@ static __INLINE uint32_t FMC_ReadUCID(uint32_t u32Index)
   *             g_FMC_i32ErrCode will be set to eFMC_ERRCODE_CMD_TIMEOUT if command timeout.
   *
   */
-static __INLINE uint32_t FMC_ReadVBGCode(void)
+__STATIC_INLINE uint32_t FMC_ReadVBGCode(void)
 {
     int32_t  tout = FMC_TIMEOUT_READ;
 
@@ -494,7 +484,7 @@ static __INLINE uint32_t FMC_ReadVBGCode(void)
     if (tout <= 0)
     {
         g_FMC_i32ErrCode = eFMC_ERRCODE_CMD_TIMEOUT;
-        return 0xFFFFFFFF;
+        return 0xFFFFFFFFU;
     }
 
     return FMC->ISPDAT;
@@ -512,7 +502,7 @@ static __INLINE uint32_t FMC_ReadVBGCode(void)
   *             g_FMC_i32ErrCode will be set to eFMC_ERRCODE_CMD_TIMEOUT if command timeout.
   *
   */
-static __INLINE uint32_t FMC_ReadVTEMPCode(void)
+__STATIC_INLINE uint32_t FMC_ReadVTEMPCode(void)
 {
     int32_t  tout = FMC_TIMEOUT_READ;
 
@@ -530,7 +520,7 @@ static __INLINE uint32_t FMC_ReadVTEMPCode(void)
     if (tout <= 0)
     {
         g_FMC_i32ErrCode = eFMC_ERRCODE_CMD_TIMEOUT;
-        return 0xFFFFFFFF;
+        return 0xFFFFFFFFU;
     }
 
     return FMC->ISPDAT;
@@ -548,7 +538,7 @@ static __INLINE uint32_t FMC_ReadVTEMPCode(void)
   *             g_FMC_i32ErrCode will be set to eFMC_ERRCODE_CMD_TIMEOUT if command timeout.
   *
   */
-static __INLINE uint32_t FMC_ReadADCOffset(void)
+__STATIC_INLINE uint32_t FMC_ReadADCOffset(void)
 {
     int32_t  tout = FMC_TIMEOUT_READ;
 
@@ -566,7 +556,7 @@ static __INLINE uint32_t FMC_ReadADCOffset(void)
     if (tout <= 0)
     {
         g_FMC_i32ErrCode = eFMC_ERRCODE_CMD_TIMEOUT;
-        return 0xFFFFFFFF;
+        return 0xFFFFFFFFU;
     }
 
     return FMC->ISPDAT;
@@ -584,7 +574,7 @@ static __INLINE uint32_t FMC_ReadADCOffset(void)
  *              g_FMC_i32ErrCode will be set to eFMC_ERRCODE_CMD_TIMEOUT if command timeout.
  *
  */
-static __INLINE void FMC_SetVectorPageAddr(uint32_t u32PageAddr)
+__STATIC_INLINE void FMC_SetVectorPageAddr(uint32_t u32PageAddr)
 {
     int32_t  tout = FMC_TIMEOUT_WRITE;
 
@@ -617,7 +607,7 @@ static __INLINE void FMC_SetVectorPageAddr(uint32_t u32PageAddr)
  *              VECMAP only valid when new IAP function is enabled. (CBS = 10'b or 00'b)
  *
  */
-static __INLINE uint32_t FMC_GetVECMAP(void)
+__STATIC_INLINE uint32_t FMC_GetVECMAP(void)
 {
     return (FMC->ISPSTS & FMC_ISPSTS_VECMAP_Msk);
 }
@@ -627,7 +617,7 @@ static __INLINE uint32_t FMC_GetVECMAP(void)
   * @brief      Run CRC32 checksum calculation and get result.
   *
   * @param[in]  u32Addr    Starting flash address. It must be a page aligned address.
-  * @param[in]  i32Size    Byte count of flash to be calculated. It must be multiple of 512 bytes.
+  * @param[in]  u32Size    Byte count of flash to be calculated. It must be multiple of 512 bytes.
   *
   * @retval     0xFFFFFFFF: Check g_FMC_i32ErrCode to know if command timeout or invalid parameter
   * @retval     Others    : Checksum value of specify area
@@ -639,21 +629,21 @@ static __INLINE uint32_t FMC_GetVECMAP(void)
   *             g_FMC_i32ErrCode will be set to eFMC_ERRCODE_INVALID_PARAM if not 512 aligned.
   *
   */
-static __INLINE uint32_t FMC_GetCheckSum(uint32_t u32Addr, int32_t i32Size)
+__STATIC_INLINE uint32_t FMC_GetCheckSum(uint32_t u32Addr, uint32_t u32Size)
 {
     int32_t  tout;
 
     g_FMC_i32ErrCode = eFMC_ERRCODE_SUCCESS;
 
-    if ((u32Addr % 512UL) || (i32Size % 512UL))
+    if ((u32Addr % 512UL) || (u32Size % 512UL))
     {
         g_FMC_i32ErrCode = eFMC_ERRCODE_INVALID_PARAM;
-        return 0xFFFFFFFF;
+        return 0xFFFFFFFFU;
     }
 
     FMC->ISPCMD = FMC_ISPCMD_CAL_CHECKSUM;
     FMC->ISPADDR = u32Addr;
-    FMC->ISPDAT = (uint32_t)i32Size;
+    FMC->ISPDAT = u32Size;
     FMC->ISPTRG = FMC_ISPTRG_ISPGO_Msk;
 #if ISBEN
     __ISB();
@@ -666,7 +656,7 @@ static __INLINE uint32_t FMC_GetCheckSum(uint32_t u32Addr, int32_t i32Size)
     if (tout <= 0)
     {
         g_FMC_i32ErrCode = eFMC_ERRCODE_CMD_TIMEOUT;
-        return 0xFFFFFFFF;
+        return 0xFFFFFFFFU;
     }
 
     FMC->ISPCMD = FMC_ISPCMD_CHECKSUM;
@@ -679,7 +669,7 @@ static __INLINE uint32_t FMC_GetCheckSum(uint32_t u32Addr, int32_t i32Size)
     if (tout <= 0)
     {
         g_FMC_i32ErrCode = eFMC_ERRCODE_CMD_TIMEOUT;
-        return 0xFFFFFFFF;
+        return 0xFFFFFFFFU;
     }
 
     return FMC->ISPDAT;
@@ -688,8 +678,8 @@ static __INLINE uint32_t FMC_GetCheckSum(uint32_t u32Addr, int32_t i32Size)
 void FMC_Open(void);
 void FMC_Close(void);
 int32_t FMC_ReadConfig(uint32_t u32Config[], uint32_t u32Count);
-int32_t FMC_WriteConfig(uint32_t u32Config[], uint32_t u32Count);
-void FMC_SetBootSource(int32_t i32BootSrc);
+int32_t FMC_WriteConfig(const uint32_t u32Config[], uint32_t u32Count);
+void FMC_SetBootSource(uint32_t u32BootSrc);
 int32_t FMC_GetBootSource(void);
 uint32_t FMC_CheckAllOne(uint32_t u32addr, uint32_t u32count);
 uint32_t FMC_GetChkSum(uint32_t u32addr, uint32_t u32count);
@@ -699,7 +689,7 @@ int32_t FMC_Erase(uint32_t u32Addr);
 int32_t FMC_Config_XOM(uint32_t xom_num, uint32_t xom_base, uint8_t xom_page);
 uint32_t FMC_Read(uint32_t u32Addr);
 void FMC_Write(uint32_t u32Addr, uint32_t u32Data);
-int32_t FMC_Write128(uint32_t u32Addr, uint32_t pu32Buf[]);
+int32_t FMC_Write128(uint32_t u32Addr, const uint32_t pu32Buf[]);
 
 /** @} end of group FMC_EXPORTED_FUNCTIONS */
 

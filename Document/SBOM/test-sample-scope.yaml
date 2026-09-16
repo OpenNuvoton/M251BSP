@@ -1,0 +1,11 @@
+sbomType: Test Sample SBOM
+include:
+  - path: SampleCode/
+  - path: ThirdParty/
+  - path: Tool/
+exclude:
+  - path: Document/
+  - path: Library/
+  - path: Tool/HIDTransferTest/Debug/HIDTransferTest.exe
+  - path: Tool/TK/TouchView.exe
+  - path: Tool/TK/TouchView_MP.exe

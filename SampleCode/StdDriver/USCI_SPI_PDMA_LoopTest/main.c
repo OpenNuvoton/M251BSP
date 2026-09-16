@@ -1,10 +1,9 @@
-/**************************************************************************//**
- * @file     main.c
- * @version  V0.10
- * @brief
- *           Demonstrate USCI_SPI data transfer with PDMA.
- *           USCI_SPI0 will be configured as Master mode and USCI_SPI1 will be configured as Slave mode.
- *           Both TX PDMA function and RX PDMA function will be enabled.
+/***************************************************************************//**
+ * @file    main.c
+ * @version V0.10
+ * @brief   Demonstrate USCI_SPI data transfer with PDMA.
+ *          USCI_SPI0 will be configured as Master mode and USCI_SPI1 will be configured as Slave mode.
+ *          Both TX PDMA function and RX PDMA function will be enabled.
  *
  * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
@@ -25,6 +24,7 @@
 #define USPI_SLAVE_RX_DMA_CH  3
 
 #define TEST_COUNT 64
+#define USPI_PDMA_TIMEOUT  (1000000UL)
 
 /* Function prototype declaration */
 void SYS_Init(void);
@@ -109,11 +109,11 @@ void USCI_SPI_Init(void)
 void SpiLoopTest_WithPDMA(void)
 {
     uint32_t u32DataCount, u32TestCycle;
-    uint32_t u32RegValue, u32Abort;
+    uint32_t u32RegValue, u32Abort, u32TimeOutCount;
     int32_t i32Err;
 
     USPI_T *UspiMaster = USPI0;
-    USPI_T *UspiSlave  = USPI1;
+    USPI_T *UspiSlave = USPI1;
 
 
     printf("\nUSCI_SPI0/1 Loop test with PDMA ");
@@ -228,11 +228,19 @@ void SpiLoopTest_WithPDMA(void)
 
     for (u32TestCycle = 0; u32TestCycle < 10000; u32TestCycle++)
     {
+        u32TimeOutCount = USPI_PDMA_TIMEOUT;
+
         if ((u32TestCycle & 0x1FF) == 0)
             putchar('.');
 
         while (1)
         {
+            if (u32TimeOutCount-- == 0UL)
+            {
+                i32Err = 1;
+                break;
+            }
+
             /* Get interrupt status */
             u32RegValue = PDMA_GET_INT_STATUS(PDMA);
 
@@ -377,6 +385,9 @@ int main(void)
     printf("The I/O connection for USCI_SPI0/USCI_SPI1 loopback:\n");
     printf("    USCI_SPI0_SS(PC14)   <--> USCI_SPI1_SS(PB5)\n    USCI_SPI0_CLK(PB12)  <--> USCI_SPI1_CLK(PB1)\n");
     printf("    USCI_SPI0_MISO(PB14) <--> USCI_SPI1_MISO(PB3)\n    USCI_SPI0_MOSI(PB13) <--> USCI_SPI1_MOSI(PB2)\n\n");
+    printf("Demo only: this sample requires same-board lab wiring between USCI_SPI0 and USCI_SPI1.\n");
+    printf("Production code should use non-interactive startup, bounded recovery, and peer-state checks.\n");
+    printf("The polling loop below uses both PDMA status flags and a software timeout guard.\n");
     printf("Please connect USCI_SPI0 with USCI_SPI1, and press any key to start transmission ...");
     getchar();
     printf("\n");
@@ -392,3 +403,5 @@ int main(void)
 
     while (1);
 }
+
+/*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/

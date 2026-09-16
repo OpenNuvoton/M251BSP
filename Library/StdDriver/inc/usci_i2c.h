@@ -3,8 +3,8 @@
  * @version  V3.0
  * @brief    M251 series USCI I2C(UI2C) driver header file
  *
- * @copyright SPDX-License-Identifier: Apache-2.0
- * @copyright Copyright (C) 2022 Nuvoton Technology Corp. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ * @copyright (C) 2022 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 
 #ifndef __USCI_I2C_H__
@@ -14,7 +14,6 @@
 extern "C"
 {
 #endif
-
 
 /** @addtogroup Standard_Driver Standard Driver
   @{
@@ -111,7 +110,7 @@ extern int32_t g_UI2C_i32ErrCode;
  *    @param[in]    ui2c      The pointer of the specified USCI_I2C module.
  *    @param[in]    u8Ctrl    Set the register value of USCI_I2C control register.
  *
- *    @details      Set UI2C_PROTCTL register to control USCI_I2C bus conditions of START, STOP, SI, ACK.
+ *    @details      Set UI2C_PROTCTL register to control USCI_I2C bus conditions of START, STOP, PTRG, ACK.
  *    \hideinitializer
  */
 #define UI2C_SET_CONTROL_REG(ui2c, u8Ctrl) ((ui2c)->PROTCTL = ((ui2c)->PROTCTL & ~0x2EU) | (u8Ctrl))
@@ -157,7 +156,7 @@ extern int32_t g_UI2C_i32ErrCode;
  *    @details      Write a byte data value of UI2C_TXDAT register, then sends address or data to USCI I2C bus
  *    \hideinitializer
  */
-#define UI2C_SET_DATA(ui2c, u8Data) ((ui2c)->TXDAT = (u8Data))
+#define UI2C_SET_DATA(ui2c, u8Data) ((ui2c)->TXDAT = (uint8_t)(u8Data))
 
 /**
  *    @brief        This macro returns time-out flag
@@ -287,11 +286,11 @@ void UI2C_ClearTimeoutFlag(UI2C_T *ui2c);
 void UI2C_Trigger(UI2C_T *ui2c, uint8_t u8Start, uint8_t u8Stop, uint8_t u8Ptrg, uint8_t u8Ack);
 void UI2C_DisableInt(UI2C_T *ui2c, uint32_t u32Mask);
 void UI2C_EnableInt(UI2C_T *ui2c, uint32_t u32Mask);
-uint32_t UI2C_GetBusClockFreq(UI2C_T *ui2c);
+uint32_t UI2C_GetBusClockFreq(const UI2C_T *ui2c);
 uint32_t UI2C_SetBusClockFreq(UI2C_T *ui2c, uint32_t u32BusClock);
-uint32_t UI2C_GetIntFlag(UI2C_T *ui2c, uint32_t u32Mask);
+uint32_t UI2C_GetIntFlag(const UI2C_T *ui2c, uint32_t u32Mask);
 void UI2C_ClearIntFlag(UI2C_T *ui2c, uint32_t u32Mask);
-uint32_t UI2C_GetData(UI2C_T *ui2c);
+uint32_t UI2C_GetData(const UI2C_T *ui2c);
 void UI2C_SetData(UI2C_T *ui2c, uint8_t u8Data);
 void UI2C_SetSlaveAddr(UI2C_T *ui2c, uint8_t u8SlaveNo, uint16_t u16SlaveAddr, uint8_t u8GCMode);
 void UI2C_SetSlaveAddrMask(UI2C_T *ui2c, uint8_t u8SlaveNo, uint16_t u16SlaveAddrMask);
@@ -300,11 +299,11 @@ void UI2C_DisableTimeout(UI2C_T *ui2c);
 void UI2C_EnableWakeup(UI2C_T *ui2c, uint8_t u8WakeupMode);
 void UI2C_DisableWakeup(UI2C_T *ui2c);
 uint8_t UI2C_WriteByte(UI2C_T *ui2c, uint8_t u8SlaveAddr, uint8_t data);
-uint32_t UI2C_WriteMultiBytes(UI2C_T *ui2c, uint8_t u8SlaveAddr, uint8_t *data, uint32_t u32wLen);
+uint32_t UI2C_WriteMultiBytes(UI2C_T *ui2c, uint8_t u8SlaveAddr, const uint8_t *data, uint32_t u32wLen);
 uint8_t UI2C_WriteByteOneReg(UI2C_T *ui2c, uint8_t u8SlaveAddr, uint8_t u8DataAddr, uint8_t data);
-uint32_t UI2C_WriteMultiBytesOneReg(UI2C_T *ui2c, uint8_t u8SlaveAddr, uint8_t u8DataAddr, uint8_t *data, uint32_t u32wLen);
+uint32_t UI2C_WriteMultiBytesOneReg(UI2C_T *ui2c, uint8_t u8SlaveAddr, uint8_t u8DataAddr, const uint8_t *data, uint32_t u32wLen);
 uint8_t UI2C_WriteByteTwoRegs(UI2C_T *ui2c, uint8_t u8SlaveAddr, uint16_t u16DataAddr, uint8_t data);
-uint32_t UI2C_WriteMultiBytesTwoRegs(UI2C_T *ui2c, uint8_t u8SlaveAddr, uint16_t u16DataAddr, uint8_t *data, uint32_t u32wLen);
+uint32_t UI2C_WriteMultiBytesTwoRegs(UI2C_T *ui2c, uint8_t u8SlaveAddr, uint16_t u16DataAddr, const uint8_t *data, uint32_t u32wLen);
 uint8_t UI2C_ReadByte(UI2C_T *ui2c, uint8_t u8SlaveAddr);
 uint32_t UI2C_ReadMultiBytes(UI2C_T *ui2c, uint8_t u8SlaveAddr, uint8_t *rdata, uint32_t u32rLen);
 uint8_t UI2C_ReadByteOneReg(UI2C_T *ui2c, uint8_t u8SlaveAddr, uint8_t u8DataAddr);
@@ -313,16 +312,11 @@ uint8_t UI2C_ReadByteTwoRegs(UI2C_T *ui2c, uint8_t u8SlaveAddr, uint16_t u16Data
 uint32_t UI2C_ReadMultiBytesTwoRegs(UI2C_T *ui2c, uint8_t u8SlaveAddr, uint16_t u16DataAddr, uint8_t *rdata, uint32_t u32rLen);
 
 /** @} end of group USCI_I2C_EXPORTED_FUNCTIONS */
-
 /** @} end of group USCI_I2C_Driver */
-
 /** @} end of group Standard_Driver */
 
 #ifdef __cplusplus
 }
-
 #endif
 
-#endif /* __USCI_I2C_H__ */
-
-/*** (C) COPYRIGHT 2022 Nuvoton Technology Corp. ***/
+#endif

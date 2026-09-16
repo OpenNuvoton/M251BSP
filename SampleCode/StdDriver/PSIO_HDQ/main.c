@@ -1,7 +1,7 @@
-/**************************************************************************//**
- * @file     main.c
- * @version  V3.00
- * @brief    Demonstrate how to implement HDQ protocol by PSIO.
+/***************************************************************************//**
+ * @file    main.c
+ * @version V3.00
+ * @brief   Demonstrate how to implement HDQ protocol by PSIO.
  *
  * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
@@ -10,6 +10,25 @@
 #include <stdio.h>
 #include "NuMicro.h"
 #include "BQ2028_driver_EEPROM.h"
+
+#define PSIO_HDQ_TRANSFER_TIMEOUT    (SystemCoreClock)
+
+#define PSIO_HDQ_WAIT_READY(u8Data)                                                \
+    do                                                                             \
+    {                                                                              \
+        uint32_t u32TimeOutCnt = PSIO_HDQ_TRANSFER_TIMEOUT;                        \
+        \
+        while (PSIO_BQ2028_BUSY())                                                 \
+        {                                                                          \
+            if (u32TimeOutCnt-- == 0U)                                             \
+            {                                                                      \
+                printf("Wait for BQ2028 transfer timeout. Keep bounded timeout protection in production code.\n"); \
+                while (1)                                                          \
+                {                                                                  \
+                }                                                                  \
+            }                                                                      \
+        }                                                                          \
+    } while (0)
 
 /*---------------------------------------------------------------------------------------------------------*/
 /* Global variables                                                                                        */
@@ -109,6 +128,7 @@ int main()
 {
     uint8_t u8RxData = 0, u8DataCnt = 0;
     uint8_t u8Col, u8Row, u8Page, u8CRC;
+    uint32_t u32TimeOutCnt = PSIO_HDQ_TRANSFER_TIMEOUT;
 
     /* Unlock protected registers */
     SYS_UnlockReg();
@@ -126,11 +146,12 @@ int main()
     printf("******************************************************\n");
     printf("|           HDQ TI BQ2028 EEPROM Test Code           |\n");
     printf("|      Please connected PSIO_CH0(PB.15) to device    |\n");
+    printf("| Demo sample keeps bounded transfer timeout guard   |\n");
     printf("******************************************************\n");
 
     /* Use slot controller 0 and pin 0 */
-    g_Config.u8SlotCtrl   = PSIO_SC0;
-    g_Config.u8Data0Pin   = PSIO_PIN0;
+    g_Config.u8SlotCtrl = PSIO_SC0;
+    g_Config.u8Data0Pin = PSIO_PIN0;
 
     /* Initialize PSIO setting for BQ2028 */
     PSIO_BQ2028_Open(&g_Config);
@@ -138,30 +159,21 @@ int main()
     /* Send "Read ID" command and read device ID */
     PSIO_BQ2028_Read_OneByte(&g_Config, HDQ_CMD_READID, &u8RxData);
 
-    while (PSIO_BQ2028_BUSY())
-    {
-        /* Do something here */
-    }
+    PSIO_HDQ_WAIT_READY(u8RxData);
 
     printf("BQ2028 ID is %x.\n", u8RxData);
 
     /* Send "Read ID" command and read device revision */
     PSIO_BQ2028_Read_OneByte(&g_Config, HDQ_CMD_READREV, &u8RxData);
 
-    while (PSIO_BQ2028_BUSY())
-    {
-        /* Do something here */
-    }
+    PSIO_HDQ_WAIT_READY(u8RxData);
 
     printf("REV is %x.\n", u8RxData);
 
     /* Send "Read device status" command and read device status */
     PSIO_BQ2028_Read_OneByte(&g_Config, HDQ_CMD_STATUS, &u8RxData);
 
-    while (PSIO_BQ2028_BUSY())
-    {
-        /* Do something here */
-    }
+    PSIO_HDQ_WAIT_READY(u8RxData);
 
     /* Clear reset flag if reset flag is 1 */
     if (u8RxData & STATUS_RST_MSK)
@@ -169,18 +181,12 @@ int main()
         /* Send "Read control 0 register" command and read control 0 register value */
         PSIO_BQ2028_Read_OneByte(&g_Config, HDQ_CMD_CTL0, &u8RxData);
 
-        while (PSIO_BQ2028_BUSY())
-        {
-            /* Do something here */
-        }
+        PSIO_HDQ_WAIT_READY(u8RxData);
 
         /* Send "Write control 0 register" command and write STATUS_RST_MSK to clear reset flag */
         PSIO_BQ2028_Write_OneByte(&g_Config, HDQ_CMD_CTL0, u8RxData | STATUS_RST_MSK);
 
-        while (PSIO_BQ2028_BUSY())
-        {
-            /* Do something here */
-        }
+        PSIO_HDQ_WAIT_READY(u8RxData);
     }
 
     printf("/***********************************/\n");
@@ -195,18 +201,12 @@ int main()
         /* Write 1 Byte data to buffer 0 */
         PSIO_BQ2028_Write_OneByte(&g_Config, HDQ_CMD_BUF0, u8DataCnt);
 
-        while (PSIO_BQ2028_BUSY())
-        {
-            /* Do something here */
-        }
+        PSIO_HDQ_WAIT_READY(u8RxData);
 
         /* Read 1 Byte from buffer 0 */
         PSIO_BQ2028_Read_OneByte(&g_Config, HDQ_CMD_BUF0, &u8RxData);
 
-        while (PSIO_BQ2028_BUSY())
-        {
-            /* Do something here */
-        }
+        PSIO_HDQ_WAIT_READY(u8RxData);
 
         /* Check write data correct or not */
         if (u8DataCnt != u8RxData)
@@ -227,18 +227,12 @@ int main()
         /* Write 1 Byte data to buffer 1 */
         PSIO_BQ2028_Write_OneByte(&g_Config, HDQ_CMD_BUF1, u8DataCnt);
 
-        while (PSIO_BQ2028_BUSY())
-        {
-            /* Do something here */
-        }
+        PSIO_HDQ_WAIT_READY(u8RxData);
 
         /* Read 1 Byte from buffer 1 */
         PSIO_BQ2028_Read_OneByte(&g_Config, HDQ_CMD_BUF1, &u8RxData);
 
-        while (PSIO_BQ2028_BUSY())
-        {
-            /* Do something here */
-        }
+        PSIO_HDQ_WAIT_READY(u8RxData);
 
         /* Check write data correct or not */
         if (u8DataCnt != u8RxData)
@@ -259,18 +253,12 @@ int main()
         /* Write 1 Byte data to buffer 2 */
         PSIO_BQ2028_Write_OneByte(&g_Config, HDQ_CMD_BUF2, u8DataCnt);
 
-        while (PSIO_BQ2028_BUSY())
-        {
-            /* Do something here */
-        }
+        PSIO_HDQ_WAIT_READY(u8RxData);
 
         /* Read 1 Byte from buffer 2 */
         PSIO_BQ2028_Read_OneByte(&g_Config, HDQ_CMD_BUF2, &u8RxData);
 
-        while (PSIO_BQ2028_BUSY())
-        {
-            /* Do something here */
-        }
+        PSIO_HDQ_WAIT_READY(u8RxData);
 
         /* Check data correct or not */
         if (u8DataCnt != u8RxData)
@@ -291,18 +279,12 @@ int main()
         /* Write 1 Byte data to buffer 3 */
         PSIO_BQ2028_Write_OneByte(&g_Config, HDQ_CMD_BUF3, u8DataCnt);
 
-        while (PSIO_BQ2028_BUSY())
-        {
-            /* Do something here */
-        }
+        PSIO_HDQ_WAIT_READY(u8RxData);
 
         /* Read 1 Byte from buffer 3 */
         PSIO_BQ2028_Read_OneByte(&g_Config, HDQ_CMD_BUF3, &u8RxData);
 
-        while (PSIO_BQ2028_BUSY())
-        {
-            /* Do something here */
-        }
+        PSIO_HDQ_WAIT_READY(u8RxData);
 
         /* Check data correct or not */
         if (u8DataCnt != u8RxData)
@@ -322,18 +304,12 @@ int main()
     /* Enable to write manufacturer area registers */
     PSIO_BQ2028_Write_OneByte(&g_Config, HDQ_CMD_CTL2, 0x01);
 
-    while (PSIO_BQ2028_BUSY())
-    {
-        /* Do something here */
-    }
+    PSIO_HDQ_WAIT_READY(u8RxData);
 
     /* Enable page */
     PSIO_BQ2028_Write_OneByte(&g_Config, HDQ_CMD_PAGE_EN, 0xFF);
 
-    while (PSIO_BQ2028_BUSY())
-    {
-        /* Do something here */
-    }
+    PSIO_HDQ_WAIT_READY(u8RxData);
 
     /* Update EEPROM page 0 ~ page 7 */
     for (u8Page = 0; u8Page < 8; u8Page++)
@@ -341,10 +317,7 @@ int main()
         /* Setting current page which we want to access */
         PSIO_BQ2028_Write_OneByte(&g_Config, HDQ_CMD_PAGE, u8Page);
 
-        while (PSIO_BQ2028_BUSY())
-        {
-            /* Do something here */
-        }
+        PSIO_HDQ_WAIT_READY(u8RxData);
 
         printf("Page %d write pattern\n", u8Page);
 
@@ -356,40 +329,44 @@ int main()
             {
                 /* Prepare data and calculating the CRC value */
                 u8DataCnt = (u8Page * 0x10 * 4) + (0x10 * u8Row) + u8Col;
-                u8CRC   =   PSIO_BQ2028_CRC8(u8DataCnt);
+                u8CRC = PSIO_BQ2028_CRC8(u8DataCnt);
 
                 /* Send "Write and EEPROM address" command and write data to EEPROM */
                 PSIO_BQ2028_Write_OneByte(&g_Config, (u8Row << 2) | u8Col | HDQ_W | HDQ_MAP, u8DataCnt);
 
-                while (PSIO_BQ2028_BUSY())
-                {
-                    /* Do something here */
-                }
+                PSIO_HDQ_WAIT_READY(u8RxData);
 
                 /* Send "Check CRC" command and write CRC value */
                 PSIO_BQ2028_Write_OneByte(&g_Config, HDQ_CMD_CRCT, u8CRC);
 
-                while (PSIO_BQ2028_BUSY())
-                {
-                    /* Do something here */
-                }
+                PSIO_HDQ_WAIT_READY(u8RxData);
 
                 /* Check EEPROM status is normal */
+                u32TimeOutCnt = PSIO_HDQ_TRANSFER_TIMEOUT;
+
                 while (1)
                 {
                     PSIO_BQ2028_Read_OneByte(&g_Config, HDQ_CMD_STATUS, &u8RxData);
 
-                    while (PSIO_BQ2028_BUSY())
-                    {
-                        /* Do something here */
-                    }
+                    PSIO_HDQ_WAIT_READY(u8RxData);
 
                     if (u8RxData & (STATUS_PAGEER_MSK | STATUS_MEMER_MSK | STATUS_CRCER_MSK))
                     {
                         printf("status error 0x%x", u8RxData);
                     }
                     else if (!(u8RxData & STATUS_BUSY_MSK))
+                    {
                         break;
+                    }
+
+                    if (u32TimeOutCnt-- == 0U)
+                    {
+                        printf("Wait for BQ2028 status clear timeout. Keep bounded timeout protection in production code.\n");
+
+                        while (1)
+                        {
+                        }
+                    }
                 }
             }
         }
@@ -401,10 +378,7 @@ int main()
         /* Setting current page which we want to access */
         PSIO_BQ2028_Write_OneByte(&g_Config, HDQ_CMD_PAGE, u8Page);
 
-        while (PSIO_BQ2028_BUSY())
-        {
-            /* Do something here */
-        }
+        PSIO_HDQ_WAIT_READY(u8RxData);
 
         printf("Page %d read pattern\n", u8Page);
 
@@ -419,10 +393,7 @@ int main()
                 /* Send "Read and EEPROM address" command and read data from EEPROM */
                 PSIO_BQ2028_Read_OneByte(&g_Config, (u8Row << 2) | u8Col | HDQ_R | HDQ_MAP, &u8RxData);
 
-                while (PSIO_BQ2028_BUSY())
-                {
-                    /* Do something here */
-                }
+                PSIO_HDQ_WAIT_READY(u8RxData);
 
                 /* Check data correct or not */
                 if (u8DataCnt != u8RxData)
@@ -439,6 +410,5 @@ int main()
 
     while (1);
 }
-
 
 /*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/

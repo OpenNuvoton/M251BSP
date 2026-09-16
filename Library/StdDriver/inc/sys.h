@@ -1339,7 +1339,7 @@ __STATIC_INLINE void SYS_LockReg(void)
   */
 __STATIC_INLINE uint32_t SYS_IsRegLocked(void)
 {
-    return SYS->REGLCTL & 1UL ? 0UL : 1UL;
+    return (SYS->REGLCTL & 1UL) ? 0UL : 1UL;
 }
 
 void SYS_ClearResetSrc(uint32_t u32Src);
@@ -1349,7 +1349,7 @@ uint32_t SYS_ReadPDID(void);
 void SYS_ResetChip(void);
 void SYS_ResetCPU(void);
 void SYS_ResetModule(uint32_t u32ModuleIndex);
-void SYS_EnableBOD(int32_t i32Mode, uint32_t u32BODLevel);
+void SYS_EnableBOD(uint32_t u32Mode, uint32_t u32BODLevel);
 void SYS_DisableBOD(void);
 void SYS_SetPowerLevel(uint32_t u32PowerLevel);
 

@@ -1,22 +1,22 @@
-/**************************************************************************//**
- * @file        AT93C46D_driver_EEPROM.h
- * @version     V3.00
- * @brief       AT93C46D device driver
+/***************************************************************************//**
+ * @file    AT93C46D_driver_EEPROM.h
+ * @version V3.00
+ * @brief   AT93C46D device driver
  *
  * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
-*****************************************************************************/
+ ******************************************************************************/
 
 #ifndef __AT93C46D_DRIVER_EEPROM_H__
 #define __AT93C46D_DRIVER_EEPROM_H__
 
-#define CMD_ERASE       0x7<<7
-#define CMD_EWEN        0x13<<7
-#define CMD_READ(addr)  (0x6<<15|(addr&0x7F)<<8)
-#define CMD_WRITE(addr) (0x5<<15|(addr&0x7F)<<8)
+#define CMD_ERASE           (0x7 << 7)
+#define CMD_EWEN            (0x13 << 7)
+#define CMD_READ(addr)      ((0x6 << 15 | ((addr) & 0x7F) << 8))
+#define CMD_WRITE(addr)     ((0x5 << 15 | ((addr) & 0x7F) << 8))
 
-#define EEPROM_SIZE 1024
-#define DATA_WIDTH  8
+#define EEPROM_SIZE         (1024)
+#define DATA_WIDTH          (8)
 
 extern volatile uint32_t *pu32ChipSelectPin, *pu32InputPin;
 

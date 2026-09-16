@@ -1,17 +1,18 @@
-/****************************************************************************//**
- * @file     main.c
- * @version  V0.10
- * @brief    Implement SPI Master loop back transfer. This sample code needs to
- *           connect MISO_0 pin and MOSI_0 pin together. It will compare the
- *           received data with transmitted data.
+/***************************************************************************//**
+ * @file    main.c
+ * @version V0.10
+ * @brief   Implement SPI Master loop back transfer. This sample code needs to
+ *          connect MISO_0 pin and MOSI_0 pin together. It will compare the
+ *          received data with transmitted data.
  *
  * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
-*****************************************************************************/
+ ******************************************************************************/
 #include <stdio.h>
 #include "NuMicro.h"
 
 #define TEST_COUNT  64
+#define SPI_LOOPBACK_TIMEOUT  (SystemCoreClock)
 
 uint32_t g_au32SourceData[TEST_COUNT];
 uint32_t g_au32DestinationData[TEST_COUNT];
@@ -34,7 +35,7 @@ void SYS_Init(void)
     /* Select UART module clock source as HIRC and UART module clock divider as 1 */
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HIRC, CLK_CLKDIV0_UART0(1));
 
-    /* Select PCLK0 as the clock source of SPI0 */
+    /* Select PCLK1 as the clock source of SPI0 */
     CLK_SetModuleClock(SPI0_MODULE, CLK_CLKSEL2_SPI0SEL_PCLK1, MODULE_NoMsk);
 
     /* Enable UART peripheral clock */
@@ -80,7 +81,7 @@ void SPI_Init(void)
 /* ------------- */
 int main(void)
 {
-    uint32_t u32DataCount, u32TestCount, u32Err;
+    uint32_t u32DataCount, u32TestCount, u32Err, u32TimeOutCount;
 
     /* Unlock protected registers */
     SYS_UnlockReg();
@@ -104,6 +105,8 @@ int main(void)
     printf("     Master mode; data width 32 bits.\n");
     printf(" I/O connection:\n");
     printf("     SPI0_MOSI(PA0) <--> SPI0_MISO(PA1) \n");
+    printf(" Demo only: this lab sample requires manual loopback wiring.\n");
+    printf(" Production code should keep bounded timeout protection and add error handling and recovery.\n");
 
     printf("\nSPI0 Loopback test ");
 
@@ -125,20 +128,36 @@ int main(void)
             putchar('.');
         }
 
-        while (1)
+        while (u32DataCount < TEST_COUNT)
         {
             /* Write to TX register */
             SPI_WRITE_TX(SPI0, g_au32SourceData[u32DataCount]);
 
             /* Check SPI0 busy status */
-            while (SPI_IS_BUSY(SPI0)) {}
+            u32TimeOutCount = SPI_LOOPBACK_TIMEOUT;
+
+            while (SPI_IS_BUSY(SPI0))
+            {
+                if (u32TimeOutCount-- == 0UL)
+                {
+                    u32Err = 1UL;
+                    break;
+                }
+            }
+
+            if (u32Err != 0UL)
+            {
+                break;
+            }
 
             /* Read received data */
             g_au32DestinationData[u32DataCount] = SPI_READ_RX(SPI0);
             u32DataCount++;
+        }
 
-            if (u32DataCount >= TEST_COUNT)
-                break;
+        if (u32Err != 0UL)
+        {
+            break;
         }
 
         /*  Check the received data */

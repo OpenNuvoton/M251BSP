@@ -16,7 +16,7 @@
   @{
 */
 
-int32_t g_EADC_i32ErrCode = 0UL;       /*!< EADC global error code */
+int32_t g_EADC_i32ErrCode = 0;       /*!< EADC global error code */
 
 /** @addtogroup EADC_EXPORTED_FUNCTIONS EADC Exported Functions
   @{
@@ -35,7 +35,7 @@ void EADC_Open(EADC_T *eadc, uint32_t u32InputMode)
 {
     (void)u32InputMode;
     uint32_t u32Delay = SystemCoreClock; /* 1 second */
-    g_EADC_i32ErrCode = 0UL;
+    g_EADC_i32ErrCode = 0;
 
     eadc->CTL |= EADC_CTL_ADCEN_Msk;
 

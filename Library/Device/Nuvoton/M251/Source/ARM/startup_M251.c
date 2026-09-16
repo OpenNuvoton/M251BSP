@@ -24,6 +24,7 @@ extern __NO_RETURN void __PROGRAM_START(void);
  *----------------------------------------------------------------------------*/
 __NO_RETURN void Reset_Handler(void);
 __NO_RETURN void Default_Handler(void);
+void Reset_Handler_PreInit(void);
 
 /*----------------------------------------------------------------------------
   Exception / Interrupt Handler
@@ -105,8 +106,14 @@ void TK_IRQHandler(void)        __attribute__((weak, alias("Default_Handler")));
     #pragma GCC diagnostic ignored "-Wpedantic"
 #endif
 
-extern const VECTOR_TABLE_Type __VECTOR_TABLE[];
-const VECTOR_TABLE_Type __VECTOR_TABLE[] __VECTOR_TABLE_ATTRIBUTE =
+/* Add dummy definitions to suppress MISRA-C config error.
+ * (Copied from Library/CMSIS/Core/Include/m-profile/cmsis_armclang_m.h)
+ */
+#ifndef __VECTOR_TABLE_ATTRIBUTE
+    #define __VECTOR_TABLE_ATTRIBUTE  __attribute__((used, section("RESET")))
+#endif
+
+const VECTOR_TABLE_Type __VECTOR_TABLE[FMC_VECMAP_SIZE / 4UL] __VECTOR_TABLE_ATTRIBUTE =
 {
     (VECTOR_TABLE_Type)(&__INITIAL_SP),       /*       Initial Stack Pointer                            */
     Reset_Handler,                            /*       Reset Handler                                    */
@@ -217,7 +224,7 @@ __NO_RETURN void Reset_Handler(void)
     SystemInit();               /* CMSIS System Initialization */
 
     /* Disable internal function */
-    outp32((SYS_BASE + 0x180), (inp32(SYS_BASE + 0x180) & ~BIT7));
+    outp32((SYS_BASE + 0x180UL), (inp32(SYS_BASE + 0x180UL) & ~BIT7));
     /* Init POR */
     SYS->PORCTL0 = 0x5AA5;
     SYS->PORCTL1 = 0x5AA5;
@@ -237,7 +244,7 @@ __NO_RETURN void Reset_Handler(void)
  *---------------------------------------------------------------------------*/
 __WEAK void HardFault_Handler(void)
 {
-    __ASM(
+    __ASM volatile(
         "MOV     R0, LR  \n"
         "MRS     R1, MSP \n"
         "MRS     R2, PSP \n"
@@ -252,7 +259,14 @@ __WEAK void HardFault_Handler(void)
  *----------------------------------------------------------------------------*/
 void Default_Handler(void)
 {
-    while (1);
+#if 0   // Uncomment to check unhandle IRQ
+    uint32_t u32IPSR;
+
+    u32IPSR = __get_IPSR();
+    printf("\nUnexpected IRQ: %d\n", u32IPSR - 16);
+#endif
+
+    while (1) {}
 }
 
 #if defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)

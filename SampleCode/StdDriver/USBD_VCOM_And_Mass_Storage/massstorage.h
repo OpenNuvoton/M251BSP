@@ -101,8 +101,6 @@ extern uint8_t volatile g_u8Suspend;
 /*-------------------------------------------------------------*/
 
 /*-------------------------------------------------------------*/
-void DataFlashWrite(uint32_t addr, uint32_t size, uint32_t buffer);
-void DataFlashRead(uint32_t addr, uint32_t size, uint32_t buffer);
 void MSC_RequestSense(void);
 void MSC_ReadFormatCapacity(void);
 void MSC_Read(void);

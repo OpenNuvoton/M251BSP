@@ -1,7 +1,7 @@
 /**************************************************************************//**
  * @file     pdma.c
  * @version  V1.00
- * @brief    M251 series PDMA driver source file
+ * @brief    PDMA driver source file
  *
  * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
@@ -9,7 +9,7 @@
 #include "NuMicro.h"
 
 
-static uint8_t u8ChSelect[PDMA_CH_MAX];
+static uint32_t u32ChSelect[PDMA_CH_MAX];
 
 /** @addtogroup Standard_Driver Standard Driver
   @{
@@ -18,7 +18,6 @@ static uint8_t u8ChSelect[PDMA_CH_MAX];
 /** @addtogroup PDMA_Driver PDMA Driver
   @{
 */
-
 
 /** @addtogroup PDMA_EXPORTED_FUNCTIONS PDMA Exported Functions
   @{
@@ -30,7 +29,6 @@ static uint8_t u8ChSelect[PDMA_CH_MAX];
  * @param[in]   pdma            The pointer of the specified PDMA module
  * @param[in]   u32Mask     Channel enable bits.
  *
- *
  * @details     This function enable the PDMA channels.
  */
 void PDMA_Open(PDMA_T *pdma, uint32_t u32Mask)
@@ -39,10 +37,10 @@ void PDMA_Open(PDMA_T *pdma, uint32_t u32Mask)
 
     for (i = 0UL; i < PDMA_CH_MAX; i++)
     {
-        if ((1 << i) & u32Mask)
+        if (((1UL << i) & u32Mask) != 0UL)
         {
             pdma->DSCT[i].CTL = 0UL;
-            u8ChSelect[i] = PDMA_MEM;
+            u32ChSelect[i] = PDMA_MEM;
         }
     }
 
@@ -53,7 +51,6 @@ void PDMA_Open(PDMA_T *pdma, uint32_t u32Mask)
  * @brief       PDMA Close
  *
  * @param[in]   pdma            The pointer of the specified PDMA module
- *
  *
  * @details     This function disable all PDMA channels.
  */
@@ -73,7 +70,6 @@ void PDMA_Close(PDMA_T *pdma)
  *                - \ref PDMA_WIDTH_32
  * @param[in]   u32TransCount   Transfer count
  *
- *
  * @details     This function set the selected channel data width and transfer count.
  */
 void PDMA_SetTransferCnt(PDMA_T *pdma, uint32_t u32Ch, uint32_t u32Width, uint32_t u32TransCount)
@@ -90,7 +86,6 @@ void PDMA_SetTransferCnt(PDMA_T *pdma, uint32_t u32Ch, uint32_t u32Width, uint32
  * @param[in]   u32DestLen      Destination stride count
  * @param[in]   u32SrcLen       Source stride count
  * @param[in]   u32TransCount   Transfer count
- *
  *
  * @details     This function set the selected stride mode.
  */
@@ -114,7 +109,6 @@ void PDMA_SetStride(PDMA_T *pdma, uint32_t u32Ch, uint32_t u32DestLen, uint32_t 
  * @param[in]   u32DstCtrl      Destination control attribute. Valid values are
  *                - \ref PDMA_DAR_INC
  *                - \ref PDMA_DAR_FIX
- *
  *
  * @details     This function set the selected channel source/destination address and attribute.
  */
@@ -175,44 +169,43 @@ void PDMA_SetTransferAddr(PDMA_T *pdma, uint32_t u32Ch, uint32_t u32SrcAddr, uin
  * @param[in]   u32ScatterEn    Scatter-gather mode enable
  * @param[in]   u32DescAddr     Scatter-gather descriptor address
  *
- *
  * @details     This function set the selected channel transfer mode. Include peripheral setting.
  */
 void PDMA_SetTransferMode(PDMA_T *pdma, uint32_t u32Ch, uint32_t u32Peripheral, uint32_t u32ScatterEn, uint32_t u32DescAddr)
 {
-    u8ChSelect[u32Ch] = u32Peripheral;
+    u32ChSelect[u32Ch] = u32Peripheral;
 
     switch (u32Ch)
     {
-        case 0ul:
+        case 0UL:
             pdma->REQSEL0_3 = (pdma->REQSEL0_3 & ~PDMA_REQSEL0_3_REQSRC0_Msk) | u32Peripheral;
             break;
 
-        case 1ul:
+        case 1UL:
             pdma->REQSEL0_3 = (pdma->REQSEL0_3 & ~PDMA_REQSEL0_3_REQSRC1_Msk) | (u32Peripheral << PDMA_REQSEL0_3_REQSRC1_Pos);
             break;
 
-        case 2ul:
+        case 2UL:
             pdma->REQSEL0_3 = (pdma->REQSEL0_3 & ~PDMA_REQSEL0_3_REQSRC2_Msk) | (u32Peripheral << PDMA_REQSEL0_3_REQSRC2_Pos);
             break;
 
-        case 3ul:
+        case 3UL:
             pdma->REQSEL0_3 = (pdma->REQSEL0_3 & ~PDMA_REQSEL0_3_REQSRC3_Msk) | (u32Peripheral << PDMA_REQSEL0_3_REQSRC3_Pos);
             break;
 
-        case 4ul:
+        case 4UL:
             pdma->REQSEL4_7 = (pdma->REQSEL4_7 & ~PDMA_REQSEL4_7_REQSRC4_Msk) | u32Peripheral;
             break;
 
-        case 5ul:
+        case 5UL:
             pdma->REQSEL4_7 = (pdma->REQSEL4_7 & ~PDMA_REQSEL4_7_REQSRC5_Msk) | (u32Peripheral << PDMA_REQSEL4_7_REQSRC5_Pos);
             break;
 
-        case 6ul:
+        case 6UL:
             pdma->REQSEL4_7 = (pdma->REQSEL4_7 & ~PDMA_REQSEL4_7_REQSRC6_Msk) | (u32Peripheral << PDMA_REQSEL4_7_REQSRC6_Pos);
             break;
 
-        case 7ul:
+        case 7UL:
             pdma->REQSEL4_7 = (pdma->REQSEL4_7 & ~PDMA_REQSEL4_7_REQSRC7_Msk) | (u32Peripheral << PDMA_REQSEL4_7_REQSRC7_Pos);
             break;
 
@@ -220,7 +213,7 @@ void PDMA_SetTransferMode(PDMA_T *pdma, uint32_t u32Ch, uint32_t u32Peripheral, 
             break;
     }
 
-    if (u32ScatterEn)
+    if (u32ScatterEn != 0UL)
     {
         pdma->DSCT[u32Ch].NEXT = u32DescAddr - (pdma->SCATBA);
         pdma->DSCT[u32Ch].CTL = (pdma->DSCT[u32Ch].CTL & ~PDMA_DSCT_CTL_OPMODE_Msk) | PDMA_OP_SCATTER;
@@ -249,7 +242,6 @@ void PDMA_SetTransferMode(PDMA_T *pdma, uint32_t u32Ch, uint32_t u32Peripheral, 
  *                - \ref PDMA_BURST_2
  *                - \ref PDMA_BURST_1
  *
- *
  * @details     This function set the selected channel burst type and size.
  */
 void PDMA_SetBurstType(PDMA_T *pdma, uint32_t u32Ch, uint32_t u32BurstType, uint32_t u32BurstSize)
@@ -264,7 +256,6 @@ void PDMA_SetBurstType(PDMA_T *pdma, uint32_t u32Ch, uint32_t u32BurstType, uint
  * @param[in]   pdma            The pointer of the specified PDMA module
  * @param[in]   u32Mask         Channel enable bits.
  *
- *
  * @details     This function enable timeout function of the selected channel(s).
  */
 void PDMA_EnableTimeout(PDMA_T *pdma, uint32_t u32Mask)
@@ -277,7 +268,6 @@ void PDMA_EnableTimeout(PDMA_T *pdma, uint32_t u32Mask)
  *
  * @param[in]   pdma            The pointer of the specified PDMA module
  * @param[in]   u32Mask         Channel enable bits.
- *
  *
  * @details     This function disable timeout function of the selected channel(s).
  */
@@ -294,7 +284,6 @@ void PDMA_DisableTimeout(PDMA_T *pdma, uint32_t u32Mask)
  * @param[in]   u32OnOff        Enable/disable time out function
  * @param[in]   u32TimeOutCnt   Timeout count
  *
- *
  * @details     This function set the timeout count.
  * @note        M251 only supported channel 0/1.
  */
@@ -302,11 +291,11 @@ void PDMA_SetTimeOut(PDMA_T *pdma, uint32_t u32Ch, uint32_t u32OnOff, uint32_t u
 {
     switch (u32Ch)
     {
-        case 0ul:
+        case 0UL:
             pdma->TOC0_1 = (pdma->TOC0_1 & ~PDMA_TOC0_1_TOC0_Msk) | u32TimeOutCnt;
             break;
 
-        case 1ul:
+        case 1UL:
             pdma->TOC0_1 = (pdma->TOC0_1 & ~PDMA_TOC0_1_TOC1_Msk) | (u32TimeOutCnt << PDMA_TOC0_1_TOC1_Pos);
             break;
 
@@ -314,10 +303,14 @@ void PDMA_SetTimeOut(PDMA_T *pdma, uint32_t u32Ch, uint32_t u32OnOff, uint32_t u
             break;
     }
 
-    if (u32OnOff)
-        pdma->TOUTEN |= (1 << u32Ch);
+    if (u32OnOff != 0UL)
+    {
+        pdma->TOUTEN |= (1UL << u32Ch);
+    }
     else
-        pdma->TOUTEN &= ~(1 << u32Ch);
+    {
+        pdma->TOUTEN &= ~(1UL << u32Ch);
+    }
 }
 
 /**
@@ -326,14 +319,13 @@ void PDMA_SetTimeOut(PDMA_T *pdma, uint32_t u32Ch, uint32_t u32OnOff, uint32_t u
  * @param[in]   pdma            The pointer of the specified PDMA module
  * @param[in]   u32Ch           The selected channel
  *
- *
  * @details     This function trigger the selected channel.
  */
 void PDMA_Trigger(PDMA_T *pdma, uint32_t u32Ch)
 {
-    if (u8ChSelect[u32Ch] == PDMA_MEM)
+    if (u32ChSelect[u32Ch] == PDMA_MEM)
     {
-        pdma->SWREQ = (1ul << u32Ch);
+        pdma->SWREQ = (1UL << u32Ch);
     }
     else {}
 }
@@ -348,22 +340,21 @@ void PDMA_Trigger(PDMA_T *pdma, uint32_t u32Ch)
  *                - \ref PDMA_INT_TEMPTY
  *                - \ref PDMA_INT_TIMEOUT
  *
- *
  * @details     This function enable the selected channel interrupt.
  */
 void PDMA_EnableInt(PDMA_T *pdma, uint32_t u32Ch, uint32_t u32Mask)
 {
-    if (u32Mask & PDMA_INT_TRANS_DONE)
+    if ((u32Mask & PDMA_INT_TRANS_DONE) != 0UL)
     {
         (pdma)->INTEN |= (1UL << u32Ch);
     }
 
-    if (u32Mask & PDMA_INT_TEMPTY)
+    if ((u32Mask & PDMA_INT_TEMPTY) != 0UL)
     {
         (pdma)->DSCT[u32Ch].CTL &= ~PDMA_DSCT_CTL_TBINTDIS_Msk;
     }
 
-    if (u32Mask & PDMA_INT_TIMEOUT)
+    if ((u32Mask & PDMA_INT_TIMEOUT) != 0UL)
     {
         (pdma)->TOUTIEN |= (1UL << u32Ch);
     }
@@ -379,31 +370,28 @@ void PDMA_EnableInt(PDMA_T *pdma, uint32_t u32Ch, uint32_t u32Mask)
  *                - \ref PDMA_INT_TEMPTY
  *                - \ref PDMA_INT_TIMEOUT
  *
- *
  * @details     This function disable the selected channel interrupt.
  */
 void PDMA_DisableInt(PDMA_T *pdma, uint32_t u32Ch, uint32_t u32Mask)
 {
-    if (u32Mask & PDMA_INT_TRANS_DONE)
+    if ((u32Mask & PDMA_INT_TRANS_DONE) != 0UL)
     {
         (pdma)->INTEN &= ~(1UL << u32Ch);
     }
 
-    if (u32Mask & PDMA_INT_TEMPTY)
+    if ((u32Mask & PDMA_INT_TEMPTY) != 0UL)
     {
         (pdma)->DSCT[u32Ch].CTL |= PDMA_DSCT_CTL_TBINTDIS_Msk;
     }
 
-    if (u32Mask & PDMA_INT_TIMEOUT)
+    if ((u32Mask & PDMA_INT_TIMEOUT) != 0UL)
     {
         (pdma)->TOUTIEN &= ~(1UL << u32Ch);
     }
 }
 
 /** @} end of group PDMA_EXPORTED_FUNCTIONS */
-
 /** @} end of group PDMA_Driver */
-
 /** @} end of group Standard_Driver */
 
 /*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/

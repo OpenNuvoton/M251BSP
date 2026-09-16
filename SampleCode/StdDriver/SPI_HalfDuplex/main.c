@@ -1,14 +1,12 @@
-/**************************************************************************//**
- * @file     main.c
- * @version  V0.10
- * @brief
- *           Demonstrate SPI half-duplex mode.
- *           USPI0 will be configured as Master mode and SPI0 will be configured as Slave mode.
- *           Both USPI0 and SPI0 will be configured as half-duplex mode.
+/***************************************************************************//**
+ * @file    main.c
+ * @version V0.10
+ * @brief   Demonstrate SPI half-duplex mode.
+ *          USPI0 will be configured as Master mode and SPI0 will be configured as Slave mode.
+ *          Both USPI0 and SPI0 will be configured as half-duplex mode.
  *
  * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
- *
  ******************************************************************************/
 #include <stdio.h>
 #include "NuMicro.h"
@@ -160,6 +158,8 @@ int main(void)
     printf("    USPI0_CLK (PA11) <-> SPI0_CLK (PD2)\n");
     printf("    USPI0_MOSI(PA10) <-> SPI0_MOSI(PD0)\n\n");
     printf("After the transfer is done, the received data will be printed out.\n");
+    printf("Demo only: this sample requires paired USPI and SPI instances with lab wiring and fixed direction assumptions.\n");
+    printf("Production code should add bounded wait handling, bus-error recovery, and explicit role validation.\n");
 
 
     /* Set slave SPI0 to half-duplex mode */

@@ -95,12 +95,9 @@ extern uint8_t volatile g_u8Suspend;
 
 #define MassCMD_BUF        ((uint32_t)&g_au32MassBlock[0])
 #define STORAGE_DATA_BUF   ((uint32_t)&g_au32StorageBlock[0])
-
 /*-------------------------------------------------------------*/
 
 /*-------------------------------------------------------------*/
-void DataFlashWrite(uint32_t addr, uint32_t size, uint32_t buffer);
-void DataFlashRead(uint32_t addr, uint32_t size, uint32_t buffer);
 void MSC_RequestSense(void);
 void MSC_ReadFormatCapacity(void);
 void MSC_Read(void);

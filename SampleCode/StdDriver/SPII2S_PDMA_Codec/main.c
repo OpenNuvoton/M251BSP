@@ -1,7 +1,7 @@
-/**************************************************************************//**
- * @file     main.c
- * @version  V0.10
- * @brief    This is a I2S demo with PDMA function connected with NAU8822 codec.
+/***************************************************************************//**
+ * @file    main.c
+ * @version V0.10
+ * @brief   This is a I2S demo with PDMA function connected with NAU8822 codec.
  *
  * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
@@ -16,7 +16,7 @@
 /* Global variables                                                                                        */
 /*---------------------------------------------------------------------------------------------------------*/
 #define BUFF_LEN        512
-#define BUFF_HALF_LEN   (BUFF_LEN/2)
+#define BUFF_HALF_LEN   (BUFF_LEN / 2)
 
 #define NAU8822_ADDR    0x1A                /* NAU8822 Device ID */
 
@@ -59,25 +59,25 @@ void NAU8822_Setup()
 {
     printf("\nConfigure NAU8822 ...");
 
-    I2C_WriteNAU8822(0,  0x000);   /* Reset all registers */
+    I2C_WriteNAU8822(0,  0x000); /* Reset all registers */
     CLK_SysTickDelay(10000);
 
     I2C_WriteNAU8822(1,  0x02F);
-    I2C_WriteNAU8822(2,  0x1B3);   /* Enable L/R Headphone, ADC Mix/Boost, ADC */
-    I2C_WriteNAU8822(3,  0x07F);   /* Enable L/R main mixer, DAC */
-    I2C_WriteNAU8822(4,  0x010);   /* 16-bit word length, I2S format, Stereo */
-    I2C_WriteNAU8822(5,  0x000);   /* Companding control and loop back mode (all disable) */
-    I2C_WriteNAU8822(6,  0x1AD);   /* Divide by 6, 16K */
-    I2C_WriteNAU8822(7,  0x006);   /* 16K for internal filter coefficients */
-    I2C_WriteNAU8822(10, 0x008);   /* DAC soft mute is disabled, DAC oversampling rate is 128x */
-    I2C_WriteNAU8822(14, 0x108);   /* ADC HP filter is disabled, ADC oversampling rate is 128x */
-    I2C_WriteNAU8822(15, 0x1EF);   /* ADC left digital volume control */
-    I2C_WriteNAU8822(16, 0x1EF);   /* ADC right digital volume control */
-    I2C_WriteNAU8822(44, 0x000);   /* LLIN/RLIN is not connected to PGA */
-    I2C_WriteNAU8822(47, 0x050);   /* LLIN connected, and its Gain value */
-    I2C_WriteNAU8822(48, 0x050);   /* RLIN connected, and its Gain value */
-    I2C_WriteNAU8822(50, 0x001);   /* Left DAC connected to LMIX */
-    I2C_WriteNAU8822(51, 0x001);   /* Right DAC connected to RMIX */
+    I2C_WriteNAU8822(2,  0x1B3); /* Enable L/R Headphone, ADC Mix/Boost, ADC */
+    I2C_WriteNAU8822(3,  0x07F); /* Enable L/R main mixer, DAC */
+    I2C_WriteNAU8822(4,  0x010); /* 16-bit word length, I2S format, Stereo */
+    I2C_WriteNAU8822(5,  0x000); /* Companding control and loop back mode (all disable) */
+    I2C_WriteNAU8822(6,  0x1AD); /* Divide by 6, 16K */
+    I2C_WriteNAU8822(7,  0x006); /* 16K for internal filter coefficients */
+    I2C_WriteNAU8822(10, 0x008); /* DAC soft mute is disabled, DAC oversampling rate is 128x */
+    I2C_WriteNAU8822(14, 0x108); /* ADC HP filter is disabled, ADC oversampling rate is 128x */
+    I2C_WriteNAU8822(15, 0x1EF); /* ADC left digital volume control */
+    I2C_WriteNAU8822(16, 0x1EF); /* ADC right digital volume control */
+    I2C_WriteNAU8822(44, 0x000); /* LLIN/RLIN is not connected to PGA */
+    I2C_WriteNAU8822(47, 0x050); /* LLIN connected, and its Gain value */
+    I2C_WriteNAU8822(48, 0x050); /* RLIN connected, and its Gain value */
+    I2C_WriteNAU8822(50, 0x001); /* Left DAC connected to LMIX */
+    I2C_WriteNAU8822(51, 0x001); /* Right DAC connected to RMIX */
 
     printf("[OK]\n");
 }
@@ -136,7 +136,7 @@ uint8_t I2C_WriteNAU88L25(uint16_t u16Addr, uint16_t u16Dat)
 void NAU88L25_Reset(void)
 {
     I2C_WriteNAU88L25(0,  0x1);
-    I2C_WriteNAU88L25(0,  0);   // Reset all registers
+    I2C_WriteNAU88L25(0,  0); // Reset all registers
     CLK_SysTickDelay(10000);
 
     printf("NAU88L25 Software Reset.\n");
@@ -171,7 +171,7 @@ void NAU88L25_Setup(void)
     I2C_WriteNAU88L25(0x001A,  0x0000);
     I2C_WriteNAU88L25(0x001B,  0x0000);
     I2C_WriteNAU88L25(0x001C,  0x0002);
-    I2C_WriteNAU88L25(0x001D,  0x301a);   //301A:Master, BCLK_DIV=12.288M/8=1.536M, LRC_DIV=1.536M/32=48K
+    I2C_WriteNAU88L25(0x001D,  0x301a); //301A:Master, BCLK_DIV=12.288M/8=1.536M, LRC_DIV=1.536M/32=48K
     I2C_WriteNAU88L25(0x001E,  0x0000);
     I2C_WriteNAU88L25(0x001F,  0x0000);
     I2C_WriteNAU88L25(0x0020,  0x0000);
@@ -295,7 +295,7 @@ void PDMA_Init(void)
     g_asDescTable_TX[1].CTL = ((BUFF_LEN - 1) << PDMA_DSCT_CTL_TXCNT_Pos) | PDMA_WIDTH_32 | PDMA_SAR_INC | PDMA_DAR_FIX | PDMA_REQ_SINGLE | PDMA_OP_SCATTER;
     g_asDescTable_TX[1].SA = (uint32_t)&g_au32PcmTxBuff[1];
     g_asDescTable_TX[1].DA = (uint32_t)&SPI0->TX;
-    g_asDescTable_TX[1].NEXT = (uint32_t)&g_asDescTable_TX[0] - (PDMA->SCATBA);   //link to first description
+    g_asDescTable_TX[1].NEXT = (uint32_t)&g_asDescTable_TX[0] - (PDMA->SCATBA); //link to first description
 
     /* Rx description */
     g_asDescTable_RX[0].CTL = ((BUFF_LEN - 1) << PDMA_DSCT_CTL_TXCNT_Pos) | PDMA_WIDTH_32 | PDMA_SAR_FIX | PDMA_DAR_INC | PDMA_REQ_SINGLE | PDMA_OP_SCATTER;
@@ -306,7 +306,7 @@ void PDMA_Init(void)
     g_asDescTable_RX[1].CTL = ((BUFF_LEN - 1) << PDMA_DSCT_CTL_TXCNT_Pos) | PDMA_WIDTH_32 | PDMA_SAR_FIX | PDMA_DAR_INC | PDMA_REQ_SINGLE | PDMA_OP_SCATTER;
     g_asDescTable_RX[1].SA = (uint32_t)&SPI0->RX;
     g_asDescTable_RX[1].DA = (uint32_t)&g_au32PcmRxBuff[1];
-    g_asDescTable_RX[1].NEXT = (uint32_t)&g_asDescTable_RX[0] - (PDMA->SCATBA);   //link to first description
+    g_asDescTable_RX[1].NEXT = (uint32_t)&g_asDescTable_RX[0] - (PDMA->SCATBA); //link to first description
 
     /* Open PDMA channel 1 for SPI TX and channel 2 for SPI RX */
     PDMA_Open(PDMA, 0x3 << 1);
@@ -395,7 +395,7 @@ void PDMA_IRQHandler(void)
 {
     uint32_t u32Status = PDMA_GET_INT_STATUS(PDMA);
 
-    if (u32Status & 0x1)   /* abort */
+    if (u32Status & 0x1) /* abort */
     {
         if (PDMA_GET_ABORT_STS(PDMA) & 0x4)
             PDMA_CLR_ABORT_FLAG(PDMA, PDMA_ABTSTS_ABTIF1_Msk);
@@ -404,14 +404,14 @@ void PDMA_IRQHandler(void)
     }
     else if (u32Status & 0x2)
     {
-        if (PDMA_GET_TD_STS(PDMA) & 0x4)            /* channel 2 done */
+        if (PDMA_GET_TD_STS(PDMA) & 0x4) /* channel 2 done */
         {
             /* Copy RX data to TX buffer */
             memcpy(&g_au32PcmTxBuff[u8TxIdx ^ 1], &g_au32PcmRxBuff[u8RxIdx], BUFF_LEN * 4);
             u8RxIdx ^= 1;
         }
 
-        if (PDMA_GET_TD_STS(PDMA) & 0x2)            /* channel 1 done */
+        if (PDMA_GET_TD_STS(PDMA) & 0x2) /* channel 1 done */
         {
             u8TxIdx ^= 1;
         }

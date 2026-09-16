@@ -550,7 +550,7 @@ void USBD_PrepareCtrlIn(uint8_t pu8Buf[], uint32_t u32Size)
     if (u32Size > g_usbd_CtrlMaxPktSize)
     {
         /* Data size > MXPLD */
-        g_usbd_CtrlInPointer = pu8Buf + g_usbd_CtrlMaxPktSize;
+        g_usbd_CtrlInPointer = (uint8_t *)(pu8Buf + g_usbd_CtrlMaxPktSize);
         g_usbd_CtrlInSize = u32Size - g_usbd_CtrlMaxPktSize;
         USBD_SET_DATA1(EP0);
         addr = USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0);
@@ -750,6 +750,89 @@ void USBD_LockEpStall(uint32_t u32EpBitmap)
     g_u32EpStallLock = u32EpBitmap;
 }
 
+/**
+  * @brief       Set USB endpoint stall state
+  *
+  * @param[in]   epnum  USB endpoint number
+  *
+  *
+  * @details     Set USB endpoint stall state. Endpoint will respond STALL token automatically.
+  *
+  */
+void USBD_SetStall(uint8_t epnum)
+{
+    uint32_t i;
+
+    for (i = 0UL; i < USBD_MAX_EP; i++)
+    {
+        uint32_t u32CfgAddr = (uint32_t)(i << 4UL) + (uint32_t)&USBD->EP[0].CFG; /* USBD_CFG0 */
+        uint32_t u32Cfg = *((__IO uint32_t *)(u32CfgAddr));
+
+        if ((u32Cfg & 0xFUL) == (uint32_t)epnum)
+        {
+            u32CfgAddr = (uint32_t)(i << 4UL) + (uint32_t)&USBD->EP[0].CFGP; /* USBD_CFGP0 */
+            u32Cfg = *((__IO uint32_t *)(u32CfgAddr));
+
+            *((__IO uint32_t *)(u32CfgAddr)) = (u32Cfg | USBD_CFGP_SSTALL);
+            break;
+        }
+    }
+}
+
+/**
+  * @brief       Clear USB endpoint stall state
+  *
+  * @param[in]   epnum  USB endpoint number
+  *
+  *
+  * @details     Clear USB endpoint stall state. Endpoint will respond ACK/NAK token.
+  */
+void USBD_ClearStall(uint8_t epnum)
+{
+    uint32_t i;
+
+    for (i = 0UL; i < USBD_MAX_EP; i++)
+    {
+        uint32_t u32CfgAddr = (uint32_t)(i << 4UL) + (uint32_t)&USBD->EP[0].CFG; /* USBD_CFG0 */
+        uint32_t u32Cfg = *((__IO uint32_t *)(u32CfgAddr));
+
+        if ((u32Cfg & 0xFUL) == (uint32_t)epnum)
+        {
+            u32CfgAddr = (uint32_t)(i << 4UL) + (uint32_t)&USBD->EP[0].CFGP; /* USBD_CFGP0 */
+            u32Cfg = *((__IO uint32_t *)(u32CfgAddr));
+
+            *((__IO uint32_t *)(u32CfgAddr)) = (u32Cfg & ~USBD_CFGP_SSTALL);
+            break;
+        }
+    }
+}
+
+/**
+  * @brief       Get USB endpoint stall state
+  *
+  * @param[in]   epnum  USB endpoint number
+  *
+  * @retval      0      USB endpoint is not stalled.
+  * @retval      1      USB endpoint is stalled.
+  * @retval      0xFF   Endpoint number not found.
+  *
+  * @details     Find the configuration for the specified endpoint number and return its stall state.
+  *
+  */
+uint32_t USBD_GetStall(uint8_t epnum)
+{
+    uint32_t i;
+
+    for (i = 0UL; i < USBD_MAX_EP; i++)
+    {
+        if ((USBD->EP[i].CFG & 0xFUL) == (uint32_t)epnum)
+        {
+            return ((USBD->EP[i].CFGP & USBD_CFGP_SSTALL) != 0U) ? 1UL : 0UL;
+        }
+    }
+
+    return 0xFFUL;
+}
 
 /*@}*/ /* end of group USBD_EXPORTED_FUNCTIONS */
 

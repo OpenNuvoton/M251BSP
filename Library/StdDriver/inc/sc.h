@@ -311,11 +311,16 @@ __STATIC_INLINE void SC_SetTxRetry(SC_T *psSC, uint32_t u32Count)
     /* Retry count must set while enable bit disabled, so disable it first */
     (psSC)->CTL &= ~(SC_CTL_TXRTY_Msk | SC_CTL_TXRTYEN_Msk);
 
-    if ((u32Count) != 0UL)
+    switch (u32Count)
     {
-        while ((psSC)->CTL & SC_CTL_SYNC_Msk) {}
+        case 0UL:
+            break;
 
-        (psSC)->CTL |= (((u32Count) - 1UL) << SC_CTL_TXRTY_Pos) | SC_CTL_TXRTYEN_Msk;
+        default:
+            while ((psSC)->CTL & SC_CTL_SYNC_Msk) {}
+
+            (psSC)->CTL |= (((u32Count) - 1UL) << SC_CTL_TXRTY_Pos) | SC_CTL_TXRTYEN_Msk;
+            break;
     }
 }
 
@@ -336,11 +341,16 @@ __STATIC_INLINE void SC_SetRxRetry(SC_T *psSC, uint32_t u32Count)
     /* Retry count must set while enable bit disabled, so disable it first */
     (psSC)->CTL &= ~(SC_CTL_RXRTY_Msk | SC_CTL_RXRTYEN_Msk);
 
-    if ((u32Count) != 0UL)
+    switch (u32Count)
     {
-        while ((psSC)->CTL & SC_CTL_SYNC_Msk) {}
+        case 0UL:
+            break;
 
-        (psSC)->CTL |= (((u32Count) - 1UL) << SC_CTL_RXRTY_Pos) | SC_CTL_RXRTYEN_Msk;
+        default:
+            while ((psSC)->CTL & SC_CTL_SYNC_Msk) {}
+
+            (psSC)->CTL |= (((u32Count) - 1UL) << SC_CTL_RXRTY_Pos) | SC_CTL_RXRTYEN_Msk;
+            break;
     }
 }
 

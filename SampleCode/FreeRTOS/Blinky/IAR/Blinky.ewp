@@ -265,7 +265,7 @@
                 </option>
                 <option>
                     <name>CCDiagSuppress</name>
-                    <state>Pa082</state>
+                    <state>Pa082, Pe1305</state>
                 </option>
                 <option>
                     <name>CCDiagRemark</name>
@@ -623,6 +623,7 @@
                 <option>
                     <name>AUserIncludes</name>
                     <state>$PROJ_DIR$\..</state>
+                    <state>$PROJ_DIR$\..\..\..\..\ThirdParty\FreeRTOS\Source\include</state>
                 </option>
                 <option>
                     <name>AExtraOptionsCheckV2</name>

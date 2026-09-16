@@ -75,7 +75,8 @@ void CLK_EnableCKO(uint32_t u32ClkSrc, uint32_t u32ClkDiv, uint32_t u32ClkDivBy1
   */
 uint32_t CLK_PowerDown(void)
 {
-    uint32_t u32HIRCTRIMCTL, u32MIRCTRIMCTL;
+    uint32_t u32HIRCTRIMCTL;
+    uint32_t u32MIRCTRIMCTL;
 
     /* Check stable status for LIRC disable*/
     if ((!(CLK->PWRCTL & CLK_PWRCTL_LIRCEN_Msk)) && ((CLK->STATUS & CLK_STATUS_LIRCSTB_Msk)))
@@ -135,9 +136,13 @@ void CLK_Idle(void)
 uint32_t CLK_GetHXTFreq(void)
 {
     if (CLK->PWRCTL & CLK_PWRCTL_HXTEN_Msk)
+    {
         return __HXT;
+    }
     else
+    {
         return 0UL;
+    }
 }
 
 /**
@@ -148,9 +153,13 @@ uint32_t CLK_GetHXTFreq(void)
 uint32_t CLK_GetLXTFreq(void)
 {
     if (CLK->PWRCTL & CLK_PWRCTL_LXTEN_Msk)
+    {
         return __LXT;
+    }
     else
+    {
         return 0UL;
+    }
 }
 
 /**
@@ -259,7 +268,7 @@ uint32_t CLK_GetPLLClockFreq(void)
     u32PllFreq = 0UL;
     u32Reg = CLK->PLLCTL;
 
-    if ((u32Reg & (CLK_PLLCTL_PD_Msk | CLK_PLLCTL_OE_Msk)) == 0)
+    if ((u32Reg & (CLK_PLLCTL_PD_Msk | CLK_PLLCTL_OE_Msk)) == 0UL)
     {
         uint32_t u32FIN;
 
@@ -267,12 +276,18 @@ uint32_t CLK_GetPLLClockFreq(void)
         if (u32Reg & CLK_PLLCTL_PLLSRC_Msk)
         {
             if ((u32Reg & CLK_PLLCTL_PLLSRC_Msk) == CLK_PLLCTL_PLLSRC_MIRC)
+            {
                 u32FIN = __MIRC;
+            }
             else
+            {
                 u32FIN = (__HIRC >> 2);
+            }
         }
         else
+        {
             u32FIN = __HXT;
+        }
 
         if (u32Reg & CLK_PLLCTL_BP_Msk)
         {
@@ -281,7 +296,9 @@ uint32_t CLK_GetPLLClockFreq(void)
         }
         else
         {
-            uint32_t u32NF, u32NR, u32NO;
+            uint32_t u32NF;
+            uint32_t u32NR;
+            uint32_t u32NO;
             const uint8_t au8NoTbl[4] = {1u, 2u, 4u, 4u}; /* OUT_DV :DEF: {1, 2, 4, 4} */
 
             /* PLL is in normal work mode */
@@ -320,8 +337,12 @@ void CLK_DisablePLL(void)
   */
 uint32_t CLK_EnablePLL(uint32_t u32PllClkSrc, uint32_t u32PllFreq)
 {
-    uint32_t u32PllSrcClk, u32NR, u32NF, u32NO, u32ClkSrc;
-    uint32_t u32Tmp, u32Tmp2, u32Tmp3, u32Min, u32MinNF, u32MinNR, u32MinNO, u32PllBassFreq;
+    uint32_t u32PllSrcClk;
+    uint32_t u32ClkSrc;
+    uint32_t u32MinNF;
+    uint32_t u32MinNR;
+    uint32_t u32MinNO;
+    uint32_t u32PllFreqTemp = u32PllFreq;
 
     /* Disable PLL first to avoid unstable when setting PLL */
     CLK_DisablePLL();
@@ -333,7 +354,7 @@ uint32_t CLK_EnablePLL(uint32_t u32PllClkSrc, uint32_t u32PllFreq)
         CLK->PWRCTL = (CLK->PWRCTL & ~CLK_PWRCTL_HXTEN_Msk) | CLK_PWRCTL_HXTEN_Msk;
 
         /* Wait for HXT clock ready */
-        CLK_WaitClockReady(CLK_STATUS_HXTSTB_Msk);
+        (void)CLK_WaitClockReady(CLK_STATUS_HXTSTB_Msk);
 
         /* Select PLL source clock from HXT */
         u32ClkSrc = CLK_PLLCTL_PLLSRC_HXT;
@@ -348,9 +369,9 @@ uint32_t CLK_EnablePLL(uint32_t u32PllClkSrc, uint32_t u32PllFreq)
         CLK->PWRCTL |= CLK_PWRCTL_MIRCEN_Msk;
 
         /* Wait for HIRC clock ready */
-        CLK_WaitClockReady(CLK_STATUS_HIRCSTB_Msk);
+        (void)CLK_WaitClockReady(CLK_STATUS_HIRCSTB_Msk);
         /* Wait for MIRC clock ready */
-        CLK_WaitClockReady(CLK_STATUS_MIRCSTB_Msk);
+        (void)CLK_WaitClockReady(CLK_STATUS_MIRCSTB_Msk);
 
         /* Select PLL source clock from HIRC_DIV4 */
         u32ClkSrc = CLK_PLLCTL_PLLSRC_HIRC_DIV4;
@@ -364,39 +385,47 @@ uint32_t CLK_EnablePLL(uint32_t u32PllClkSrc, uint32_t u32PllFreq)
         CLK->PWRCTL |= CLK_PWRCTL_HIRCEN_Msk;
 
         /* Wait for MIRC clock ready */
-        CLK_WaitClockReady(CLK_STATUS_MIRCSTB_Msk);
+        (void)CLK_WaitClockReady(CLK_STATUS_MIRCSTB_Msk);
         /* Wait for HIRC clock ready */
-        CLK_WaitClockReady(CLK_STATUS_HIRCSTB_Msk);
+        (void)CLK_WaitClockReady(CLK_STATUS_HIRCSTB_Msk);
 
         /* Select PLL source clock from MIRC */
         u32ClkSrc = CLK_PLLCTL_PLLSRC_MIRC;
         u32PllSrcClk = __MIRC;//4 MHz
     }
 
-    if ((u32PllFreq <= FREQ_100MHZ) && (u32PllFreq >= FREQ_16MHZ))
+    if ((u32PllFreqTemp <= FREQ_100MHZ) && (u32PllFreqTemp >= FREQ_16MHZ))
     {
+        uint32_t u32NR;
+        uint32_t u32NF;
+        uint32_t u32NO;
+        uint32_t u32Min;
+        uint32_t u32PllBassFreq;
+
         /* Find best solution */
         u32Min = (uint32_t) - 1UL;
-        u32MinNR = 0UL;
-        u32MinNF = 0UL;
+        u32MinNR = 6UL;
+        u32MinNF = 25UL;
         u32MinNO = 0UL;
-        u32PllBassFreq = u32PllFreq;
+        u32PllBassFreq = u32PllFreqTemp;
 
         for (u32NO = 0UL; u32NO <= 3UL; u32NO++)
         {
             /* Break when get good results */
             if (u32Min == 0UL)
+            {
                 break;
+            }
 
             if (u32NO != 2UL)
             {
                 if (u32NO == 3UL)
                 {
-                    u32PllFreq = u32PllBassFreq << 2;
+                    u32PllFreqTemp = u32PllBassFreq << 2UL;
                 }
                 else if (u32NO == 1UL)
                 {
-                    u32PllFreq = u32PllBassFreq << 1;
+                    u32PllFreqTemp = u32PllBassFreq << 1UL;
                 }
                 else
                 {
@@ -404,17 +433,22 @@ uint32_t CLK_EnablePLL(uint32_t u32PllClkSrc, uint32_t u32PllFreq)
 
                 for (u32NR = 1UL; u32NR <= 6UL; u32NR++)   //u32PllSrcClk: MIRC:4M, HIRC_DIV4:12M, HXT:4~24M, 4 MHz <= u32Tmp
                 {
+                    uint32_t u32Tmp;
+
+
                     u32Tmp = u32PllSrcClk / u32NR;
 
-                    if (u32Tmp >= FREQ_4MHZ && u32Tmp <= FREQ_8MHZ)  //4 MHz <= u32Tmp <= 8 MHz
+                    if ((u32Tmp >= FREQ_4MHZ) && (u32Tmp <= FREQ_8MHZ))  //4 MHz <= u32Tmp <= 8 MHz
                     {
                         for (u32NF = 8UL; u32NF <= 25UL; u32NF++)  //4 MHz <= u32Tmp, u32Tmp2 <= FREQ_100MHZ
                         {
+                            uint32_t u32Tmp2;
                             u32Tmp2 = u32Tmp * u32NF;
 
                             if ((u32Tmp2 >= FREQ_64MHZ) && (u32Tmp2 <= FREQ_100MHZ))
                             {
-                                u32Tmp3 = (u32Tmp2 > u32PllFreq) ? (u32Tmp2 - u32PllFreq) : (u32PllFreq - u32Tmp2);
+                                uint32_t u32Tmp3;
+                                u32Tmp3 = (u32Tmp2 > u32PllFreqTemp) ? (u32Tmp2 - u32PllFreqTemp) : (u32PllFreqTemp - u32Tmp2);
 
                                 if (u32NO == 3UL)
                                 {
@@ -437,7 +471,9 @@ uint32_t CLK_EnablePLL(uint32_t u32PllClkSrc, uint32_t u32PllFreq)
 
                                     /* Break when get good results */
                                     if (u32Min == 0UL)
+                                    {
                                         break;
+                                    }
                                 }
                             }
                         }
@@ -449,45 +485,52 @@ uint32_t CLK_EnablePLL(uint32_t u32PllClkSrc, uint32_t u32PllFreq)
     else
     {
         /* Wrong frequency request. Just return default setting. */
-        goto lexit;
+        /* Apply PLL setting and return */
+        if (u32PllFreqTemp < FREQ_16MHZ)
+        {
+            if (u32PllClkSrc == CLK_PLLCTL_PLLSRC_HXT)
+            {
+                CLK->PLLCTL = CLK_PLLCTL_16MHz_HXT;
+            }
+            else if (u32PllClkSrc == CLK_PLLCTL_PLLSRC_HIRC_DIV4)
+            {
+                CLK->PLLCTL = CLK_PLLCTL_16MHz_HIRC_DIV4;
+            }
+            else
+            {
+                CLK->PLLCTL = CLK_PLLCTL_16MHz_MIRC;
+            }
+        }
+        else
+        {
+            if (u32PllClkSrc == CLK_PLLCTL_PLLSRC_HXT)
+            {
+                CLK->PLLCTL = CLK_PLLCTL_100MHz_HXT;
+            }
+            else if (u32PllClkSrc == CLK_PLLCTL_PLLSRC_HIRC_DIV4)
+            {
+                CLK->PLLCTL = CLK_PLLCTL_100MHz_HIRC_DIV4;
+            }
+            else
+            {
+                CLK->PLLCTL = CLK_PLLCTL_100MHz_MIRC;
+            }
+        }
+
+        /* Wait for PLL clock stable */
+        (void)CLK_WaitClockReady(CLK_STATUS_PLLSTB_Msk);
+
+        return CLK_GetPLLClockFreq();
     }
 
     /* Enable and apply new PLL setting. */
     CLK->PLLCTL = u32ClkSrc | (u32MinNO << 14) | ((u32MinNR) << 9) | (u32MinNF);
 
     /* Wait for PLL clock stable */
-    CLK_WaitClockReady(CLK_STATUS_PLLSTB_Msk);
+    (void)CLK_WaitClockReady(CLK_STATUS_PLLSTB_Msk);
 
     /* Return actual PLL output clock frequency */
-    return u32PllSrcClk / ((u32MinNO + 1UL) * u32MinNR) * u32MinNF;
-
-lexit:
-
-    /* Apply PLL setting and return */
-    if (u32PllFreq < FREQ_16MHZ)
-    {
-        if (u32PllClkSrc == CLK_PLLCTL_PLLSRC_HXT)
-            CLK->PLLCTL = CLK_PLLCTL_16MHz_HXT;
-        else if (u32PllClkSrc == CLK_PLLCTL_PLLSRC_HIRC_DIV4)
-            CLK->PLLCTL = CLK_PLLCTL_16MHz_HIRC_DIV4;
-        else
-            CLK->PLLCTL = CLK_PLLCTL_16MHz_MIRC;
-    }
-    else
-    {
-        if (u32PllClkSrc == CLK_PLLCTL_PLLSRC_HXT)
-            CLK->PLLCTL = CLK_PLLCTL_100MHz_HXT;
-        else if (u32PllClkSrc == CLK_PLLCTL_PLLSRC_HIRC_DIV4)
-            CLK->PLLCTL = CLK_PLLCTL_100MHz_HIRC_DIV4;
-        else
-            CLK->PLLCTL = CLK_PLLCTL_100MHz_MIRC;
-    }
-
-    /* Wait for PLL clock stable */
-    CLK_WaitClockReady(CLK_STATUS_PLLSTB_Msk);
-
-    return CLK_GetPLLClockFreq();
-
+    return (u32PllSrcClk / ((u32MinNO + 1UL) * u32MinNR)) * u32MinNF;
 }
 
 /**
@@ -514,7 +557,7 @@ void CLK_SetHCLK(uint32_t u32ClkSrc, uint32_t u32ClkDiv)
 
     /* Switch to HIRC for Safe. Avoid HCLK too high when applying new divider. */
     CLK->PWRCTL |= CLK_PWRCTL_HIRCEN_Msk;
-    CLK_WaitClockReady(CLK_STATUS_HIRCSTB_Msk);
+    (void)CLK_WaitClockReady(CLK_STATUS_HIRCSTB_Msk);
     CLK->CLKSEL0 = (CLK->CLKSEL0 & (~CLK_CLKSEL0_HCLKSEL_Msk)) | CLK_CLKSEL0_HCLKSEL_HIRC;
 
     /* Apply new Divider */
@@ -528,7 +571,9 @@ void CLK_SetHCLK(uint32_t u32ClkSrc, uint32_t u32ClkDiv)
 
     /* Disable HIRC if HIRC is disabled before switching HCLK source */
     if (u32HircStable == 0UL)
+    {
         CLK->PWRCTL &= ~CLK_PWRCTL_HIRCEN_Msk;
+    }
 }
 
 /**
@@ -543,32 +588,40 @@ void CLK_SetHCLK(uint32_t u32ClkSrc, uint32_t u32ClkDiv)
 uint32_t CLK_SetCoreClock(uint32_t u32Hclk)
 {
     uint32_t u32PllclkSet;
+    uint32_t u32HclkTemp = u32Hclk;
 
     /* The range of u32Hclk is 25 MHz ~ 48 MHz */
-    if (u32Hclk > FREQ_48MHZ)
-        u32Hclk = FREQ_48MHZ;
+    if (u32HclkTemp > FREQ_48MHZ)
+    {
+        u32HclkTemp = FREQ_48MHZ;
+    }
 
-    if (u32Hclk < FREQ_25MHZ)
-        u32Hclk = FREQ_25MHZ;
+    if (u32HclkTemp < FREQ_25MHZ)
+    {
+        u32HclkTemp = FREQ_25MHZ;
+    }
 
     /* Switch HCLK clock source to MIRC clock for safe */
     CLK->PWRCTL |= CLK_PWRCTL_MIRCEN_Msk;
-    CLK_WaitClockReady(CLK_STATUS_MIRCSTB_Msk);
+    (void)CLK_WaitClockReady(CLK_STATUS_MIRCSTB_Msk);
     CLK_SetHCLK(CLK_CLKSEL0_HCLKSEL_MIRC, CLK_CLKDIV0_HCLK(1));
 
-    u32PllclkSet = (u32Hclk << 1);
+    u32PllclkSet = (u32HclkTemp << 1);
 
     /* Configure PLL setting if HXT clock is stable */
     if (CLK->STATUS & CLK_STATUS_HXTSTB_Msk)
+    {
         u32PllclkSet = CLK_EnablePLL(CLK_PLLCTL_PLLSRC_HXT, u32PllclkSet);
-
+    }
     /* Configure PLL setting if HXT clock is not stable, MIRC & HIRC clock is stable */
     else if ((CLK->STATUS & CLK_STATUS_MIRCSTB_Msk) && (CLK->STATUS & CLK_STATUS_HIRCSTB_Msk))
     {
         u32PllclkSet = CLK_EnablePLL(CLK_PLLCTL_PLLSRC_HIRC_DIV4, u32PllclkSet);
     }
     else
+    {
         return 0UL;
+    }
 
     /* Select HCLK clock source to PLL,
        Select HCLK clock source divider as 2
@@ -821,7 +874,7 @@ void CLK_EnableModuleClock(uint32_t u32ModuleIdx)
 {
     const uint32_t au32ClkTbl[3] = {0x0UL, 0x4UL, 0x8UL};
 
-    *(volatile uint32_t *)((uint32_t)&CLK->AHBCLK + (au32ClkTbl[MODULE_APBCLK(u32ModuleIdx)]))  |= 1 << MODULE_IP_EN_Pos(u32ModuleIdx);
+    *(volatile uint32_t *)((uint32_t)&CLK->AHBCLK + (au32ClkTbl[MODULE_APBCLK(u32ModuleIdx)]))  |= 1UL << MODULE_IP_EN_Pos(u32ModuleIdx);
 }
 
 /**
@@ -880,7 +933,7 @@ void CLK_DisableModuleClock(uint32_t u32ModuleIdx)
 {
     const uint32_t au32ClkTbl[3] = {0x0UL, 0x4UL, 0x8UL};
 
-    *(volatile uint32_t *)((uint32_t)&CLK->AHBCLK + (au32ClkTbl[MODULE_APBCLK(u32ModuleIdx)]))  &= ~(1 << MODULE_IP_EN_Pos(u32ModuleIdx));
+    *(volatile uint32_t *)((uint32_t)&CLK->AHBCLK + (au32ClkTbl[MODULE_APBCLK(u32ModuleIdx)]))  &= ~(1UL << MODULE_IP_EN_Pos(u32ModuleIdx));
 }
 
 /**
@@ -1062,6 +1115,9 @@ void CLK_EnableDPDWKPin(uint32_t u32Pin, uint32_t u32TriggerType)
         case CLK_DPDWKPIN_4:
             CLK->PMUCTL = (CLK->PMUCTL & ~(CLK_PMUCTL_WKPINEN4_Msk)) | (u32TriggerType << CLK_PMUCTL_WKPINEN4_Pos);
             break;
+
+        default:
+            break;
     }
 }
 
@@ -1219,6 +1275,10 @@ uint32_t CLK_GetModuleClockSource(uint32_t u32ModuleIdx)
         /* Get clock source selection setting */
         u32TmpVal = ((inpw((uint32_t *)u32TmpAddr) & (MODULE_CLKSEL_Msk(u32ModuleIdx) << MODULE_CLKSEL_Pos(u32ModuleIdx))) >> MODULE_CLKSEL_Pos(u32ModuleIdx));
     }
+    else
+    {
+        return MODULE_NoMsk;
+    }
 
     return u32TmpVal;
 }
@@ -1265,11 +1325,13 @@ uint32_t CLK_GetModuleClockDivider(uint32_t u32ModuleIdx)
   */
 void CLK_SysTickDelay(uint32_t u32USec)
 {
-    uint32_t u32TargetValue, u32TargetInt, u32TargetRem, u32DelayCycles;
-
     /* Systick function is using and clock source is core clock */
     if ((SysTick->CTRL & (SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_ENABLE_Msk)) == (SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_ENABLE_Msk))
     {
+        uint32_t u32TargetValue;
+        uint32_t u32TargetInt;
+        uint32_t u32TargetRem;
+        uint32_t u32DelayCycles;
         u32DelayCycles = u32USec * CyclesPerUs;
 
         if (u32DelayCycles > SysTick->LOAD)
@@ -1297,7 +1359,7 @@ void CLK_SysTickDelay(uint32_t u32USec)
             u32TargetValue = SysTick->VAL - u32TargetRem;
         }
 
-        while (u32TargetInt > 0)
+        while (u32TargetInt > 0UL)
         {
             /* Waiting for down-count to zero */
             while ((SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk) == 0UL)
@@ -1338,20 +1400,21 @@ void CLK_SysTickDelay(uint32_t u32USec)
 void CLK_SysTickLongDelay(uint32_t u32USec)
 {
     uint32_t u32Delay;
+    uint32_t u32USecTemp = u32USec;
 
     /* It should <= 349525us for each delay loop */
     u32Delay = 349525UL;
 
     do
     {
-        if (u32USec > u32Delay)
+        if (u32USecTemp > u32Delay)
         {
-            u32USec -= u32Delay;
+            u32USecTemp -= u32Delay;
         }
         else
         {
-            u32Delay = u32USec;
-            u32USec = 0UL;
+            u32Delay = u32USecTemp;
+            u32USecTemp = 0UL;
         }
 
         SysTick->LOAD = u32Delay * CyclesPerUs;
@@ -1366,8 +1429,7 @@ void CLK_SysTickLongDelay(uint32_t u32USec)
         /* Disable SysTick counter */
         SysTick->CTRL = 0UL;
 
-    } while (u32USec > 0UL);
-
+    } while (u32USecTemp > 0UL);
 }
 
 /** @} end of group CLK_EXPORTED_FUNCTIONS */

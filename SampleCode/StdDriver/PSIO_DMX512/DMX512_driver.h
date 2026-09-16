@@ -1,7 +1,7 @@
 /***************************************************************************//**
- * @file        DMX512_driver.c
- * @version     V3.00
- * @brief       DMX512 Driver.
+ * @file    DMX512_driver.h
+ * @version V3.00
+ * @brief   DMX512 Driver.
  *
  * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
@@ -12,17 +12,17 @@
 
 #include "NuMicro.h"
 
-#define BITRATE_DMX512 250000UL     /* 250K bps */
+#define BITRATE_DMX512              (250000UL)     /* 250K bps */
 
 /* DMX512 11Bit Raw Frame for packet recognition */
-#define DMX512_PATTERN_BREAK 0x000UL
-#define DMX512_PATTERN_START 0x600UL
-#define DMX512_PATTERN_DATA  0x601UL
+#define DMX512_PATTERN_BREAK        (0x000UL)
+#define DMX512_PATTERN_START        (0x600UL)
+#define DMX512_PATTERN_DATA         (0x601UL)
 
 /* DMX512 11Bit Data Mask */
-#define DMX512_PATTERN_DATA_MASK 0x1FEUL
+#define DMX512_PATTERN_DATA_MASK    (0x1FEUL)
 
-#define DMX512_GET_DATA(x) (( x & DMX512_PATTERN_DATA_MASK) >> 1 )
+#define DMX512_GET_DATA(x)  (((x) & DMX512_PATTERN_DATA_MASK) >> 1)
 
 typedef enum
 {

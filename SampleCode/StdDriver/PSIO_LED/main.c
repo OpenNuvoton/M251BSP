@@ -1,7 +1,7 @@
 /***************************************************************************//**
- * @file        main.c
- * @version     V3.00
- * @brief       Demonstrate how to light up the WS1812B LED array.
+ * @file    main.c
+ * @version V3.00
+ * @brief   Demonstrate how to light up the WS1812B LED array.
  *
  * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
@@ -125,16 +125,19 @@ int main(void)
     printf("|         Worldsemi WS2812B LED sample code            | \n");
     printf("|          Please connected PSIO_CH0(PB.15)            | \n");
     printf("|           and PSIO_CH1(PC.4) to device               | \n");
+    printf("| Demo only: LED strip timing and power constraints    | \n");
+    printf("| are board-specific; production code should add       | \n");
+    printf("| validation, recovery handling, and fault checks.     | \n");
     printf("+------------------------------------------------------+ \n");
 
     /* Set Led configuration */
-    sConfig.u8SlotCtrl      = PSIO_SC0;
-    sConfig.u8PDMAChannel   = 0;
-    sConfig.pu8PinCFG       = sPinCFG;
-    sConfig.u8PinNumber     = 2;
-    sConfig.pu32DataAddr    = au32LedPattern;
-    sConfig.u32DataLength   = LED_NUMBER * PIN_NUMBER;
-    sConfig.pu32InternalMemory = au32InternalUse;           /* For library internal used, the memory size should be (data length)*3 word at least. */
+    sConfig.u8SlotCtrl = PSIO_SC0;
+    sConfig.u8PDMAChannel = 0;
+    sConfig.pu8PinCFG = sPinCFG;
+    sConfig.u8PinNumber = 2;
+    sConfig.pu32DataAddr = au32LedPattern;
+    sConfig.u32DataLength = LED_NUMBER * PIN_NUMBER;
+    sConfig.pu32InternalMemory = au32InternalUse; /* For library internal used, the memory size should be (data length)*3 word at least. */
     /* This case is  LED_NUMBER*PIN_NUMBER*3 word. */
 
     /* Initialize PSIO setting for WS2812B LED */
@@ -146,85 +149,85 @@ int main(void)
         {
             case eCASE_GREEN_BLUE:
                 /* PIN0 */                              /* PIN1 */
-                au32LedPattern[0]    = WS2812B_GREEN;
-                au32LedPattern[1]    = WS2812B_BLUE;    //LED0
-                au32LedPattern[2]    = WS2812B_GREEN;
-                au32LedPattern[3]    = WS2812B_BLUE;    //LED1
-                au32LedPattern[4]    = WS2812B_GREEN;
-                au32LedPattern[5]    = WS2812B_BLUE;    //LED2
-                au32LedPattern[6]    = WS2812B_GREEN;
-                au32LedPattern[7]    = WS2812B_BLUE;    //LED3
-                au32LedPattern[8]    = WS2812B_GREEN;
-                au32LedPattern[9]    = WS2812B_BLUE;    //LED4
-                au32LedPattern[10]   = WS2812B_GREEN;
-                au32LedPattern[11]   = WS2812B_BLUE;    //LED5
-                au32LedPattern[12]   = WS2812B_GREEN;
-                au32LedPattern[13]   = WS2812B_BLUE;    //LED6
-                au32LedPattern[14]   = WS2812B_GREEN;
-                au32LedPattern[15]   = WS2812B_BLUE;    //LED7
+                au32LedPattern[0] = WS2812B_GREEN;
+                au32LedPattern[1] = WS2812B_BLUE;  //LED0
+                au32LedPattern[2] = WS2812B_GREEN;
+                au32LedPattern[3] = WS2812B_BLUE;  //LED1
+                au32LedPattern[4] = WS2812B_GREEN;
+                au32LedPattern[5] = WS2812B_BLUE;  //LED2
+                au32LedPattern[6] = WS2812B_GREEN;
+                au32LedPattern[7] = WS2812B_BLUE;  //LED3
+                au32LedPattern[8] = WS2812B_GREEN;
+                au32LedPattern[9] = WS2812B_BLUE;  //LED4
+                au32LedPattern[10] = WS2812B_GREEN;
+                au32LedPattern[11] = WS2812B_BLUE; //LED5
+                au32LedPattern[12] = WS2812B_GREEN;
+                au32LedPattern[13] = WS2812B_BLUE; //LED6
+                au32LedPattern[14] = WS2812B_GREEN;
+                au32LedPattern[15] = WS2812B_BLUE; //LED7
                 eColor = eCASE_RED_GREEN;
                 break;
 
             case eCASE_RED_GREEN:
                 /* PIN0 */                              /* PIN1 */
-                au32LedPattern[0]    = WS2812B_RED;
-                au32LedPattern[1]    = WS2812B_GREEN;    //LED0
-                au32LedPattern[2]    = WS2812B_RED;
-                au32LedPattern[3]    = WS2812B_GREEN;    //LED1
-                au32LedPattern[4]    = WS2812B_RED;
-                au32LedPattern[5]    = WS2812B_GREEN;    //LED2
-                au32LedPattern[6]    = WS2812B_RED;
-                au32LedPattern[7]    = WS2812B_GREEN;    //LED3
-                au32LedPattern[8]    = WS2812B_RED;
-                au32LedPattern[9]    = WS2812B_GREEN;    //LED4
-                au32LedPattern[10]   = WS2812B_RED;
-                au32LedPattern[11]   = WS2812B_GREEN;    //LED5
-                au32LedPattern[12]   = WS2812B_RED;
-                au32LedPattern[13]   = WS2812B_GREEN;    //LED6
-                au32LedPattern[14]   = WS2812B_RED;
-                au32LedPattern[15]   = WS2812B_GREEN;    //LED7
+                au32LedPattern[0] = WS2812B_RED;
+                au32LedPattern[1] = WS2812B_GREEN;  //LED0
+                au32LedPattern[2] = WS2812B_RED;
+                au32LedPattern[3] = WS2812B_GREEN;  //LED1
+                au32LedPattern[4] = WS2812B_RED;
+                au32LedPattern[5] = WS2812B_GREEN;  //LED2
+                au32LedPattern[6] = WS2812B_RED;
+                au32LedPattern[7] = WS2812B_GREEN;  //LED3
+                au32LedPattern[8] = WS2812B_RED;
+                au32LedPattern[9] = WS2812B_GREEN;  //LED4
+                au32LedPattern[10] = WS2812B_RED;
+                au32LedPattern[11] = WS2812B_GREEN; //LED5
+                au32LedPattern[12] = WS2812B_RED;
+                au32LedPattern[13] = WS2812B_GREEN; //LED6
+                au32LedPattern[14] = WS2812B_RED;
+                au32LedPattern[15] = WS2812B_GREEN; //LED7
                 eColor = eCASE_BLUE_RED;
                 break;
 
             case eCASE_BLUE_RED:
                 /* PIN0 */                              /* PIN1 */
-                au32LedPattern[0]    = WS2812B_BLUE;
-                au32LedPattern[1]    = WS2812B_RED;    //LED0
-                au32LedPattern[2]    = WS2812B_BLUE;
-                au32LedPattern[3]    = WS2812B_RED;    //LED1
-                au32LedPattern[4]    = WS2812B_BLUE;
-                au32LedPattern[5]    = WS2812B_RED;    //LED2
-                au32LedPattern[6]    = WS2812B_BLUE;
-                au32LedPattern[7]    = WS2812B_RED;    //LED3
-                au32LedPattern[8]    = WS2812B_BLUE;
-                au32LedPattern[9]    = WS2812B_RED;    //LED4
-                au32LedPattern[10]   = WS2812B_BLUE;
-                au32LedPattern[11]   = WS2812B_RED;    //LED5
-                au32LedPattern[12]   = WS2812B_BLUE;
-                au32LedPattern[13]   = WS2812B_RED;    //LED6
-                au32LedPattern[14]   = WS2812B_BLUE;
-                au32LedPattern[15]   = WS2812B_RED;    //LED7
+                au32LedPattern[0] = WS2812B_BLUE;
+                au32LedPattern[1] = WS2812B_RED;  //LED0
+                au32LedPattern[2] = WS2812B_BLUE;
+                au32LedPattern[3] = WS2812B_RED;  //LED1
+                au32LedPattern[4] = WS2812B_BLUE;
+                au32LedPattern[5] = WS2812B_RED;  //LED2
+                au32LedPattern[6] = WS2812B_BLUE;
+                au32LedPattern[7] = WS2812B_RED;  //LED3
+                au32LedPattern[8] = WS2812B_BLUE;
+                au32LedPattern[9] = WS2812B_RED;  //LED4
+                au32LedPattern[10] = WS2812B_BLUE;
+                au32LedPattern[11] = WS2812B_RED; //LED5
+                au32LedPattern[12] = WS2812B_BLUE;
+                au32LedPattern[13] = WS2812B_RED; //LED6
+                au32LedPattern[14] = WS2812B_BLUE;
+                au32LedPattern[15] = WS2812B_RED; //LED7
                 eColor = eCASE_WHITE;
                 break;
 
             case eCASE_WHITE:
                 /* PIN0 */                              /* PIN1 */
-                au32LedPattern[0]    = WS2812B_WHITE;
-                au32LedPattern[1]    = WS2812B_WHITE;    //LED0
-                au32LedPattern[2]    = WS2812B_WHITE;
-                au32LedPattern[3]    = WS2812B_WHITE;    //LED1
-                au32LedPattern[4]    = WS2812B_WHITE;
-                au32LedPattern[5]    = WS2812B_WHITE;    //LED2
-                au32LedPattern[6]    = WS2812B_WHITE;
-                au32LedPattern[7]    = WS2812B_WHITE;    //LED3
-                au32LedPattern[8]    = WS2812B_WHITE;
-                au32LedPattern[9]    = WS2812B_WHITE;    //LED4
-                au32LedPattern[10]   = WS2812B_WHITE;
-                au32LedPattern[11]   = WS2812B_WHITE;    //LED5
-                au32LedPattern[12]   = WS2812B_WHITE;
-                au32LedPattern[13]   = WS2812B_WHITE;    //LED6
-                au32LedPattern[14]   = WS2812B_WHITE;
-                au32LedPattern[15]   = WS2812B_WHITE;    //LED7
+                au32LedPattern[0] = WS2812B_WHITE;
+                au32LedPattern[1] = WS2812B_WHITE;  //LED0
+                au32LedPattern[2] = WS2812B_WHITE;
+                au32LedPattern[3] = WS2812B_WHITE;  //LED1
+                au32LedPattern[4] = WS2812B_WHITE;
+                au32LedPattern[5] = WS2812B_WHITE;  //LED2
+                au32LedPattern[6] = WS2812B_WHITE;
+                au32LedPattern[7] = WS2812B_WHITE;  //LED3
+                au32LedPattern[8] = WS2812B_WHITE;
+                au32LedPattern[9] = WS2812B_WHITE;  //LED4
+                au32LedPattern[10] = WS2812B_WHITE;
+                au32LedPattern[11] = WS2812B_WHITE; //LED5
+                au32LedPattern[12] = WS2812B_WHITE;
+                au32LedPattern[13] = WS2812B_WHITE; //LED6
+                au32LedPattern[14] = WS2812B_WHITE;
+                au32LedPattern[15] = WS2812B_WHITE; //LED7
                 eColor = eCASE_GREEN_BLUE;
                 break;
         }
@@ -240,6 +243,5 @@ int main(void)
 
     while (1);
 }
-
 
 /*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/

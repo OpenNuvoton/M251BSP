@@ -37,11 +37,11 @@ extern "C"
 /*---------------------------------------------------------------------------------------------------------*/
 /*Digital constant definitions.                                                                          */
 /*---------------------------------------------------------------------------------------------------------*/
-#define DIGITAL_SEG_NUM_14         14      /*!< LCD Com Seg Table Number */
-#define DIGITAL_SEG_NUM_7           7      /*!< LCD Com Seg Table Number */
+#define DIGITAL_SEG_NUM_14         14U     /*!< LCD Com Seg Table Number */
+#define DIGITAL_SEG_NUM_7           7U      /*!< LCD Com Seg Table Number */
 
 
-void LCDLIB_Printf(uint32_t u32Zone, char *InputStr);
+void LCDLIB_Printf(uint32_t u32Zone, const char *InputStr);
 void LCDLIB_PutChar(uint32_t u32Zone, uint32_t u32Index, uint8_t u8Ch);
 void LCDLIB_PrintNumber(uint32_t u32Zone, uint32_t InputNum);
 void LCDLIB_SetSymbol(uint32_t u32Symbol, uint32_t u32OnOff);

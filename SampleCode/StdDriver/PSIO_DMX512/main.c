@@ -1,7 +1,7 @@
 /***************************************************************************//**
- * @file        main.c
- * @version     V3.00
- * @brief       Demonstrate how to implement DMX512 protocol by PSIO.
+ * @file    main.c
+ * @version V3.00
+ * @brief   Demonstrate how to implement DMX512 protocol by PSIO.
  *
  * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
@@ -10,6 +10,8 @@
 #include <stdio.h>
 #include "NuMicro.h"
 #include "DMX512_driver.h"
+
+#define PSIO_DMX512_TRANSFER_TIMEOUT    (SystemCoreClock)
 
 
 void SYS_Init(void)
@@ -84,7 +86,8 @@ int main(void)
 {
     S_PSIO_DMX512_CFG sConfig;
     uint16_t au16RxBuf[5];
-    uint32_t i;
+    uint32_t i = 0UL;
+    uint32_t u32TimeOutCnt = PSIO_DMX512_TRANSFER_TIMEOUT;
 
     /* Unlock protected registers */
     SYS_UnlockReg();
@@ -103,6 +106,7 @@ int main(void)
     printf("+--------------------------------------------------------+ \n");
     printf("|   DMX512 Protocol Test Code                            | \n");
     printf("|   Please connected PSIO_CH0(PB.15) to PSIO_CH1(PC.4)   | \n");
+    printf("| Demo sample keeps bounded receive timeout protection   | \n");
     printf("+--------------------------------------------------------+ \n");
 
     /* Reset PSIO */
@@ -111,10 +115,10 @@ int main(void)
 
     /* Use slot controller 0 and pin 0  for TX */
     /* Use slot controller 1 and pin 1  for RX */
-    sConfig.u8TxSlotCounter      = PSIO_SC0;
-    sConfig.u8RxSlotCounter      = PSIO_SC1;
-    sConfig.u8TxPin              = PSIO_PIN0;
-    sConfig.u8RxPin              = PSIO_PIN1;
+    sConfig.u8TxSlotCounter = PSIO_SC0;
+    sConfig.u8RxSlotCounter = PSIO_SC1;
+    sConfig.u8TxPin = PSIO_PIN0;
+    sConfig.u8RxPin = PSIO_PIN1;
 
     /* Initialize PSIO setting for DMX512 */
     PSIO_DMX512_Open(&sConfig);
@@ -122,7 +126,6 @@ int main(void)
 
     while (1)
     {
-
         for (i = 1 ; i < 6 ; i++)
         {
             PSIO_DMX512_getChannelData(&sConfig, i, &au16RxBuf[0]);
@@ -131,23 +134,34 @@ int main(void)
 
             PSIO_DMX512_Tx(&sConfig, 0, eDMX512_BREAK_START);
             CLK_SysTickDelay(50);
-            PSIO_DMX512_Tx(&sConfig, 0x59, eDMX512_DATA);     /* Channel 1 data */
+            PSIO_DMX512_Tx(&sConfig, 0x59, eDMX512_DATA); /* Channel 1 data */
             CLK_SysTickDelay(50);
-            PSIO_DMX512_Tx(&sConfig, 0x67, eDMX512_DATA);     /* Channel 2 data */
+            PSIO_DMX512_Tx(&sConfig, 0x67, eDMX512_DATA); /* Channel 2 data */
             CLK_SysTickDelay(50);
-            PSIO_DMX512_Tx(&sConfig, 0x79, eDMX512_DATA);     /* Channel 3 data */
+            PSIO_DMX512_Tx(&sConfig, 0x79, eDMX512_DATA); /* Channel 3 data */
             CLK_SysTickDelay(50);
-            PSIO_DMX512_Tx(&sConfig, 0x88, eDMX512_DATA);     /* Channel 4 data */
+            PSIO_DMX512_Tx(&sConfig, 0x88, eDMX512_DATA); /* Channel 4 data */
             CLK_SysTickDelay(50);
-            PSIO_DMX512_Tx(&sConfig, 0x55, eDMX512_DATA);     /* Channel 5 data */
+            PSIO_DMX512_Tx(&sConfig, 0x55, eDMX512_DATA); /* Channel 5 data */
             CLK_SysTickDelay(50);
 
-            while (!(*sConfig.pu8RcvDone));
+            u32TimeOutCnt = PSIO_DMX512_TRANSFER_TIMEOUT;
+
+            while (!(*sConfig.pu8RcvDone))
+            {
+                if (u32TimeOutCnt-- == 0U)
+                {
+                    printf("Wait for DMX512 receive timeout. Keep bounded timeout protection in production code.\n");
+
+                    while (1)
+                    {
+                    }
+                }
+            }
 
             printf("%u: 0x%02X\n", i, (uint8_t)DMX512_GET_DATA(au16RxBuf[0]));
         }
     }
 }
-
 
 /*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/
